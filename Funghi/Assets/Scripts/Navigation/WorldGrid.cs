@@ -72,7 +72,7 @@ public class WorldGrid : MonoBehaviour
 
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, slime))
                 {
-                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5);
+                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, slime);
                     hitColliders[0].gameObject.transform.position = worldPoint;
                     state = 3;
                     funi = hitColliders[0].GetComponent<FunSlime>();
@@ -81,7 +81,8 @@ public class WorldGrid : MonoBehaviour
 
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, node))
                 {
-                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5);
+
+                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, node);
                     hitColliders[0].gameObject.transform.position = worldPoint;
                     FunNode funode = hitColliders[0].GetComponent<FunNode>();
                     funode.worldPos = worldPoint;
@@ -91,16 +92,15 @@ public class WorldGrid : MonoBehaviour
 
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, human))
                 {
-                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5);
+                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, human);
                     hitColliders[0].gameObject.transform.position = worldPoint;
                     state = 4;
                 }
 
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, center))
                 {
-                    Debug.Log("Found Center");
-                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5);
-                    hitColliders[0].gameObject.transform.position = worldPoint;
+                    Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, center);
+                    hitColliders[0].gameObject.transform.position = worldPoint - new Vector3(0, 0, 0.03f);
                     FungusNetwork.Instance.center = hitColliders[0].GetComponent<FunCenter>();
                 }
 

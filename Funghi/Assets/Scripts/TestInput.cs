@@ -5,8 +5,7 @@ using System.Collections.Generic;
 
 public class TestInput : MonoBehaviour
 {
-
-    Tile lastClicked;
+    public LayerMask center;
 
     // Use this for initialization
     void Start()
@@ -18,11 +17,32 @@ public class TestInput : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetButtonDown("Click"))
+        if (Input.GetButtonDown("Node"))
         {
             FungusNetwork.Instance.CreateNewNode(GetClickedTile().worldPosition);
         }
 
+        if (Input.GetButtonDown("Click"))
+        {
+            if (HitCenter(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        }
+
+
+    }
+
+    private bool HitCenter(Vector3 _mousePos)
+    {
+        bool hitCenter = false;
+        _mousePos = new Vector3(_mousePos.x, _mousePos.y, Camera.main.transform.position.z);
+        Ray ray = new Ray(_mousePos, new Vector3(0, 0, 20.0f));
+        RaycastHit hit = new RaycastHit();
+        if (Physics.Raycast(ray, out hit, 100.0f, center))
+        {
+            Debug.Log("Found Center");
+            hitCenter = true;
+        }
+
+        return hitCenter;
     }
 
     private Tile GetClickedTile()
