@@ -6,12 +6,12 @@ public class AStar
 {
 
 
-    public List<Vector3> FindPath(Tile _start, Tile _end)
+    public List<Tile> FindPath(Tile _start, Tile _end)
     {
 
         Heap<Tile> openSet = new Heap<Tile>(WorldGrid.Instance.grid_SizeX * WorldGrid.Instance.grid_SizeY);
         HashSet<Tile> closedSet = new HashSet<Tile>();
-        List<Vector3> path = new List<Vector3>();
+        List<Tile> path = new List<Tile>();
 
         openSet.Add(_start);
 
@@ -63,15 +63,15 @@ public class AStar
 
         }//END while
 
-        
+
         return null;
 
     }
 
-    private List<Vector3> Backtracking(Tile _start, Tile _end)
+    private List<Tile> Backtracking(Tile _start, Tile _end)
     {
 
-        List<Vector3> path = new List<Vector3>();
+        List<Tile> path = new List<Tile>();
         Tile current = _end;
 
         while (current != _start)
@@ -81,7 +81,7 @@ public class AStar
                 Debug.Log("Oh no the current!!");
                 return path;
             }
-            path.Insert(0, current.worldPosition);
+            path.Insert(0, current);
             current = current.Parent;
         }
 

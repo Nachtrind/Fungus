@@ -124,9 +124,30 @@ public class WorldGrid : MonoBehaviour
     }
 
 
+    void DrawGridPreview()
+    {
+        Gizmos.color = new Color(1, 1, 1, 0.5f);
+        Vector3 worldBottomLeft = transform.position - Vector3.right * field_SizeX / 2 - Vector3.up * field_SizeY / 2;
+        Vector3 cubeSize = new Vector3(tile_Size*0.9f, tile_Size*0.9f, 0.1f);
+        int g_grid_SizeX = Mathf.RoundToInt(field_SizeX / tile_Size);
+        int g_grid_SizeY = Mathf.RoundToInt(field_SizeY / tile_Size);
+        for (int x = 0; x < g_grid_SizeX; x++)
+        {
+            for (int y = 0; y < g_grid_SizeY; y++)
+            {
+                Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * tile_Size + tile_Size / 2) + Vector3.up * (y * tile_Size + tile_Size / 2) + Vector3.forward * 6;
+                Gizmos.DrawCube(worldPoint, cubeSize);
+            }
+        }
+    }
+
     void OnDrawGizmos()
     {
-
+        if (!Application.isPlaying)
+        {
+            DrawGridPreview();
+            return;
+        }
         Gizmos.DrawWireCube(transform.position, new Vector3(field_SizeX, field_SizeY, 1));
 
 

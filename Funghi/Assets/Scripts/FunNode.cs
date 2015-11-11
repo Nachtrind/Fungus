@@ -8,10 +8,11 @@ public class FunNode : Fungus
 
     public float radius { get; set; }
     public Vector3 worldPos { get; set; }
+    public List<List<Tile>> slimePaths { get; set; }
 
     void Awake()
     {
-
+        List<List<Tile>> slimePath = new List<List<Tile>>();
     }
 
     // Use this for initialization
@@ -25,4 +26,16 @@ public class FunNode : Fungus
     {
 
     }
+
+    void OnMouseDown()
+    {
+
+        foreach(List<Tile> slimeList in slimePaths)
+        {
+
+            
+        }
+    }
+
+
 }

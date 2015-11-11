@@ -14,6 +14,8 @@ public class Tile : IHeapItem<Tile>
     int hCost;
     int heapIndex;
     public Fungus fun;
+    public FunNode funNode { get; set; }
+    public FunSlime slime { get; set; }
     Tile parent;
 
     public int HeapIndex
@@ -95,26 +97,12 @@ public class Tile : IHeapItem<Tile>
     {
         List<Tile> neighbours = new List<Tile>();
 
-        //0 -> x - 1, y + 1
-        if (x - 1 >= 0 &&
-            y + 1 < WorldGrid.Instance.grid_SizeY)
-        {
-            neighbours.Add(WorldGrid.Instance.grid[x - 1, y + 1]);
-        }
-
         //1 -> x, y + 1
         if (y + 1 < WorldGrid.Instance.grid_SizeY)
         {
             neighbours.Add(WorldGrid.Instance.grid[x, y + 1]);
         }
 
-        //2 -> x + 1, y + 1
-        if (x + 1 < WorldGrid.Instance.grid_SizeX &&
-            y + 1 < WorldGrid.Instance.grid_SizeY)
-        {
-            neighbours.Add(WorldGrid.Instance.grid[x + 1, y + 1]);
-
-        }
 
         //3 -> x - 1, y
         if (x - 1 >= 0)
@@ -128,19 +116,15 @@ public class Tile : IHeapItem<Tile>
             neighbours.Add(WorldGrid.Instance.grid[x + 1, y]);
         }
 
-        //5 -> x - 1, y - 1
-        if (x - 1 >= 0 &&
-            y - 1 >= 0)
-        {
-            neighbours.Add(WorldGrid.Instance.grid[x - 1, y - 1]);
-        }
-
         //6 -> x, y - 1
         if (y - 1 >= 0)
         {
             neighbours.Add(WorldGrid.Instance.grid[x, y - 1]);
         }
 
+        //diagonals
+
+        /*
         //7 -> x + 1, y - 1
         if (x + 1 < WorldGrid.Instance.grid_SizeX &&
             y - 1 >= 0)
@@ -148,6 +132,31 @@ public class Tile : IHeapItem<Tile>
             neighbours.Add(WorldGrid.Instance.grid[x + 1, y - 1]);
         }
 
+
+        //5 -> x - 1, y - 1
+        if (x - 1 >= 0 &&
+            y - 1 >= 0)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x - 1, y - 1]);
+        }
+
+
+        //2 -> x + 1, y + 1
+        if (x + 1 < WorldGrid.Instance.grid_SizeX &&
+            y + 1 < WorldGrid.Instance.grid_SizeY)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x + 1, y + 1]);
+
+        }
+
+
+        //0 -> x - 1, y + 1
+        if (x - 1 >= 0 &&
+            y + 1 < WorldGrid.Instance.grid_SizeY)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x - 1, y + 1]);
+        }
+        */
         return neighbours;
     }
 

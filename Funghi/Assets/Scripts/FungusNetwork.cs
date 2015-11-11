@@ -16,7 +16,7 @@ public class FungusNetwork : MonoBehaviour
 
     public FunCenter center { get; set; }
 
-    List<List<Vector3>> currentGrowthPaths;
+    List<List<Tile>> currentGrowthPaths;
 
     //Prefabs
     public GameObject preNode;
@@ -41,7 +41,7 @@ public class FungusNetwork : MonoBehaviour
     {
         instance = this;
         aStar = new AStar();
-        currentGrowthPaths = new List<List<Vector3>>();
+        currentGrowthPaths = new List<List<Tile>>();
     }
 
     // Update is called once per frame
@@ -49,11 +49,11 @@ public class FungusNetwork : MonoBehaviour
     {
         if (currentGrowthPaths.Count > 0 && growthTimer >= growthTick)
         {
-            foreach (List<Vector3> growthPath in currentGrowthPaths)
+            foreach (List<Tile> growthPath in currentGrowthPaths)
             {
                 if (growthPath.Count > 0)
                 {
-                    CreateNewSlime(growthPath[0]);
+                    CreateNewSlime(growthPath[0].worldPosition);
                     growthPath.RemoveAt(0);
                     growthTimer = 0.0f;
                 }
@@ -69,8 +69,11 @@ public class FungusNetwork : MonoBehaviour
     private void CreateNewSlime(Vector3 _position)
     {
         GameObject funNode = Instantiate(preSlime, _position, transform.rotation) as GameObject;
-        WorldGrid.Instance.TileFromWorldPoint(_position).state = 3;
+        Tile slimeTile = WorldGrid.Instance.TileFromWorldPoint(_position);
+        slimeTile.state = 3;
+        slimeTile.slime = funNode.GetComponent<FunSlime>();
         funNode.transform.position = funNode.transform.position + new Vector3(0, 0, 0.2f);
+
 
     }
 
@@ -87,10 +90,11 @@ public class FungusNetwork : MonoBehaviour
         {
             if (NewNodeInRadius(n, funT.worldPosition))
             {
-                List<Vector3> path = aStar.FindPath(WorldGrid.Instance.TileFromWorldPoint(n.worldPos), funT);
+                List<Tile> path = aStar.FindPath(WorldGrid.Instance.TileFromWorldPoint(n.worldPos), funT);
                 if (path.Count <= maxGrowthSteps)
                 {
                     currentGrowthPaths.Add(path);
+                    funNode.GetComponent<FunNode>().slimePaths.Add(path);
                     inAnyRadius = true;
                 }
             }
