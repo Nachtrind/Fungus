@@ -894,7 +894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   field_SizeX: 17.0400009
   field_SizeY: 9.19999981
-  tile_Size: .129999995
+  tile_Size: .25
   grid_SizeX: 0
   grid_SizeY: 0
   obstacle:
@@ -1537,6 +1537,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c5eb14bc62d65488057984af5e04c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  center:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &882330698
 Transform:
   m_ObjectHideFlags: 0
