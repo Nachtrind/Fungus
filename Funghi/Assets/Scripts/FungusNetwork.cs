@@ -11,8 +11,8 @@ public class FungusNetwork : MonoBehaviour
     public float growthTick;
 
     //Network of Fungi
-    public List<Fungus> fungi;
-    public List<FunNode> nodes;
+    public List<Fungus> fungi { get; set; }
+    public List<FunNode> nodes { get; set; }
 
     public FunCenter center { get; set; }
 
@@ -42,6 +42,13 @@ public class FungusNetwork : MonoBehaviour
         instance = this;
         aStar = new AStar();
         currentGrowthPaths = new List<List<Tile>>();
+
+        fungi = new List<Fungus>();
+        nodes = new List<FunNode>();
+
+        FunNode[] inSceneNodes = FindObjectsOfType(typeof(FunNode)) as FunNode[];
+        nodes.AddRange(inSceneNodes);
+        fungi.AddRange(inSceneNodes);
     }
 
     // Update is called once per frame
@@ -94,7 +101,13 @@ public class FungusNetwork : MonoBehaviour
                 if (path.Count <= maxGrowthSteps)
                 {
                     currentGrowthPaths.Add(path);
-                    funNode.GetComponent<FunNode>().slimePaths.Add(path);
+                    FunNode nodi = funNode.GetComponent<FunNode>();
+                    if (nodi.slimePaths == null)
+                    {
+                        nodi.slimePaths = new List<List<Tile>>();
+                    }
+                    Debug.Log(path.Count);
+                    funNode.GetComponent<FunNode>().slimePaths.Add(new List<Tile>(path));
                     inAnyRadius = true;
                 }
             }

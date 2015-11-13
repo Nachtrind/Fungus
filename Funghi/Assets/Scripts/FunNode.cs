@@ -7,6 +7,12 @@ public class FunNode : Fungus
 {
 
     public float radius { get; set; }
+
+    //Destroying Node + Slime Paths
+    private float destroyTick = 0.8f;
+    private float destroyTimer;
+    private bool destroying = false;
+
     public Vector3 worldPos { get; set; }
     public List<List<Tile>> slimePaths { get; set; }
 
@@ -24,16 +30,43 @@ public class FunNode : Fungus
     // Update is called once per frame
     void Update()
     {
+        if (destroying && destroyTimer >= destroyTick)
+        {
+            DestroySlime();
+            destroyTick = 0.0f;
+        }
+        else
+        {
+            destroyTimer += Time.deltaTime;
+        }
 
+        if (destroying && slimePaths.Count <= 0)
+        {
+            Destroy(this);
+        }
     }
 
     void OnMouseDown()
     {
+        destroying = true;
+        this.GetComponent<Renderer>().enabled = false;
+        FungusNetwork.Instance.nodes.Remove(this);
+        FungusNetwork.Instance.fungi.Remove(this);
+    }
 
-        foreach(List<Tile> slimeList in slimePaths)
+    public void DestroySlime()
+    {
+        for (int i = slimePaths.Count - 1; i >= 0; i--)
         {
-
-            
+            if (slimePaths[i].Count > 0)
+            {
+                Destroy(slimePaths[i][slimePaths[i].Count - 1].slime.gameObject);
+                slimePaths[i].RemoveAt(slimePaths[i].Count - 1);
+            }
+            if (slimePaths[i].Count == 0)
+            {
+                slimePaths.RemoveAt(i);
+            }
         }
     }
 
