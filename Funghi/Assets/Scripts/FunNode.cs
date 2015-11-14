@@ -42,7 +42,7 @@ public class FunNode : Fungus
 
         if (destroying && slimePaths.Count <= 0)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -60,8 +60,19 @@ public class FunNode : Fungus
         {
             if (slimePaths[i].Count > 0)
             {
-                Destroy(slimePaths[i][slimePaths[i].Count - 1].slime.gameObject);
-                slimePaths[i].RemoveAt(slimePaths[i].Count - 1);
+                Tile toRemove = slimePaths[i][slimePaths[i].Count - 1];
+                if (toRemove.slime.usages == 1)
+                {
+
+                    slimePaths[i].RemoveAt(slimePaths[i].Count - 1);
+                    toRemove.state = 0;
+                    Destroy(toRemove.slime.gameObject);
+                }
+                else
+                {
+                    slimePaths[i].RemoveAt(slimePaths[i].Count - 1);
+                    toRemove.slime.usages -= 1;
+                }
             }
             if (slimePaths[i].Count == 0)
             {

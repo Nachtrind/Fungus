@@ -75,12 +75,20 @@ public class FungusNetwork : MonoBehaviour
     //creates a new Slime on a given position
     private void CreateNewSlime(Vector3 _position)
     {
-        GameObject funNode = Instantiate(preSlime, _position, transform.rotation) as GameObject;
         Tile slimeTile = WorldGrid.Instance.TileFromWorldPoint(_position);
-        slimeTile.state = 3;
-        slimeTile.slime = funNode.GetComponent<FunSlime>();
-        funNode.transform.position = funNode.transform.position + new Vector3(0, 0, 0.2f);
 
+        if (slimeTile.slime == null)
+        {
+            GameObject funNode = Instantiate(preSlime, _position, transform.rotation) as GameObject;
+            slimeTile.state = 3;
+            slimeTile.slime = funNode.GetComponent<FunSlime>();
+            slimeTile.slime.usages = 1;
+            funNode.transform.position = funNode.transform.position + new Vector3(0, 0, 0.2f);
+        }
+        else
+        {
+            slimeTile.slime.usages += 1;
+        }
 
     }
 
@@ -97,7 +105,7 @@ public class FungusNetwork : MonoBehaviour
         {
             if (NewNodeInRadius(n, funT.worldPosition))
             {
-                List<Tile> path = aStar.FindPath(WorldGrid.Instance.TileFromWorldPoint(n.worldPos), funT);
+                List<Tile> path = aStar.FindPath(WorldGrid.Instance.TileFromWorldPoint(n.worldPos), funT, new List<int> { 0, 2, 3 });
                 if (path.Count <= maxGrowthSteps)
                 {
                     currentGrowthPaths.Add(path);
@@ -106,7 +114,6 @@ public class FungusNetwork : MonoBehaviour
                     {
                         nodi.slimePaths = new List<List<Tile>>();
                     }
-                    Debug.Log(path.Count);
                     funNode.GetComponent<FunNode>().slimePaths.Add(new List<Tile>(path));
                     inAnyRadius = true;
                 }
