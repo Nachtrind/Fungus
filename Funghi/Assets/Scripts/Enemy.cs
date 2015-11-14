@@ -2,13 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class FunCenter : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
+    //parameters
     public float speed;
+    public float attackRadius;
+    public float callRadius;
+    public float damage;
 
-
+    //movement
     bool onTheMove = false;
     List<Tile> currentPath;
+
+    bool pathToCenter;
 
     Tile currentTarget;
     Vector3 lastPosition;
@@ -16,22 +22,14 @@ public class FunCenter : MonoBehaviour
     float startTime;
     float dis;
 
+    public LayerMask enemyLayer;
+
     AStar star = new AStar();
 
-
-    private static FunCenter instance;
-
-    public static FunCenter Instance
-    {
-        get { return instance ?? (instance = new GameObject("FunCenter").AddComponent<FunCenter>()); }
-    }
-
-
     // Use this for initialization
-    void Awake()
+    void Start()
     {
-        instance = this;
-        lastPosition = this.transform.position;
+        CalculatePathToCenter();
     }
 
     // Update is called once per frame
@@ -39,14 +37,37 @@ public class FunCenter : MonoBehaviour
     {
         if (onTheMove)
         {
-            MoveCenter();
-
+            Move();
+        }
+        else
+        {
+            CalculatePathToCenter();
         }
     }
 
-    public void MoveCenter()
+    public void CalculatePathToCenter()
     {
-        if (currentTarget.state == 2 || currentTarget.state == 3)
+
+        List<Tile> adjacendToCenter = WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position).GetNeighboursWithDiagonals();
+        foreach (Tile t in adjacendToCenter)
+        {
+            if (MoveToNewTile(t))
+            {
+                pathToCenter = true;
+                return;
+            }
+        }
+    }
+
+
+    public void GotAttacked()
+    {
+
+    }
+
+    public void Move()
+    {
+        if (currentTarget.state == 0)
         {
             float disCovered = (Time.time - startTime) * speed;
             float fracJourney = disCovered / dis;
@@ -77,27 +98,44 @@ public class FunCenter : MonoBehaviour
         }
     }
 
-
-    public void MoveToNewTile(Tile _target)
+    public bool MoveToNewTile(Tile _target)
     {
-        currentPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), _target, new List<int> { 2, 3 });
+        currentPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), _target, new List<int> { 0 });
 
         if (currentPath != null && currentPath.Count > 0)
         {
+            Debug.Log("FoundPath");
             onTheMove = true;
             currentTarget = currentPath[0];
             currentPath.RemoveAt(0);
             lastPosition = this.transform.position;
             dis = Vector3.Distance(currentTarget.worldPosition, lastPosition);
+            startTime = Time.time;
+            return true;
         }
-
+        return false;
     }
 
-    /*
-    void OnMouseDrag()
+
+    //Get other Enemys in radius
+    private List<Enemy> GetFriendsInRadius()
     {
-        float distance = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance));
-    }*/
+        List<Enemy> friends = new List<Enemy>();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, callRadius, enemyLayer);
+
+        foreach (Collider co in colliders)
+        {
+            friends.Add(co.GetComponent<Enemy>());
+        }
+
+        return friends;
+    }
+
+    //alarms Enemy of an agressor in the region
+    public void Alarm(Tile _agressor)
+    {
+
+    }
 
 }

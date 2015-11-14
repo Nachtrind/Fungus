@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - obstacle
-  - human
+  - enemy
   - node
   - slime
   - food

@@ -160,6 +160,72 @@ public class Tile : IHeapItem<Tile>
         return neighbours;
     }
 
+    public List<Tile> GetNeighboursWithDiagonals()
+    {
+        List<Tile> neighbours = new List<Tile>();
+
+        //1 -> x, y + 1
+        if (y + 1 < WorldGrid.Instance.grid_SizeY)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x, y + 1]);
+        }
+
+
+        //3 -> x - 1, y
+        if (x - 1 >= 0)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x - 1, y]);
+        }
+
+        //4 -> x + 1, y
+        if (x + 1 < WorldGrid.Instance.grid_SizeX)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x + 1, y]);
+        }
+
+        //6 -> x, y - 1
+        if (y - 1 >= 0)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x, y - 1]);
+        }
+
+        //diagonals
+
+
+        //7 -> x + 1, y - 1
+        if (x + 1 < WorldGrid.Instance.grid_SizeX &&
+            y - 1 >= 0)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x + 1, y - 1]);
+        }
+
+
+        //5 -> x - 1, y - 1
+        if (x - 1 >= 0 &&
+            y - 1 >= 0)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x - 1, y - 1]);
+        }
+
+
+        //2 -> x + 1, y + 1
+        if (x + 1 < WorldGrid.Instance.grid_SizeX &&
+            y + 1 < WorldGrid.Instance.grid_SizeY)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x + 1, y + 1]);
+
+        }
+
+
+        //0 -> x - 1, y + 1
+        if (x - 1 >= 0 &&
+            y + 1 < WorldGrid.Instance.grid_SizeY)
+        {
+            neighbours.Add(WorldGrid.Instance.grid[x - 1, y + 1]);
+        }
+
+        return neighbours;
+    }
 
 
     public Tile Parent

@@ -90,12 +90,13 @@ public class WorldGrid : MonoBehaviour
                     state = 2;
                 }
 
+                /*
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, human))
                 {
                     Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, human);
                     hitColliders[0].gameObject.transform.position = worldPoint;
                     state = 4;
-                }
+                }*/
 
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, center))
                 {
@@ -128,7 +129,7 @@ public class WorldGrid : MonoBehaviour
     {
         Gizmos.color = new Color(1, 1, 1, 0.5f);
         Vector3 worldBottomLeft = transform.position - Vector3.right * field_SizeX / 2 - Vector3.up * field_SizeY / 2;
-        Vector3 cubeSize = new Vector3(tile_Size*0.9f, tile_Size*0.9f, 0.1f);
+        Vector3 cubeSize = new Vector3(tile_Size * 0.9f, tile_Size * 0.9f, 0.1f);
         int g_grid_SizeX = Mathf.RoundToInt(field_SizeX / tile_Size);
         int g_grid_SizeY = Mathf.RoundToInt(field_SizeY / tile_Size);
         for (int x = 0; x < g_grid_SizeX; x++)

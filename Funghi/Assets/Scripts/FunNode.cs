@@ -7,6 +7,8 @@ public class FunNode : Fungus
 {
 
     public float radius { get; set; }
+    public float maxHealth;
+    float currentHealth;
 
     //Destroying Node + Slime Paths
     private float destroyTick = 0.8f;
@@ -16,6 +18,8 @@ public class FunNode : Fungus
     public Vector3 worldPos { get; set; }
     public List<List<Tile>> slimePaths { get; set; }
 
+    public LayerMask enemyLayer;
+
     void Awake()
     {
         List<List<Tile>> slimePath = new List<List<Tile>>();
@@ -24,7 +28,7 @@ public class FunNode : Fungus
     // Use this for initialization
     void Start()
     {
-
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -49,7 +53,7 @@ public class FunNode : Fungus
 
     }
 
-    void OnMouseDown()
+    void KillNode()
     {
         destroying = true;
         this.GetComponent<Renderer>().enabled = false;
@@ -91,6 +95,7 @@ public class FunNode : Fungus
         }
     }
 
+
     public bool CenterOnTile(Tile _tileToCheck)
     {
         if (WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position) == _tileToCheck)
@@ -102,4 +107,40 @@ public class FunNode : Fungus
     }
 
 
+    public void Damage(float _damage)
+    {
+        this.currentHealth -= _damage;
+        if (currentHealth <= 0)
+        {
+            KillNode();
+        }
+    }
+
+
+    public void NormalAttack()
+    {
+        List<Enemy> enemies = GetEnemiesInRadius();
+
+        if (enemies.Count > 0)
+        {
+            enemies[0].GotAttacked();
+        }
+
+    }
+
+
+
+    private List<Enemy> GetEnemiesInRadius()
+    {
+        List<Enemy> enemies = new List<Enemy>();
+
+        Collider[] colliders = Physics.OverlapSphere(worldPos, radius, enemyLayer);
+
+        foreach (Collider co in colliders)
+        {
+            enemies.Add(co.GetComponent<Enemy>());
+        }
+
+        return enemies;
+    }
 }
