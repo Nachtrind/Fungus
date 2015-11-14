@@ -24,7 +24,7 @@ public class TestInput : MonoBehaviour
 
         if (Input.GetButtonDown("Click"))
         {
-            if (HitCenter(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+            FunCenter.Instance.MoveToNewTile(GetClickedTile());
         }
 
 
