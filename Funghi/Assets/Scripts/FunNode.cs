@@ -30,6 +30,12 @@ public class FunNode : Fungus
     // Update is called once per frame
     void Update()
     {
+        //Node gets destroyed
+        if (destroying && slimePaths.Count <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
         if (destroying && destroyTimer >= destroyTick)
         {
             DestroySlime();
@@ -40,10 +46,7 @@ public class FunNode : Fungus
             destroyTimer += Time.deltaTime;
         }
 
-        if (destroying && slimePaths.Count <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 
     void OnMouseDown()
@@ -61,6 +64,13 @@ public class FunNode : Fungus
             if (slimePaths[i].Count > 0)
             {
                 Tile toRemove = slimePaths[i][slimePaths[i].Count - 1];
+
+                if (CenterOnTile(toRemove))
+                {
+                    slimePaths.Remove(slimePaths[i]);
+                    continue;
+                }
+
                 if (toRemove.slime.usages == 1)
                 {
 
@@ -79,6 +89,16 @@ public class FunNode : Fungus
                 slimePaths.RemoveAt(i);
             }
         }
+    }
+
+    public bool CenterOnTile(Tile _tileToCheck)
+    {
+        if (WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position) == _tileToCheck)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 

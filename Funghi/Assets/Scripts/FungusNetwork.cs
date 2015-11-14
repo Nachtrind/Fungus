@@ -84,6 +84,7 @@ public class FungusNetwork : MonoBehaviour
             slimeTile.slime = funNode.GetComponent<FunSlime>();
             slimeTile.slime.usages = 1;
             funNode.transform.position = funNode.transform.position + new Vector3(0, 0, 0.2f);
+            fungi.Add(slimeTile.slime);
         }
         else
         {
@@ -123,6 +124,7 @@ public class FungusNetwork : MonoBehaviour
         if (inAnyRadius)
         {
             nodes.Add(funNode.GetComponent<FunNode>());
+            fungi.Add(funNode.GetComponent<FunNode>());
             funNode.transform.position = funT.worldPosition;
             funNode.GetComponent<FunNode>().worldPos = funT.worldPosition;
             funT.state = 2;

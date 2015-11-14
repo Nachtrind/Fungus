@@ -46,28 +46,34 @@ public class FunCenter : MonoBehaviour
 
     public void MoveCenter()
     {
-
-        float disCovered = (Time.time - startTime) * speed;
-        float fracJourney = disCovered / dis;
-
-        transform.position = Vector3.Lerp(lastPosition, currentTarget.worldPosition, fracJourney);
-
-        if (fracJourney >= 1.0f)
+        if (currentTarget.state == 2 || currentTarget.state == 3)
         {
+            float disCovered = (Time.time - startTime) * speed;
+            float fracJourney = disCovered / dis;
 
-            lastPosition = currentTarget.worldPosition;
-            startTime = Time.time;
-            if (currentPath.Count <= 0)
+            transform.position = Vector3.Lerp(lastPosition, currentTarget.worldPosition, fracJourney);
+
+            if (fracJourney >= 1.0f)
             {
-                onTheMove = false;
-            }
-            else
-            {
+
+                lastPosition = currentTarget.worldPosition;
                 startTime = Time.time;
-                currentTarget = currentPath[0];
-                currentPath.RemoveAt(0);
-                dis = Vector3.Distance(currentTarget.worldPosition, lastPosition);
+                if (currentPath.Count <= 0)
+                {
+                    onTheMove = false;
+                }
+                else
+                {
+                    startTime = Time.time;
+                    currentTarget = currentPath[0];
+                    currentPath.RemoveAt(0);
+                    dis = Vector3.Distance(currentTarget.worldPosition, lastPosition);
+                }
             }
+        }
+        else
+        {
+            onTheMove = false;
         }
     }
 
