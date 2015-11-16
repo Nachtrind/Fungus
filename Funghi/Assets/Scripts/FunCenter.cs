@@ -6,6 +6,9 @@ public class FunCenter : MonoBehaviour
 {
     public float speed;
 
+    public float maxHealth;
+    public float currHealth { get; set; }
+
 
     bool onTheMove = false;
     List<Tile> currentPath;
@@ -32,6 +35,7 @@ public class FunCenter : MonoBehaviour
     {
         instance = this;
         lastPosition = this.transform.position;
+        currHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -92,6 +96,19 @@ public class FunCenter : MonoBehaviour
         }
 
     }
+
+    public void Attacked(float _damage)
+    {
+        currHealth -= _damage;
+        Debug.Log(currHealth);
+        if (currHealth <= 0)
+        {
+            //TODO: Game Over Stuff
+            Debug.Log("Oh no, it's dead!");
+        }
+
+    }
+
 
     /*
     void OnMouseDrag()

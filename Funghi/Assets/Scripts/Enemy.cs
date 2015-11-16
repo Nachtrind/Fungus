@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,10 +15,13 @@ public class Enemy : MonoBehaviour
     bool onTheMove = false;
     List<Tile> currentPath;
 
-    bool pathToCenter;
 
     Tile currentTarget;
     Vector3 lastPosition;
+
+    //Timer
+    float attackTick = 0.8f;
+    float attackTimer;
 
     float startTime;
     float dis;
@@ -41,11 +45,70 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            CalculatePathToCenter();
+            if (CenterInRange())
+            {
+                if (attackTimer >= attackTick)
+                {
+                    Debug.Log("Attacked Center!");
+                    FunCenter.Instance.Attacked(damage);
+                    attackTimer = 0.0f;
+                }
+            }
+            else
+            {
+                if (!CalculatePathToCenter())
+                {
+                    //CalculatePathToNearestNode();
+                }
+
+            }
         }
+
+        //Timer
+        attackTimer += Time.deltaTime;
+
     }
 
-    public void CalculatePathToCenter()
+    private bool CalculatePathToNearestNode()
+    {
+        int shortestCount = int.MaxValue;
+        List<Tile> shortestPath = null;
+        FunNode nearestNode = null;
+
+        foreach (FunNode node in FungusNetwork.Instance.nodes)
+        {
+            List<Tile> path = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(transform.position), WorldGrid.Instance.TileFromWorldPoint(node.worldPos), new List<int> { 0, 2 });
+            if (path != null)
+            {
+                if (path.Count < shortestCount)
+                {
+                    shortestPath = path;
+                    shortestCount = path.Count;
+                    nearestNode = node;
+                }
+            }
+            else
+            {
+                Debug.Log("Path is Null");
+            }
+        }
+
+        if (shortestPath == null)
+        {
+            Debug.Log("No Path found to node :(");
+            return false;
+        }
+        else
+        {
+            shortestPath.RemoveAt(shortestPath.Count - 1);
+            currentPath = shortestPath;
+            return true;
+        }
+
+
+    }
+
+    public bool CalculatePathToCenter()
     {
 
         List<Tile> adjacendToCenter = WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position).GetNeighboursWithDiagonals();
@@ -53,15 +116,35 @@ public class Enemy : MonoBehaviour
         {
             if (MoveToNewTile(t))
             {
-                pathToCenter = true;
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
 
     public void GotAttacked()
     {
+
+    }
+
+    private bool CenterInRange()
+    {
+        Tile centerTile = WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position);
+        Tile currTile = WorldGrid.Instance.TileFromWorldPoint(transform.position);
+
+        List<Tile> neighbours = currTile.GetNeighboursWithDiagonals();
+
+        foreach (Tile t in neighbours)
+        {
+            if (t == centerTile)
+            {
+                return true;
+            }
+        }
+
+        return false;
 
     }
 

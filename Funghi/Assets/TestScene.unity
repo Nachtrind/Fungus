@@ -1073,6 +1073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: .5
+  maxHealth: 100
 --- !u!1 &528101250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,11 +1813,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 465564, guid: 6352fc2db3def9c41b32f1ed6af79b9a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -.870000005
+      value: -3.88000011
       objectReference: {fileID: 0}
     - target: {fileID: 465564, guid: 6352fc2db3def9c41b32f1ed6af79b9a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.52999997
+      value: 2.51999998
       objectReference: {fileID: 0}
     - target: {fileID: 465564, guid: 6352fc2db3def9c41b32f1ed6af79b9a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2187,7 +2188,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1771039443
 GameObject:
   m_ObjectHideFlags: 0
