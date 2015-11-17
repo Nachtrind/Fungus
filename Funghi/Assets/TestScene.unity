@@ -997,23 +997,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 400854593}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &505773030 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 106948, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
-  m_PrefabInternal: {fileID: 1573408477}
---- !u!114 &505773033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 505773030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 983d610e04d5a9e409a92bc6a04ab7c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothingStrength: 1
-  depth: -.200000003
 --- !u!1 &515492763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2093,7 +2076,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 499554, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11488826, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: fungi.Array.data[0]
@@ -2122,6 +2105,14 @@ Prefab:
     - target: {fileID: 499554, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11404104, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: excludeSmoothingSelf
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11404104, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: smoothingStrength
+      value: .75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}

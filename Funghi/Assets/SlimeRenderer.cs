@@ -9,7 +9,7 @@ public class SlimeRenderer : MonoBehaviour
     private volatile bool pendingRefresh = false;
 
     [Range(0,1f)]
-    public float smoothingStrength = 1f;
+    public float smoothingStrength = 0.75f;
     private float oldSmooth = 1f;
 
     public float depth = -0.2f;
@@ -195,11 +195,18 @@ public class SlimeRenderer : MonoBehaviour
         {
             for (int t = 0; t < 3; t++)
             {
-                if (tris[(i*3)+t] == index)
+                int current = tris[(i * 3) + t];
+                if (current == index)
                 {
-                    neighbors.Add(verts[tris[i * 3]]);
-                    neighbors.Add(verts[tris[i * 3 + 1]]);
-                    neighbors.Add(verts[tris[i * 3 + 2]]);
+                    for (int ti = 0; ti < 3; ti++)
+                    {
+                        int vIndex = tris[i * 3 + ti];
+                        if (vIndex == index)
+                        {
+                            continue;
+                        }
+                        neighbors.Add(verts[vIndex]);
+                    }
                     break;
                 }
             }
