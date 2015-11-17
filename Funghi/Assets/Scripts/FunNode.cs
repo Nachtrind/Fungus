@@ -16,14 +16,14 @@ public class FunNode : Fungus
     private bool destroying = false;
 
     public Vector3 worldPos { get; set; }
-    public List<List<Tile>> slimePaths { get; set; }
+    private List<List<Tile>> slimePaths = new List<List<Tile>>();
+    public List<List<Tile>> SlimePaths
+    {
+        get { return slimePaths; }
+        set { slimePaths = value; }
+    }
 
     public LayerMask enemyLayer;
-
-    void Awake()
-    {
-        List<List<Tile>> slimePath = new List<List<Tile>>();
-    }
 
     // Use this for initialization
     void Start()
@@ -35,7 +35,11 @@ public class FunNode : Fungus
     void Update()
     {
         //Node gets destroyed
+<<<<<<< HEAD
         if (destroying && (slimePaths.Count <= 0 || slimePaths == null))
+=======
+        if (destroying && SlimePaths.Count <= 0)
+>>>>>>> origin/master
         {
             Destroy(this.gameObject);
         }
@@ -63,34 +67,34 @@ public class FunNode : Fungus
 
     public void DestroySlime()
     {
-        for (int i = slimePaths.Count - 1; i >= 0; i--)
+        for (int i = SlimePaths.Count - 1; i >= 0; i--)
         {
-            if (slimePaths[i].Count > 0)
+            if (SlimePaths[i].Count > 0)
             {
-                Tile toRemove = slimePaths[i][slimePaths[i].Count - 1];
+                Tile toRemove = SlimePaths[i][SlimePaths[i].Count - 1];
 
                 if (CenterOnTile(toRemove))
                 {
-                    slimePaths.Remove(slimePaths[i]);
+                    SlimePaths.Remove(SlimePaths[i]);
                     continue;
                 }
 
                 if (toRemove.slime.usages == 1)
                 {
 
-                    slimePaths[i].RemoveAt(slimePaths[i].Count - 1);
+                    SlimePaths[i].RemoveAt(SlimePaths[i].Count - 1);
                     toRemove.state = 0;
                     Destroy(toRemove.slime.gameObject);
                 }
                 else
                 {
-                    slimePaths[i].RemoveAt(slimePaths[i].Count - 1);
+                    SlimePaths[i].RemoveAt(SlimePaths[i].Count - 1);
                     toRemove.slime.usages -= 1;
                 }
             }
-            if (slimePaths[i].Count == 0)
+            if (SlimePaths[i].Count == 0)
             {
-                slimePaths.RemoveAt(i);
+                SlimePaths.RemoveAt(i);
             }
         }
     }

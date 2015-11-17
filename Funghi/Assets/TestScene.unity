@@ -2144,7 +2144,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 499554, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11488826, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: fungi.Array.data[0]
@@ -2161,6 +2161,26 @@ Prefab:
     - target: {fileID: 11488826, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: maxGrowthSteps
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 499554, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 499554, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 499554, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11404104, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: excludeSmoothingSelf
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11404104, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
+      propertyPath: smoothingStrength
+      value: .75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
@@ -2241,7 +2261,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
   m_StereoMirrorMode: 0

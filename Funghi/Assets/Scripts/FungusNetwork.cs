@@ -94,7 +94,7 @@ public class FungusNetwork : MonoBehaviour
         {
             slimeTile.slime.usages += 1;
         }
-
+        GetComponent<SlimeRenderer>().Refresh();
     }
 
     //creates a new node (if possible); checks for all nodes in the radius of _position, if they need to grow slime
@@ -114,12 +114,7 @@ public class FungusNetwork : MonoBehaviour
                 if (path.Count <= maxGrowthSteps)
                 {
                     currentGrowthPaths.Add(path);
-                    FunNode nodi = funNode.GetComponent<FunNode>();
-                    if (nodi.slimePaths == null)
-                    {
-                        nodi.slimePaths = new List<List<Tile>>();
-                    }
-                    funNode.GetComponent<FunNode>().slimePaths.Add(new List<Tile>(path));
+                    funNode.GetComponent<FunNode>().SlimePaths.Add(new List<Tile>(path));
                     inAnyRadius = true;
                 }
             }
@@ -153,5 +148,4 @@ public class FungusNetwork : MonoBehaviour
             return true;
         }
     }
-
 }
