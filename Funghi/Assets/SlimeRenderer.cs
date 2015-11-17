@@ -173,6 +173,7 @@ public class SlimeRenderer : MonoBehaviour
         for (int i = 0; i < shrunk.Count; i++)
         {
             List<Vector3> neighbors = FindNeighborTris(vertices, tris, i);
+            if (neighbors.Count > 4) { continue; }
             Vector3 shrunkCenter = Vector3.zero;
             for (int n = 0; n < neighbors.Count; n++)
             {
