@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public abstract class Fungus : MonoBehaviour
 {
-    List<Fungus> neighbours;
+    //List<Fungus> neighbours;
 
 
     public List<Fungus> GetNeighbours()
@@ -19,7 +19,7 @@ public abstract class Fungus : MonoBehaviour
         if (y + 1 < WorldGrid.Instance.grid_SizeY &&
             (WorldGrid.Instance.grid[x, y + 1].state == 3 || WorldGrid.Instance.grid[x, y + 1].state == 2))
         {
-            neighbours.Add(WorldGrid.Instance.grid[x, y + 1].fun);
+            neighbourList.Add(WorldGrid.Instance.grid[x, y + 1].fun);
         }
 
 
@@ -27,21 +27,21 @@ public abstract class Fungus : MonoBehaviour
         if (x - 1 >= 0 &&
             (WorldGrid.Instance.grid[x, y + 1].state == 3 || WorldGrid.Instance.grid[x, y + 1].state == 2))
         {
-            neighbours.Add(WorldGrid.Instance.grid[x - 1, y].fun);
+            neighbourList.Add(WorldGrid.Instance.grid[x - 1, y].fun);
         }
 
         //4 -> x + 1, y
         if (x + 1 < WorldGrid.Instance.grid_SizeX &&
              (WorldGrid.Instance.grid[x, y + 1].state == 3 || WorldGrid.Instance.grid[x, y + 1].state == 2))
         {
-            neighbours.Add(WorldGrid.Instance.grid[x + 1, y].fun);
+            neighbourList.Add(WorldGrid.Instance.grid[x + 1, y].fun);
         }
 
         //6 -> x, y - 1
         if (y - 1 >= 0 &&
              (WorldGrid.Instance.grid[x, y + 1].state == 2 || WorldGrid.Instance.grid[x, y + 1].state == 3))
         {
-            neighbours.Add(WorldGrid.Instance.grid[x, y - 1].fun);
+            neighbourList.Add(WorldGrid.Instance.grid[x, y - 1].fun);
         }
 
         return neighbourList;
