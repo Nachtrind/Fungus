@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class FunNode : Fungus
 {
 
-    public float radius { get; set; }
+    public float radius = 1.0f;
     public float maxHealth;
     float currentHealth;
 
@@ -35,7 +35,7 @@ public class FunNode : Fungus
     void Update()
     {
         //Node gets destroyed
-        if (destroying && slimePaths.Count <= 0)
+        if (destroying && (slimePaths.Count <= 0 || slimePaths == null))
         {
             Destroy(this.gameObject);
         }
@@ -120,6 +120,7 @@ public class FunNode : Fungus
     public void NormalAttack()
     {
         List<Enemy> enemies = GetEnemiesInRadius();
+        Debug.Log("enemies: " + enemies.Count);
 
         if (enemies.Count > 0)
         {
@@ -135,7 +136,7 @@ public class FunNode : Fungus
         List<Enemy> enemies = new List<Enemy>();
 
         Collider[] colliders = Physics.OverlapSphere(worldPos, radius, enemyLayer);
-
+        Debug.Log("Colliders: " + colliders.Length);
         foreach (Collider co in colliders)
         {
             enemies.Add(co.GetComponent<Enemy>());

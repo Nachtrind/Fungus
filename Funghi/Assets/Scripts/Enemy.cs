@@ -10,10 +10,15 @@ public class Enemy : MonoBehaviour
     public float attackRadius;
     public float callRadius;
     public float damage;
+    public float movementOffset;
 
     //movement
     bool onTheMove = false;
     List<Tile> currentPath;
+    Vector3 currentOffset;
+
+    //attack
+    FunNode nodeToAttack = null;
 
 
     Tile currentTarget;
@@ -33,7 +38,7 @@ public class Enemy : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        CalculatePathToCenter();
+        PathToCenter();
     }
 
     // Update is called once per frame
@@ -50,15 +55,27 @@ public class Enemy : MonoBehaviour
                 if (attackTimer >= attackTick)
                 {
                     Debug.Log("Attacked Center!");
-                    FunCenter.Instance.Attacked(damage);
+                    FunCenter.Instance.Damage(damage);
                     attackTimer = 0.0f;
                 }
             }
             else
             {
-                if (!CalculatePathToCenter())
+                if (!PathToCenter())
                 {
-                    //CalculatePathToNearestNode();
+                    if (NodeInRange())
+                    {
+                        if (attackTimer >= attackTick)
+                        {
+                            Debug.Log("Attacked Node!");
+                            nodeToAttack.Damage(damage);
+                            attackTimer = 0.0f;
+                        }
+                    }
+                    else
+                    {
+                        CalculatePathToNearestNode();
+                    }
                 }
 
             }
@@ -85,39 +102,58 @@ public class Enemy : MonoBehaviour
                     shortestPath = path;
                     shortestCount = path.Count;
                     nearestNode = node;
+                    nodeToAttack = node;
                 }
             }
             else
             {
-                Debug.Log("Path is Null");
+
             }
         }
 
         if (shortestPath == null)
         {
-            Debug.Log("No Path found to node :(");
+            Debug.Log("No Path found to any node :(");
+            nodeToAttack = null;
             return false;
         }
         else
         {
             shortestPath.RemoveAt(shortestPath.Count - 1);
-            currentPath = shortestPath;
+            SetNewPath(shortestPath);
             return true;
         }
 
 
     }
 
-    public bool CalculatePathToCenter()
+
+    //Try to Calculate a path to the center; return true on success
+    public bool PathToCenter()
     {
 
         List<Tile> adjacendToCenter = WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position).GetNeighboursWithDiagonals();
+
+        List<Tile> shortestPath = null;
+        int shortestCount = int.MaxValue;
+
         foreach (Tile t in adjacendToCenter)
         {
-            if (MoveToNewTile(t))
+            if (t.state == 0)
             {
-                return true;
+                List<Tile> currPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), t, new List<int> { 0 });
+                if (currPath != null && currPath.Count <= shortestCount)
+                {
+                    shortestPath = currPath;
+                    shortestCount = shortestPath.Count;
+                }
             }
+        }
+
+        if (shortestPath != null)
+        {
+            SetNewPath(shortestPath);
+            return true;
         }
 
         return false;
@@ -126,7 +162,8 @@ public class Enemy : MonoBehaviour
 
     public void GotAttacked()
     {
-
+        //TODO: Stuff to alarm others
+        Destroy(this.gameObject);
     }
 
     private bool CenterInRange()
@@ -143,7 +180,24 @@ public class Enemy : MonoBehaviour
                 return true;
             }
         }
+        return false;
 
+    }
+
+    private bool NodeInRange()
+    {
+        Tile currTile = WorldGrid.Instance.TileFromWorldPoint(transform.position);
+
+        List<Tile> neighbours = currTile.GetNeighboursWithDiagonals();
+
+        foreach (Tile t in neighbours)
+        {
+            if (t.state == 2)
+            {
+                nodeToAttack = t.funNode;
+                return true;
+            }
+        }
         return false;
 
     }
@@ -155,7 +209,7 @@ public class Enemy : MonoBehaviour
             float disCovered = (Time.time - startTime) * speed;
             float fracJourney = disCovered / dis;
 
-            transform.position = Vector3.Lerp(lastPosition, currentTarget.worldPosition, fracJourney);
+            transform.position = Vector3.Lerp(lastPosition, currentTarget.worldPosition + currentOffset, fracJourney);
 
             if (fracJourney >= 1.0f)
             {
@@ -171,7 +225,8 @@ public class Enemy : MonoBehaviour
                     startTime = Time.time;
                     currentTarget = currentPath[0];
                     currentPath.RemoveAt(0);
-                    dis = Vector3.Distance(currentTarget.worldPosition, lastPosition);
+                    currentOffset = new Vector3(UnityEngine.Random.Range(-movementOffset, movementOffset), UnityEngine.Random.Range(-movementOffset, movementOffset), 0.0f);
+                    dis = Vector3.Distance(currentTarget.worldPosition + currentOffset, lastPosition);
                 }
             }
         }
@@ -181,22 +236,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public bool MoveToNewTile(Tile _target)
+    public void SetNewPath(List<Tile> _path)
     {
-        currentPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), _target, new List<int> { 0 });
+        currentPath = _path;
 
         if (currentPath != null && currentPath.Count > 0)
         {
-            Debug.Log("FoundPath");
             onTheMove = true;
             currentTarget = currentPath[0];
             currentPath.RemoveAt(0);
             lastPosition = this.transform.position;
-            dis = Vector3.Distance(currentTarget.worldPosition, lastPosition);
+            currentOffset = new Vector3(UnityEngine.Random.Range(-movementOffset, movementOffset), UnityEngine.Random.Range(-movementOffset, movementOffset), 0.0f);
+            dis = Vector3.Distance(currentTarget.worldPosition + currentOffset, lastPosition);
             startTime = Time.time;
-            return true;
         }
-        return false;
     }
 
 

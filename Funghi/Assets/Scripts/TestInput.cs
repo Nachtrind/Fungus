@@ -24,10 +24,27 @@ public class TestInput : MonoBehaviour
 
         if (Input.GetButtonDown("Click"))
         {
-            FunCenter.Instance.MoveToNewTile(GetClickedTile());
+            Tile clickTile = GetClickedTile();
+            //Center selection & movement
+            if (clickTile == WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position))
+            {
+                FunCenter.Instance.selected = !FunCenter.Instance.selected;
+            }
+            else if (FunCenter.Instance.selected)
+            {
+                FunCenter.Instance.MoveToNewTile(clickTile);
+                if (FunCenter.Instance.onTheMove)
+                {
+                    FunCenter.Instance.selected = false;
+                }
+            }
+
+            //Node Attack
+            if (clickTile.funNode != null)
+            {
+                clickTile.funNode.NormalAttack();
+            }
         }
-
-
     }
 
     private bool HitCenter(Vector3 _mousePos)

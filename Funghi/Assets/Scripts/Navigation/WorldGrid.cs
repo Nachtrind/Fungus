@@ -61,6 +61,7 @@ public class WorldGrid : MonoBehaviour
             for (int y = 0; y < grid_SizeY; y++)
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * tile_Size + tile_Size / 2) + Vector3.up * (y * tile_Size + tile_Size / 2) + Vector3.forward * 6;
+                FunNode funode = null;
                 //set tiles
                 //0 = free, 1 = obstacle, 2 = funghi, 3 = fun, 4 = human
                 int state = 0;
@@ -84,7 +85,7 @@ public class WorldGrid : MonoBehaviour
 
                     Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, node);
                     hitColliders[0].gameObject.transform.position = worldPoint;
-                    FunNode funode = hitColliders[0].GetComponent<FunNode>();
+                    funode = hitColliders[0].GetComponent<FunNode>();
                     funode.worldPos = worldPoint;
                     funi = funode;
                     state = 2;
@@ -105,7 +106,8 @@ public class WorldGrid : MonoBehaviour
                     FungusNetwork.Instance.center = hitColliders[0].GetComponent<FunCenter>();
                 }
 
-                Tile t = new Tile(worldPoint, state, x, y, funi);
+               
+                Tile t = new Tile(worldPoint, state, x, y, funi, funode);
                 grid[x, y] = t;
             }
         }

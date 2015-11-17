@@ -80,7 +80,11 @@ public class FungusNetwork : MonoBehaviour
         if (slimeTile.slime == null)
         {
             GameObject funNode = Instantiate(preSlime, _position, transform.rotation) as GameObject;
-            slimeTile.state = 3;
+
+            if (slimeTile.state != 2)
+            {
+                slimeTile.state = 3;
+            }
             slimeTile.slime = funNode.GetComponent<FunSlime>();
             slimeTile.slime.usages = 1;
             funNode.transform.position = funNode.transform.position + new Vector3(0, 0, 0.2f);
@@ -128,6 +132,7 @@ public class FungusNetwork : MonoBehaviour
             funNode.transform.position = funT.worldPosition;
             funNode.GetComponent<FunNode>().worldPos = funT.worldPosition;
             funT.state = 2;
+            funT.funNode = funNode.GetComponent<FunNode>();
         }
         else
         {

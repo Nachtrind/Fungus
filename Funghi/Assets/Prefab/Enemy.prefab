@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.44000006, y: 2.50999999, z: 6}
+  m_LocalPosition: {x: -2.73678613, y: 1.097, z: .029296875}
   m_LocalScale: {x: .0917926356, y: .0917926282, z: .0618114136}
   m_Children: []
   m_Father: {fileID: 0}
@@ -89,6 +89,7 @@ MonoBehaviour:
   attackRadius: 1
   callRadius: 1
   damage: 1
+  movementOffset: .109999999
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512

@@ -30,13 +30,14 @@ public class Tile : IHeapItem<Tile>
         }
     }
 
-    public Tile(Vector3 _pos, int _state, int _x, int _y, Fungus _fun)
+    public Tile(Vector3 _pos, int _state, int _x, int _y, Fungus _fun, FunNode _node)
     {
         this.worldPosition = _pos;
         this.state = _state;
         this.x = _x;
         this.y = _y;
         this.fun = _fun;
+        funNode = _node;
     }
 
 

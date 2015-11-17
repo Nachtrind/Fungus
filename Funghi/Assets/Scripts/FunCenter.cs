@@ -9,8 +9,9 @@ public class FunCenter : MonoBehaviour
     public float maxHealth;
     public float currHealth { get; set; }
 
+    public bool selected { get; set; }
 
-    bool onTheMove = false;
+    public bool onTheMove { get; set; }
     List<Tile> currentPath;
 
     Tile currentTarget;
@@ -36,6 +37,8 @@ public class FunCenter : MonoBehaviour
         instance = this;
         lastPosition = this.transform.position;
         currHealth = maxHealth;
+        selected = false;
+        onTheMove = false;
     }
 
     // Update is called once per frame
@@ -97,7 +100,7 @@ public class FunCenter : MonoBehaviour
 
     }
 
-    public void Attacked(float _damage)
+    public void Damage(float _damage)
     {
         currHealth -= _damage;
         Debug.Log(currHealth);
