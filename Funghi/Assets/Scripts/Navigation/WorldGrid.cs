@@ -12,8 +12,53 @@ public class WorldGrid : MonoBehaviour
     public int grid_SizeY;
     public Tile[,] grid;
 
+    #region Editable Grid
     [SerializeField]
     List<Tile> tGrid = new List<Tile>();
+
+    public bool GetTile(int x, int y, out Tile tile)
+    {
+        int index = x + grid_SizeX * y;
+        if (index < 0 || index >= tGrid.Count) { tile = null; return false; }
+        tile = tGrid[index];
+        return true;
+    }
+
+    public List<Tile> GetNeighbors(Tile tile, int distance)
+    {
+        List<Tile> neighbors = new List<Tile>();
+        int minX = Mathf.Max(0, tile.x - distance);
+        int maxX = Mathf.Min(tile.x + distance, tGrid.Count - 1);
+        int miny = Mathf.Max(0, tile.y - distance);
+        int maxY = Mathf.Min(tile.y + distance, tGrid.Count - 1);
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = miny; y <= maxY; y++)
+            {
+                Tile t;
+                if (GetTile(x, y, out t) && t != tile)
+                {
+                    neighbors.Add(t);
+                }
+            }
+        }
+        return neighbors;
+    }
+
+    public void GenerateGrid(int sizeX, int sizeY)
+    {
+        tGrid = new List<Tile>(sizeX * sizeY);
+        Vector3 worldBottomLeft = transform.position - Vector3.right * field_SizeX / 2 - Vector3.up * field_SizeY / 2;
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int y = 0; y < sizeY; y++)
+            {
+                Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * tile_Size + tile_Size / 2) + Vector3.up * (y * tile_Size + tile_Size / 2) + Vector3.forward * 6;
+                Tile t = new Tile(worldPoint, TileStates.Free, x, y, null, null);
+            }
+        }
+    }
+    #endregion
 
     //Masks
     public LayerMask obstacle;
@@ -38,18 +83,6 @@ public class WorldGrid : MonoBehaviour
         grid_SizeY = Mathf.RoundToInt(field_SizeY / tile_Size);
         instance = this;
         CreateGrid();
-
-    }
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 

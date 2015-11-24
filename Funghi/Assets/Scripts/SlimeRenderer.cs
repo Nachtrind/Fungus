@@ -46,9 +46,10 @@ public class SlimeRenderer : MonoBehaviour
     void OnRenderObject()
     {
         RenderTexture previous = RenderTexture.active;
-        RenderTexture temp = RenderTexture.GetTemporary((int)(Screen.width*downSampling), (int)(Screen.height*downSampling), 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, 2);
+        RenderTexture temp = RenderTexture.GetTemporary((int)(Screen.width*downSampling), (int)(Screen.height*downSampling), 0, RenderTextureFormat.Default, RenderTextureReadWrite.Default, 2);
         temp.DiscardContents();
         RenderTexture.active = temp;
+        GL.Clear(true, true, Color.clear);
         intermediate.SetPass(0);
         foreach (Tile t in GetSlimeTiles())
         {

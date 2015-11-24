@@ -58,19 +58,6 @@ public class Tile : IHeapItem<Tile>
     }
 
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     public int GCost
     {
         get
