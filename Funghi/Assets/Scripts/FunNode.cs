@@ -56,7 +56,11 @@ public class FunNode : Fungus
     void KillNode()
     {
         destroying = true;
-        this.GetComponent<Renderer>().enabled = false;
+        Renderer r = GetComponent<Renderer>();
+        if (r)
+        {
+            r.enabled = false;
+        }
         FungusNetwork.Instance.nodes.Remove(this);
         FungusNetwork.Instance.fungi.Remove(this);
     }
