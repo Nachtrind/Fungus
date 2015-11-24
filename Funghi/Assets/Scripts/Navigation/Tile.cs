@@ -3,19 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+public enum TileStates
+{
+    Free = 0,
+    Obstacle = 1,
+    Node = 2,
+    Slime = 3,
+    Human = 4,
+    Food = 5,
+    FungusCenter = 6
+}
+
+[Serializable]
 public class Tile : IHeapItem<Tile>
 {
-
     public Vector3 worldPosition;
-    public int state; //0 = free, 1 = obstacle, 2 = node, 3 = slime, 4 = human, 5 = food, 6 = fungus center
+    public TileStates state;
+    //public int state; //0 = free, 1 = obstacle, 2 = node, 3 = slime, 4 = human, 5 = food, 6 = fungus center
     public int x;
     public int y;
+    [NonSerialized]
     int gCost;
+    [NonSerialized]
     int hCost;
+    [NonSerialized]
     int heapIndex;
+    [NonSerialized]
     public Fungus fun;
     public FunNode funNode { get; set; }
     public FunSlime slime { get; set; }
+    [NonSerialized]
     Tile parent;
 
     public int HeapIndex
@@ -30,7 +47,7 @@ public class Tile : IHeapItem<Tile>
         }
     }
 
-    public Tile(Vector3 _pos, int _state, int _x, int _y, Fungus _fun, FunNode _node)
+    public Tile(Vector3 _pos, TileStates _state, int _x, int _y, Fungus _fun, FunNode _node)
     {
         this.worldPosition = _pos;
         this.state = _state;

@@ -83,7 +83,7 @@ public class FunNode : Fungus
                 {
 
                     SlimePaths[i].RemoveAt(SlimePaths[i].Count - 1);
-                    toRemove.state = 0;
+                    toRemove.state = TileStates.Free;
                     Destroy(toRemove.slime.gameObject);
                 }
                 else

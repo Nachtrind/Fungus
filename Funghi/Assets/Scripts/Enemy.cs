@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
 
         foreach (FunNode node in FungusNetwork.Instance.nodes)
         {
-            List<Tile> path = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(transform.position), WorldGrid.Instance.TileFromWorldPoint(node.worldPos), new List<int> { 0, 2 });
+            List<Tile> path = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(transform.position), WorldGrid.Instance.TileFromWorldPoint(node.worldPos), new List<TileStates> { TileStates.Free, TileStates.Node });
             if (path != null)
             {
                 if (path.Count < shortestCount)
@@ -139,9 +139,9 @@ public class Enemy : MonoBehaviour
 
         foreach (Tile t in adjacendToCenter)
         {
-            if (t.state == 0)
+            if (t.state == TileStates.Free)
             {
-                List<Tile> currPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), t, new List<int> { 0 });
+                List<Tile> currPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), t, new List<TileStates> { TileStates.Free });
                 if (currPath != null && currPath.Count <= shortestCount)
                 {
                     shortestPath = currPath;
@@ -192,7 +192,7 @@ public class Enemy : MonoBehaviour
 
         foreach (Tile t in neighbours)
         {
-            if (t.state == 2)
+            if (t.state == TileStates.Node)
             {
                 nodeToAttack = t.funNode;
                 return true;
@@ -204,7 +204,7 @@ public class Enemy : MonoBehaviour
 
     public void Move()
     {
-        if (currentTarget.state == 0)
+        if (currentTarget.state == TileStates.Free)
         {
             float disCovered = (Time.time - startTime) * speed;
             float fracJourney = disCovered / dis;

@@ -81,9 +81,9 @@ public class FungusNetwork : MonoBehaviour
         {
             GameObject funNode = Instantiate(preSlime, _position, transform.rotation) as GameObject;
 
-            if (slimeTile.state != 2)
+            if (slimeTile.state != TileStates.Node)
             {
-                slimeTile.state = 3;
+                slimeTile.state = TileStates.Slime;
             }
             slimeTile.slime = funNode.GetComponent<FunSlime>();
             slimeTile.slime.usages = 1;
@@ -109,7 +109,7 @@ public class FungusNetwork : MonoBehaviour
         {
             if (NewNodeInRadius(n, funT.worldPosition))
             {
-                List<Tile> path = aStar.FindPath(WorldGrid.Instance.TileFromWorldPoint(n.worldPos), funT, new List<int> { 0, 2, 3 });
+                List<Tile> path = aStar.FindPath(WorldGrid.Instance.TileFromWorldPoint(n.worldPos), funT, new List<TileStates> { TileStates.Free, TileStates.Node, TileStates.Slime });
                 if (path.Count <= maxGrowthSteps)
                 {
                     currentGrowthPaths.Add(path);
@@ -125,7 +125,7 @@ public class FungusNetwork : MonoBehaviour
             fungi.Add(funNode.GetComponent<FunNode>());
             funNode.transform.position = funT.worldPosition;
             funNode.GetComponent<FunNode>().worldPos = funT.worldPosition;
-            funT.state = 2;
+            funT.state = TileStates.Node;
             funT.funNode = funNode.GetComponent<FunNode>();
         }
         else
