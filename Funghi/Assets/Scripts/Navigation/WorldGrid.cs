@@ -158,6 +158,7 @@ public class WorldGrid : MonoBehaviour
         {
             return;
         }
+        return;
         foreach (Tile t in grid)
         {
             if (t.state == 0)
