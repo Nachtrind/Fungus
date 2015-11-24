@@ -8,16 +8,19 @@
 		_Speed("Geschwindigkeit", Range(0,0.1)) = 1 
 		_Color("Tint", color) = (1,1,1,1)
 		_CutOff("Schärfe", Range(0.1,0.9)) = 0.5
+		_Test("AlphaCut", Range(0,1)) = 0.5
 	}
 	SubShader
 	{
 		Tags { "RenderType" = "Transparent" }
-		LOD 200
-		blend SrcAlpha OneMinusSrcAlpha
+		zwrite off
+		cull off
+		//blend SrcAlpha OneMinusSrcAlpha
+		ztest lequal
 
 		CGPROGRAM
-		#pragma surface surf Lambert alpha
-		#pragma target 2.0
+		#pragma surface surf Lambert alphatest:_Test
+		#pragma target 2.0 nolighting
 
 		sampler2D _MainTex;
 		sampler2D _StructureTex;
@@ -43,7 +46,8 @@
 			fixed4 mask = tex2D(_MainTex, lerp(IN.uv_MainTex, disp, 0.01));
 			fixed4 tex = tex2D(_StructureTex, lerp(IN.uv_StructureTex, disp, 0.05));
 			o.Emission = tex.rgb*_Color;
-			o.Alpha = saturate(clamp(mask.a-_CutOff,0,1)*10);
+			o.Albedo = o.Emission;
+			o.Alpha = clamp(saturate((mask.a-_CutOff)*10), 0, 1);
 		}
 		ENDCG
 	}
