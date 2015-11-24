@@ -21,7 +21,7 @@ public class FunCenter : MonoBehaviour
     float dis;
 
     AStar star = new AStar();
-
+    ParticleSystem particleS;
 
     private static FunCenter instance;
 
@@ -34,6 +34,7 @@ public class FunCenter : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        particleS = this.GetComponent<ParticleSystem>();
         instance = this;
         lastPosition = this.transform.position;
         currHealth = maxHealth;
@@ -102,8 +103,9 @@ public class FunCenter : MonoBehaviour
 
     public void Damage(float _damage)
     {
+        particleS.Play();
         currHealth -= _damage;
-        Debug.Log(currHealth);
+        
         if (currHealth <= 0)
         {
             //TODO: Game Over Stuff

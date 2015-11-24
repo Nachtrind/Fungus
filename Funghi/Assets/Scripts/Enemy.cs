@@ -54,7 +54,6 @@ public class Enemy : MonoBehaviour
             {
                 if (attackTimer >= attackTick)
                 {
-                    Debug.Log("Attacked Center!");
                     FunCenter.Instance.Damage(damage);
                     attackTimer = 0.0f;
                 }
@@ -67,7 +66,6 @@ public class Enemy : MonoBehaviour
                     {
                         if (attackTimer >= attackTick)
                         {
-                            Debug.Log("Attacked Node!");
                             nodeToAttack.Damage(damage);
                             attackTimer = 0.0f;
                         }

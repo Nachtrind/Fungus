@@ -25,10 +25,13 @@ public class FunNode : Fungus
 
     public LayerMask enemyLayer;
 
+    ParticleSystem particleS;
+
     // Use this for initialization
     void Start()
     {
         currentHealth = maxHealth;
+        particleS = this.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -113,9 +116,26 @@ public class FunNode : Fungus
 
     public void Damage(float _damage)
     {
+        particleS.Play();
         this.currentHealth -= _damage;
+
         if (currentHealth <= 0)
         {
+
+            if (slimePaths.Count <= 0)
+        {
+            Tile t = WorldGrid.Instance.TileFromWorldPoint(transform.position);
+            if(t.slime != null)
+            {
+                t.state = 3;
+            }
+            else
+            {
+                t.state = 0;
+            }
+        }
+
+        
             KillNode();
         }
     }
@@ -124,7 +144,6 @@ public class FunNode : Fungus
     public void NormalAttack()
     {
         List<Enemy> enemies = GetEnemiesInRadius();
-        Debug.Log("enemies: " + enemies.Count);
 
         if (enemies.Count > 0)
         {
@@ -140,7 +159,6 @@ public class FunNode : Fungus
         List<Enemy> enemies = new List<Enemy>();
 
         Collider[] colliders = Physics.OverlapSphere(worldPos, radius, enemyLayer);
-        Debug.Log("Colliders: " + colliders.Length);
         foreach (Collider co in colliders)
         {
             enemies.Add(co.GetComponent<Enemy>());
