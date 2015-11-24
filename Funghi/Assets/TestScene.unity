@@ -897,6 +897,7 @@ MonoBehaviour:
   tile_Size: .25
   grid_SizeX: 0
   grid_SizeY: 0
+  tGrid: []
   obstacle:
     serializedVersion: 2
     m_Bits: 256
@@ -1993,7 +1994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d4ca1b977ca7b49adfb675efedde5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intermediate: {fileID: 0}
+  intermediate: {fileID: 2100000, guid: 7b9657cfdaea3964bbf0154b76709082, type: 2}
   postProcessor: {fileID: 2100000, guid: 7540522c9958667469989730fbf59f46, type: 2}
   downSampling: .25
 --- !u!1001 &1216079815

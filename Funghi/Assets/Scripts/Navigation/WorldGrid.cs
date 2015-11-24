@@ -12,6 +12,9 @@ public class WorldGrid : MonoBehaviour
     public int grid_SizeY;
     public Tile[,] grid;
 
+    [SerializeField]
+    List<Tile> tGrid = new List<Tile>();
+
     //Masks
     public LayerMask obstacle;
     public LayerMask node;
@@ -64,18 +67,18 @@ public class WorldGrid : MonoBehaviour
                 FunNode funode = null;
                 //set tiles
                 //0 = free, 1 = obstacle, 2 = funghi, 3 = fun, 4 = human
-                int state = 0;
+                TileStates state = TileStates.Free;
                 Fungus funi = null;
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, obstacle))
                 {
-                    state = 1;
+                    state = TileStates.Obstacle;
                 }
 
                 if (Physics.CheckSphere(worldPoint, tile_Size / 5, slime))
                 {
                     Collider[] hitColliders = Physics.OverlapSphere(worldPoint, tile_Size / 5, slime);
                     hitColliders[0].gameObject.transform.position = worldPoint;
-                    state = 3;
+                    state = TileStates.Slime;
                     funi = hitColliders[0].GetComponent<FunSlime>();
                 }
 
@@ -88,7 +91,7 @@ public class WorldGrid : MonoBehaviour
                     funode = hitColliders[0].GetComponent<FunNode>();
                     funode.worldPos = worldPoint;
                     funi = funode;
-                    state = 2;
+                    state = TileStates.Node;
                 }
 
                 /*
@@ -161,32 +164,32 @@ public class WorldGrid : MonoBehaviour
         return;
         foreach (Tile t in grid)
         {
-            if (t.state == 0)
+            if (t.state == TileStates.Free)
             {
                 Gizmos.color = Color.white;
             }
 
-            if (t.state == 1)
+            if (t.state == TileStates.Obstacle)
             {
                 Gizmos.color = Color.red;
             }
 
-            if (t.state == 2)
+            if (t.state == TileStates.Node)
             {
                 Gizmos.color = Color.green;
             }
 
-            if (t.state == 3)
+            if (t.state == TileStates.Slime)
             {
                 Gizmos.color = Color.yellow;
             }
 
-            if (t.state == 4)
+            if (t.state == TileStates.Human)
             {
                 Gizmos.color = Color.black;
             }
 
-            if (t.state == 5)
+            if (t.state == TileStates.Food)
             {
                 Gizmos.color = Color.magenta;
             }

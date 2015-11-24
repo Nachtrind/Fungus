@@ -7,7 +7,7 @@ public class AStar
 
     //finds a path from _start to _end and returns ist as a List of Tiles.
     //_allowedTiles defines, which states are fine to step on (e.g. only slime tiles, or slime Tiles and free Tiles)
-    public List<Tile> FindPath(Tile _start, Tile _end, List<int> _allowedTiles)
+    public List<Tile> FindPath(Tile _start, Tile _end, List<TileStates> _allowedTiles)
     {
 
         Heap<Tile> openSet = new Heap<Tile>(WorldGrid.Instance.grid_SizeX * WorldGrid.Instance.grid_SizeY);
@@ -40,7 +40,7 @@ public class AStar
             foreach (Tile neigh in current.GetNeighbours())
             {
                 bool tileAllowed = false;
-                foreach (int allowedStatus in _allowedTiles)
+                foreach (TileStates allowedStatus in _allowedTiles)
                 {
                     if (neigh.state == allowedStatus)
                     {

@@ -53,7 +53,7 @@ public class FunCenter : MonoBehaviour
 
     public void MoveCenter()
     {
-        if (currentTarget.state == 2 || currentTarget.state == 3)
+        if (currentTarget.state == TileStates.Node || currentTarget.state == TileStates.Slime)
         {
             float disCovered = (Time.time - startTime) * speed;
             float fracJourney = disCovered / dis;
@@ -87,7 +87,7 @@ public class FunCenter : MonoBehaviour
 
     public void MoveToNewTile(Tile _target)
     {
-        currentPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), _target, new List<int> { 2, 3 });
+        currentPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), _target, new List<TileStates> { TileStates.Node, TileStates.Slime });
 
         if (currentPath != null && currentPath.Count > 0)
         {
