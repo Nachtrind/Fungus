@@ -35,7 +35,11 @@ public class FunNode : Fungus
     void Update()
     {
         //Node gets destroyed
+<<<<<<< HEAD
         if (destroying && (slimePaths.Count <= 0 || slimePaths == null))
+=======
+        if (destroying && SlimePaths.Count <= 0)
+>>>>>>> origin/master
         {
             Destroy(this.gameObject);
         }
