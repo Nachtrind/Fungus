@@ -103,7 +103,10 @@ public class FunCenter : MonoBehaviour
 
     public void Damage(float _damage)
     {
-        particleS.Play();
+        if (particleS)
+        {
+            particleS.Play();
+        }
         currHealth -= _damage;
         
         if (currHealth <= 0)

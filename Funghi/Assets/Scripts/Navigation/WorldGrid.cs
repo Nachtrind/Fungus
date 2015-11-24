@@ -12,8 +12,8 @@ public class WorldGrid : MonoBehaviour
     public int grid_SizeY;
     public Tile[,] grid;
 
-    [SerializeField]
-    List<Tile> tGrid = new List<Tile>();
+    //[SerializeField]
+    //List<Tile> tGrid = new List<Tile>();
 
     //Masks
     public LayerMask obstacle;

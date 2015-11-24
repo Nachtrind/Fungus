@@ -127,7 +127,7 @@ public class FunNode : Fungus
             Tile t = WorldGrid.Instance.TileFromWorldPoint(transform.position);
             if(t.slime != null)
             {
-                t.state = 3;
+                t.state = TileStates.Slime;
             }
             else
             {
