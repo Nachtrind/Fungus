@@ -21,7 +21,6 @@ public class Spawner : MonoBehaviour
     {
         if (enemyTimer >= enemyTick)
         {
-            Debug.Log("Tick");
             GameObject enemy = Instantiate(preEnemy, this.transform.position, Quaternion.Euler(Vector3.zero)) as GameObject;
             enemyTimer = 0.0f;
         }

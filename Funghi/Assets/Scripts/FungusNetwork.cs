@@ -56,6 +56,7 @@ public class FungusNetwork : MonoBehaviour
     {
         if (currentGrowthPaths.Count > 0 && growthTimer >= growthTick)
         {
+	//		Debug.Log(growthTimer + " >= " + growthTick);
             foreach (List<Tile> growthPath in currentGrowthPaths)
             {
                 if (growthPath.Count > 0)

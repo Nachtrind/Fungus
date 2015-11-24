@@ -35,7 +35,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 106948}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983d610e04d5a9e409a92bc6a04ab7c1, type: 3}
   m_Name: 
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxGrowthRadius: 2
   maxGrowthSteps: 8
-  growthTick: .100000001
+  growthTick: 6.01999998
   preNode: {fileID: 166300, guid: ff90cdc5fea4bb649a53122275886747, type: 2}
   preSlime: {fileID: 114978, guid: 7095b246fc95e4b428bd97ee615d7d61, type: 2}
 --- !u!1001 &100100000
@@ -64,7 +64,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: growthTick
+      value: 6.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 106948}

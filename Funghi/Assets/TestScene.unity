@@ -2261,7 +2261,7 @@ Prefab:
       objectReference: {fileID: 1679178520}
     - target: {fileID: 11488826, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: growthTick
-      value: .100000001
+      value: .400000006
       objectReference: {fileID: 0}
     - target: {fileID: 11488826, guid: 6a64f95947c39b241ad77c0be168cd57, type: 2}
       propertyPath: maxGrowthSteps
