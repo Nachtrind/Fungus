@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cebac3d2fc68ea2428d700c9eb9f662f
+timeCreated: 1448551774
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - fungusNodePrefab: {fileID: 11451118, guid: 266ab57f4a593f045a899e345c13fb52, type: 2}
+  - slimeHandler: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

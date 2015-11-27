@@ -1,277 +1,106 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Pathfinding;
 using System.Collections.Generic;
-using System;
 
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(Seeker))]
+public class Enemy : Entity
 {
-    //parameters
-    public float speed;
-    public float attackRadius;
-    public float callRadius;
-    public float damage;
-    public float movementOffset;
+    Seeker seeker;
+    List<Vector3> pathToTarget = new List<Vector3>();
+    Entity target;
 
-    //movement
-    bool onTheMove = false;
-    List<Tile> currentPath;
-    Vector3 currentOffset;
+    [Header("Attacking")]
+    public float attackRadius = 0.2f;
+    public int damagerPerSecond = 20;
 
-    //attack
-    FunNode nodeToAttack = null;
+    const float repathRate = 0.5f;
+    float lastPath;
 
+    public float moveSpeed = 1f;
 
-    Tile currentTarget;
-    Vector3 lastPosition;
-
-    //Timer
-    float attackTick = 0.8f;
-    float attackTimer;
-
-    float startTime;
-    float dis;
-
-    public LayerMask enemyLayer;
-
-    AStar star = new AStar();
-
-    // Use this for initialization
-    void Start()
+    protected override void Initialize()
     {
-        PathToCenter();
+        seeker = GetComponent<Seeker>();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Tick(float deltaTime)
     {
-        if (onTheMove)
+        SelectTarget();
+        if (Time.time - lastPath > repathRate)
         {
-            Move();
+            PathTo(target.transform.position);
+            lastPath = Time.time;
         }
-        else
+        if (pathToTarget.Count > 0)
         {
-            if (CenterInRange())
+            if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) >= 0.05f)
             {
-                if (attackTimer >= attackTick)
-                {
-                    Debug.Log("Attacked Center!");
-                    FunCenter.Instance.Damage(damage);
-                    attackTimer = 0.0f;
-                }
+                transform.position = Vector3.MoveTowards(transform.position, pathToTarget[0], deltaTime * moveSpeed);
             }
             else
             {
-                if (!PathToCenter())
-                {
-                    if (NodeInRange())
-                    {
-                        if (attackTimer >= attackTick)
-                        {
-                            Debug.Log("Attacked Node!");
-                            nodeToAttack.Damage(damage);
-                            attackTimer = 0.0f;
-                        }
-                    }
-                    else
-                    {
-                        CalculatePathToNearestNode();
-                    }
-                }
-
+                pathToTarget.RemoveAt(0);
             }
         }
-
-        //Timer
-        attackTimer += Time.deltaTime;
-
+        else
+        {
+            if (AstarMath.SqrMagnitudeXZ(target.transform.position, transform.position) < attackRadius * attackRadius)
+            {
+                Attack();
+            }
+        }
     }
 
-    private bool CalculatePathToNearestNode()
+    void SelectTarget()
     {
-        int shortestCount = int.MaxValue;
-        List<Tile> shortestPath = null;
-        FunNode nearestNode = null;
-
-        foreach (FunNode node in FungusNetwork.Instance.nodes)
+        FungusNode nearestNode = world.GetNearestFungusNode(transform.position);
+        if (!nearestNode)
         {
-            List<Tile> path = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(transform.position), WorldGrid.Instance.TileFromWorldPoint(node.worldPos), new List<TileStates> { TileStates.Free, TileStates.Node });
-            if (path != null)
+            target = world.Core;
+        }
+        else
+        {
+            FungusCore core = world.Core;
+            if (!core) { return; }
+            float nnDist = Vector3.SqrMagnitude(nearestNode.transform.position - transform.position);
+            float cDist = Vector3.SqrMagnitude(core.transform.position - transform.position);
+            if (nnDist < cDist)
             {
-                if (path.Count < shortestCount)
-                {
-                    shortestPath = path;
-                    shortestCount = path.Count;
-                    nearestNode = node;
-                    nodeToAttack = node;
-                }
+                target = nearestNode;
             }
             else
             {
-
+                target = core;
             }
         }
-
-        if (shortestPath == null)
-        {
-            Debug.Log("No Path found to any node :(");
-            nodeToAttack = null;
-            return false;
-        }
-        else
-        {
-            shortestPath.RemoveAt(shortestPath.Count - 1);
-            SetNewPath(shortestPath);
-            return true;
-        }
-
-
     }
 
-
-    //Try to Calculate a path to the center; return true on success
-    public bool PathToCenter()
+    void Attack()
     {
-
-        List<Tile> adjacendToCenter = WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position).GetNeighboursWithDiagonals();
-
-        List<Tile> shortestPath = null;
-        int shortestCount = int.MaxValue;
-
-        foreach (Tile t in adjacendToCenter)
-        {
-            if (t.state == TileStates.Free)
-            {
-                List<Tile> currPath = star.FindPath(WorldGrid.Instance.TileFromWorldPoint(this.transform.position), t, new List<TileStates> { TileStates.Free });
-                if (currPath != null && currPath.Count <= shortestCount)
-                {
-                    shortestPath = currPath;
-                    shortestCount = shortestPath.Count;
-                }
-            }
-        }
-
-        if (shortestPath != null)
-        {
-            SetNewPath(shortestPath);
-            return true;
-        }
-
-        return false;
+        target.Damage(this, (int)(damagerPerSecond*GameWorld.TickInterval));
     }
 
-
-    public void GotAttacked()
+    public override void Damage(Entity attacker, int amount)
     {
-        //TODO: Stuff to alarm others
-        Destroy(this.gameObject);
+        SubtractHealth(amount);
+        if (IsDead) { world.OnEnemyWasKilled(this); }
     }
 
-    private bool CenterInRange()
+    void PathTo(Vector3 position)
     {
-        Tile centerTile = WorldGrid.Instance.TileFromWorldPoint(FunCenter.Instance.transform.position);
-        Tile currTile = WorldGrid.Instance.TileFromWorldPoint(transform.position);
-
-        List<Tile> neighbours = currTile.GetNeighboursWithDiagonals();
-
-        foreach (Tile t in neighbours)
-        {
-            if (t == centerTile)
-            {
-                return true;
-            }
-        }
-        return false;
-
+        seeker.StartPath(transform.position, position, OnPathCompleted);
     }
 
-    private bool NodeInRange()
+    void OnPathCompleted(Path p)
     {
-        Tile currTile = WorldGrid.Instance.TileFromWorldPoint(transform.position);
-
-        List<Tile> neighbours = currTile.GetNeighboursWithDiagonals();
-
-        foreach (Tile t in neighbours)
-        {
-            if (t.state == TileStates.Node)
-            {
-                nodeToAttack = t.funNode;
-                return true;
-            }
-        }
-        return false;
-
+        if (p.error) { Debug.LogError("Error in pathfinding"); return; }
+        pathToTarget = p.vectorPath;
     }
 
-    public void Move()
+    void OnDrawGizmos()
     {
-        if (currentTarget.state == TileStates.Free)
-        {
-            float disCovered = (Time.time - startTime) * speed;
-            float fracJourney = disCovered / dis;
-
-            transform.position = Vector3.Lerp(lastPosition, currentTarget.worldPosition + currentOffset, fracJourney);
-
-            if (fracJourney >= 1.0f)
-            {
-
-                lastPosition = currentTarget.worldPosition;
-                startTime = Time.time;
-                if (currentPath.Count <= 0)
-                {
-                    onTheMove = false;
-                }
-                else
-                {
-                    startTime = Time.time;
-                    currentTarget = currentPath[0];
-                    currentPath.RemoveAt(0);
-                    currentOffset = new Vector3(UnityEngine.Random.Range(-movementOffset, movementOffset), UnityEngine.Random.Range(-movementOffset, movementOffset), 0.0f);
-                    dis = Vector3.Distance(currentTarget.worldPosition + currentOffset, lastPosition);
-                }
-            }
-        }
-        else
-        {
-            onTheMove = false;
-        }
+        Gizmos.color = new Color(1, 0, 0f, 0.5f);
+        Gizmos.DrawSphere(transform.position, 0.15f);
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
-
-    public void SetNewPath(List<Tile> _path)
-    {
-        currentPath = _path;
-
-        if (currentPath != null && currentPath.Count > 0)
-        {
-            onTheMove = true;
-            currentTarget = currentPath[0];
-            currentPath.RemoveAt(0);
-            lastPosition = this.transform.position;
-            currentOffset = new Vector3(UnityEngine.Random.Range(-movementOffset, movementOffset), UnityEngine.Random.Range(-movementOffset, movementOffset), 0.0f);
-            dis = Vector3.Distance(currentTarget.worldPosition + currentOffset, lastPosition);
-            startTime = Time.time;
-        }
-    }
-
-
-    //Get other Enemys in radius
-    private List<Enemy> GetFriendsInRadius()
-    {
-        List<Enemy> friends = new List<Enemy>();
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, callRadius, enemyLayer);
-
-        foreach (Collider co in colliders)
-        {
-            friends.Add(co.GetComponent<Enemy>());
-        }
-
-        return friends;
-    }
-
-    //alarms Enemy of an agressor in the region
-    public void Alarm(Tile _agressor)
-    {
-
-    }
-
 }

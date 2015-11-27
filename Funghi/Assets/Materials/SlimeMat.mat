@@ -92,6 +92,13 @@ Material:
           m_Texture: {fileID: 2800000, guid: 0f123a3c8fb000544875d79269dc1031, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ground
+        second:
+          m_Texture: {fileID: 2800000, guid: ee2523340e7944c4297a80937a51484c, type: 3}
+          m_Scale: {x: 20, y: 13}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -168,7 +175,7 @@ Material:
       data:
         first:
           name: _CutOff
-        second: .400000006
+        second: .5
       data:
         first:
           name: _Amount
@@ -177,6 +184,22 @@ Material:
         first:
           name: _Speed
         second: .0215000007
+      data:
+        first:
+          name: _Test
+        second: .5
+      data:
+        first:
+          name: _Strength
+        second: .0074
+      data:
+        first:
+          name: _Sharpness
+        second: .100000001
+      data:
+        first:
+          name: _Spread
+        second: .00300000003
     m_Colors:
       data:
         first:
@@ -185,4 +208,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .463488877, g: 1, b: .154411793, a: 1}
+        second: {r: .326291621, g: .757352948, b: .077962786, a: 1}
