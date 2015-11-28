@@ -2,7 +2,7 @@
 {
 	Properties
 	{
-		_MainTex("Schleim (nicht zuweisen)", 2D) = "white" {}
+		_MainTex("Schleim (nicht zuweisen)", 2D) = "red" {}
 		_StructureTex("Struktur (zuweisen)", 2D) = "white" {}
 		_Ground("Boden (zuweisen)", 2D) = "black" {}
 		_Speed("Geschwindigkeit", Range(0,0.1)) = 0.05

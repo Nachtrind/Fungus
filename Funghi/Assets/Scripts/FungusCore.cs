@@ -9,6 +9,7 @@ public class FungusCore : Entity
     public float groundCheckInterval = 0.33f;
     Seeker seeker;
     List<Vector3> pathToTarget = new List<Vector3>();
+    NNConstraint slimeConstraint = new NNConstraint();
 
     public float moveSpeed = 1f;
 
@@ -16,6 +17,8 @@ public class FungusCore : Entity
     {
         seeker = GetComponent<Seeker>();
         GameInput.RegisterCoreMoveCallback(TryMoveTo);
+        slimeConstraint.constrainTags = true;
+        slimeConstraint.tags = seeker.traversableTags;
     }
     protected override void Cleanup()
     {
@@ -59,13 +62,15 @@ public class FungusCore : Entity
         Gizmos.DrawSphere(transform.position, 0.15f);
     }
 
+
     public bool IsOnValidGround
     {
         get
         {
-            NNInfo nn = AstarPath.active.GetNearest(transform.position);
-            //Debug.DrawLine(nn.clampedPosition, transform.position);
-            return (nn.node.Tag & GameWorld.slimeTag) == GameWorld.slimeTag;
+            NNInfo nn = AstarPath.active.GetNearest(transform.position, slimeConstraint);
+            Debug.DrawLine(nn.clampedPosition, transform.position);
+            return Vector3.Distance(nn.clampedPosition, transform.position) < 0.2f;
+            //return (nn.node.Tag & GameWorld.slimeTag) == GameWorld.slimeTag;
         }
     }
 

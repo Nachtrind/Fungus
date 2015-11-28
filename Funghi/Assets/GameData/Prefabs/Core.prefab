@@ -46,7 +46,7 @@ MonoBehaviour:
   startEndModifier:
     priority: 1
     addPoints: 0
-    exactStartPoint: 0
+    exactStartPoint: 3
     exactEndPoint: 0
     useRaycasting: 0
     mask:
@@ -72,6 +72,7 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   groundCheckInterval: .330000013
+  moveSpeed: 1
 --- !u!122 &12239482
 Halo:
   m_ObjectHideFlags: 1
@@ -104,7 +105,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: startEndModifier.exactStartPoint
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: startEndModifier.exactEndPoint
