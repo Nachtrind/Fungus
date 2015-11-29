@@ -9,7 +9,7 @@ public class GameInput: MonoBehaviour
     float requestInterval = 0.1f;
 
     static event Action<Vector3> OnCoreCommand;
-    static event Action<Vector3> OnSpawnFungusCommand;
+    static event Func<Vector3, bool> OnSpawnFungusCommand;
 
     void Update()
     {
@@ -24,7 +24,7 @@ public class GameInput: MonoBehaviour
         {
             Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             worldMousePos.y = 0;
-            FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode(worldMousePos); //TODO: nearest node is not always shortest path (compare multiple paths)
+            FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode(worldMousePos); //HACK: nearest node is not always shortest path (if needed, compare multiple paths)
             if (nodeNearCursor)
             {
                 if (Time.time - lastRequest >= requestInterval)
@@ -77,12 +77,12 @@ public class GameInput: MonoBehaviour
         OnCoreCommand -= callback;
     }
 
-    public static void RegisterSpawnFungusCallback(Action<Vector3> callback)
+    public static void RegisterSpawnFungusCallback(Func<Vector3, bool> callback)
     {
         OnSpawnFungusCommand += callback;
     }
 
-    public static void ReleaseSpawnFungusCallback(Action<Vector3> callback)
+    public static void ReleaseSpawnFungusCallback(Func<Vector3, bool> callback)
     {
         OnSpawnFungusCommand -= callback;
     }

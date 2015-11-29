@@ -20,6 +20,10 @@ public class GameWorld : MonoBehaviour
             return instance;
         }
     }
+
+    static float levelStartTime;
+    public static float LevelTime;
+
     #endregion
 
     List<FungusNode> nodes = new List<FungusNode>();
@@ -37,7 +41,11 @@ public class GameWorld : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField]
+    FungusCore corePrefab;
+    [SerializeField]
     FungusNode fungusNodePrefab;
+    [SerializeField]
+    Enemy enemyPrefab;
 
     [Header("Masks")]
     public LayerMask ObstacleLayer;
@@ -46,12 +54,18 @@ public class GameWorld : MonoBehaviour
     {
         instance = this;
         slimeHandler = GetComponent<SlimeHandler>();
+        PlayerRecord.Initialize("SomeOne");
     }
 
     void Start()
     {
         SpawnNodeAndCenter();
         GameInput.RegisterSpawnFungusCallback(SpawnFungusNode);
+    }
+
+    void OnLevelWasLoaded()
+    {
+        levelStartTime = Time.time;
     }
 
     bool gameShuttingDown = false;
@@ -62,6 +76,7 @@ public class GameWorld : MonoBehaviour
 
     void Update()
     {
+        LevelTime = Time.time - levelStartTime;
         slimeHandler.UpdateSlimeConnections();
     }
 
@@ -76,16 +91,36 @@ public class GameWorld : MonoBehaviour
 #endif
             return;
         }
-        start.Spawn();
+        SpawnFungusNode(start.transform.position);
+        SpawnCore(start.transform.position);
     }
 
-    public void SpawnFungusNode(Vector3 position)
+    public bool SpawnCore(Vector3 position)
     {
+        if (core != null)
+        {
+            Debug.LogError("A core is already registered!");
+            return false;
+        }
+        Instantiate(corePrefab, position, Quaternion.identity);
+        return true;
+    }
+
+    public bool SpawnEnemy(Vector3 position)
+    {
+        //TODO limit in world?
+        Instantiate(enemyPrefab, position, Quaternion.identity);
+        return true;
+    }
+
+    public bool SpawnFungusNode(Vector3 position)
+    {
+        //TODO limit?
         Instantiate(fungusNodePrefab, position, Quaternion.identity);
+        return true;
     }
 
     #region Registry
-
     public void Register(Entity e)
     {
         FungusNode fn = e as FungusNode;
@@ -204,16 +239,9 @@ public class GameWorld : MonoBehaviour
         FungusNode node = nodes[UnityEngine.Random.Range(0, nodes.Count - 1)];
         return (node.transform.position - sourcePoint).normalized;
     }
-
     #endregion
 
     #region Slime
-
-    public void OnConnectionInitiated(FungusNode a, FungusNode b, List<Vector3> path)
-    {
-        slimeHandler.AddConnection(new SlimePath(a, b, path));
-    }
-
     public void SetPositionIsSlime(Vector3 point, float size, bool state)
     {
         if (gameShuttingDown) { return; }
@@ -225,6 +253,11 @@ public class GameWorld : MonoBehaviour
     #endregion
 
     #region EventHandler
+    public void OnNodeConnectionInitiated(FungusNode a, FungusNode b, List<Vector3> path)
+    {
+        slimeHandler.AddConnection(new SlimePath(a, b, path));
+    }
+
     public void OnNodeWasDisconnected(FungusNode node)
     {
         if (destroyDisconnectedNodes)
@@ -255,6 +288,23 @@ public class GameWorld : MonoBehaviour
     public void OnCoreWasKilled(FungusCore core)
     {
         Debug.Log("Core killed");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPaused = true;
+#endif
+    }
+
+    public void OnCoreTouchedGoal(FungusGoal goal)
+    {
+        if (goal.unlockedAbility)
+        {
+            PlayerRecord.UnlockAbility(goal.unlockedAbility);
+            Debug.Log("Goal reached, ability unlocked: " + goal.unlockedAbility.name);
+        }
+        else
+        {
+            Debug.Log("Goal reached");
+        }
+        //TODO handle new level etc
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPaused = true;
 #endif

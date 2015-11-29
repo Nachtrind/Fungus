@@ -36,7 +36,7 @@ public class FungusNode : Entity
             }
             if (pendingPaths[i].IsDone)
             {
-                world.OnConnectionInitiated(this, pendingPaths[i].other, pendingPaths[i].path.vectorPath);
+                world.OnNodeConnectionInitiated(this, pendingPaths[i].other, pendingPaths[i].path.vectorPath);
                 pendingPaths.RemoveAt(i);
             }
         }
