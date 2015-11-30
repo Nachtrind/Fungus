@@ -7,7 +7,7 @@ public class GameWorld : MonoBehaviour
 {
     #region Global
     public const int slimeTag = 0x1;
-    public const float TickInterval = 0.1f;
+    public const float TickInterval = 0.05f;
 
     public const float nodeConnectionDistance = 2f;
 

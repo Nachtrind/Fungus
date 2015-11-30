@@ -71,6 +71,7 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   attackRadius: .400000006
+  damagerPerSecond: 20
   moveSpeed: 1
 --- !u!1001 &100100000
 Prefab:

@@ -38,6 +38,27 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _StructureTex
+        second:
+          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
+          m_Scale: {x: 3, y: 2}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Displacement
+        second:
+          m_Texture: {fileID: 2800000, guid: 0f123a3c8fb000544875d79269dc1031, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ground
+        second:
+          m_Texture: {fileID: 2800000, guid: ee2523340e7944c4297a80937a51484c, type: 3}
+          m_Scale: {x: 20, y: 13}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -78,27 +99,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _StructureTex
-        second:
-          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
-          m_Scale: {x: 3, y: 2}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Displacement
-        second:
-          m_Texture: {fileID: 2800000, guid: 0f123a3c8fb000544875d79269dc1031, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Ground
-        second:
-          m_Texture: {fileID: 2800000, guid: ee2523340e7944c4297a80937a51484c, type: 3}
-          m_Scale: {x: 20, y: 13}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -112,6 +112,22 @@ Material:
         first:
           name: _Cutoff
         second: .600000024
+      data:
+        first:
+          name: _Speed
+        second: .0215000007
+      data:
+        first:
+          name: _CutOff
+        second: .5
+      data:
+        first:
+          name: _Strength
+        second: .0074
+      data:
+        first:
+          name: _Spread
+        second: .00300000003
       data:
         first:
           name: _Parallax
@@ -174,32 +190,16 @@ Material:
         second: 15
       data:
         first:
-          name: _CutOff
-        second: .5
-      data:
-        first:
           name: _Amount
         second: .00930000003
-      data:
-        first:
-          name: _Speed
-        second: .0215000007
       data:
         first:
           name: _Test
         second: .5
       data:
         first:
-          name: _Strength
-        second: .0074
-      data:
-        first:
           name: _Sharpness
         second: .100000001
-      data:
-        first:
-          name: _Spread
-        second: .00300000003
     m_Colors:
       data:
         first:
