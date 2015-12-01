@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NPCBehaviours
 {
+
     [DisallowMultipleComponent]
     public abstract class NPCBehaviour: MonoBehaviour
     {
-        public abstract void Evaluate(Enemy owner, float deltaTime);
+        public abstract void Evaluate(float deltaTime);
+        public abstract void OnAlarm(Enemy alarmSource);
+
+        protected Enemy owner;
 
         void Awake()
         {
@@ -18,18 +18,19 @@ namespace NPCBehaviours
             {
                 Destroy(this);
             }
+            owner = e;
         }
 
         void OnDestroy()
         {
-            Enemy e = GetComponent<Enemy>();
-            if (e)
+            
+            if (owner)
             {
-                e.UnregisterBehaviour(this);
+                owner.UnregisterBehaviour(this);
             }
         }
 
-        public virtual void Initialize(Enemy owner) { }
+        public virtual void Initialize() { }
         public virtual void Tick(float deltaTime) { }
     }
 }

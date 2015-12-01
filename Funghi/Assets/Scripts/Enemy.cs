@@ -15,6 +15,7 @@ public class Enemy : Entity
     public NPCBehaviour behaviour;
     public float attackRadius = 0.2f;
     public int damagerPerSecond = 20;
+    public float sightRadius = 2f;
 
     const float repathRate = 1f;
     float lastPath;
@@ -26,9 +27,14 @@ public class Enemy : Entity
         seeker = GetComponent<Seeker>();
     }
 
+    public void Alarm(Enemy alarmSource)
+    {
+        if (behaviour) { behaviour.OnAlarm(alarmSource); }
+    }
+
     protected override void Tick(float deltaTime)
     {
-        if (behaviour) { behaviour.Evaluate(this, deltaTime); }
+        if (behaviour) { behaviour.Evaluate(deltaTime); }
         if (Time.time - lastPath > repathRate)
         {
             RequestPath(targetPosition);
@@ -47,35 +53,11 @@ public class Enemy : Entity
         }
     }
 
-    //void SelectTarget()
-    //{
-    //    FungusNode nearestNode = world.GetNearestFungusNode(transform.position);
-    //    if (!nearestNode)
-    //    {
-    //        target = world.Core;
-    //    }
-    //    else
-    //    {
-    //        FungusCore core = world.Core;
-    //        if (!core) { return; }
-    //        float nnDist = Vector3.SqrMagnitude(nearestNode.transform.position - transform.position);
-    //        float cDist = Vector3.SqrMagnitude(core.transform.position - transform.position);
-    //        if (nnDist < cDist)
-    //        {
-    //            target = nearestNode;
-    //        }
-    //        else
-    //        {
-    //            target = core;
-    //        }
-    //    }
-    //}
-
     public bool RegisterBehaviour(NPCBehaviour behaviour)
     {
         if (this.behaviour != null) { return false; }
         this.behaviour = behaviour;
-        behaviour.Initialize(this);
+        behaviour.Initialize();
         return true;
     }
 
