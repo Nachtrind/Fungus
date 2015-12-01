@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
+using NPCBehaviours;
 
 [RequireComponent(typeof(Seeker))]
 public class Enemy : Entity
 {
     Seeker seeker;
+    Vector3 targetPosition;
     List<Vector3> pathToTarget = new List<Vector3>();
     Entity target;
 
-    [Header("Attacking")]
+    [Header("Behaviour")]
+    public NPCBehaviour behaviour;
     public float attackRadius = 0.2f;
     public int damagerPerSecond = 20;
 
-    const float repathRate = 0.5f;
+    const float repathRate = 1f;
     float lastPath;
 
     public float moveSpeed = 1f;
@@ -25,53 +28,62 @@ public class Enemy : Entity
 
     protected override void Tick(float deltaTime)
     {
-        SelectTarget();
+        if (behaviour) { behaviour.Evaluate(this, deltaTime); }
         if (Time.time - lastPath > repathRate)
         {
-            PathTo(target.transform.position);
+            RequestPath(targetPosition);
             lastPath = Time.time;
         }
         if (pathToTarget.Count > 0)
         {
-            if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) >= 0.05f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, pathToTarget[0], deltaTime * moveSpeed);
-            }
-            else
+            if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) < 0.05f)
             {
                 pathToTarget.RemoveAt(0);
             }
-        }
-        else
-        {
-            if (AstarMath.SqrMagnitudeXZ(target.transform.position, transform.position) < attackRadius * attackRadius)
+            if (pathToTarget.Count > 0)
             {
-                Attack();
+                transform.position = Vector3.MoveTowards(transform.position, pathToTarget[0], deltaTime * moveSpeed);
             }
         }
     }
 
-    void SelectTarget()
+    //void SelectTarget()
+    //{
+    //    FungusNode nearestNode = world.GetNearestFungusNode(transform.position);
+    //    if (!nearestNode)
+    //    {
+    //        target = world.Core;
+    //    }
+    //    else
+    //    {
+    //        FungusCore core = world.Core;
+    //        if (!core) { return; }
+    //        float nnDist = Vector3.SqrMagnitude(nearestNode.transform.position - transform.position);
+    //        float cDist = Vector3.SqrMagnitude(core.transform.position - transform.position);
+    //        if (nnDist < cDist)
+    //        {
+    //            target = nearestNode;
+    //        }
+    //        else
+    //        {
+    //            target = core;
+    //        }
+    //    }
+    //}
+
+    public bool RegisterBehaviour(NPCBehaviour behaviour)
     {
-        FungusNode nearestNode = world.GetNearestFungusNode(transform.position);
-        if (!nearestNode)
+        if (this.behaviour != null) { return false; }
+        this.behaviour = behaviour;
+        behaviour.Initialize(this);
+        return true;
+    }
+
+    public void UnregisterBehaviour(NPCBehaviour behaviour)
+    {
+        if (this.behaviour == behaviour)
         {
-            target = world.Core;
-        }
-        else
-        {
-            FungusCore core = world.Core;
-            if (!core) { return; }
-            float nnDist = Vector3.SqrMagnitude(nearestNode.transform.position - transform.position);
-            float cDist = Vector3.SqrMagnitude(core.transform.position - transform.position);
-            if (nnDist < cDist)
-            {
-                target = nearestNode;
-            }
-            else
-            {
-                target = core;
-            }
+            this.behaviour = null;
         }
     }
 
@@ -86,15 +98,33 @@ public class Enemy : Entity
         if (IsDead) { world.OnEnemyWasKilled(this); }
     }
 
-    void PathTo(Vector3 position)
+    public bool PathTo(Vector3 position)
     {
-        seeker.StartPath(transform.position, position, OnPathCompleted);
+        if (targetPosition != position)
+        {
+            targetPosition = position;
+            RequestPath(position);
+        }
+        if (pathToTarget.Count > 0)
+        {
+            if (pathComputing == true) { return false; }
+            return AstarMath.SqrMagnitudeXZ(transform.position, pathToTarget[pathToTarget.Count - 1]) <= 0.05f;
+        }
+        return false;
     }
 
+    void RequestPath(Vector3 position)
+    {
+        seeker.StartPath(transform.position, targetPosition, OnPathCompleted);
+        pathComputing = true;
+    }
+
+    bool pathComputing = false;
     void OnPathCompleted(Path p)
     {
         if (p.error) { Debug.LogError("Error in pathfinding"); return; }
         pathToTarget = p.vectorPath;
+        pathComputing = false;
     }
 
     void OnDrawGizmos()
