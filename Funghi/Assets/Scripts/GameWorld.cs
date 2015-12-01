@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Pathfinding;
 
 [RequireComponent(typeof(SlimeHandler))]
 public class GameWorld : MonoBehaviour
@@ -179,7 +180,7 @@ public class GameWorld : MonoBehaviour
         List<Enemy> rangeQuery = new List<Enemy>();
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (Vector3.SqrMagnitude(enemies[i].transform.position - position) <= radius * radius)
+            if (AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position) <= radius * radius)
             {
                 rangeQuery.Add(enemies[i]);
             }
@@ -191,10 +192,10 @@ public class GameWorld : MonoBehaviour
     {
         if (enemies.Count == 0) { return null; }
         Enemy nearest = enemies[0];
-        float dist = Vector3.SqrMagnitude(nearest.transform.position - position);
+        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position,position);
         for (int i = 1; i < enemies.Count; i++)
         {
-            float curDist = Vector3.SqrMagnitude(enemies[i].transform.position - position);
+            float curDist = AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position);
             if (curDist < dist)
             {
                 nearest = enemies[i];
@@ -209,7 +210,7 @@ public class GameWorld : MonoBehaviour
         List<FungusNode> rangeQuery = new List<FungusNode>();
         for (int i = 0; i < nodes.Count; i++)
         {
-            if (Vector3.SqrMagnitude(nodes[i].transform.position - position) <= radius * radius)
+            if (AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position) <= radius * radius)
             {
                 rangeQuery.Add(nodes[i]);
             }
@@ -221,10 +222,10 @@ public class GameWorld : MonoBehaviour
     {
         if (nodes.Count == 0) { return null; }
         FungusNode nearest = nodes[0];
-        float dist = Vector3.SqrMagnitude(nearest.transform.position - position);
+		float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
         for (int i = 1; i < nodes.Count; i++)
         {
-            float curDist = Vector3.SqrMagnitude(nodes[i].transform.position - position);
+			float curDist = AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position);
             if (curDist < dist)
             {
                 nearest = nodes[i];

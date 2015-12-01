@@ -12,6 +12,7 @@ namespace NodeAbilities
         #endregion
         [Header("Skill")]
         public float radius;
+		public int cost;
 
         public abstract void Execute(FungusNode node);
     }
