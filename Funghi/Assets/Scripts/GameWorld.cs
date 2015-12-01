@@ -178,7 +178,7 @@ public class GameWorld : MonoBehaviour
 
     public bool HasLineOfSight(Entity source, Entity target)
     {
-        return AstarPath.active.astarData.gridGraph.Linecast(source.transform.position, target.transform.position);
+        return !AstarPath.active.astarData.gridGraph.Linecast(source.transform.position, target.transform.position);
     }
 
     public List<Enemy> GetEnemies(Vector3 position, float radius)

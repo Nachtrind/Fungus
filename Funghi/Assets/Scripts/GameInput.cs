@@ -26,11 +26,9 @@ public class GameInput: MonoBehaviour
 		if (Input.GetMouseButton (0) && inputTimer > inputTick) {
 			Vector3 worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
-			Debug.Log (nodesInRadius.Count);
 			if (nodesInRadius.Count <= 0) {
 				CreateNewSlimePath (worldMousePos);
 			} else {
-				Debug.Log ("ToggleActive");
 				nodesInRadius [0].ToggleActive ();
 			}
 			inputTimer = 0.0f;

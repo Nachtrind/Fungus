@@ -14,7 +14,7 @@ public class Enemy : Entity
     [Header("Behaviour")]
     public NPCBehaviour behaviour;
 
-    const float repathRate = 1f;
+    const float repathRate = 0.5f;
     float lastPath;
 
     public float moveSpeed = 1f;

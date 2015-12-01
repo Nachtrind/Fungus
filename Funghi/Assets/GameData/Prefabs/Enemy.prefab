@@ -10,6 +10,8 @@ GameObject:
   - 4: {fileID: 466592}
   - 114: {fileID: 11436818}
   - 114: {fileID: 11403472}
+  - 33: {fileID: 3319150}
+  - 23: {fileID: 2326616}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -29,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!23 &2326616
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124204}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3319150
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124204}
+  m_Mesh: {fileID: 0}
 --- !u!114 &11403472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
-  attackRadius: .400000006
+  behaviour: {fileID: 0}
   moveSpeed: 1
 --- !u!1001 &100100000
 Prefab:
