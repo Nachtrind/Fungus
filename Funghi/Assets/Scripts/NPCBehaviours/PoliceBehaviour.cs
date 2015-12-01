@@ -13,7 +13,11 @@ public class PoliceBehaviour : NPCBehaviour
     public float alarmRadius = 2f;
     public float enemyScanTimeout = 3f;
 
-    public enum NPCStates { Idle, Patrolling, Alarmed, LookingForEnemy, ApproachingEnemy, ReturningToPatrol, InAttackRange }
+    public float attackRadius = 0.2f;
+    public int damagerPerSecond = 20;
+    public float sightRadius = 2f;
+
+    public enum NPCStates { Idle, Patrolling, Alarmed, LookingForTarget, ApproachingTarget, ReturningToPatrol, InAttackRange }
 
     public NPCStates state = NPCStates.Idle;
     float currentDelay = 0f;
@@ -36,10 +40,10 @@ public class PoliceBehaviour : NPCBehaviour
             case NPCStates.Alarmed:
                 OnAlarmed(deltaTime);
                 break;
-            case NPCStates.LookingForEnemy:
-                OnLookingForEnemy(deltaTime);
+            case NPCStates.LookingForTarget:
+                OnLookingForTarget(deltaTime);
                 break;
-            case NPCStates.ApproachingEnemy:
+            case NPCStates.ApproachingTarget:
                 OnApproaching(deltaTime);
                 break;
             case NPCStates.ReturningToPatrol:
@@ -65,10 +69,10 @@ public class PoliceBehaviour : NPCBehaviour
             case NPCStates.Alarmed:
                 OnEnterAlarmed(state);
                 break;
-            case NPCStates.LookingForEnemy:
-                OnEnterLookingForEnemy(state);
+            case NPCStates.LookingForTarget:
+                OnEnterLookingForTarget(state);
                 break;
-            case NPCStates.ApproachingEnemy:
+            case NPCStates.ApproachingTarget:
                 OnEnterApproaching(state);
                 break;
             case NPCStates.ReturningToPatrol:
@@ -104,7 +108,7 @@ public class PoliceBehaviour : NPCBehaviour
         lastPatrollingPosition = owner.transform.position;
     }
 
-    void OnEnterLookingForEnemy(NPCStates oldState)
+    void OnEnterLookingForTarget(NPCStates oldState)
     {
         lookingForEnemyStarted = GameWorld.LevelTime;
     }
@@ -136,14 +140,28 @@ public class PoliceBehaviour : NPCBehaviour
         {
             GotoState(NPCStates.Patrolling);
             currentTargetIndex++;
+            return;
+        }
+        if (FindNode())
+        {
+            AlarmOthers();
+            GotoState(NPCStates.ApproachingTarget);
+            return;
         }
     }
 
     void OnMoving(float deltaTime)
     {
+        if (FindNode())
+        {
+            AlarmOthers();
+            GotoState(NPCStates.ApproachingTarget);
+            return;
+        }
         if (path == null || path.points.Count == 0 || (currentTargetIndex == path.points.Count - 1 & path.circularPath == false))
         {
             GotoState(NPCStates.Idle);
+            return;
         }
         if (currentTargetIndex >= path.points.Count)
         {
@@ -159,6 +177,7 @@ public class PoliceBehaviour : NPCBehaviour
             {
                 GotoState(NPCStates.Idle);
                 currentDelay = path.points[currentTargetIndex].waitTime;
+                return;
             }
         }
     }
@@ -167,23 +186,33 @@ public class PoliceBehaviour : NPCBehaviour
     {
         if (owner.PathTo(alarmedPosition))
         {
-            GotoState(NPCStates.LookingForEnemy);
+            GotoState(NPCStates.LookingForTarget);
+            return;
         }
     }
 
-    void OnLookingForEnemy(float deltaTime)
+    void OnLookingForTarget(float deltaTime)
     {
         if (GameWorld.LevelTime-lookingForEnemyStarted > enemyScanTimeout)
         {
             GotoState(NPCStates.ReturningToPatrol);
+            return;
         }
-        //TODO
-        Debug.Log("TODO");
+        if (FindNode())
+        {
+            GotoState(NPCStates.ApproachingTarget);
+            return;
+        }
     }
 
     void OnApproaching(float deltaTime)
     {
-
+        if (!target) { GotoState(NPCStates.LookingForTarget); return; }
+        if (owner.PathTo(target.transform.position))
+        {
+            GotoState(NPCStates.InAttackRange);
+            return;
+        }
     }
 
     void OnReturningToPatrol(float deltaTime)
@@ -191,12 +220,15 @@ public class PoliceBehaviour : NPCBehaviour
         if (owner.PathTo(lastPatrollingPosition))
         {
             GotoState(NPCStates.Patrolling);
+            return;
         }
     }
 
     void OnInRange(float deltaTime)
     {
-
+        if (!target) { GotoState(NPCStates.LookingForTarget); return; }
+        if (!IsInRange(target, attackRadius)){ GotoState(NPCStates.ApproachingTarget); return; }
+        Attack();
     }
     #endregion
 
@@ -209,5 +241,35 @@ public class PoliceBehaviour : NPCBehaviour
             others[i].Alarm(owner);
         }
     }
+
+    void Attack()
+    {
+        target.Damage(owner, (int)(damagerPerSecond * GameWorld.TickInterval));
+    }
     #endregion
+
+    bool IsInRange(Entity e, float range)
+    {
+        return AstarMath.SqrMagnitudeXZ(owner.transform.position, e.transform.position) <= range * range;
+    }
+
+    bool FindNode()
+    {
+        List<FungusNode> nodes = GameWorld.Instance.GetFungusNodes(owner.transform.position, sightRadius);
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            if (GameWorld.Instance.HasLineOfSight(owner, nodes[i]))
+            {
+                target = nodes[i];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+    }
 }

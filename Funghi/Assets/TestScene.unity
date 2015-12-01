@@ -1971,7 +1971,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 1329045078}
   currentTargetIndex: 0
+  alarmRadius: 2
+  enemyScanTimeout: 3
+  attackRadius: .200000003
+  damagerPerSecond: 20
+  sightRadius: 2
   state: 0
+  target: {fileID: 0}
 --- !u!1 &1695140339
 GameObject:
   m_ObjectHideFlags: 0

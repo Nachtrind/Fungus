@@ -13,9 +13,6 @@ public class Enemy : Entity
 
     [Header("Behaviour")]
     public NPCBehaviour behaviour;
-    public float attackRadius = 0.2f;
-    public int damagerPerSecond = 20;
-    public float sightRadius = 2f;
 
     const float repathRate = 1f;
     float lastPath;
@@ -69,11 +66,6 @@ public class Enemy : Entity
         }
     }
 
-    void Attack()
-    {
-        target.Damage(this, (int)(damagerPerSecond*GameWorld.TickInterval));
-    }
-
     public override void Damage(Entity attacker, int amount)
     {
         SubtractHealth(amount);
@@ -113,6 +105,5 @@ public class Enemy : Entity
     {
         Gizmos.color = new Color(1, 0, 0f, 0.5f);
         Gizmos.DrawSphere(transform.position, 0.15f);
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
