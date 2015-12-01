@@ -7,6 +7,8 @@ public class GameInput: MonoBehaviour
 {
 	float lastRequest;
 	float requestInterval = 0.1f;
+	private float inputTimer;
+	private float inputTick = 0.1f;
 
 	static event Action<Vector3> OnCoreCommand;
 	static event Func<Vector3, bool> OnSpawnFungusCommand;
@@ -21,9 +23,9 @@ public class GameInput: MonoBehaviour
 			return;
 		}
 		//Left Mouse Click
-		if (Input.GetMouseButton (0)) {
+		if (Input.GetMouseButton (0) && inputTimer > inputTick) {
 			Vector3 worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 2.0f);
+			List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
 			Debug.Log (nodesInRadius.Count);
 			if (nodesInRadius.Count <= 0) {
 				CreateNewSlimePath (worldMousePos);
@@ -31,20 +33,24 @@ public class GameInput: MonoBehaviour
 				Debug.Log ("ToggleActive");
 				nodesInRadius [0].ToggleActive ();
 			}
-            
+			inputTimer = 0.0f;
 		}
 
 		if (Input.GetMouseButtonUp (0)) {
 			SpawnNewSlimePath ();
+			inputTimer = 0.0f;
 		}
 
-		if (Input.GetMouseButtonUp (1)) {
+		if (Input.GetMouseButtonUp (1) && inputTimer > inputTick) {
 			Vector3 worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			worldMousePos.y = 0;
 			if (OnCoreCommand != null) {
 				OnCoreCommand (worldMousePos);
 			}
+			inputTimer = 0.0f;
 		}
+
+		inputTimer += Time.deltaTime;
 	}
 
 	public static void RegisterCoreMoveCallback (Action<Vector3> callback)
