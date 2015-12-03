@@ -9,7 +9,10 @@ public class FungusNode : Entity
 
 	public bool isActive { get; set; }
 
-	public Material matActive;
+	private float attackTimer;
+	[Header("Materials")]
+	public Material
+		matActive;
 	public Material matInactive;
 
 	protected override void Initialize ()
@@ -17,6 +20,7 @@ public class FungusNode : Entity
 		world.SetPositionIsSlime (transform.position, size, true);
 		CreateConnections ();
 		isActive = false;
+		attackTimer = 0.0f;
 	}
 
 	protected override void Cleanup ()
@@ -31,6 +35,14 @@ public class FungusNode : Entity
 
 	protected override void Tick (float deltaTime)
 	{
+		//using ability if active
+		if (isActive && attackTimer > ability.tickRate) {
+			ExecuteAbility ();
+		} else {
+			attackTimer += deltaTime;
+		}
+
+
 		for (int i = pendingPaths.Count; i-- > 0;) {
 			if (!pendingPaths [i].IsValid) {
 				pendingPaths.RemoveAt (i);
@@ -65,8 +77,8 @@ public class FungusNode : Entity
 
 	public void ExecuteAbility ()
 	{
-		if (ability) {
-			ability.Execute (this);
+		if (ability.Execute (this)) {
+			attackTimer = 0.0f;
 		}
 	}
 
@@ -152,6 +164,7 @@ public class FungusNode : Entity
 	{
 		if (isActive) {
 			GetComponent<MeshRenderer> ().material = matInactive;
+			attackTimer = ability.tickRate * 2.0f;
 			isActive = false;
 		} else {
 			GetComponent<MeshRenderer> ().material = matActive;

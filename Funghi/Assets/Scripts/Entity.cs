@@ -12,8 +12,11 @@ public abstract class Entity : MonoBehaviour
 
     protected GameWorld world;
 
+	public virtual void Repair(int amount) { }
+
+	//Why do we need damage and Kill?
     public abstract void Damage(Entity attacker, int amount);
-    public virtual void Repair(int amount) { }
+
     public void Kill(Entity murderer)
     {
         Damage(murderer, currentHealth);

@@ -77,7 +77,7 @@ MonoBehaviour:
   size: .300000012
   matActive: {fileID: 2100000, guid: 09fe560858de1c84c9e44a581e769ca2, type: 2}
   matInactive: {fileID: 2100000, guid: 57759f648c189ac42931521674997fa8, type: 2}
-  ability: {fileID: 0}
+  ability: {fileID: 11400000, guid: e973c5bb2d556434493c2bedd4f57147, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -88,7 +88,8 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ability
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: e973c5bb2d556434493c2bedd4f57147,
+        type: 2}
     - target: {fileID: 0}
       propertyPath: matInactive
       value: 

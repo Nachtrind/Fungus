@@ -15,3 +15,6 @@ MonoBehaviour:
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   radius: .5
+  cost: 0
+  tickRate: 1
+  damage: 5
