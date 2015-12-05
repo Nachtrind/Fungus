@@ -10,7 +10,7 @@ public class FungusNode : Entity
 
 	public bool isActive { get; set; }
 
-	private float attackTimer;
+	float attackTimer;
 	[Header("Materials")]
 	public Material
 		matActive;
