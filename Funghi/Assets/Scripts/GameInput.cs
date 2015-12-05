@@ -22,8 +22,8 @@ public class GameInput: MonoBehaviour
 #endif
 			return;
 		}
-		//Left Mouse Click
-		if (Input.GetMouseButton (0) && inputTimer > inputTick) {
+        //Left Mouse Click
+        if (Input.GetMouseButton (0) && inputTimer > inputTick) {
 			Vector3 worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
 			if (nodesInRadius.Count <= 0) {

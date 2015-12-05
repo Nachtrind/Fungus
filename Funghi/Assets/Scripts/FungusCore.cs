@@ -67,10 +67,7 @@ public class FungusCore : Entity
     {
         get
         {
-            NNInfo nn = AstarPath.active.GetNearest(transform.position, slimeConstraint);
-            Debug.DrawLine(nn.clampedPosition, transform.position);
-            return Vector3.Distance(nn.clampedPosition, transform.position) < 0.2f;
-            //return (nn.node.Tag & GameWorld.slimeTag) == GameWorld.slimeTag;
+            return GameWorld.Instance.GetPositionIsSlime(transform.position, 0.2f);
         }
     }
 

@@ -317,10 +317,25 @@ public class GameWorld : MonoBehaviour
     public void SetPositionIsSlime(Vector3 point, float size, bool state)
     {
         if (gameShuttingDown) { return; }
-        Pathfinding.GraphUpdateObject guo = new Pathfinding.GraphUpdateObject(new Bounds(point, Vector3.one * size));
+        GraphUpdateObject guo = new GraphUpdateObject(new Bounds(point, Vector3.one * size));
         guo.modifyTag = true;
         guo.setTag = state ? slimeTag : 0;
         AstarPath.active.UpdateGraphs(guo);
+    }
+
+    public bool GetPositionIsSlime(Vector3 point, float toleranceRadius)
+    {
+        point.y = 0;
+        NNConstraint slimeConstraint = new NNConstraint();
+        slimeConstraint.constrainTags = true;
+        slimeConstraint.tags = ~slimeTag;
+        NNInfo nn = AstarPath.active.GetNearest(point, slimeConstraint);
+        if (AstarMath.SqrMagnitudeXZ(nn.clampedPosition, point) <= toleranceRadius * toleranceRadius)
+        {
+            Debug.DrawLine(nn.clampedPosition, point);
+            return true;
+        }
+        return false;
     }
     #endregion
 
