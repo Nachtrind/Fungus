@@ -23,6 +23,11 @@ public class Enemy : Entity, IBehaviourControllable
     MoveResult moveResult = MoveResult.Preparing;
     public float moveSpeed = 1f;
     #endregion
+	
+	public int resourceValue;
+
+	//dummy feedback TODO: delete later on
+	ParticleSystem particleDamage;
 
     [SerializeField, ReadOnly]
     NPCBehaviour behaviour;
@@ -33,6 +38,7 @@ public class Enemy : Entity, IBehaviourControllable
         seeker = GetComponent<Seeker>();
         GetComponent<CapsuleCollider>().isTrigger = true;
         GetComponent<Rigidbody>().isKinematic = true;
+		particleDamage = this.GetComponent<ParticleSystem> ();
     }
 
     protected override void Tick(float deltaTime)
@@ -82,11 +88,14 @@ public class Enemy : Entity, IBehaviourControllable
         return true;
     }
 
-    public override void Damage(Entity attacker, int amount)
-    {
-        SubtractHealth(amount);
-        if (IsDead) { world.OnEnemyWasKilled(this); }
-    }
+	public override void Damage (Entity attacker, int amount)
+	{
+		SubtractHealth (amount);
+		particleDamage.Play ();
+		if (IsDead) {
+			world.OnEnemyWasKilled (this);
+		}
+	}
 
     public void StopMovement()
     {

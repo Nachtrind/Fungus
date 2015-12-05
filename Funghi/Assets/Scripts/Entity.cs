@@ -14,8 +14,8 @@ public abstract class Entity : MonoBehaviour
 
     public bool isAttackable = true;
 
-    public abstract void Damage(Entity attacker, int amount);
-    public virtual void Repair(int amount) { }
+	public abstract void Damage(Entity attacker, int amount);
+	public virtual void Repair(int amount) { }
     public void Kill(Entity murderer)
     {
         Damage(murderer, currentHealth);

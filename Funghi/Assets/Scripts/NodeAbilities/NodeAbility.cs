@@ -13,7 +13,8 @@ namespace NodeAbilities
         [Header("Skill")]
         public float radius;
 		public int cost;
+		public float tickRate;
 
-        public abstract void Execute(FungusNode node);
+        public abstract bool Execute(FungusNode node);
     }
 }
