@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace NodeAbilities
 {
-    [CreateAssetMenu]
     [AbilityIdentifier("KillAndConsume")]
     public class KillAndConsume: NodeAbility
     {

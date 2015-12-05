@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
+using System;
 
 [RequireComponent(typeof(Seeker))]
 public class FungusCore : Entity
@@ -61,7 +62,6 @@ public class FungusCore : Entity
         Gizmos.color = new Color(0, 0, 1f, 0.33f);
         Gizmos.DrawSphere(transform.position, 0.15f);
     }
-
 
     public bool IsOnValidGround
     {

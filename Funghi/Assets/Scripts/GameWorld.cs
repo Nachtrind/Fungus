@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System;
 using Pathfinding;
@@ -8,7 +9,17 @@ public class GameWorld : MonoBehaviour
 {
     #region Global
     public const int slimeTag = 0x1;
-    public const float TickInterval = 0.1f;
+    [Header("Updating")]
+    Coroutine enemyUpdater;
+    public float enemyTickInterval = 0.1f;
+    float enemyDelta = 0;
+    System.Diagnostics.Stopwatch enemyStopWatch = new System.Diagnostics.Stopwatch();
+    Coroutine nodeUpdater;
+    public float nodeTickInterval = 0.1f;
+    float nodeDelta = 0;
+    System.Diagnostics.Stopwatch nodeStopWatch = new System.Diagnostics.Stopwatch();
+    public float coreTickInterval = 0.1f;
+    float lastCoreUpdate = 0;
 
     public const float nodeConnectionDistance = 2f;
 
@@ -45,8 +56,6 @@ public class GameWorld : MonoBehaviour
     FungusCore corePrefab;
     [SerializeField]
     FungusNode fungusNodePrefab;
-    [SerializeField]
-    Enemy enemyPrefab;
 
     [Header("Masks")]
     public LayerMask ObstacleLayer;
@@ -62,6 +71,8 @@ public class GameWorld : MonoBehaviour
     {
         SpawnNodeAndCenter();
         GameInput.RegisterSpawnFungusCallback(SpawnFungusNode);
+        if (nodeUpdater == null) { nodeUpdater = StartCoroutine(NodeUpdate()); }
+        if (enemyUpdater == null) { enemyUpdater = StartCoroutine(EnemyUpdate()); }
     }
 
     void OnLevelWasLoaded()
@@ -79,6 +90,42 @@ public class GameWorld : MonoBehaviour
     {
         LevelTime = Time.time - levelStartTime;
         slimeHandler.UpdateSlimeConnections();
+        if (core)
+        {
+            if (Time.time - lastCoreUpdate >= coreTickInterval)
+            {
+                core.UpdateEntity(coreTickInterval);
+                lastCoreUpdate = Time.time;
+            }
+        }
+    }
+
+    IEnumerator EnemyUpdate()
+    {
+    RESTART:
+        enemyDelta = enemyStopWatch.ElapsedMilliseconds / 1000f;
+        enemyStopWatch.Reset();
+        enemyStopWatch.Start();
+        for (int i = enemies.Count; i-- > 0;)
+        {
+            enemies[i].UpdateEntity(enemyDelta);
+        }
+        yield return new WaitForSeconds(enemyTickInterval - (enemyStopWatch.ElapsedMilliseconds / 1000f));
+        goto RESTART;
+    }
+
+    IEnumerator NodeUpdate()
+    {
+    RESTART:
+        nodeDelta = nodeStopWatch.ElapsedMilliseconds / 1000f;
+        nodeStopWatch.Reset();
+        nodeStopWatch.Start();
+        for (int i = nodes.Count; i-- > 0;)
+        {
+            nodes[i].UpdateEntity(nodeDelta);
+        }
+        yield return new WaitForSeconds(nodeTickInterval - (nodeStopWatch.ElapsedMilliseconds / 1000f));
+        goto RESTART;
     }
 
     void SpawnNodeAndCenter()
@@ -107,18 +154,11 @@ public class GameWorld : MonoBehaviour
         return true;
     }
 
-    public bool SpawnEnemy(Vector3 position)
-    {
-        //TODO limit in world?
-        Instantiate(enemyPrefab, position, Quaternion.identity);
-        return true;
-    }
-
-    public bool SpawnFungusNode(Vector3 position)
+    public FungusNode SpawnFungusNode(Vector3 position)
     {
         //TODO limit?
-        Instantiate(fungusNodePrefab, position, Quaternion.identity);
-        return true;
+        FungusNode fn = Instantiate(fungusNodePrefab, position, Quaternion.identity) as FungusNode;
+        return fn;
     }
 
     #region Registry
@@ -181,6 +221,31 @@ public class GameWorld : MonoBehaviour
         return !AstarPath.active.astarData.gridGraph.Linecast(source.transform.position, target.transform.position);
     }
 
+    public void BroadcastToEnimies(Message message, Vector3 position, float radius = float.PositiveInfinity)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == message.sender) { continue; }
+            if (AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position) <= radius * radius)
+            {
+                enemies[i].ReceiveBroadcast(message);
+            }
+        }
+        
+    }
+
+    public void BroadcastToNodes(Message message, Vector3 position, float radius = float.PositiveInfinity)
+    {
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            if (nodes[i] == message.sender) { continue; }
+            if (AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position) <= radius * radius)
+            {
+                nodes[i].ReceiveBroadcast(message);
+            }
+        }
+    }
+
     public List<Enemy> GetEnemies(Vector3 position, float radius)
     {
         List<Enemy> rangeQuery = new List<Enemy>();
@@ -198,7 +263,7 @@ public class GameWorld : MonoBehaviour
     {
         if (enemies.Count == 0) { return null; }
         Enemy nearest = enemies[0];
-        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position,position);
+        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
         for (int i = 1; i < enemies.Count; i++)
         {
             float curDist = AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position);
@@ -228,16 +293,16 @@ public class GameWorld : MonoBehaviour
     {
         if (nodes.Count == 0) { return null; }
         FungusNode nearest = nodes[0];
-		float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
+        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
         for (int i = 1; i < nodes.Count; i++)
         {
-			float curDist = AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position);
+            float curDist = AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position);
             if (curDist < dist)
             {
                 nearest = nodes[i];
                 dist = curDist;
             }
-        }  
+        }
         return nearest;
     }
 

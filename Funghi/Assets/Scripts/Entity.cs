@@ -12,6 +12,8 @@ public abstract class Entity : MonoBehaviour
 
     protected GameWorld world;
 
+    public bool isAttackable = true;
+
     public abstract void Damage(Entity attacker, int amount);
     public virtual void Repair(int amount) { }
     public void Kill(Entity murderer)
@@ -45,15 +47,9 @@ public abstract class Entity : MonoBehaviour
         Initialize();
     }
 
-    float lastTick;
-    void Update()
+    public void UpdateEntity(float delta)
     {
-        float delta = Time.time - lastTick;
-        if (delta >= GameWorld.TickInterval)
-        {
-            lastTick = Time.time;
-            Tick(delta);
-        }
+        Tick(delta);
     }
 
     void OnDestroy()
@@ -65,5 +61,9 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Initialize() { }
     protected virtual void Tick(float deltaTime) { }
     protected virtual void Cleanup() { }
+
+    #region Messaging
+    public virtual void ReceiveBroadcast(Message message) { }
+    #endregion
 
 }

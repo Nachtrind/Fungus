@@ -2,68 +2,84 @@
 using Pathfinding;
 using System.Collections.Generic;
 using NPCBehaviours;
+using System;
 
 [RequireComponent(typeof(Seeker))]
-public class Enemy : Entity
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Rigidbody))]
+public class Enemy : Entity, IBehaviourControllable
 {
+
+    enum MoveTypes { Direct, Pathing }
+
+    #region Movement variables
+    const float targetReachDistance = 0.025f;
     Seeker seeker;
-    Vector3 targetPosition;
+    Vector3 lastRequestedMoveTargetPosition;
     List<Vector3> pathToTarget = new List<Vector3>();
-    Entity target;
-
-    [Header("Behaviour")]
-    public NPCBehaviour behaviour;
-
-    const float repathRate = 0.5f;
-    float lastPath;
-
+    const float repathRate = 0.25f;
+    float lastPathRequestTime;
+    MoveTypes movementType = MoveTypes.Direct;
+    MoveResult moveResult = MoveResult.Preparing;
     public float moveSpeed = 1f;
+    #endregion
+
+    [SerializeField, ReadOnly]
+    NPCBehaviour behaviour;
+    public NPCBehaviour Behaviour { get { return behaviour; } }
 
     protected override void Initialize()
     {
         seeker = GetComponent<Seeker>();
-    }
-
-    public void Alarm(Enemy alarmSource)
-    {
-        if (behaviour) { behaviour.OnAlarm(alarmSource); }
+        GetComponent<CapsuleCollider>().isTrigger = true;
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     protected override void Tick(float deltaTime)
     {
-        if (behaviour) { behaviour.Evaluate(deltaTime); }
-        if (Time.time - lastPath > repathRate)
+        if (behaviour) { behaviour.Evaluate(this, deltaTime); }
+        if (Time.time - lastPathRequestTime > repathRate)
         {
-            RequestPath(targetPosition);
-            lastPath = Time.time;
+            if (RequestPath(lastRequestedMoveTargetPosition))
+            {
+                lastPathRequestTime = Time.time;
+            }
         }
         if (pathToTarget.Count > 0)
         {
-            if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) < 0.05f)
+            if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) <= targetReachDistance)
             {
                 pathToTarget.RemoveAt(0);
+                if (pathToTarget.Count == 0)
+                {
+                    moveResult = MoveResult.ReachedTarget;
+                }
             }
             if (pathToTarget.Count > 0)
             {
                 transform.position = Vector3.MoveTowards(transform.position, pathToTarget[0], deltaTime * moveSpeed);
+                moveResult = MoveResult.Moving;
             }
         }
     }
 
-    public bool RegisterBehaviour(NPCBehaviour behaviour)
+    public NPCBehaviour SetBehaviour(NPCBehaviour behaviour)
     {
-        if (this.behaviour != null) { return false; }
-        this.behaviour = behaviour;
-        behaviour.Initialize();
-        return true;
+        if (this.behaviour != null && this.behaviour.isInstantiated) { Destroy(this.behaviour); }
+        this.behaviour = Instantiate(behaviour);
+        return this.behaviour;
     }
 
-    public void UnregisterBehaviour(NPCBehaviour behaviour)
+    public void RemoveBehaviour()
     {
-        if (this.behaviour == behaviour)
-        {
-            this.behaviour = null;
-        }
+        behaviour = null;
+    }
+
+    bool IBehaviourControllable.Attack(Entity target, int amount)
+    {
+        if (!target.isAttackable) { return false; }
+        target.Damage(this, amount);
+        return true;
     }
 
     public override void Damage(Entity attacker, int amount)
@@ -72,33 +88,76 @@ public class Enemy : Entity
         if (IsDead) { world.OnEnemyWasKilled(this); }
     }
 
-    public bool PathTo(Vector3 position)
+    public void StopMovement()
     {
-        if (targetPosition != position)
+        movementType = MoveTypes.Direct;
+        pathToTarget = new List<Vector3> { transform.position };
+        moveResult = MoveResult.ReachedTarget;
+    }
+
+    MoveResult IBehaviourControllable.MoveTo(Vector3 position)
+    {
+        movementType = MoveTypes.Pathing;
+        if (lastRequestedMoveTargetPosition != position)
         {
-            targetPosition = position;
+            lastRequestedMoveTargetPosition = position;
             RequestPath(position);
         }
-        if (pathToTarget.Count > 0)
-        {
-            if (pathComputing == true) { return false; }
-            return AstarMath.SqrMagnitudeXZ(transform.position, pathToTarget[pathToTarget.Count - 1]) <= 0.05f;
-        }
-        return false;
+        return moveResult;
     }
 
-    void RequestPath(Vector3 position)
+    MoveResult IBehaviourControllable.MoveToDirect(Vector3 position)
     {
-        seeker.StartPath(transform.position, targetPosition, OnPathCompleted);
-        pathComputing = true;
+        movementType = MoveTypes.Direct;
+        if (lastRequestedMoveTargetPosition != position)
+        {
+            moveResult = MoveResult.Moving;
+            pathToTarget = new List<Vector3> { position };
+            lastRequestedMoveTargetPosition = position;
+        }
+        return moveResult;
     }
 
-    bool pathComputing = false;
+    public override void ReceiveBroadcast(Message message)
+    {
+        if (behaviour)
+        {
+            behaviour.OnReceivedBroadcastMessage(message);
+        }
+    }
+
+    bool RequestPath(Vector3 position)
+    {
+        if (movementType != MoveTypes.Pathing)
+        {
+            return false;
+        }
+        if (!seeker.IsDone())
+        {
+            return false;
+        }
+        moveResult = MoveResult.Preparing;
+        seeker.StartPath(transform.position, lastRequestedMoveTargetPosition, OnPathCompleted);
+        return true;
+    }
+
     void OnPathCompleted(Path p)
     {
-        if (p.error) { Debug.LogError("Error in pathfinding"); return; }
+        if (movementType != MoveTypes.Pathing)
+        {
+            return;
+        }
+        if (p.error)
+        {
+            moveResult = MoveResult.TargetNotReachable;
+            return;
+        }
         pathToTarget = p.vectorPath;
-        pathComputing = false;
+    }
+
+    Enemy IBehaviourControllable.entity
+    {
+        get { return this; }
     }
 
     void OnDrawGizmos()

@@ -11,7 +11,7 @@ public class GameInput: MonoBehaviour
 	private float inputTick = 0.1f;
 
 	static event Action<Vector3> OnCoreCommand;
-	static event Func<Vector3, bool> OnSpawnFungusCommand;
+	static event Func<Vector3, FungusNode> OnSpawnFungusCommand;
 
 	void Update ()
 	{
@@ -61,12 +61,12 @@ public class GameInput: MonoBehaviour
 		OnCoreCommand -= callback;
 	}
 
-	public static void RegisterSpawnFungusCallback (Func<Vector3, bool> callback)
+	public static void RegisterSpawnFungusCallback (Func<Vector3, FungusNode> callback)
 	{
 		OnSpawnFungusCommand += callback;
 	}
 
-	public static void ReleaseSpawnFungusCallback (Func<Vector3, bool> callback)
+	public static void ReleaseSpawnFungusCallback (Func<Vector3, FungusNode> callback)
 	{
 		OnSpawnFungusCommand -= callback;
 	}

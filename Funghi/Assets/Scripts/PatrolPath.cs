@@ -42,7 +42,7 @@ public class PatrolPathEditor : Editor
             }
             else
             {
-                p.position = Vector3.right;
+                p.position = pp.transform.position+ Vector3.right;
             }
             pp.points.Add(p);
             SceneView.RepaintAll();
@@ -88,10 +88,7 @@ public class PatrolPathEditor : Editor
         PatrolPath pp = target as PatrolPath;
         for (int i = pp.points.Count; i-- > 0;)
         {
-            if (Tools.current == Tool.Move)
-            {
-                pp.points[i].position = Handles.PositionHandle(pp.points[i].position, Quaternion.identity);
-            }
+            pp.points[i].position = Handles.PositionHandle(pp.points[i].position, Quaternion.identity);
             Handles.color = Color.white;
             Handles.Label(pp.points[i].position, i.ToString());
             Handles.color = Color.yellow;
@@ -104,6 +101,34 @@ public class PatrolPathEditor : Editor
         {
             Handles.DrawLine(pp.points[pp.points.Count-1].position, pp.points[0].position);
         }
+        if (pp.transform.hasChanged)
+        {
+            MoveNodesOnTransformChange(pp);
+            pp.transform.hasChanged = false;
+        }
+    }
+
+    Vector3 lastPosition = Vector3.zero;
+    void MoveNodesOnTransformChange(PatrolPath pp)
+    {
+        Vector3 delta = pp.transform.position - lastPosition;
+        for (int i = 0; i < pp.points.Count; i++)
+        {
+            pp.points[i].position = pp.points[i].position + delta;
+        }
+        lastPosition = pp.transform.position;
+    }
+
+    void OnEnable()
+    {
+        //Tools.hidden = true;
+        PatrolPath pp = target as PatrolPath;
+        lastPosition = pp.transform.position;
+    }
+
+    void OnDisable()
+    {
+        //Tools.hidden = false;
     }
 }
 #endif

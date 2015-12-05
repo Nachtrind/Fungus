@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using System;
 
 public class FungusNode : Entity
 {
@@ -43,7 +44,7 @@ public class FungusNode : Entity
 		}
 	}
 
-	Color gizmoRadiusColor = new Color (1, 1, 1, 0.25f);
+    Color gizmoRadiusColor = new Color (1, 1, 1, 0.25f);
 	Color gizmoRadiusAbilityColor = new Color (1, 0, 0, 0.25f);
 
 	void OnDrawGizmos ()

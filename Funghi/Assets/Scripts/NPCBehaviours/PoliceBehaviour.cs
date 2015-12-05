@@ -7,28 +7,33 @@ using Pathfinding;
 public class PoliceBehaviour : NPCBehaviour
 {
 
-    public PatrolPath path;
-    public int currentTargetIndex = 0;
+    #region Settings
+    const float enemyScanTimeout = 3f;
 
-    public float alarmRadius = 2f;
-    public float enemyScanTimeout = 3f;
+    const float alarmRadius = 2f;
+    const float attackRadius = 0.5f;
 
-    public float attackRadius = 0.2f;
-    public int damagerPerSecond = 20;
-    public float sightRadius = 2f;
+    const int damagerPerSecond = 20;
+    const float sightRadius = 2f;
+    #endregion
+
+    int currentTargetIndex = 0;
 
     public enum NPCStates { Idle, Patrolling, Alarmed, LookingForTarget, ApproachingTarget, ReturningToPatrol, InAttackRange }
 
-    public NPCStates state = NPCStates.Idle;
+    NPCStates state = NPCStates.Idle;
     float currentDelay = 0f;
     Vector3 alarmedPosition;
     Vector3 lastPatrollingPosition;
+    bool pathingReversed = false;
 
-    public FungusNode target;
+    IBehaviourControllable owner;
+    FungusNode target;
     float lookingForEnemyStarted;
 
-    public override void Evaluate(float deltaTime)
+    public override void Evaluate(IBehaviourControllable owner, float deltaTime)
     {
+        this.owner = owner;
         switch (state)
         {
             case NPCStates.Idle:
@@ -86,10 +91,13 @@ public class PoliceBehaviour : NPCBehaviour
         state = newState;
     }
 
-    public override void OnAlarm(Enemy alarmSource)
+    public override void OnReceivedBroadcastMessage(Message message)
     {
-        alarmedPosition = alarmSource.transform.position;
-        GotoState(NPCStates.Alarmed);
+        if (message.type == NotificationType.PoliceAlarm)
+        {
+            alarmedPosition = message.position;
+            GotoState(NPCStates.Alarmed);
+        }
     }
 
     #region Transitions
@@ -105,7 +113,7 @@ public class PoliceBehaviour : NPCBehaviour
 
     void OnEnterAlarmed(NPCStates oldState)
     {
-        lastPatrollingPosition = owner.transform.position;
+        lastPatrollingPosition = owner.entity.transform.position;
     }
 
     void OnEnterLookingForTarget(NPCStates oldState)
@@ -163,15 +171,41 @@ public class PoliceBehaviour : NPCBehaviour
             GotoState(NPCStates.Idle);
             return;
         }
-        if (currentTargetIndex >= path.points.Count)
+        if (pathingReversed == false)
         {
-            currentTargetIndex = 0;
+            if (currentTargetIndex >= path.points.Count)
+            {
+                if (!path.circularPath)
+                {
+                    pathingReversed = true;
+                }
+                else
+                {
+                    currentTargetIndex = 0;
+                    pathingReversed = false;
+                }
+            }
         }
-        if (owner.PathTo(path.points[currentTargetIndex].position))
+        else
+        {
+            if (currentTargetIndex <=0)
+            {
+                currentTargetIndex = 0;
+                pathingReversed = false;
+            }
+        }
+        if (owner.MoveTo(path.points[currentTargetIndex].position) == MoveResult.ReachedTarget)
         {
             if (path.points[currentTargetIndex].action == PatrolPath.PatrolPointActions.Continue)
             {
-                currentTargetIndex++;
+                if (pathingReversed)
+                {
+                    currentTargetIndex--;
+                }
+                else
+                {
+                    currentTargetIndex++;
+                }
             }
             else if (path.points[currentTargetIndex].action == PatrolPath.PatrolPointActions.Wait)
             {
@@ -184,7 +218,7 @@ public class PoliceBehaviour : NPCBehaviour
 
     void OnAlarmed(float deltaTime)
     {
-        if (owner.PathTo(alarmedPosition))
+        if (owner.MoveTo(alarmedPosition) == MoveResult.ReachedTarget)
         {
             GotoState(NPCStates.LookingForTarget);
             return;
@@ -208,7 +242,7 @@ public class PoliceBehaviour : NPCBehaviour
     void OnApproaching(float deltaTime)
     {
         if (!target) { GotoState(NPCStates.LookingForTarget); return; }
-        if (owner.PathTo(target.transform.position))
+        if (owner.MoveTo(target.transform.position) == MoveResult.ReachedTarget)
         {
             GotoState(NPCStates.InAttackRange);
             return;
@@ -217,7 +251,7 @@ public class PoliceBehaviour : NPCBehaviour
 
     void OnReturningToPatrol(float deltaTime)
     {
-        if (owner.PathTo(lastPatrollingPosition))
+        if (owner.MoveTo(lastPatrollingPosition) == MoveResult.ReachedTarget)
         {
             GotoState(NPCStates.Patrolling);
             return;
@@ -228,37 +262,34 @@ public class PoliceBehaviour : NPCBehaviour
     {
         if (!target) { GotoState(NPCStates.LookingForTarget); return; }
         if (!IsInRange(target, attackRadius)){ GotoState(NPCStates.ApproachingTarget); return; }
-        Attack();
+        Attack(deltaTime);
     }
     #endregion
 
     #region Actions
     void AlarmOthers()
     {
-        List<Enemy> others = GameWorld.Instance.GetEnemies(owner.transform.position, alarmRadius);
-        for (int i = 0; i < others.Count; i++)
-        {
-            others[i].Alarm(owner);
-        }
+        Message m = new Message(owner.entity, NotificationType.PoliceAlarm, owner.entity.transform.position);
+        GameWorld.Instance.BroadcastToEnimies(m, m.position);
     }
 
-    void Attack()
+    void Attack(float deltaTime)
     {
-        target.Damage(owner, (int)(damagerPerSecond * GameWorld.TickInterval));
+        owner.Attack(target, (int)(damagerPerSecond * deltaTime));
     }
     #endregion
 
     bool IsInRange(Entity e, float range)
     {
-        return AstarMath.SqrMagnitudeXZ(owner.transform.position, e.transform.position) <= range * range;
+        return AstarMath.SqrMagnitudeXZ(owner.entity.transform.position, e.transform.position) <= range * range;
     }
 
     bool FindNode()
     {
-        List<FungusNode> nodes = GameWorld.Instance.GetFungusNodes(owner.transform.position, sightRadius);
+        List<FungusNode> nodes = GameWorld.Instance.GetFungusNodes(owner.entity.transform.position, sightRadius);
         for (int i = 0; i < nodes.Count; i++)
         {
-            if (GameWorld.Instance.HasLineOfSight(owner, nodes[i]))
+            if (GameWorld.Instance.HasLineOfSight(owner.entity, nodes[i]))
             {
                 target = nodes[i];
                 return true;
@@ -269,7 +300,8 @@ public class PoliceBehaviour : NPCBehaviour
 
     void OnDrawGizmos()
     {
+        if (owner == null) { return; }
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.DrawWireSphere(owner.entity.transform.position, attackRadius);
     }
 }

@@ -3,34 +3,14 @@
 namespace NPCBehaviours
 {
 
-    [DisallowMultipleComponent]
-    public abstract class NPCBehaviour: MonoBehaviour
+    public abstract class NPCBehaviour: ScriptableObject
     {
-        public abstract void Evaluate(float deltaTime);
-        public abstract void OnAlarm(Enemy alarmSource);
+        public PatrolPath path;
 
-        protected Enemy owner;
+        [HideInInspector]
+        public bool isInstantiated = false;
 
-        void Awake()
-        {
-            Enemy e = GetComponent<Enemy>();
-            if (!e || !e.RegisterBehaviour(this))
-            {
-                Destroy(this);
-            }
-            owner = e;
-        }
-
-        void OnDestroy()
-        {
-            
-            if (owner)
-            {
-                owner.UnregisterBehaviour(this);
-            }
-        }
-
-        public virtual void Initialize() { }
-        public virtual void Tick(float deltaTime) { }
+        public abstract void Evaluate(IBehaviourControllable owner, float deltaTime);
+        public virtual void OnReceivedBroadcastMessage(Message message) { }
     }
 }
