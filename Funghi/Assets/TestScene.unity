@@ -493,11 +493,17 @@ MonoBehaviour:
   - position: {x: -8.25763702, y: 0, z: -5.36586571}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: -8.2695713, y: 0, z: -4.25067139}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
 --- !u!4 &69451857
 Transform:
   m_ObjectHideFlags: 0
@@ -1650,15 +1656,24 @@ MonoBehaviour:
   - position: {x: 5.13713121, y: 0, z: -5.12568426}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 5.16340113, y: 0, z: -5.79980421}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 5.69900751, y: 0, z: -5.79980421}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
 --- !u!4 &757520214
 Transform:
   m_ObjectHideFlags: 0
@@ -2042,43 +2057,73 @@ MonoBehaviour:
   - position: {x: -7.04824114, y: 0, z: -4.57122326}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 3.1571753, y: 0, z: -4.31976175}
     action: 1
     waitTime: 2
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 3.02560449, y: 0, z: .562755108}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 5.45054436, y: 0, z: .562755108}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 5.48661232, y: 0, z: -.946005702}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 7.26194763, y: 0, z: -.946005702}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 7.27706146, y: 0, z: -2.66431665}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 5.04998875, y: 0, z: -2.72718143}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: 5.08605814, y: 0, z: -4.99032259}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
   - position: {x: -6.54981375, y: 0, z: -4.84363747}
     action: 0
     waitTime: 0
-    areaRadius: 0
+    linkedPath: {fileID: 0}
+    changeLikelyness: 100
+    functionName: 
+    target: 0
 --- !u!4 &1329045079
 Transform:
   m_ObjectHideFlags: 0

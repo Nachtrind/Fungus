@@ -196,7 +196,8 @@ public class PoliceBehaviour : NPCBehaviour
         }
         if (owner.MoveTo(path.points[currentTargetIndex].position) == MoveResult.ReachedTarget)
         {
-            if (path.points[currentTargetIndex].action == PatrolPath.PatrolPointActions.Continue)
+            PatrolPath.PatrolPoint pp = path.points[currentTargetIndex];
+            if (pp.action == PatrolPath.PatrolPointActions.Continue)
             {
                 if (pathingReversed)
                 {
@@ -207,11 +208,35 @@ public class PoliceBehaviour : NPCBehaviour
                     currentTargetIndex++;
                 }
             }
-            else if (path.points[currentTargetIndex].action == PatrolPath.PatrolPointActions.Wait)
+            else if (pp.action == PatrolPath.PatrolPointActions.Wait)
             {
                 GotoState(NPCStates.Idle);
-                currentDelay = path.points[currentTargetIndex].waitTime;
+                currentDelay = pp.waitTime;
                 return;
+            }
+            else if (pp.action == PatrolPath.PatrolPointActions.ChangePath)
+            {
+                path = pp.linkedPath;
+                currentTargetIndex = 0;
+                pathingReversed = false;
+                return;
+            }
+            else if (pp.action == PatrolPath.PatrolPointActions.ExecuteFunction)
+            {
+                if (pp.target == PatrolPath.PatrolPoint.FunctionTarget.NPC)
+                {
+                    if (pp.functionName.Length > 1)
+                    {
+                        owner.entity.BroadcastMessage(pp.functionName, SendMessageOptions.RequireReceiver);
+                    }
+                }
+                else
+                {
+                    if (pp.functionName.Length > 1)
+                    {
+                        path.BroadcastMessage(pp.functionName, SendMessageOptions.RequireReceiver);
+                    }
+                }
             }
         }
     }

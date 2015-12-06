@@ -6,17 +6,22 @@ using UnityEditor;
 
 public class PatrolPath : MonoBehaviour
 {
-    public enum PatrolPointActions { Continue, Wait, PatrolRandomArea }
+    public enum PatrolPointActions { Continue, Wait, ChangePath, ExecuteFunction }
 
     public bool circularPath = true;
 
     [System.Serializable]
 	public class PatrolPoint
     {
+        public enum FunctionTarget { NPC, PatrolPath }
+
         public Vector3 position;
         public PatrolPointActions action;
-        public float waitTime;
-        public float areaRadius;
+        public float waitTime = 0;
+        public PatrolPath linkedPath;
+        public int changeLikelyness = 100;
+        public string functionName = "";
+        public FunctionTarget target;
     }
 
     public List<PatrolPoint> points = new List<PatrolPoint>();
@@ -71,9 +76,19 @@ public class PatrolPathEditor : Editor
                 case PatrolPath.PatrolPointActions.Wait:
                     pp.points[i].waitTime = EditorGUILayout.FloatField("WaitTime:", pp.points[i].waitTime);
                     break;
-                case PatrolPath.PatrolPointActions.PatrolRandomArea:
-                    pp.points[i].waitTime = EditorGUILayout.FloatField("RandomPatrolDuration:", pp.points[i].waitTime);
-                    pp.points[i].areaRadius = EditorGUILayout.FloatField("RandomPatrolRadius:", pp.points[i].areaRadius);
+                case PatrolPath.PatrolPointActions.ChangePath:
+                    pp.points[i].linkedPath = EditorGUILayout.ObjectField("New Path:", pp.points[i].linkedPath, typeof(PatrolPath), true) as PatrolPath;
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Probability:");
+                    pp.points[i].changeLikelyness = EditorGUILayout.IntSlider(pp.points[i].changeLikelyness, 0, 100);
+                    GUILayout.EndHorizontal();
+                    break;
+                case PatrolPath.PatrolPointActions.ExecuteFunction:
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Function Name:");
+                    pp.points[i].functionName = EditorGUILayout.TextField(pp.points[i].functionName);
+                    GUILayout.EndHorizontal();
+                    pp.points[i].target = (PatrolPath.PatrolPoint.FunctionTarget)EditorGUILayout.EnumPopup("Function Target:", pp.points[i].target);
                     break;
             }
             EditorGUILayout.EndVertical();

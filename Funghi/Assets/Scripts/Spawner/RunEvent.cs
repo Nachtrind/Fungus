@@ -20,7 +20,7 @@ namespace Spawner.Modules
         {
             if (target)
             {
-                target.SendMessage(functionToCall, SendMessageOptions.RequireReceiver);
+                target.BroadcastMessage(functionToCall, SendMessageOptions.RequireReceiver);
             }
             worker.ProcessNext(e);
         }
