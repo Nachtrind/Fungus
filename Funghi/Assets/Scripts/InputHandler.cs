@@ -1,37 +1,49 @@
-﻿using UnityEngine;
+﻿
+
+
+
+using UnityEngine;
 using System;
-using Pathfinding;
+using System.Collections;
 using ButtonName;
+using Pathfinding;
 using System.Collections.Generic;
 
-public class GameInput: MonoBehaviour
+public class InputHandler : MonoBehaviour
 {
+	static InputHandler instance;
+	AbilityButton currentSelection;
 	float lastRequest;
 	float requestInterval = 0.1f;
 	private float inputTimer;
 	private float inputTick = 0.1f;
-
+	
 	static event Action<Vector3> OnCoreCommand;
 	static event Func<Vector3, FungusNode> OnSpawnFungusCommand;
-
-	static InputHandler instance;
-	AbilityButton currentSelection;
 	
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
 	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
-
+	
+	public static InputHandler Instance {
+		get {
+			if (instance == null) {
+				instance = FindObjectOfType<InputHandler> ();
+			}
+			return instance;
+		}
+	}
+	
+	// Use this for initialization
+	void Start ()
+	{
+		
+	}
+	
+	// Update is called once per frame
 	void Update ()
 	{
-		if (!Camera.main) {
-			Debug.LogError ("No Camera tagged as MainCamera");
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPaused = true;
-#endif
-			return;
-		}
-
 		
 		//Touch Input for Tablet
 		if (Input.touchCount > 0) {
@@ -71,10 +83,8 @@ public class GameInput: MonoBehaviour
 		}
 		
 		inputTimer += Time.deltaTime;
-
-
 	}
-
+	
 	public void ClickedButton (AbilityButton _button)
 	{
 		if (_button == currentSelection) {
@@ -95,30 +105,30 @@ public class GameInput: MonoBehaviour
 			
 		}
 	}
-
+	
 	public static void RegisterCoreMoveCallback (Action<Vector3> callback)
 	{
 		OnCoreCommand += callback;
 	}
-
+	
 	public static void ReleaseCoreMoveCallback (Action<Vector3> callback)
 	{
 		OnCoreCommand -= callback;
 	}
-
+	
 	public static void RegisterSpawnFungusCallback (Func<Vector3, FungusNode> callback)
 	{
 		OnSpawnFungusCommand += callback;
 	}
-
+	
 	public static void ReleaseSpawnFungusCallback (Func<Vector3, FungusNode> callback)
 	{
 		OnSpawnFungusCommand -= callback;
 	}
-
+	
 	List<Vector3> pathToCursor = new List<Vector3> ();
 	float pathToCursorLength = 0;
-
+	
 	void OnPathCompleted (Path p)
 	{
 		if (p.error) {
@@ -127,7 +137,7 @@ public class GameInput: MonoBehaviour
 		pathToCursor = p.vectorPath;
 		pathToCursorLength = Mathf.Lerp (Vector3.Distance (pathToCursor [0], pathToCursor [pathToCursor.Count - 1]), p.GetTotalLength (), 0.5f);
 	}
-
+	
 	private void SpawnNewSlimePath ()
 	{
 		if (pathToCursor.Count == 0) {
@@ -140,7 +150,7 @@ public class GameInput: MonoBehaviour
 		}
 		pathToCursor.Clear ();
 	}
-
+	
 	private void CreateNewSlimePath (Vector3 _mousePosition)
 	{
 		_mousePosition.y = 0;
@@ -159,6 +169,6 @@ public class GameInput: MonoBehaviour
 			pathToCursorLength = float.PositiveInfinity;
 		}
 	}
-
-
+	
 }
+
