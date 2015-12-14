@@ -320,6 +320,7 @@ public class GameWorld : MonoBehaviour
         GraphUpdateObject guo = new GraphUpdateObject(new Bounds(point, Vector3.one * size));
         guo.modifyTag = true;
         guo.setTag = state ? slimeTag : 0;
+		guo.updatePhysics = false;
         AstarPath.active.UpdateGraphs(guo);
     }
 
