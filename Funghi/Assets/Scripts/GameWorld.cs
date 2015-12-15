@@ -324,6 +324,7 @@ public class GameWorld : MonoBehaviour
         guo.updatePhysics = false;
         guo.modifyWalkability = false;
         guo.setTag = state ? slimeTag : 0;
+		guo.updatePhysics = false;
         AstarPath.active.UpdateGraphs(guo);
     }
 

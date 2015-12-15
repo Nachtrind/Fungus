@@ -12,6 +12,8 @@ GameObject:
   - 114: {fileID: 11403472}
   - 54: {fileID: 5440110}
   - 136: {fileID: 13600694}
+  - 23: {fileID: 2386310}
+  - 33: {fileID: 3345098}
   m_Layer: 0
   m_Name: NormalEnemy
   m_TagString: Untagged
@@ -26,11 +28,42 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 124204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.53641462, y: .252999991, z: -4.89383125}
+  m_LocalScale: {x: .138471991, y: .138471946, z: .138471946}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!23 &2386310
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124204}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 5062ed2837d9f1041a695cf5cda3a763, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3345098
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124204}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &5440110
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -89,6 +122,7 @@ MonoBehaviour:
   maxHealth: 100
   isAttackable: 1
   moveSpeed: 1
+  resourceValue: 0
   behaviour: {fileID: 0}
 --- !u!136 &13600694
 CapsuleCollider:
@@ -99,7 +133,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: .25
+  m_Radius: .769999981
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
