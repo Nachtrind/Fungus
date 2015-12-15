@@ -11,7 +11,7 @@ namespace Spawner.Modules
         {
             Vector2 rndPos = Random.insideUnitCircle;
             Vector3 newPosition = new Vector3(Mathf.Clamp(rndPos.x, minRadius, maxRadius), 0, Mathf.Clamp(rndPos.y, minRadius, maxRadius));
-            e.transform.position = newPosition;
+            e.transform.position += newPosition;
             worker.ProcessNext(e);
         }
 

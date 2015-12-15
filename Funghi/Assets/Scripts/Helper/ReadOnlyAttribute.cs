@@ -2,12 +2,12 @@
 using System;
 using UnityEngine;
 
-public class ReadOnlyAttribute : PropertyAttribute
+public class ReadOnlyInInspectorAttribute : PropertyAttribute
 {
 
 }
 
-[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+[CustomPropertyDrawer(typeof(ReadOnlyInInspectorAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property,

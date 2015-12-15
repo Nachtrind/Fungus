@@ -39,7 +39,7 @@ public class EnemySpawner: MonoBehaviour
 
     Enemy CreateEmptyEnemy(Enemy e)
     {
-        return Instantiate(e) as Enemy;
+        return Instantiate(e, transform.position, Quaternion.identity) as Enemy;
     }
 
     public void CancelRepeating()

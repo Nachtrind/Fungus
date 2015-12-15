@@ -246,11 +246,12 @@ public class GameWorld : MonoBehaviour
         }
     }
 
-    public List<Enemy> GetEnemies(Vector3 position, float radius)
+    public List<Enemy> GetEnemies(Vector3 position, float radius, Enemy except = null)
     {
         List<Enemy> rangeQuery = new List<Enemy>();
         for (int i = 0; i < enemies.Count; i++)
         {
+            if (except == enemies[i]) { continue; }
             if (AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position) <= radius * radius)
             {
                 rangeQuery.Add(enemies[i]);
@@ -276,11 +277,12 @@ public class GameWorld : MonoBehaviour
         return nearest;
     }
 
-    public List<FungusNode> GetFungusNodes(Vector3 position, float radius)
+    public List<FungusNode> GetFungusNodes(Vector3 position, float radius, FungusNode except = null)
     {
         List<FungusNode> rangeQuery = new List<FungusNode>();
         for (int i = 0; i < nodes.Count; i++)
         {
+            if (except == nodes[i]) { continue; }
             if (AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position) <= radius * radius)
             {
                 rangeQuery.Add(nodes[i]);
@@ -319,6 +321,8 @@ public class GameWorld : MonoBehaviour
         if (gameShuttingDown) { return; }
         GraphUpdateObject guo = new GraphUpdateObject(new Bounds(point, Vector3.one * size));
         guo.modifyTag = true;
+        guo.updatePhysics = false;
+        guo.modifyWalkability = false;
         guo.setTag = state ? slimeTag : 0;
         AstarPath.active.UpdateGraphs(guo);
     }

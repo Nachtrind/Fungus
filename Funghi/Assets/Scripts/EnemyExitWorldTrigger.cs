@@ -22,11 +22,11 @@ public class EnemyExitWorldTrigger: MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
     {
-        IBehaviourControllable ibc = other.GetComponent(typeof(IBehaviourControllable)) as IBehaviourControllable;
-        if (ibc != null)
+        Enemy e = GetComponent<Enemy>();
+        if (e != null)
         {
-            if (linkedPath == null) { Destroy(ibc.entity.gameObject); return; }
-            ibc.SetBehaviour(ScriptableObject.CreateInstance<LeaveWorldBehaviour>()).path = linkedPath;
+            if (linkedPath == null) { Destroy(e.gameObject); return; }
+            e.SetBehaviour(ScriptableObject.CreateInstance<LeaveWorldBehaviour>()).path = linkedPath;
         }
     }
 
