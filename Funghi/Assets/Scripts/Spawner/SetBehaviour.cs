@@ -8,7 +8,7 @@ namespace Spawner.Modules
     {
         public NPCBehaviour behaviour;
         public PatrolPath path;
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             EnterWorldBehaviour pathBehaviour = e.Behaviour as EnterWorldBehaviour;
             if (pathBehaviour)

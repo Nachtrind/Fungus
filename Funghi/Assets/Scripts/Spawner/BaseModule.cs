@@ -8,6 +8,6 @@ namespace Spawner.Modules
 {
     public abstract class BaseModule: ScriptableObject
     {
-        public abstract void Apply(Enemy e, ModuleWorker worker);
+        public abstract void Apply(Human e, ModuleWorker worker);
     }
 }

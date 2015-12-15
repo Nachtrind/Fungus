@@ -12,7 +12,7 @@ public class Menu
     {
         GameObject go = new GameObject("SpawnPoint (Enemy)");
         go.transform.position = GetPositionFromView();
-        go.AddComponent<EnemySpawner>();
+        go.AddComponent<HumanSpawner>();
     }
 
     static Vector3 GetPositionFromView()
@@ -37,6 +37,6 @@ public class Menu
     {
         GameObject go = new GameObject("EnemyExit");
         go.transform.position = GetPositionFromView();
-        go.AddComponent<EnemyExitWorldTrigger>();
+        go.AddComponent<HumanExitWorldTrigger>();
     }
 }

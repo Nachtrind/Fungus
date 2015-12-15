@@ -12,18 +12,18 @@ namespace NPCBehaviours
 
         int pathIndex = 0;
 
-        public override void Evaluate(IBehaviourControllable owner, float deltaTime)
+        public override void Evaluate(Human owner, float deltaTime)
         {
             if (pathIndex < path.points.Count)
             {
-                if (owner.MoveToDirect(path.points[pathIndex].position) == MoveResult.ReachedTarget)
+                if (owner.MoveToDirect(path.points[pathIndex].position) == Human.MoveResult.ReachedTarget)
                 {
                     pathIndex++;
                 }
             }
             else
             {
-                owner.entity.isAttackable = true;
+                owner.isAttackable = true;
                 owner.SetBehaviour(afterPathBehaviour).path = afterSpawnPath;
             }
         }

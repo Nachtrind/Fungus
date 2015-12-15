@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Spawner.Modules
 {
-    [ModuleDescription("Makes the Enemy walk the path to enter the world (out of a garden for example)")]
+    [ModuleDescription("Makes the Human walk the path to enter the world (out of a garden for example)")]
     public class PathToPosition : PositionModule
     {
         public PatrolPath path;
         public bool invulnerableUntilTargetReached = false;
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             if (path == null) { throw new ArgumentException("Path invalid"); }
             EnterWorldBehaviour ewb = e.SetBehaviour(CreateInstance<EnterWorldBehaviour>()) as EnterWorldBehaviour;

@@ -10,7 +10,7 @@ namespace Spawner.Modules
     public class RandomSelectPosition : PositionModule
     {
         public List<Vector3> positions = new List<Vector3>();
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             if (positions.Count > 0)
             {

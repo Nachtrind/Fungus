@@ -40,6 +40,7 @@ public abstract class Entity : MonoBehaviour
     {
         world = GameWorld.Instance;
         world.Register(this);
+        OnAwake();
     }
 
     void Start()
@@ -59,6 +60,7 @@ public abstract class Entity : MonoBehaviour
     }
 
     protected virtual void Initialize() { }
+    protected virtual void OnAwake() { }
     protected virtual void Tick(float deltaTime) { }
     protected virtual void Cleanup() { }
 

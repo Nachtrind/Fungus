@@ -7,10 +7,14 @@ using System;
 [RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class Enemy : Entity, IBehaviourControllable
+public class Human : Entity
 {
-
+    public enum MoveResult { Preparing, Moving, ReachedTarget, TargetNotReachable }
     enum MoveTypes { Direct, Pathing }
+
+#if UNITY_EDITOR
+    public bool debug = false;
+#endif
 
     #region Movement variables
     const float targetReachDistance = 0.025f;
@@ -23,17 +27,17 @@ public class Enemy : Entity, IBehaviourControllable
     MoveResult moveResult = MoveResult.Preparing;
     public float moveSpeed = 1f;
     #endregion
-	
-	public int resourceValue;
 
-	//dummy feedback TODO: delete later on
-	ParticleSystem particleDamage;
+    public int resourceValue;
 
-    [SerializeField, ReadOnly]
+    //dummy feedback TODO: delete later on
+    ParticleSystem particleDamage;
+
+    [SerializeField, ReadOnlyInInspector]
     NPCBehaviour behaviour;
     public NPCBehaviour Behaviour { get { return behaviour; } }
 
-    protected override void Initialize()
+    protected override void OnAwake()
     {
         seeker = GetComponent<Seeker>();
         GetComponent<CapsuleCollider>().isTrigger = true;
@@ -71,31 +75,32 @@ public class Enemy : Entity, IBehaviourControllable
 
     public NPCBehaviour SetBehaviour(NPCBehaviour behaviour)
     {
-        if (this.behaviour != null && this.behaviour.isInstantiated) { Destroy(this.behaviour); }
+        if (this.behaviour != null) { this.behaviour.Cleanup(this); Destroy(this.behaviour); }
         this.behaviour = Instantiate(behaviour);
         return this.behaviour;
     }
 
     public void RemoveBehaviour()
     {
-        behaviour = null;
+        if (behaviour != null) { behaviour.Cleanup(this); Destroy(behaviour); }
     }
 
-    bool IBehaviourControllable.Attack(Entity target, int amount)
+    public bool Attack(Entity target, int amount)
     {
         if (!target.isAttackable) { return false; }
         target.Damage(this, amount);
         return true;
     }
 
-	public override void Damage (Entity attacker, int amount)
-	{
-		SubtractHealth (amount);
-		particleDamage.Play ();
-		if (IsDead) {
-			world.OnEnemyWasKilled (this);
-		}
-	}
+    public override void Damage(Entity attacker, int amount)
+    {
+        SubtractHealth(amount);
+        particleDamage.Play();
+        if (IsDead)
+        {
+            world.OnHumanWasKilled(this);
+        }
+    }
 
     public void StopMovement()
     {
@@ -104,18 +109,29 @@ public class Enemy : Entity, IBehaviourControllable
         moveResult = MoveResult.ReachedTarget;
     }
 
-    MoveResult IBehaviourControllable.MoveTo(Vector3 position)
+    /// <summary>
+    /// Uses pathfinding to reach the target
+    /// </summary>
+    public MoveResult MoveTo(Vector3 position)
     {
         movementType = MoveTypes.Pathing;
         if (lastRequestedMoveTargetPosition != position)
         {
+            pathToTarget.Clear();
+            moveResult = MoveResult.Preparing;
             lastRequestedMoveTargetPosition = position;
-            RequestPath(position);
+            if (!RequestPath(lastRequestedMoveTargetPosition))
+            {
+                lastRequestedMoveTargetPosition = Vector3.zero;
+            }
         }
         return moveResult;
     }
 
-    MoveResult IBehaviourControllable.MoveToDirect(Vector3 position)
+    /// <summary>
+    /// ignores pathfinding to reach the target
+    /// </summary>
+    public MoveResult MoveToDirect(Vector3 position)
     {
         movementType = MoveTypes.Direct;
         if (lastRequestedMoveTargetPosition != position)
@@ -158,20 +174,30 @@ public class Enemy : Entity, IBehaviourControllable
         }
         if (p.error)
         {
+            pathToTarget.Clear();
             moveResult = MoveResult.TargetNotReachable;
             return;
         }
         pathToTarget = p.vectorPath;
     }
 
-    Enemy IBehaviourControllable.entity
-    {
-        get { return this; }
-    }
-
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0f, 0.5f);
         Gizmos.DrawSphere(transform.position, 0.15f);
+        if (behaviour)
+        {
+            behaviour.DrawGizmos(this);
+        }
     }
+
+#if UNITY_EDITOR
+    void OnGUI()
+    {
+        if (debug && behaviour)
+        {
+            behaviour.DrawDebugInfos(this);
+        }
+    }
+#endif
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Pathfinding;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -7,8 +8,6 @@ using UnityEditor;
 public class PatrolPath : MonoBehaviour
 {
     public enum PatrolPointActions { Continue, Wait, ChangePath, ExecuteFunction }
-
-    public bool circularPath = true;
 
     [System.Serializable]
 	public class PatrolPoint
@@ -22,6 +21,23 @@ public class PatrolPath : MonoBehaviour
         public int changeLikelyness = 100;
         public string functionName = "";
         public FunctionTarget target;
+    }
+
+    public int GetNearestPatrolPointIndex(Vector3 position)
+    {
+        if (points.Count == 0) { throw new System.Exception("Path has no points"); }
+        int nearest = 0;
+        float nearestDist = AstarMath.SqrMagnitudeXZ(position, points[0].position);
+        for (int i = 1; i < points.Count; i++)
+        {
+            float newnearDist = AstarMath.SqrMagnitudeXZ(position, points[i].position);
+            if (newnearDist < nearestDist)
+            {
+                nearest = i;
+                nearestDist = newnearDist;
+            }
+        }
+        return nearest;
     }
 
     public List<PatrolPoint> points = new List<PatrolPoint>();
@@ -58,7 +74,6 @@ public class PatrolPathEditor : Editor
             SceneView.RepaintAll();
         }
         EditorGUILayout.EndHorizontal();
-        pp.circularPath = EditorGUILayout.Toggle("Loop: ", pp.circularPath);
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(Mathf.Min(pp.points.Count * 50, 200)));
         for (int i = 0; i < pp.points.Count; i++)
         {
@@ -112,7 +127,7 @@ public class PatrolPathEditor : Editor
                 Handles.DrawLine(pp.points[i].position, pp.points[i - 1].position);
             }
         }
-        if (pp.circularPath && pp.points.Count > 1)
+        if (pp.points.Count > 2)
         {
             Handles.DrawLine(pp.points[pp.points.Count-1].position, pp.points[0].position);
         }

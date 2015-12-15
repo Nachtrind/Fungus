@@ -4,13 +4,13 @@ using UnityEditor;
 using System;
 using UnityEngine;
 
-public class ReadOnlyAttribute : PropertyAttribute
+public class ReadOnlyInInspectorAttribute : PropertyAttribute
 {
 
 }
 
 #if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+[CustomPropertyDrawer(typeof(ReadOnlyInInspectorAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property,

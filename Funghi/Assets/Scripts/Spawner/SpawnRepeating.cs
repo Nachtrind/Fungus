@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Spawner.Modules
 {
-    [ModuleDescription("Spawns endless enemies, after [delay] in [timeInterval] seconds. Call EnemySpawner.CancelRepeating() if stop is required")]
+    [ModuleDescription("Spawns endless enemies, after [delay] in [timeInterval] seconds. Call HumanSpawner.CancelRepeating() if stop is required")]
     public class SpawnRepeating : SpawnModule
     {
         public float delay = 0f;
         public float timeInterval = 1f;
         bool started = false;
         bool cancel = false;
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             worker.source.StartCoroutine(Execute(worker));
         }
@@ -23,10 +23,10 @@ namespace Spawner.Modules
             yield return new WaitForSeconds(delay);
         RESTART:
             if (cancel) { yield break; }
-            if (enemyPrefab == null) { Debug.LogError("enemy prefab not assigned"); yield break; }
-            if (enemyPrefab != null)
+            if (humanPrefab == null) { Debug.LogError("human prefab not assigned"); yield break; }
+            if (humanPrefab != null)
             {
-                worker.ProcessNext(Instantiate(enemyPrefab, worker.source.transform.position, Quaternion.identity) as Enemy);
+                worker.ProcessNext(Instantiate(humanPrefab, worker.source.transform.position, Quaternion.identity) as Human);
             }
             yield return new WaitForSeconds(timeInterval);
             goto RESTART;
