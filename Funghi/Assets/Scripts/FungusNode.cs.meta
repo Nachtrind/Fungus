@@ -1,10 +1,19 @@
 fileFormatVersion: 2
 guid: bfffbb2cdd9d5a84fb2c7efb7a41ca1a
-timeCreated: 1446645622
+timeCreated: 1450195786
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - matActive: {instanceID: 0}
+  - matInactive: {instanceID: 0}
+  - beatneat: {fileID: 21300010, guid: bc906ceed97dfd647b90e2dc2b84e4b0, type: 3}
+  - attract: {fileID: 21300006, guid: bc906ceed97dfd647b90e2dc2b84e4b0, type: 3}
+  - slowdown: {fileID: 21300004, guid: bc906ceed97dfd647b90e2dc2b84e4b0, type: 3}
+  - speedup: {fileID: 21300002, guid: bc906ceed97dfd647b90e2dc2b84e4b0, type: 3}
+  - zombie: {fileID: 21300000, guid: bc906ceed97dfd647b90e2dc2b84e4b0, type: 3}
+  - growth: {fileID: 21300008, guid: bc906ceed97dfd647b90e2dc2b84e4b0, type: 3}
+  - ability: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

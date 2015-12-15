@@ -11,10 +11,11 @@ namespace NodeAbilities
         public AudioClip deathSound;
         #endregion
         [Header("Skill")]
+		public string name;
         public float radius;
 		public int cost;
 		public float tickRate;
 
-        public abstract bool Execute(FungusNode node);
+        public abstract void Execute(FungusNode node);
     }
 }

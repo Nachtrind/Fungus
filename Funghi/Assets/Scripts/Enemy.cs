@@ -38,7 +38,7 @@ public class Enemy : Entity, IBehaviourControllable
         seeker = GetComponent<Seeker>();
         GetComponent<CapsuleCollider>().isTrigger = true;
         GetComponent<Rigidbody>().isKinematic = true;
-		particleDamage = this.GetComponent<ParticleSystem> ();
+		particleDamage = this.GetComponentInChildren<ParticleSystem> ();
     }
 
     protected override void Tick(float deltaTime)

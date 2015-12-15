@@ -11,10 +11,17 @@ public class FungusNode : Entity
 	public bool isActive { get; set; }
 
 	float attackTimer;
-	[Header("Materials")]
+	[Header("Materials & Sprites")]
 	public Material
 		matActive;
 	public Material matInactive;
+	public Sprite beatneat;
+	public Sprite attract;
+	public Sprite slowdown;
+	public Sprite speedup;
+	public Sprite zombie;
+	public Sprite growth;
+	SpriteRenderer abilityDisplay;
 
 	protected override void Initialize ()
 	{
@@ -22,6 +29,7 @@ public class FungusNode : Entity
 		CreateConnections ();
 		isActive = false;
 		attackTimer = 0.0f;
+		abilityDisplay = GetComponentInChildren<SpriteRenderer> ();
 	}
 
 	protected override void Cleanup ()
@@ -56,7 +64,7 @@ public class FungusNode : Entity
 		}
 	}
 
-    Color gizmoRadiusColor = new Color (1, 1, 1, 0.25f);
+	Color gizmoRadiusColor = new Color (1, 1, 1, 0.25f);
 	Color gizmoRadiusAbilityColor = new Color (1, 0, 0, 0.25f);
 
 	void OnDrawGizmos ()
@@ -78,9 +86,8 @@ public class FungusNode : Entity
 
 	public void ExecuteAbility ()
 	{
-		if (ability.Execute (this)) {
+		ability.Execute (this);
 			attackTimer = 0.0f;
-		}
 	}
 
 	public bool IsSpecialized {
@@ -90,6 +97,41 @@ public class FungusNode : Entity
 	public void Specialize (NodeAbility newAbility)
 	{
 		ability = newAbility;
+
+
+		switch (newAbility.name) {
+		case "beatneat":
+			{
+			abilityDisplay.sprite = beatneat;
+			break;
+			}
+		case "attract":
+		{
+			abilityDisplay.sprite = attract;
+			break;
+		}
+		case "slowdown":
+		{
+			abilityDisplay.sprite = slowdown;
+			break;
+		}
+		case "zombie":
+		{
+			abilityDisplay.sprite = zombie;
+			break;
+		}
+		case "speedup":
+		{
+			abilityDisplay.sprite = speedup;
+			break;
+		}
+		case "growth":
+		{
+			abilityDisplay.sprite = growth;
+			break;
+		}
+		}
+
 	}
     #endregion
 

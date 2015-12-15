@@ -3,19 +3,27 @@ using System;
 using Pathfinding;
 using ButtonName;
 using System.Collections.Generic;
+using NodeAbilities;
 
 public class GameInput: MonoBehaviour
 {
+	public ParticleSystem spores;
 	float lastRequest;
 	float requestInterval = 0.1f;
 	private float inputTimer;
-	private float inputTick = 0.1f;
+	private float inputTick = 0.2f;
 
 	static event Action<Vector3> OnCoreCommand;
 	static event Func<Vector3, FungusNode> OnSpawnFungusCommand;
 
 	static InputHandler instance;
 	AbilityButton currentSelection;
+	public NodeAbility beatneat;
+	public NodeAbility attract;
+	public NodeAbility slowdown;
+	public NodeAbility speedup;
+	public NodeAbility zombies;
+	public NodeAbility growth;
 	
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
@@ -32,46 +40,87 @@ public class GameInput: MonoBehaviour
 			return;
 		}
 
-		
-		//Touch Input for Tablet
-		if (Input.touchCount > 0) {
-			if (Input.GetTouch (0).phase == TouchPhase.Began || Input.GetTouch (0).phase == TouchPhase.Moved) {
-				Vector3 worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
-				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
-				if (nodesInRadius.Count <= 0) {
-					CreateNewSlimePath (worldMousePos);
-				} else {
-					nodesInRadius [0].ToggleActive ();
+
+		if (currentSelection != null && inputTimer > inputTick) {
+			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
+
+				//////////////
+				// NEW NODE //
+				//////////////
+				if (currentSelection.buttonName == ButtonName.ButtonName.NewNode) {
+					Vector3 worldMousePos;
+					//take mouse position or touch position
+					if (Input.GetMouseButton (0)) {
+						worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+					} else {
+						worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					}
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
+
+					if (!spores.isPlaying) {
+						spores.Play ();
+					}
+					spores.transform.position = new Vector3 (worldMousePos.x, 0, worldMousePos.z);
+
+					if (nodesInRadius.Count <= 0) {
+						CreateNewSlimePath (worldMousePos);
+					}
 				}
+
+				/////////////////////
+				// Change Ability  //
+				/////////////////////
+				/// Set a node to attract
+				if (currentSelection.buttonName != null && currentSelection.buttonName != ButtonName.ButtonName.NewNode) {
+
+					Vector3 worldMousePos;
+					//take mouse position or touch position
+					if (Input.GetMouseButton (0)) {
+						worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+					} else {
+						worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					}
+
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
+					if (nodesInRadius.Count > 0) {
+						SpecializeNode (nodesInRadius [0]);
+						DeactivateSelection ();
+					}
+				}
+
+
+			}
+			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
+				SpawnNewSlimePath ();
+				DeactivateSelection ();
+				spores.Stop ();
 			}
 			
-			if (Input.GetTouch (0).phase == TouchPhase.Ended) {
-				SpawnNewSlimePath ();
-			}
+			
 		}
-		
-		
-		
-		//Left Mouse Click
-		if (Input.GetMouseButton (0) && inputTimer > inputTick) {
-			Vector3 worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
-			if (nodesInRadius.Count <= 0) {
-				CreateNewSlimePath (worldMousePos);
-			} else {
-				nodesInRadius [0].ToggleActive ();
-			}
-			inputTimer = 0.0f;
-		}
-		
-		if (Input.GetMouseButtonUp (0)) {
-			Debug.Log ("Mouse Up!");
-			SpawnNewSlimePath ();
-			inputTimer = 0.0f;
-		}
-		
-		inputTimer += Time.deltaTime;
 
+		//Activating Nodes
+		if (currentSelection == null && inputTimer > inputTick) {
+			if (Input.GetMouseButton (0) || Input.touchCount > 0) {
+
+				Vector3 worldMousePos;
+				//take mouse position or touch position
+				if (Input.GetMouseButton (0)) {
+					worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+				} else {
+					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+				}
+
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
+
+				if (nodesInRadius.Count > 0) {
+					nodesInRadius [0].ToggleActive ();
+					inputTimer = 0.0f;
+				}
+			}
+		}
+
+		inputTimer += Time.deltaTime;
 
 	}
 
@@ -92,8 +141,57 @@ public class GameInput: MonoBehaviour
 			currentSelection = _button;
 			_button.isSelected = true;
 			_button.SetTint (selectedTint);
-			
 		}
+		inputTimer = 0.0f;	
+	}
+
+	void DeactivateSelection ()
+	{
+		inputTimer = 0.0f;
+		currentSelection.SetTint (normalTint);
+		currentSelection.isSelected = false;
+		currentSelection = null;
+	}
+
+	void SpecializeNode (FungusNode fungusNode)
+	{
+
+		Debug.Log ("Specialize");
+
+		switch (currentSelection.buttonName) {
+		case ButtonName.ButtonName.BeatNEat:
+			{
+				fungusNode.Specialize (beatneat);
+				break;
+			}
+		case ButtonName.ButtonName.ScentNode:
+			{
+				fungusNode.Specialize (attract);
+				break;
+			}
+		case ButtonName.ButtonName.SlowDown:
+			{
+				fungusNode.Specialize (slowdown);
+				break;
+			}
+		case ButtonName.ButtonName.SpeedUp:
+			{
+				fungusNode.Specialize (speedup);
+				break;
+			}
+		case ButtonName.ButtonName.Zombies:
+			{
+				fungusNode.Specialize (zombies);
+				break;
+			}
+		case ButtonName.ButtonName.GrowthSpores:
+			{
+				fungusNode.Specialize (growth);
+				break;
+			}
+		}
+
+
 	}
 
 	public static void RegisterCoreMoveCallback (Action<Vector3> callback)
@@ -143,6 +241,7 @@ public class GameInput: MonoBehaviour
 
 	private void CreateNewSlimePath (Vector3 _mousePosition)
 	{
+		bool reachable = true;
 		_mousePosition.y = 0;
 		FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode (_mousePosition); //HACK: nearest node is not always shortest path (if needed, compare multiple paths)
 		if (nodeNearCursor) {
@@ -151,6 +250,8 @@ public class GameInput: MonoBehaviour
 				lastRequest = Time.time;
 			}
 			Color c = pathToCursorLength > GameWorld.nodeConnectionDistance ? Color.red : Color.green;
+			//non gizmo indicator
+			spores.startColor = pathToCursorLength > GameWorld.nodeConnectionDistance ? new Color (232 / 255f, 82 / 255f, 0 / 255f, 1f) : new Color (167 / 255f, 255 / 255f, 0 / 255f, 1f);
 			for (int i = 1; i < pathToCursor.Count; i++) {
 				Debug.DrawLine (pathToCursor [i], pathToCursor [i - 1], c);
 			}
@@ -158,6 +259,7 @@ public class GameInput: MonoBehaviour
 			pathToCursor.Clear ();
 			pathToCursorLength = float.PositiveInfinity;
 		}
+
 	}
 
 
