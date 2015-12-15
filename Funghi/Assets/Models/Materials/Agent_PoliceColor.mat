@@ -6,11 +6,11 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: SlimeMat
-  m_Shader: {fileID: 4800000, guid: b109b70669eeeb64594d9e0fc1acff52, type: 3}
+  m_Name: Agent_PoliceColor
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 5a02e7ee532896e4db43f89344c0e961, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -78,27 +78,6 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _StructureTex
-        second:
-          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
-          m_Scale: {x: 3, y: 2}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Displacement
-        second:
-          m_Texture: {fileID: 2800000, guid: 0f123a3c8fb000544875d79269dc1031, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Ground
-        second:
-          m_Texture: {fileID: 2800000, guid: 5d951d0a838a34f40ac2b9ce8968a7d6, type: 3}
-          m_Scale: {x: 1, y: -.349999994}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
@@ -111,7 +90,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .600000024
+        second: .5
       data:
         first:
           name: _Parallax
@@ -148,58 +127,6 @@ Material:
         first:
           name: _Metallic
         second: 0
-      data:
-        first:
-          name: _Speed
-        second: .0215000007
-      data:
-        first:
-          name: _CutOff
-        second: .400000006
-      data:
-        first:
-          name: _Stencil
-        second: 0
-      data:
-        first:
-          name: _StencilComp
-        second: 8
-      data:
-        first:
-          name: _StencilOp
-        second: 0
-      data:
-        first:
-          name: _StencilReadMask
-        second: 255
-      data:
-        first:
-          name: _StencilWriteMask
-        second: 255
-      data:
-        first:
-          name: _ColorMask
-        second: 15
-      data:
-        first:
-          name: _Amount
-        second: .00930000003
-      data:
-        first:
-          name: _Test
-        second: .5
-      data:
-        first:
-          name: _Strength
-        second: .0074
-      data:
-        first:
-          name: _Sharpness
-        second: .100000001
-      data:
-        first:
-          name: _Spread
-        second: .00300000003
     m_Colors:
       data:
         first:
@@ -208,4 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .326291621, g: .757352948, b: .077962786, a: 1}
+        second: {r: .588, g: .588, b: .588, a: 1}

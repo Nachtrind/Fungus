@@ -87,7 +87,7 @@ public class FungusNode : Entity
 	public void ExecuteAbility ()
 	{
 		ability.Execute (this);
-			attackTimer = 0.0f;
+		attackTimer = 0.0f;
 	}
 
 	public bool IsSpecialized {
@@ -102,34 +102,35 @@ public class FungusNode : Entity
 		switch (newAbility.name) {
 		case "beatneat":
 			{
-			abilityDisplay.sprite = beatneat;
-			break;
+				Debug.Log ("BEATNEAT");
+				abilityDisplay.sprite = beatneat;
+				break;
 			}
 		case "attract":
-		{
-			abilityDisplay.sprite = attract;
-			break;
-		}
+			{
+				abilityDisplay.sprite = attract;
+				break;
+			}
 		case "slowdown":
-		{
-			abilityDisplay.sprite = slowdown;
-			break;
-		}
+			{
+				abilityDisplay.sprite = slowdown;
+				break;
+			}
 		case "zombie":
-		{
-			abilityDisplay.sprite = zombie;
-			break;
-		}
+			{
+				abilityDisplay.sprite = zombie;
+				break;
+			}
 		case "speedup":
-		{
-			abilityDisplay.sprite = speedup;
-			break;
-		}
+			{
+				abilityDisplay.sprite = speedup;
+				break;
+			}
 		case "growth":
-		{
-			abilityDisplay.sprite = growth;
-			break;
-		}
+			{
+				abilityDisplay.sprite = growth;
+				break;
+			}
 		}
 
 	}

@@ -156,8 +156,6 @@ public class GameInput: MonoBehaviour
 	void SpecializeNode (FungusNode fungusNode)
 	{
 
-		Debug.Log ("Specialize");
-
 		switch (currentSelection.buttonName) {
 		case ButtonName.ButtonName.BeatNEat:
 			{

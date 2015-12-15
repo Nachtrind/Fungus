@@ -21,7 +21,7 @@ public class GameWorld : MonoBehaviour
     public float coreTickInterval = 0.1f;
     float lastCoreUpdate = 0;
 
-    public const float nodeConnectionDistance = 2f;
+    public const float nodeConnectionDistance = 3f;
 
     static GameWorld instance;
     public static GameWorld Instance
