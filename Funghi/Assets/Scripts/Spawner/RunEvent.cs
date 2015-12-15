@@ -16,7 +16,7 @@ namespace Spawner.Modules
             }
         }
 
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             if (target)
             {

@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Spawner.Modules
 {
-    [ModuleDescription("Generates a random Position between min and max radius to place the spawned enemy at")]
+    [ModuleDescription("Generates a random Position between min and max radius to place the spawned human at")]
     public class RandomRangePosition : PositionModule
     {
         public float minRadius = 0f;
         public float maxRadius = 1f;
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             Vector2 rndPos = Random.insideUnitCircle;
             Vector3 newPosition = new Vector3(Mathf.Clamp(rndPos.x, minRadius, maxRadius), 0, Mathf.Clamp(rndPos.y, minRadius, maxRadius));

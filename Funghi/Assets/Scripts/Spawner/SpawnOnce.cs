@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Spawner.Modules
 {
-    [ModuleDescription("Spawns one enemy after given [delay]")]
+    [ModuleDescription("Spawns one human after given [delay]")]
     public class SpawnOnce : SpawnModule
     {
         public float delay = 0f;
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             worker.source.StartCoroutine(Execute(worker));
         }
@@ -16,9 +16,9 @@ namespace Spawner.Modules
         IEnumerator Execute(ModuleWorker worker)
         {
             yield return new WaitForSeconds(delay);
-            if (enemyPrefab != null)
+            if (humanPrefab != null)
             {
-                worker.ProcessNext(Instantiate(enemyPrefab, worker.source.transform.position, Quaternion.identity) as Enemy);
+                worker.ProcessNext(Instantiate(humanPrefab, worker.source.transform.position, Quaternion.identity) as Human);
             }
         }
     }

@@ -10,10 +10,10 @@ public class GameWorld : MonoBehaviour
     #region Global
     public const int slimeTag = 0x1;
     [Header("Updating")]
-    Coroutine enemyUpdater;
-    public float enemyTickInterval = 0.1f;
-    float enemyDelta = 0;
-    System.Diagnostics.Stopwatch enemyStopWatch = new System.Diagnostics.Stopwatch();
+    Coroutine humanUpdater;
+    public float humanTickInterval = 0.1f;
+    float humanDelta = 0;
+    System.Diagnostics.Stopwatch humanStopWatch = new System.Diagnostics.Stopwatch();
     Coroutine nodeUpdater;
     public float nodeTickInterval = 0.1f;
     float nodeDelta = 0;
@@ -39,7 +39,7 @@ public class GameWorld : MonoBehaviour
     #endregion
 
     List<FungusNode> nodes = new List<FungusNode>();
-    List<Enemy> enemies = new List<Enemy>();
+    List<Human> humans = new List<Human>();
     FungusCore core;
     public FungusCore Core { get { return core; } }
 
@@ -72,7 +72,7 @@ public class GameWorld : MonoBehaviour
         SpawnNodeAndCenter();
         GameInput.RegisterSpawnFungusCallback(SpawnFungusNode);
         if (nodeUpdater == null) { nodeUpdater = StartCoroutine(NodeUpdate()); }
-        if (enemyUpdater == null) { enemyUpdater = StartCoroutine(EnemyUpdate()); }
+        if (humanUpdater == null) { humanUpdater = StartCoroutine(HumanUpdate()); }
     }
 
     void OnLevelWasLoaded()
@@ -100,17 +100,17 @@ public class GameWorld : MonoBehaviour
         }
     }
 
-    IEnumerator EnemyUpdate()
+    IEnumerator HumanUpdate()
     {
     RESTART:
-        enemyDelta = enemyStopWatch.ElapsedMilliseconds / 1000f;
-        enemyStopWatch.Reset();
-        enemyStopWatch.Start();
-        for (int i = enemies.Count; i-- > 0;)
+        humanDelta = humanStopWatch.ElapsedMilliseconds / 1000f;
+        humanStopWatch.Reset();
+        humanStopWatch.Start();
+        for (int i = humans.Count; i-- > 0;)
         {
-            enemies[i].UpdateEntity(enemyDelta);
+            humans[i].UpdateEntity(humanDelta);
         }
-        yield return new WaitForSeconds(enemyTickInterval - (enemyStopWatch.ElapsedMilliseconds / 1000f));
+        yield return new WaitForSeconds(humanTickInterval - (humanStopWatch.ElapsedMilliseconds / 1000f));
         goto RESTART;
     }
 
@@ -174,12 +174,12 @@ public class GameWorld : MonoBehaviour
             }
             return;
         }
-        Enemy en = e as Enemy;
+        Human en = e as Human;
         if (en)
         {
-            if (!enemies.Contains(en))
+            if (!humans.Contains(en))
             {
-                enemies.Add(en);
+                humans.Add(en);
                 en.transform.parent = entityHolder;
             }
             return;
@@ -207,8 +207,8 @@ public class GameWorld : MonoBehaviour
     {
         FungusNode fn = e as FungusNode;
         if (fn) { nodes.Remove(fn); }
-        Enemy en = e as Enemy;
-        if (en) { enemies.Remove(en); }
+        Human en = e as Human;
+        if (en) { humans.Remove(en); }
         FungusCore fc = e as FungusCore;
         if (fc) { if (core == fc) { core = null; } }
     }
@@ -223,12 +223,12 @@ public class GameWorld : MonoBehaviour
 
     public void BroadcastToEnimies(Message message, Vector3 position, float radius = float.PositiveInfinity)
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < humans.Count; i++)
         {
-            if (enemies[i] == message.sender) { continue; }
-            if (AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position) <= radius * radius)
+            if (humans[i] == message.sender) { continue; }
+            if (AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position) <= radius * radius)
             {
-                enemies[i].ReceiveBroadcast(message);
+                humans[i].ReceiveBroadcast(message);
             }
         }
         
@@ -246,31 +246,31 @@ public class GameWorld : MonoBehaviour
         }
     }
 
-    public List<Enemy> GetEnemies(Vector3 position, float radius, Enemy except = null)
+    public List<Human> GetEnemies(Vector3 position, float radius, Human except = null)
     {
-        List<Enemy> rangeQuery = new List<Enemy>();
-        for (int i = 0; i < enemies.Count; i++)
+        List<Human> rangeQuery = new List<Human>();
+        for (int i = 0; i < humans.Count; i++)
         {
-            if (except == enemies[i]) { continue; }
-            if (AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position) <= radius * radius)
+            if (except == humans[i]) { continue; }
+            if (AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position) <= radius * radius)
             {
-                rangeQuery.Add(enemies[i]);
+                rangeQuery.Add(humans[i]);
             }
         }
         return rangeQuery;
     }
 
-    public Enemy GetNearestEnemy(Vector3 position)
+    public Human GetNearestHuman(Vector3 position)
     {
-        if (enemies.Count == 0) { return null; }
-        Enemy nearest = enemies[0];
+        if (humans.Count == 0) { return null; }
+        Human nearest = humans[0];
         float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
-        for (int i = 1; i < enemies.Count; i++)
+        for (int i = 1; i < humans.Count; i++)
         {
-            float curDist = AstarMath.SqrMagnitudeXZ(enemies[i].transform.position, position);
+            float curDist = AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position);
             if (curDist < dist)
             {
-                nearest = enemies[i];
+                nearest = humans[i];
                 dist = curDist;
             }
         }
@@ -363,10 +363,10 @@ public class GameWorld : MonoBehaviour
         Destroy(node.gameObject);
     }
 
-    public void OnEnemyWasKilled(Enemy enemy)
+    public void OnHumanWasKilled(Human human)
     {
         //TODO handle resources
-        Destroy(enemy.gameObject);
+        Destroy(human.gameObject);
     }
 
     public void OnCoreLostGrounding(FungusCore core)

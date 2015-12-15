@@ -2,7 +2,7 @@
 using UnityEngine;
 using Spawner.Modules;
 
-public class EnemySpawner: MonoBehaviour
+public class HumanSpawner: MonoBehaviour
 {
     public bool autoActivateOnStart = true;
 
@@ -37,9 +37,9 @@ public class EnemySpawner: MonoBehaviour
         worker.ProcessNext(null);
     }
 
-    Enemy CreateEmptyEnemy(Enemy e)
+    Human CreateEmptyHuman(Human e)
     {
-        return Instantiate(e, transform.position, Quaternion.identity) as Enemy;
+        return Instantiate(e, transform.position, Quaternion.identity) as Human;
     }
 
     public void CancelRepeating()

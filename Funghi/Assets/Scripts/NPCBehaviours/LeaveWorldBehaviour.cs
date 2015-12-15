@@ -4,11 +4,11 @@
     {
         int pathIndex = 0;
 
-        public override void Evaluate(Enemy owner, float deltaTime)
+        public override void Evaluate(Human owner, float deltaTime)
         {
             if (pathIndex < path.points.Count)
             {
-                if (owner.MoveToDirect(path.points[pathIndex].position) == Enemy.MoveResult.ReachedTarget)
+                if (owner.MoveToDirect(path.points[pathIndex].position) == Human.MoveResult.ReachedTarget)
                 {
                     pathIndex++;
                 }

@@ -2,7 +2,7 @@
 using NPCBehaviours;
 
 [RequireComponent(typeof(SphereCollider))]
-public class EnemyExitWorldTrigger: MonoBehaviour
+public class HumanExitWorldTrigger: MonoBehaviour
 {
     public PatrolPath linkedPath;
 
@@ -22,7 +22,7 @@ public class EnemyExitWorldTrigger: MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
     {
-        Enemy e = GetComponent<Enemy>();
+        Human e = GetComponent<Human>();
         if (e != null)
         {
             if (linkedPath == null) { Destroy(e.gameObject); return; }

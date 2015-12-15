@@ -5,17 +5,17 @@ namespace Spawner
 {
     public class ModuleWorker
     {
-        public readonly EnemySpawner source;
-        public List<Action<Enemy, ModuleWorker>> steps = new List<Action<Enemy, ModuleWorker>>();
-        public ModuleWorker(EnemySpawner spawner)
+        public readonly HumanSpawner source;
+        public List<Action<Human, ModuleWorker>> steps = new List<Action<Human, ModuleWorker>>();
+        public ModuleWorker(HumanSpawner spawner)
         {
             source = spawner;
         }
-        public void ProcessNext(Enemy e)
+        public void ProcessNext(Human e)
         {
             if (steps.Count > 0)
             {
-                Action<Enemy, ModuleWorker> next = steps[0];
+                Action<Human, ModuleWorker> next = steps[0];
                 steps.RemoveAt(0);
                 next(e, this);
             }

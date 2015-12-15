@@ -7,7 +7,7 @@ using System;
 [RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
-public class Enemy : Entity
+public class Human : Entity
 {
     public enum MoveResult { Preparing, Moving, ReachedTarget, TargetNotReachable }
     enum MoveTypes { Direct, Pathing }
@@ -98,7 +98,7 @@ public class Enemy : Entity
         particleDamage.Play();
         if (IsDead)
         {
-            world.OnEnemyWasKilled(this);
+            world.OnHumanWasKilled(this);
         }
     }
 

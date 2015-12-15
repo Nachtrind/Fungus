@@ -30,14 +30,14 @@ public class PoliceBehaviour : NPCBehaviour
     Vector3 alarmedPosition;
     Vector3 lastPatrolingPosition;
 
-    Enemy owner;
+    Human owner;
     FungusNode target;
     float lookingForEnemyStarted;
     NPCStates delayReturnState = NPCStates.Idle;
 
     #region Gizmos/Debug
     Color gizmoColor = new Color(0, 0, 1f, 0.25f);
-    public override void DrawGizmos(Enemy owner)
+    public override void DrawGizmos(Human owner)
     {
         Gizmos.color = gizmoColor;
         Gizmos.DrawWireSphere(owner.transform.position, sightRadius);
@@ -45,7 +45,7 @@ public class PoliceBehaviour : NPCBehaviour
         Gizmos.DrawWireSphere(owner.transform.position, attackRadius);
     }
 #if UNITY_EDITOR
-    public override void DrawDebugInfos(Enemy owner)
+    public override void DrawDebugInfos(Human owner)
     {
         Vector2 unitPos = Camera.main.WorldToScreenPoint(owner.transform.position);
         unitPos.y = Screen.height - unitPos.y;
@@ -57,7 +57,7 @@ public class PoliceBehaviour : NPCBehaviour
 #endif
     #endregion
 
-    public override void Evaluate(Enemy owner, float deltaTime)
+    public override void Evaluate(Human owner, float deltaTime)
     {
         this.owner = owner;
         switch (state)
@@ -207,7 +207,7 @@ public class PoliceBehaviour : NPCBehaviour
             GotoState(NPCStates.ApproachingTarget);
             return;
         } 
-        if (owner.MoveTo(path.points[currentTargetIndex].position) == Enemy.MoveResult.ReachedTarget)
+        if (owner.MoveTo(path.points[currentTargetIndex].position) == Human.MoveResult.ReachedTarget)
         {
             PatrolPath.PatrolPoint pp = path.points[currentTargetIndex];
             if (pp.action == PatrolPath.PatrolPointActions.Wait)
@@ -261,7 +261,7 @@ public class PoliceBehaviour : NPCBehaviour
 
     void OnAlarmed(float deltaTime)
     {
-        if (owner.MoveTo(alarmedPosition) == Enemy.MoveResult.ReachedTarget)
+        if (owner.MoveTo(alarmedPosition) == Human.MoveResult.ReachedTarget)
         {
             GotoState(NPCStates.LookingForTarget);
             return;
@@ -285,7 +285,7 @@ public class PoliceBehaviour : NPCBehaviour
     void OnApproaching(float deltaTime)
     {
         if (!target) { GotoState(NPCStates.LookingForTarget); return; }
-        if (owner.MoveTo(target.transform.position) == Enemy.MoveResult.ReachedTarget)
+        if (owner.MoveTo(target.transform.position) == Human.MoveResult.ReachedTarget)
         {
             GotoState(NPCStates.InAttackRange);
             return;
@@ -294,7 +294,7 @@ public class PoliceBehaviour : NPCBehaviour
 
     void OnReturningToPatrol(float deltaTime)
     {
-        if (owner.MoveTo(lastPatrolingPosition) == Enemy.MoveResult.ReachedTarget)
+        if (owner.MoveTo(lastPatrolingPosition) == Human.MoveResult.ReachedTarget)
         {
             GotoState(NPCStates.Patroling);
             return;

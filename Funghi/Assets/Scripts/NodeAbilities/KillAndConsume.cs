@@ -10,7 +10,7 @@ namespace NodeAbilities
 
 		public override bool Execute (FungusNode node)
 		{
-			List<Enemy> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position, radius);
+			List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position, radius);
 			for (int i = 0; i < enemiesInRadius.Count; i++) 
 			{
 				enemiesInRadius [i].Damage (node, damage);

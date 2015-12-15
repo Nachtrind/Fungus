@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Spawner.Modules
 {
-    [ModuleDescription("Choses a random behaviour out of the provided ones to apply to the spawned enemy and passes it the given path")]
+    [ModuleDescription("Choses a random behaviour out of the provided ones to apply to the spawned human and passes it the given path")]
     public class SetRandomBehaviour : BehaviourModule
     {
         public List<NPCBehaviour> behaviours = new List<NPCBehaviour>();
         public PatrolPath path;
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             EnterWorldBehaviour pathBehaviour = e.Behaviour as EnterWorldBehaviour;
             if (pathBehaviour)

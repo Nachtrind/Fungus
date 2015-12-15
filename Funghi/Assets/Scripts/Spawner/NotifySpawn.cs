@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Spawner.Modules
 {
-    [ModuleDescription("Notifies the target about the spawned Enemy \n(the function must have the signature: Function(Enemy))")]
+    [ModuleDescription("Notifies the target about the spawned human \n(the function must have the signature: Function(Human))")]
     public class NotifySpawn : EventModule
     {
         public GameObject target;
@@ -15,7 +15,7 @@ namespace Spawner.Modules
             }
         }
 
-        public override void Apply(Enemy e, ModuleWorker worker)
+        public override void Apply(Human e, ModuleWorker worker)
         {
             if (target)
             {
