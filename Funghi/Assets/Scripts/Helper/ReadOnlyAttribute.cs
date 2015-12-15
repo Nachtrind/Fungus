@@ -9,12 +9,8 @@ public class ReadOnlyInInspectorAttribute : PropertyAttribute
 
 }
 
-<<<<<<< HEAD
-[CustomPropertyDrawer(typeof(ReadOnlyInInspectorAttribute))]
-=======
 #if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
->>>>>>> origin/master
+[CustomPropertyDrawer(typeof(ReadOnlyInInspectorAttribute))]
 public class ReadOnlyDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property,
