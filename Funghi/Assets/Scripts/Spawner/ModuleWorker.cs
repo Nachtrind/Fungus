@@ -20,7 +20,7 @@ namespace Spawner
             {
                 Action<Human, ModuleWorker> next = steps[currentStep];
                 currentStep++;
-                if (currentStep >= steps.Count) { currentStep = 0; }
+                if (currentStep >= steps.Count) { currentStep = 0; linkedSpawnPath = null; }
                 next(e, this);
             }
         }

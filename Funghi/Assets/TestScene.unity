@@ -134,7 +134,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -207,7 +209,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -280,7 +284,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -317,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 978747093}
-  invulnerableUntilTargetReached: 0
+  triggerIdentifier: EnterWorld
 --- !u!1 &55392548
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +611,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -705,7 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   astarData:
-    dataString: UEsDBBQAAAgIAAAIIeyd1dUaRAIAAGQEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1Uttu2zAM/ZVBz05gu3Zub12yZhu6Nmg27GHogyrTsRBZMnRZLkX+vZTsOAmGIYDtkOeQPDx8JxvHCzJ7J3+pcEBmhKVZnmaTyThJ43x6lw3Skk0z/MzHjN1lkJFTRKhpgNkXarkisyQi3KgarObsXm4EVokj4iQvla6/FBuYK2MNmZVUGIiIVtbzpG+6D9BDeB7xiaUZSAu6Sw7iYZymyXicTcajK2CIZ/l4Oh1lo5NvxgStGyjW/AgdN5kMW0qSDPMcQVIV0ObjYZJjJyUEN90k9tB49XPaGIcKIlJwipL8JKivAr6pbPjsWc9lacD6YlhL08OCa9xJKEc+K1thjZqa7dVu09zP2tb6cZsaJJgptaq/dp2wpq04277QA6PG9tu7Di6uR3RyR8WWvgn4XYF8UkutnERnrXZIcwbSRV+k1zCvgG37cDtZF+t4zY1NSWfTyWvbzwWv38I2L3/v99wEHAbWQvmlTobTiIDG7X/DYYP3LQRjfohfBn7SzeVAuvAD18ZiIkCps+qRy+1S8+KCPEcX3NhHXnPvEA4qvY435TQiyQO+0Qrm7FxpCfrCbkBSYQ8r7Gav/fwn8z/GA2VWtdvvMt3538JDsMfG8W1ipXZnBw18d3WzUlzaNVDNqovrsLdOw4Ja6v1AOvpc9GmDGhn2lU4IPKPQCnX+iSP8vaL4ikoJwofIk5L+vK9fr2gnlyiJilU7WdgCmifPdyDx0nCZfv2flpo2/roLTXdLfqyVOaO4LNWaaQD5HLhhvNMHUEsDBBQAAAgAAAAIIewef112MgAAADIAAAASACQAZ3JhcGgwX2VkaXRvci5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BeyJsb2NrZWQiOnRydWUsInNob3dFeHRyYSI6ZmFsc2UsInBpdm90IjoiQ2VudGVyIn1QSwMEFAAACAgAAAgh7KgXYqZ2AAAAgwAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQEdzLEOgyAUheF3ubMlCpegrh3cmu6NA4GrMvRiEJs0Td+90O0b/nM+8KJ0hMgwghJGIDSwJrtvB4xd4Rl80QOcRC2x700nWz0ovMjFDViojXMKCWFuIL93utkn/Rd3m7clsA+8iikFP9XXWnH0dI0n55q18/cHUEsBAi0AFAAACAgAAAgh7J3V1RpEAgAAZAQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAAAAAgh7B5/XXYyAAAAMgAAABIAJAAAAAAAAAAAAAAAkQIAAGdyYXBoMF9lZGl0b3IuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIeyoF2KmdgAAAIMAAAAJACQAAAAAAAAAAAAAABcDAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAMAAwAcAQAA2AMAAAAA
+    dataString: UEsDBBQAAAgIAAAIIewzKSx/QwIAAGUEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1Uttu2zAM/ZVBz05gu3Zub12yZhu6Nmg27GHogyrTsRBZMnRZLkX+vZTsOAmGIYBjk+eQPDx8JxvHCzJ7J3+pcEBmhKVZnmaTyThJ43x6lw3Skk0zfM3HjN1lkJFTRKhpgNkXarkisyQi3KgarObsXm4EVokj4iQvla6/FBuYK2MNmZVUGIiIVtbzpG+6D9BDeB7xiaUZSAu6Sw7iYZymyXicTcajK2CIZ/l4Oh1lo5NvxgStGyjW/AgdN5kMW0qSDPMcQVIV0ObjYZJjJyUEN90k9tB49XPaGIcKIlJwipL8JKivAr6pbHjtWc9lacD6YlhL08OCa9xJKEc+K1thjZqa7dVu09zP2tb6cZsapJgptaq/dp2wpq04277QA6PG9tu7Di6uR3RyR8WWvgn4XYF8UkutnCx6njOQLvqvXsS8Arbtw+1oXcxq53nNjU9J59PJi9vPBa/fwjovn/d7bgIOA2uh/FYnw2lEQOP6v+G0wfwWgjE/xC8DP+nmciFd+IFrYzERoNRZ9cjldql5cUGeowtu7COvubcIB5Vex5tyGpHkAf/RC+bsXGkJ+sJuQFJhDyvsZq8N/SfzP8YDZVa16+8y3f3fwkOwx8bxbWKldmcLDXx3dbNSXNo1UM2qi+2wt07Dglrq/UA6Gn1x16BGhn2lEwLvKLRCnX/iCH+vKL6iUoLwIfKkpL/v679XtJNLlETFqp0sbAHNk+c7kHhquEy//k9LTRt/3oWmuyU/1sqcUVyWas00gHwO3DDe6QNQSwMEFAAACAAAAAgh7B5/XXYyAAAAMgAAABIAJABncmFwaDBfZWRpdG9yLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF7ImxvY2tlZCI6dHJ1ZSwic2hvd0V4dHJhIjpmYWxzZSwicGl2b3QiOiJDZW50ZXIifVBLAwQUAAAICAAACCHsqBdipnYAAACDAAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAR3MsQ6DIBSF4Xe5syUKl6CuHdya7o0Dgasy9GIQmzRN373Q7Rv+cz7wonSEyDCCEkYgNLAmu28HjF3hGXzRA5xELbHvTSdbPSi8yMUNWKiNcwoJYW4gv3e62Sf9F3ebtyWwD7yKKQU/1ddacfR0jSfnmrXz9wdQSwECLQAUAAAICAAACCHsMyksf0MCAABlBAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAIAAAACCHsHn9ddjIAAAAyAAAAEgAkAAAAAAAAAAAAAACQAgAAZ3JhcGgwX2VkaXRvci5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7KgXYqZ2AAAAgwAAAAkAJAAAAAAAAAAAAAAAFgMAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAwADABwBAADXAwAAAAA=
     upgradeData: 
     data_backup: 
     file_cachedStartup: {fileID: 4900000, guid: 5b84ae352e479714cad092ec38daf575,
@@ -780,8 +788,8 @@ MonoBehaviour:
     seed: 0
     pivotPointRoot: {fileID: 0}
     spreadOutCount: 1
-  showGraphs: 0
-  lastUniqueAreaIndex: 16
+  showGraphs: 1
+  lastUniqueAreaIndex: 15
 --- !u!4 &160924446
 Transform:
   m_ObjectHideFlags: 0
@@ -970,7 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 69451856}
-  invulnerableUntilTargetReached: 0
+  triggerIdentifier: EnterWorld
 --- !u!114 &334972149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -982,7 +990,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670c6037aab3b94408687ddd79e28e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11400000, guid: a9fefb6c4ae282748a353a7c70f741f0, type: 2}
+  behaviour: {fileID: 11400000, guid: fccf3140223f98e4f9b0be214ecfb459, type: 2}
   path: {fileID: 1223447245}
 --- !u!1001 &349083702
 Prefab:
@@ -1551,7 +1559,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -1624,7 +1634,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -1763,7 +1775,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -2208,7 +2222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670c6037aab3b94408687ddd79e28e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11400000, guid: a9fefb6c4ae282748a353a7c70f741f0, type: 2}
+  behaviour: {fileID: 11400000, guid: fccf3140223f98e4f9b0be214ecfb459, type: 2}
   path: {fileID: 1329045078}
 --- !u!1 &926397526
 GameObject:
@@ -2238,6 +2252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba532f77787348d45b52a7af34f90b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerIdentifier: LeaveWorld
   linkedPath: {fileID: 757520213}
 --- !u!135 &926397528
 SphereCollider:
@@ -3885,7 +3900,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -3975,7 +3992,9 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -4142,7 +4161,7 @@ GameObject:
   - 4: {fileID: 1981722008}
   - 114: {fileID: 1981722009}
   m_Layer: 0
-  m_Name: SpawnPoint (Enemy)
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

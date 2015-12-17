@@ -11,6 +11,7 @@ namespace Spawner.Modules
                     e.Behaviour.TryExecuteTrigger(worker.pathStartIdentifier, worker.linkedSpawnPath);
                 }
             }
+            worker.ProcessNext(e);
         }
     }
 }
