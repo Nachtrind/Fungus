@@ -1,6 +1,4 @@
-using NPCBehaviours;
 using System;
-using UnityEngine;
 
 namespace Spawner.Modules
 {
@@ -8,17 +6,16 @@ namespace Spawner.Modules
     public class PathToPosition : PositionModule
     {
         public PatrolPath path;
-        public bool invulnerableUntilTargetReached = false;
+        public string triggerIdentifier = "EnterWorld";
         public override void Apply(Human e, ModuleWorker worker)
         {
             if (path == null) { throw new ArgumentException("Path invalid"); }
-            EnterWorldBehaviour ewb = e.SetBehaviour(CreateInstance<EnterWorldBehaviour>()) as EnterWorldBehaviour;
+            worker.linkedSpawnPath = path;
+            worker.pathStartIdentifier = triggerIdentifier;
             if (path.points.Count > 0)
             {
                 e.transform.position = path.points[0].position;
             }
-            e.isAttackable = !invulnerableUntilTargetReached;
-            ewb.path = path;
             worker.ProcessNext(e);
         }
     }

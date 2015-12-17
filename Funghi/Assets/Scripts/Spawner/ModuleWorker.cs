@@ -7,16 +7,20 @@ namespace Spawner
     {
         public readonly HumanSpawner source;
         public List<Action<Human, ModuleWorker>> steps = new List<Action<Human, ModuleWorker>>();
+        int currentStep = 0;
+        public PatrolPath linkedSpawnPath;
+        public string pathStartIdentifier = "EnterWorld";
         public ModuleWorker(HumanSpawner spawner)
         {
             source = spawner;
         }
         public void ProcessNext(Human e)
         {
-            if (steps.Count > 0)
+            if (currentStep < steps.Count)
             {
-                Action<Human, ModuleWorker> next = steps[0];
-                steps.RemoveAt(0);
+                Action<Human, ModuleWorker> next = steps[currentStep];
+                currentStep++;
+                if (currentStep >= steps.Count) { currentStep = 0; }
                 next(e, this);
             }
         }

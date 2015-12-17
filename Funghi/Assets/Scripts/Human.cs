@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
-using NPCBehaviours;
+using ModularBehaviour;
 using System;
 
 [RequireComponent(typeof(Seeker))]
@@ -26,6 +26,8 @@ public class Human : Entity
     MoveTypes movementType = MoveTypes.Direct;
     MoveResult moveResult = MoveResult.Preparing;
     public float moveSpeed = 1f;
+    public float viewRange = 2f;
+    public int damagePerSecond = 10;
     #endregion
 
     public int resourceValue;
@@ -34,8 +36,8 @@ public class Human : Entity
     ParticleSystem particleDamage;
 
     [SerializeField, ReadOnlyInInspector]
-    NPCBehaviour behaviour;
-    public NPCBehaviour Behaviour { get { return behaviour; } }
+    Intelligence behaviour;
+    public Intelligence Behaviour { get { return behaviour; } }
 
     protected override void OnAwake()
     {
@@ -47,7 +49,7 @@ public class Human : Entity
 
     protected override void Tick(float deltaTime)
     {
-        if (behaviour) { behaviour.Evaluate(this, deltaTime); }
+        if (behaviour) { behaviour.UpdateTick(deltaTime); }
         if (Time.time - lastPathRequestTime > repathRate)
         {
             if (RequestPath(lastRequestedMoveTargetPosition))
@@ -73,16 +75,21 @@ public class Human : Entity
         }
     }
 
-    public NPCBehaviour SetBehaviour(NPCBehaviour behaviour)
+    public bool SetBehaviour(Intelligence behaviour)
     {
-        if (this.behaviour != null) { this.behaviour.Cleanup(this); Destroy(this.behaviour); }
-        this.behaviour = Instantiate(behaviour);
-        return this.behaviour;
+        if (this.behaviour != null) { Destroy(this.behaviour); }
+        if (behaviour)
+        {
+            this.behaviour = Instantiate(behaviour);
+            this.behaviour.Initialize(this);
+            return true;
+        }
+        return false;
     }
 
     public void RemoveBehaviour()
     {
-        if (behaviour != null) { behaviour.Cleanup(this); Destroy(behaviour); }
+        if (behaviour != null) { Destroy(behaviour); }
     }
 
     public bool Attack(Entity target, int amount)
@@ -147,7 +154,7 @@ public class Human : Entity
     {
         if (behaviour)
         {
-            behaviour.OnReceivedBroadcastMessage(message);
+            behaviour.HandleMessageBroadcast(message);
         }
     }
 

@@ -25,7 +25,7 @@ public class HumanSpawner: MonoBehaviour
         }
     }
 
-    void Activate()
+    public void Activate()
     {
         if (spawnModule == null) { Debug.LogError("Spawner is missing configuration"); return; }
         ModuleWorker worker = new ModuleWorker(this);
@@ -34,6 +34,7 @@ public class HumanSpawner: MonoBehaviour
         if (positionModule != null) { worker.steps.Add(positionModule.Apply); }
         if (behaviourModule != null) { worker.steps.Add(behaviourModule.Apply); }
         if (eventModule != null && !eventModule.BeforeSpawn) { worker.steps.Add(eventModule.Apply); }
+        worker.steps.Add(ScriptableObject.CreateInstance<SpecialPathStarter>().Apply);
         worker.ProcessNext(null);
     }
 

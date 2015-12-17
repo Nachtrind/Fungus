@@ -1,4 +1,4 @@
-using NPCBehaviours;
+using ModularBehaviour;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,24 +7,21 @@ namespace Spawner.Modules
     [ModuleDescription("Choses a random behaviour out of the provided ones to apply to the spawned human and passes it the given path")]
     public class SetRandomBehaviour : BehaviourModule
     {
-        public List<NPCBehaviour> behaviours = new List<NPCBehaviour>();
+        public List<Intelligence> behaviours = new List<Intelligence>();
         public PatrolPath path;
         public override void Apply(Human e, ModuleWorker worker)
         {
-            EnterWorldBehaviour pathBehaviour = e.Behaviour as EnterWorldBehaviour;
-            if (pathBehaviour)
+            if (behaviours.Count == 0) { throw new System.Exception("No behaviours to apply!"); }
+            Intelligence behaviour = behaviours[Random.Range(0, behaviours.Count - 1)];
+            if (e.SetBehaviour(behaviour))
             {
-                pathBehaviour.afterSpawnPath = path;
-                if (behaviours.Count > 0)
+                if (path != null)
                 {
-                    pathBehaviour.afterPathBehaviour = behaviours[Random.Range(0, behaviours.Count - 1)];
+                    e.Behaviour.Store(Intelligence.PathIdentifier, path);
                 }
-            }
-            else
-            {
-                if (behaviours.Count > 0)
+                if (worker.linkedSpawnPath != null)
                 {
-                    e.SetBehaviour(behaviours[Random.Range(0, behaviours.Count - 1)]).path = path;
+                    e.Behaviour.Store(Intelligence.SpecialPathIdentifier, worker.linkedSpawnPath);
                 }
             }
             worker.ProcessNext(e);

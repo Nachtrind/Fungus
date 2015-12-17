@@ -10,4 +10,5 @@ namespace Spawner.Modules
     {
         public abstract void Apply(Human e, ModuleWorker worker);
     }
+
 }

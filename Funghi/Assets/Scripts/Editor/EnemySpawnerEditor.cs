@@ -95,7 +95,10 @@ public class EnemySpawnerEditor : Editor
         SerializedProperty module = serializedObject.FindProperty(propertyName);
         if (module != null)
         {
-            module.objectReferenceValue = null;
+            if (module.objectReferenceValue != null)
+            {
+                DestroyImmediate(module.objectReferenceValue, false);
+            }
             module.serializedObject.ApplyModifiedProperties();
         }
     }

@@ -7,12 +7,13 @@ public class Menu
 
     const string BaseMenu = "Fungus";
 
-    [MenuItem(BaseMenu+"/Create Enemy Spawner")]
+    [MenuItem(BaseMenu+"/Create Human Spawner")]
     static void CreateEnemySpawner()
     {
-        GameObject go = new GameObject("SpawnPoint (Enemy)");
+        GameObject go = new GameObject("SpawnPoint");
         go.transform.position = GetPositionFromView();
         go.AddComponent<HumanSpawner>();
+        Selection.activeGameObject = go;
     }
 
     static Vector3 GetPositionFromView()
@@ -30,13 +31,24 @@ public class Menu
         GameObject go = new GameObject("Path");
         go.transform.position = GetPositionFromView();
         go.AddComponent<PatrolPath>();
+        Selection.activeGameObject = go;
     }
 
-    [MenuItem(BaseMenu+"/Create Enemy World Exit")]
+    [MenuItem(BaseMenu+"/Create Human World Trigger")]
     static void CreateEnemyExit()
     {
         GameObject go = new GameObject("EnemyExit");
         go.transform.position = GetPositionFromView();
-        go.AddComponent<HumanExitWorldTrigger>();
+        go.AddComponent<HumanWorldTrigger>();
+        Selection.activeGameObject = go;
+    }
+
+    [MenuItem(BaseMenu+"/Create PoliceStation")]
+    static void CreatePoliceStation()
+    {
+        GameObject go = new GameObject("PoliceStation");
+        go.transform.position = GetPositionFromView();
+        go.AddComponent<PoliceStation>();
+        Selection.activeGameObject = go;
     }
 }

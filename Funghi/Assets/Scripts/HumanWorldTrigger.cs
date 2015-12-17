@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using NPCBehaviours;
 
 [RequireComponent(typeof(SphereCollider))]
-public class HumanExitWorldTrigger: MonoBehaviour
+public class HumanWorldTrigger: MonoBehaviour
 {
+    public string triggerIdentifier = "LeaveWorld";
     public PatrolPath linkedPath;
 
     SphereCollider sc;
@@ -26,7 +26,10 @@ public class HumanExitWorldTrigger: MonoBehaviour
         if (e != null)
         {
             if (linkedPath == null) { Destroy(e.gameObject); return; }
-            e.SetBehaviour(ScriptableObject.CreateInstance<LeaveWorldBehaviour>()).path = linkedPath;
+            if (e.Behaviour)
+            {
+                e.Behaviour.TryExecuteTrigger(triggerIdentifier, linkedPath);
+            }
         }
     }
 

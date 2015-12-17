@@ -40,6 +40,7 @@ public class GameWorld : MonoBehaviour
 
     List<FungusNode> nodes = new List<FungusNode>();
     List<Human> humans = new List<Human>();
+    List<PoliceStation> policeStations = new List<PoliceStation>();
     FungusCore core;
     public FungusCore Core { get { return core; } }
 
@@ -201,16 +202,26 @@ public class GameWorld : MonoBehaviour
                 fc.transform.parent = entityHolder;
             }
         }
+        PoliceStation ps = e as PoliceStation;
+        if (ps)
+        {
+            if (!policeStations.Contains(ps))
+            {
+                policeStations.Add(ps);
+            }
+        }
     }
 
     public void Unregister(Entity e)
     {
         FungusNode fn = e as FungusNode;
-        if (fn) { nodes.Remove(fn); }
+        if (fn) { nodes.Remove(fn); return; }
         Human en = e as Human;
-        if (en) { humans.Remove(en); }
+        if (en) { humans.Remove(en); return; }
         FungusCore fc = e as FungusCore;
-        if (fc) { if (core == fc) { core = null; } }
+        if (fc) { if (core == fc) { core = null; } return; }
+        PoliceStation ps = e as PoliceStation;
+        if (ps) { policeStations.Remove(ps); }
     }
     #endregion
 
@@ -221,7 +232,7 @@ public class GameWorld : MonoBehaviour
         return !AstarPath.active.astarData.gridGraph.Linecast(source.transform.position, target.transform.position);
     }
 
-    public void BroadcastToEnimies(Message message, Vector3 position, float radius = float.PositiveInfinity)
+    public void BroadcastToHumans(Message message, Vector3 position, float radius = float.PositiveInfinity)
     {
         for (int i = 0; i < humans.Count; i++)
         {
@@ -242,6 +253,18 @@ public class GameWorld : MonoBehaviour
             if (AstarMath.SqrMagnitudeXZ(nodes[i].transform.position, position) <= radius * radius)
             {
                 nodes[i].ReceiveBroadcast(message);
+            }
+        }
+    }
+
+    public void BroadcastToPoliceStations(Message message, Vector3 position, float radius = float.PositiveInfinity)
+    {
+        for (int i = 0; i < policeStations.Count; i++)
+        {
+            if (policeStations[i] == message.sender) { continue; }
+            if (AstarMath.SqrMagnitudeXZ(policeStations[i].transform.position, position) <= radius * radius)
+            {
+                policeStations[i].ReceiveBroadcast(message);
             }
         }
     }
@@ -271,6 +294,23 @@ public class GameWorld : MonoBehaviour
             if (curDist < dist)
             {
                 nearest = humans[i];
+                dist = curDist;
+            }
+        }
+        return nearest;
+    }
+
+    public PoliceStation GetNearestPoliceStation(Vector3 position)
+    {
+        if (policeStations.Count == 0) { return null; }
+        PoliceStation nearest = policeStations[0];
+        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
+        for (int i = 1; i < policeStations.Count; i++)
+        {
+            float curDist = AstarMath.SqrMagnitudeXZ(policeStations[i].transform.position, position);
+            if (curDist < dist)
+            {
+                nearest = policeStations[i];
                 dist = curDist;
             }
         }

@@ -24,10 +24,7 @@ namespace Spawner.Modules
         RESTART:
             if (cancel) { yield break; }
             if (humanPrefab == null) { Debug.LogError("human prefab not assigned"); yield break; }
-            if (humanPrefab != null)
-            {
-                worker.ProcessNext(Instantiate(humanPrefab, worker.source.transform.position, Quaternion.identity) as Human);
-            }
+            worker.ProcessNext(Instantiate(humanPrefab, worker.source.transform.position, Quaternion.identity) as Human);
             yield return new WaitForSeconds(timeInterval);
             goto RESTART;
         }
