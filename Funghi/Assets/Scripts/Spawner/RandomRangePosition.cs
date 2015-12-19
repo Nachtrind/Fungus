@@ -7,7 +7,7 @@ namespace Spawner.Modules
     {
         public float minRadius = 0f;
         public float maxRadius = 1f;
-        public override void Apply(Human e, ModuleWorker worker)
+        public override void Apply(Entity e, ModuleWorker worker)
         {
             Vector2 rndPos = Random.insideUnitCircle;
             Vector3 newPosition = new Vector3(Mathf.Clamp(rndPos.x, minRadius, maxRadius), 0, Mathf.Clamp(rndPos.y, minRadius, maxRadius));

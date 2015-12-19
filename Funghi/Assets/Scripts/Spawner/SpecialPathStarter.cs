@@ -2,7 +2,7 @@ namespace Spawner.Modules
 {
     public class SpecialPathStarter : BaseModule
     {
-        public override void Apply(Human e, ModuleWorker worker)
+        public override void Apply(Entity e, ModuleWorker worker)
         {
             if (worker.linkedSpawnPath != null)
             {

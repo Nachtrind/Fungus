@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Linq;
 using Spawner.Modules;
 
-[CustomEditor(typeof(HumanSpawner))]
+[CustomEditor(typeof(EntitySpawner))]
 public class EnemySpawnerEditor : Editor
 {
 
@@ -34,7 +34,7 @@ public class EnemySpawnerEditor : Editor
 
     void CacheModules(Type baseType)
     {
-        List<Type> moduleTypes = Assembly.GetAssembly(typeof(HumanSpawner)).GetTypes().Where(i => i.IsClass && i.IsSubclassOf(baseType)).ToList();
+        List<Type> moduleTypes = Assembly.GetAssembly(typeof(EntitySpawner)).GetTypes().Where(i => i.IsClass && i.IsSubclassOf(baseType)).ToList();
         List<ModuleInfo> infos = new List<ModuleInfo>();
         for (int i = 0; i < moduleTypes.Count; i++)
         {
@@ -55,7 +55,7 @@ public class EnemySpawnerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        HumanSpawner esp = target as HumanSpawner;
+        EntitySpawner esp = target as EntitySpawner;
         GUILayout.BeginVertical(EditorStyles.helpBox);
         esp.autoActivateOnStart = EditorGUILayout.Toggle("AutoStart", esp.autoActivateOnStart);
         if (!esp.autoActivateOnStart)

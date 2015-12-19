@@ -9,7 +9,7 @@ namespace Spawner.Modules
     {
         public List<Intelligence> behaviours = new List<Intelligence>();
         public PatrolPath path;
-        public override void Apply(Human e, ModuleWorker worker)
+        public override void Apply(Entity e, ModuleWorker worker)
         {
             if (behaviours.Count == 0) { throw new System.Exception("No behaviours to apply!"); }
             Intelligence behaviour = behaviours[Random.Range(0, behaviours.Count - 1)];
@@ -17,11 +17,11 @@ namespace Spawner.Modules
             {
                 if (path != null)
                 {
-                    e.Behaviour.Store(Intelligence.PathIdentifier, path);
+                    e.Behaviour.LoadPath(path);
                 }
                 if (worker.linkedSpawnPath != null)
                 {
-                    e.Behaviour.Store(Intelligence.SpecialPathIdentifier, worker.linkedSpawnPath);
+                    e.Behaviour.LoadSpecialPath(worker.linkedSpawnPath);
                 }
             }
             worker.ProcessNext(e);

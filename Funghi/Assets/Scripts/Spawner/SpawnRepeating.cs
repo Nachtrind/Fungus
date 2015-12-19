@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace Spawner.Modules
         public float timeInterval = 1f;
         bool started = false;
         bool cancel = false;
-        public override void Apply(Human e, ModuleWorker worker)
+        public override void Apply(Entity e, ModuleWorker worker)
         {
             worker.source.StartCoroutine(Execute(worker));
         }
@@ -23,8 +22,9 @@ namespace Spawner.Modules
             yield return new WaitForSeconds(delay);
         RESTART:
             if (cancel) { yield break; }
-            if (humanPrefab == null) { Debug.LogError("human prefab not assigned"); yield break; }
-            worker.ProcessNext(Instantiate(humanPrefab, worker.source.transform.position, Quaternion.identity) as Human);
+            if (prefab == null) { Debug.LogError("human prefab not assigned"); yield break; }
+            worker.Restart();
+            worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.identity) as Entity);
             yield return new WaitForSeconds(timeInterval);
             goto RESTART;
         }

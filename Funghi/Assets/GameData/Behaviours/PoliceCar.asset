@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ef402280a3d32b49999db9550152f4a, type: 3}
-  m_Name: Police
+  m_Name: PoliceCar
   m_EditorClassIdentifier: 
   states:
   - {fileID: 11452240}
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
   m_EditorClassIdentifier: 
---- !u!114 &11425902
+--- !u!114 &11419736
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -215,12 +215,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
-  m_Name: IfSuccessThen
+  m_Script: {fileID: 11500000, guid: 32a6fb68ebe591f4689ee451aab48271, type: 3}
+  m_Name: DebugLog
   m_EditorClassIdentifier: 
-  invert: 1
-  ifAction: {fileID: 11443330}
-  thenAction: {fileID: 11437212}
+  debugString: Alarmed
 --- !u!114 &11427674
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -257,7 +255,7 @@ MonoBehaviour:
   m_Name: IsInRange
   m_EditorClassIdentifier: 
   entityVarName: target
-  range: .5
+  range: 1
 --- !u!114 &11430832
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -281,18 +279,6 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11464872}
---- !u!114 &11437212
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
-  m_Name: GotoState
-  m_EditorClassIdentifier: 
-  newState: {fileID: 11408666}
 --- !u!114 &11437958
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -305,19 +291,6 @@ MonoBehaviour:
   m_Name: MoveToStoredPos
   m_EditorClassIdentifier: 
   storeName: AlarmPosition
---- !u!114 &11443330
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91fc288de3bdf541b6b7ac172829cf5, type: 3}
-  m_Name: IsInRange
-  m_EditorClassIdentifier: 
-  entityVarName: target
-  range: .5
 --- !u!114 &11445722
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -397,19 +370,6 @@ MonoBehaviour:
   - {fileID: 11498860}
   - {fileID: 11402610}
   exitActions: []
---- !u!114 &11453102
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6000c39f020e4ee4c8c3f2f3c999df93, type: 3}
-  m_Name: Attack
-  m_EditorClassIdentifier: 
-  entityVarName: target
-  damagePerSecond: 20
 --- !u!114 &11453834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -484,14 +444,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
-  m_Name: AttackTarget
+  m_Name: ReleaseOfficers
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11430832}
+  - {fileID: 11498626}
   updateActions:
   - {fileID: 11403302}
-  - {fileID: 11425902}
-  - {fileID: 11453102}
   exitActions: []
 --- !u!114 &11464888
 MonoBehaviour:
@@ -573,6 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11447768}
+  - {fileID: 11419736}
   updateActions:
   - {fileID: 11497146}
   exitActions: []
@@ -668,6 +628,18 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11452240}
+--- !u!114 &11498626
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c348385380512124eb8ba09fac7aa327, type: 3}
+  m_Name: ExecuteMethod
+  m_EditorClassIdentifier: 
+  methodName: Trigger
 --- !u!114 &11498860
 MonoBehaviour:
   m_ObjectHideFlags: 3

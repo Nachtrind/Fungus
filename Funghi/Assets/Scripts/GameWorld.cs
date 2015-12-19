@@ -41,6 +41,7 @@ public class GameWorld : MonoBehaviour
     List<FungusNode> nodes = new List<FungusNode>();
     List<Human> humans = new List<Human>();
     List<PoliceStation> policeStations = new List<PoliceStation>();
+    List<PoliceCar> policeCars = new List<PoliceCar>();
     FungusCore core;
     public FungusCore Core { get { return core; } }
 
@@ -111,6 +112,10 @@ public class GameWorld : MonoBehaviour
         {
             humans[i].UpdateEntity(humanDelta);
         }
+        for (int i = 0; i < policeCars.Count; i++)
+        {
+            policeCars[i].UpdateEntity(humanDelta);
+        }
         yield return new WaitForSeconds(humanTickInterval - (humanStopWatch.ElapsedMilliseconds / 1000f));
         goto RESTART;
     }
@@ -162,6 +167,14 @@ public class GameWorld : MonoBehaviour
         return fn;
     }
 
+    #region Helper
+    public List<Vector3> SmoothPath(List<Vector3> vectorPath, bool likeSlime, SimpleSmoothModifier.SmoothType smoothType = SimpleSmoothModifier.SmoothType.Simple)
+    {
+        if (likeSlime) { return slimeHandler.SmoothLikeSlime(vectorPath); }
+        return slimeHandler.Smooth(vectorPath, smoothType);
+    }
+    #endregion
+
     #region Registry
     public void Register(Entity e)
     {
@@ -184,6 +197,15 @@ public class GameWorld : MonoBehaviour
                 en.transform.parent = entityHolder;
             }
             return;
+        }
+        PoliceCar pc = e as PoliceCar;
+        if (pc)
+        {
+            if (!policeCars.Contains(pc))
+            {
+                policeCars.Add(pc);
+                pc.transform.parent = entityHolder;
+            }
         }
         FungusCore fc = e as FungusCore;
         if (fc)
@@ -218,6 +240,8 @@ public class GameWorld : MonoBehaviour
         if (fn) { nodes.Remove(fn); return; }
         Human en = e as Human;
         if (en) { humans.Remove(en); return; }
+        PoliceCar pc = e as PoliceCar;
+        if (pc) { policeCars.Remove(pc); return; }
         FungusCore fc = e as FungusCore;
         if (fc) { if (core == fc) { core = null; } return; }
         PoliceStation ps = e as PoliceStation;

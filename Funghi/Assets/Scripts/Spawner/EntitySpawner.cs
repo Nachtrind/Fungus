@@ -2,7 +2,7 @@
 using UnityEngine;
 using Spawner.Modules;
 
-public class HumanSpawner: MonoBehaviour
+public class EntitySpawner: MonoBehaviour
 {
     public bool autoActivateOnStart = true;
 
@@ -28,7 +28,7 @@ public class HumanSpawner: MonoBehaviour
     public void Activate()
     {
         if (spawnModule == null) { Debug.LogError("Spawner is missing configuration"); return; }
-        ModuleWorker worker = new ModuleWorker(this);
+        ModuleWorker worker = new ModuleWorker(this, OnSpawnCompleted);
         if (eventModule != null && eventModule.BeforeSpawn) { worker.steps.Add(eventModule.Apply); }
         worker.steps.Add(spawnModule.Apply);
         if (positionModule != null) { worker.steps.Add(positionModule.Apply); }
@@ -38,9 +38,14 @@ public class HumanSpawner: MonoBehaviour
         worker.ProcessNext(null);
     }
 
-    Human CreateEmptyHuman(Human e)
+    public event System.Action<Entity> OnSpawned;
+
+    void OnSpawnCompleted(Entity e)
     {
-        return Instantiate(e, transform.position, Quaternion.identity) as Human;
+        if (OnSpawned != null)
+        {
+            OnSpawned(e);
+        }
     }
 
     public void CancelRepeating()

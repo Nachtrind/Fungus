@@ -7,8 +7,7 @@ namespace Spawner.Modules
 {
     public abstract class SpawnModule : BaseModule
     {
-        [FormerlySerializedAs("enemyPrefab")]
-        public Human humanPrefab;
+        public Entity prefab;
         public virtual void DrawGizmos(Vector3 center) { }
     }
 }

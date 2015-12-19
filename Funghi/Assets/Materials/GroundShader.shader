@@ -1,10 +1,13 @@
-﻿Shader "Fungus/GroundShader"
+﻿// Upgrade NOTE: replaced 'glstate.matrix.mvp' with 'UNITY_MATRIX_MVP'
+
+Shader "Fungus/GroundShader"
 {
 	Properties
 	{
 		_MainTex("Schleim (nicht zuweisen)", 2D) = "red" {}
 		_StructureTex("Struktur (zuweisen)", 2D) = "white" {}
-		_Ground("Boden (zuweisen)", 2D) = "black" {}
+		_Ground("Boden (zuweisen)", 2D) = "gray" {}
+		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Speed("Geschwindigkeit", Range(0,0.1)) = 0.05
 		_Strength("Stärke", Range(0, 0.05)) = 0.05
 		_Color("Tint", color) = (1,1,1,1)
@@ -22,6 +25,7 @@
 		sampler2D _MainTex;
 		sampler2D _StructureTex;
 		sampler2D _Ground;
+		half _Glossiness;
 		fixed4 _Color;
 		fixed _Speed;
 		fixed _Strength;
@@ -37,6 +41,8 @@
 
 		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
+			IN.screenPos.w += 0.0001;
+			half2 screenSpace = IN.screenPos.xy / IN.screenPos.w;
 			fixed speed = frac(_Speed*_Time.g);
 			fixed3 displacer = tex2D(_StructureTex, IN.uv_StructureTex+speed);
 			fixed gray = dot(displacer.rgb, fixed3(0.3, 0.59, 0.11));
@@ -46,16 +52,17 @@
 			{
 				for (fixed y = -1;y <= 1;y++) 
 				{
-					mask += tex2D(_MainTex, lerp(fixed2(IN.screenPos.x+(x*_Spread), IN.screenPos.y+(y*_Spread)), disp, _Strength));
+					mask += tex2D(_MainTex, lerp(fixed2(screenSpace.x+(x*_Spread), screenSpace.y+(y*_Spread)), disp, _Strength));
 				}
 			}
 			mask /= 9;
 			fixed slimesharpness = step(_CutOff, mask.g);
 			fixed3 slime = tex2D(_StructureTex, lerp(IN.uv_StructureTex, disp, _Strength*5));
 			fixed3 ground = tex2D(_Ground, IN.uv_Ground);
+			o.Smoothness = _Glossiness;
 			o.Albedo = lerp(slime*_Color*2, ground, 1-slimesharpness);
 		}
 		ENDCG
 	}
-	FallBack "Legacy/Transparent/Diffuse"
+	FallBack "Legacy/Diffuse"
 }

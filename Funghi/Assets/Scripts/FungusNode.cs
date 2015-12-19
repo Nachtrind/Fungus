@@ -1,8 +1,7 @@
 ﻿using NodeAbilities;
+using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
-using System;
 
 public class FungusNode : Entity
 {
@@ -23,7 +22,7 @@ public class FungusNode : Entity
 	public Sprite growth;
 	SpriteRenderer abilityDisplay;
 
-	protected override void Initialize ()
+	protected override void OnStart ()
 	{
 		world.SetPositionIsSlime (transform.position, size, true);
 		CreateConnections ();
@@ -42,7 +41,7 @@ public class FungusNode : Entity
 		world.SetPositionIsSlime (transform.position, size, false);
 	}
 
-	protected override void Tick (float deltaTime)
+	protected override void OnUpdate (float deltaTime)
 	{
 		//using ability if active
 		if (isActive && attackTimer > ability.tickRate) {
@@ -81,8 +80,7 @@ public class FungusNode : Entity
 
 	[Header("Node specialization")]
 	[SerializeField]
-	NodeAbility
-		ability;
+	NodeAbility ability;
 
 	public void ExecuteAbility ()
 	{
@@ -195,9 +193,8 @@ public class FungusNode : Entity
     #endregion
 
     #region State
-	public override void Damage (Entity attacker, int amount)
+	public override void OnDamage (Entity attacker)
 	{
-		SubtractHealth (amount);
 		if (IsDead) {
 			world.OnFungusNodeWasDestroyed (this);
 		}

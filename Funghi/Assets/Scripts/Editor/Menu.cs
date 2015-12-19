@@ -7,12 +7,12 @@ public class Menu
 
     const string BaseMenu = "Fungus";
 
-    [MenuItem(BaseMenu+"/Create Human Spawner")]
+    [MenuItem(BaseMenu+"/Create Spawner")]
     static void CreateEnemySpawner()
     {
         GameObject go = new GameObject("SpawnPoint");
         go.transform.position = GetPositionFromView();
-        go.AddComponent<HumanSpawner>();
+        go.AddComponent<EntitySpawner>();
         Selection.activeGameObject = go;
     }
 

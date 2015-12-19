@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,17 +7,18 @@ namespace Spawner.Modules
     public class SpawnOnce : SpawnModule
     {
         public float delay = 0f;
-        public override void Apply(Human e, ModuleWorker worker)
+        public override void Apply(Entity e, ModuleWorker worker)
         {
             worker.source.StartCoroutine(Execute(worker));
         }
 
         IEnumerator Execute(ModuleWorker worker)
         {
+            worker.Restart();
             yield return new WaitForSeconds(delay);
-            if (humanPrefab != null)
+            if (prefab != null)
             {
-                worker.ProcessNext(Instantiate(humanPrefab, worker.source.transform.position, Quaternion.identity) as Human);
+                worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.identity) as Entity);
             }
         }
     }

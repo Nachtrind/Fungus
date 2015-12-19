@@ -27,6 +27,37 @@ public class SlimeHandler: MonoBehaviour
         whiteMaterial.color = Color.green;
     }
 
+    public List<Vector3> Smooth(List<Vector3> vectorPath, SimpleSmoothModifier.SmoothType smoothType)
+    {
+        switch (smoothType)
+        {
+            default:
+                return pathSmoother.SmoothSimple(vectorPath);
+            case SimpleSmoothModifier.SmoothType.Bezier:
+                return pathSmoother.SmoothBezier(vectorPath);
+            case SimpleSmoothModifier.SmoothType.OffsetSimple:
+                return pathSmoother.SmoothOffsetSimple(vectorPath);
+            case SimpleSmoothModifier.SmoothType.CurvedNonuniform:
+                return pathSmoother.CurvedNonuniform(vectorPath);
+        }
+    }
+
+    public List<Vector3> SmoothLikeSlime(List<Vector3> vectorPath)
+    {
+        if (!smooth) { return vectorPath; }
+        switch (pathSmoother.smoothType)
+        {
+            default:
+                return pathSmoother.SmoothSimple(vectorPath);
+            case SimpleSmoothModifier.SmoothType.Bezier:
+                return pathSmoother.SmoothBezier(vectorPath);
+            case SimpleSmoothModifier.SmoothType.OffsetSimple:
+                return pathSmoother.SmoothOffsetSimple(vectorPath);
+            case SimpleSmoothModifier.SmoothType.CurvedNonuniform:
+                return pathSmoother.CurvedNonuniform(vectorPath);
+        }
+    }
+
     public void AddConnection(SlimePath path)
     {
         if (smooth)
@@ -46,7 +77,6 @@ public class SlimeHandler: MonoBehaviour
                     path.ApplySmoother(pathSmoother.CurvedNonuniform);
                     break;
             }
-
         }
         slimePaths.Add(path);
     }
@@ -77,6 +107,10 @@ public class SlimeHandler: MonoBehaviour
         GridGraph gg = AstarPath.active.astarData.gridGraph;
         whiteMaterial.SetPass(0);
         GL.Clear(true, true, Color.red);
+        GL.PushMatrix();
+        GL.LoadProjectionMatrix(Camera.main.projectionMatrix);
+        GL.LoadIdentity();
+        GL.MultMatrix(Camera.main.worldToCameraMatrix);
         GL.Begin(GL.QUADS);
         GL.Color(Color.green);
         for (int i = 0; i < gg.nodes.Length; i++)
@@ -94,6 +128,7 @@ public class SlimeHandler: MonoBehaviour
             GL.Vertex3(bottomLeft.x+ gg.nodeSize, 0, bottomLeft.z);
         }
         GL.End();
+        GL.PopMatrix();
         RenderTexture.active = previousRT;
         groundMaterial.mainTexture = rt;
     }

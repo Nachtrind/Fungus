@@ -12,10 +12,25 @@ GameObject:
   - 114: {fileID: 11403472}
   - 54: {fileID: 5440110}
   - 136: {fileID: 13600694}
-  - 23: {fileID: 2386310}
-  - 33: {fileID: 3345098}
   m_Layer: 0
-  m_Name: NormalHuman
+  m_Name: NormalPolice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &135086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 426210}
+  - 23: {fileID: 2394232}
+  - 33: {fileID: 3338678}
+  m_Layer: 0
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,6 +76,18 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157752}
   m_LocalRotation: {x: .0110337026, y: -.7070207, z: -.707020819, w: .0110337008}
+  m_LocalPosition: {x: 0, y: .0991000012, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 466592}
+  m_RootOrder: 1
+--- !u!4 &426210
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135086}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -72,32 +99,33 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167070}
-  m_LocalRotation: {x: -.89134711, y: -.0463994034, z: -.0859322101, w: .4426772}
-  m_LocalPosition: {x: -.0229997635, y: -.00999998767, z: .480998814}
+  m_LocalRotation: {x: .242091283, y: 0, z: 0, w: .970253527}
+  m_LocalPosition: {x: 0, y: .108000003, z: .0189999994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 466592}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &466592
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 124204}
-  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.25052929, y: 1.68566146e-07, z: -.942690134}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 426210}
   - {fileID: 426054}
   - {fileID: 428922}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2386310
+--- !u!23 &2394232
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124204}
+  m_GameObject: {fileID: 135086}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -110,18 +138,20 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3345098
+--- !u!33 &3338678
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124204}
+  m_GameObject: {fileID: 135086}
   m_Mesh: {fileID: 4300000, guid: 549ff630b5654bc44932f84373d196a5, type: 3}
 --- !u!54 &5440110
 Rigidbody:
@@ -212,10 +242,13 @@ MonoBehaviour:
   currentHealth: 5
   maxHealth: 5
   isAttackable: 1
-  debug: 0
-  moveSpeed: 1
-  resourceValue: 0
   behaviour: {fileID: 0}
+  moveSpeed: .25
+  turnSpeed: .200000003
+  movePathSmoothing: 1
+  debug: 0
+  damageTriggerIdentifier: OnDamage
+  resourceValue: 0
 --- !u!136 &13600694
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1300,7 +1333,9 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -1371,7 +1406,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: moveSpeed
-      value: 1
+      value: .25
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.x
@@ -1380,6 +1415,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
       value: .707106709
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: turnSpeed
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: movePathSmoothing
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

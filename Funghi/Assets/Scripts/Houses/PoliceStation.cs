@@ -1,21 +1,31 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(HumanSpawner))]
+[RequireComponent(typeof(EntitySpawner))]
 public class PoliceStation: House
 {
     [SerializeField]
-    HumanSpawner spawner;
-
-    public override void Damage(Entity attacker, int amount) { }
+    EntitySpawner spawner;
 
     Vector3 lastSeenNodePosition;
 
-    void Start()
+    protected override void OnAwake()
     {
         if (spawner == null)
         {
-            spawner = GetComponent<HumanSpawner>();
+            spawner = GetComponent<EntitySpawner>();
+        }
+        if (spawner != null)
+        {
+            spawner.OnSpawned += OnPoliceSpawned;
+            spawner.autoActivateOnStart = false;
+        }
+    }
+
+    protected override void Cleanup()
+    {
+        if (spawner)
+        {
+            spawner.OnSpawned -= OnPoliceSpawned;
         }
     }
 
@@ -24,11 +34,11 @@ public class PoliceStation: House
         spawner.Activate();
     }
 
-    public void OnPoliceSpawned(Human human)
+    public void OnPoliceSpawned(Entity police)
     {
-        if (human.Behaviour)
+        if (police.Behaviour)
         {
-            human.Behaviour.TryExecuteTrigger("Alarm", lastSeenNodePosition);
+            police.Behaviour.TryExecuteTrigger("Alarm", lastSeenNodePosition);
         }
     }
 

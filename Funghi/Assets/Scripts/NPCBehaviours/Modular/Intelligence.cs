@@ -9,7 +9,8 @@ namespace ModularBehaviour
         ParameterStorage Storage { get; }
         bool IsActiveState(string stateName);
         bool WasLastState(string stateName);
-        Human Owner { get; }
+        void LoadPath(PatrolPath path);
+        Entity Owner { get; }
     }
 
     [CreateAssetMenu(menuName ="Behaviour/Intelligence", fileName ="Behaviour")]
@@ -32,12 +33,13 @@ namespace ModularBehaviour
         ParameterStorage storage = new ParameterStorage();
         ParameterStorage IntelligenceController.Storage { get { return storage; } }
 
-        Human owner;
-        public Human Owner { get { return owner; } }
+        Entity owner;
+        public Entity Owner { get { return owner; } }
 
-        public void Initialize(Human owner)
+        public void Initialize(Entity owner)
         {
             this.owner = owner;
+            if (storage == null) { storage = new ParameterStorage(); }
         }
 
         [System.Serializable]
@@ -112,9 +114,18 @@ namespace ModularBehaviour
             storage.SetParameter(name, value);
         }
 
+        public void LoadPath(PatrolPath path)
+        {
+            storage.SetParameter(PathIdentifier, path);
+        }
+
+        public void LoadSpecialPath(PatrolPath path)
+        {
+            storage.SetParameter(SpecialPathIdentifier, path);
+        }
+
         public void UpdateTick(float delta)
         {
-            if (storage == null) { storage = new ParameterStorage(); }
             if (activeState)
             {
                 if (!initialized)
@@ -129,7 +140,7 @@ namespace ModularBehaviour
             }
         }
 
-        public void DrawDebugInfos(Human h)
+        public void DrawDebugInfos(Entity e)
         {
             Vector2 unitPos = Camera.main.WorldToScreenPoint(owner.transform.position);
             unitPos.y = Screen.height - unitPos.y;
@@ -138,7 +149,7 @@ namespace ModularBehaviour
             GUILayout.EndArea();
         }
 
-        public void DrawGizmos(Human h)
+        public void DrawGizmos(Entity e)
         {
 
         }

@@ -9,5 +9,4 @@ namespace ModularBehaviour
         public virtual void DrawGUI(Intelligence intelligence, CallbackCollection callbacks) { }
         public virtual void OnDelete(CallbackCollection callbacks) { }
     }
-
 }

@@ -7,17 +7,17 @@ namespace Spawner.Modules
     {
         public Intelligence behaviour;
         public PatrolPath path;
-        public override void Apply(Human e, ModuleWorker worker)
+        public override void Apply(Entity e, ModuleWorker worker)
         {
             if (e.SetBehaviour(behaviour))
             {
                 if (path != null)
                 {
-                    e.Behaviour.Store(Intelligence.PathIdentifier, path);
+                    e.Behaviour.LoadPath(path);
                 }
                 if (worker.linkedSpawnPath != null)
                 {
-                    e.Behaviour.Store(Intelligence.SpecialPathIdentifier, worker.linkedSpawnPath);
+                    e.Behaviour.LoadSpecialPath(worker.linkedSpawnPath);
                 }
             }
             worker.ProcessNext(e);
