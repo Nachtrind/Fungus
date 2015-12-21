@@ -97,7 +97,7 @@ Material:
           name: _Ground
         second:
           m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
-          m_Scale: {x: 1, y: -.349999994}
+          m_Scale: {x: 1, y: -0.35}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
@@ -111,11 +111,11 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .600000024
+        second: 0.6
       data:
         first:
           name: _Parallax
-        second: .0199999996
+        second: 0.02
       data:
         first:
           name: _ZWrite
@@ -123,7 +123,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .5
+        second: 0.5
       data:
         first:
           name: _BumpScale
@@ -151,11 +151,11 @@ Material:
       data:
         first:
           name: _Speed
-        second: .0215000007
+        second: 0.0215
       data:
         first:
           name: _CutOff
-        second: .5
+        second: 0.5
       data:
         first:
           name: _Stencil
@@ -183,23 +183,23 @@ Material:
       data:
         first:
           name: _Amount
-        second: .00930000003
+        second: 0.0093
       data:
         first:
           name: _Test
-        second: .5
+        second: 0.5
       data:
         first:
           name: _Strength
-        second: .0074
+        second: 0.0074
       data:
         first:
           name: _Sharpness
-        second: .100000001
+        second: 0.1
       data:
         first:
           name: _Spread
-        second: .0120000001
+        second: 0.012
     m_Colors:
       data:
         first:
@@ -208,4 +208,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .326291621, g: .757352948, b: .077962786, a: 1}
+        second: {r: 0.32629162, g: 0.75735295, b: 0.077962786, a: 1}

@@ -163,6 +163,7 @@ public class FungusNode : Entity
 
 	List<PathRequest> pendingPaths = new List<PathRequest> ();
 	List<FungusNode> nodeConnections = new List<FungusNode> ();
+    public List<FungusNode> Connections { get { return nodeConnections; } }
 
 	public void ConnectTo (FungusNode other)
 	{

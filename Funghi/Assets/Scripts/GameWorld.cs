@@ -266,7 +266,7 @@ public class GameWorld : MonoBehaviour
                 humans[i].ReceiveBroadcast(message);
             }
         }
-        
+
     }
 
     public void BroadcastToNodes(Message message, Vector3 position, float radius = float.PositiveInfinity)
@@ -388,7 +388,7 @@ public class GameWorld : MonoBehaviour
         guo.updatePhysics = false;
         guo.modifyWalkability = false;
         guo.setTag = state ? slimeTag : 0;
-		guo.updatePhysics = false;
+        guo.updatePhysics = false;
         AstarPath.active.UpdateGraphs(guo);
     }
 
@@ -403,6 +403,30 @@ public class GameWorld : MonoBehaviour
         {
             Debug.DrawLine(nn.clampedPosition, point);
             return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// untested, may crash
+    /// </summary>
+    public bool IsConnectedToBrain(FungusNode node)
+    {
+        FungusNode nearestToBrain = GetNearestFungusNode(core.transform.position); //TODO: replace with better guess (Vector Project + distance to projection (slimeradius))
+        HashSet<FungusNode> traversed = new HashSet<FungusNode>();
+        return RecurseIsConnectedToBrain(node, nearestToBrain, traversed);
+    }
+
+    bool RecurseIsConnectedToBrain(FungusNode searchNode, FungusNode currentNode, HashSet<FungusNode> traversed)
+    {
+        if (searchNode == currentNode) { return true; }
+        for (int i = 0; i < currentNode.Connections.Count; i++)
+        {
+            if (!traversed.Add(currentNode.Connections[i])) { continue; }
+            if (RecurseIsConnectedToBrain(searchNode, currentNode.Connections[i], traversed))
+            {
+                return true;
+            }
         }
         return false;
     }

@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'glstate.matrix.mvp' with 'UNITY_MATRIX_MVP'
-
-Shader "Fungus/GroundShader"
+﻿Shader "Fungus/GroundShader"
 {
 	Properties
 	{
