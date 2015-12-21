@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Name: IsInRange
   m_EditorClassIdentifier: 
   entityVarName: target
-  range: .5
+  range: 0.5
 --- !u!114 &11430832
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: IsInRange
   m_EditorClassIdentifier: 
   entityVarName: target
-  range: .5
+  range: 0.5
 --- !u!114 &11445722
 MonoBehaviour:
   m_ObjectHideFlags: 3

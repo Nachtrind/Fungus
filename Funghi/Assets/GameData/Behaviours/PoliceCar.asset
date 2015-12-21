@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c348385380512124eb8ba09fac7aa327, type: 3}
   m_Name: ExecuteMethod
   m_EditorClassIdentifier: 
-  methodName: Trigger
+  methodName: SpawnPolice
 --- !u!114 &11498860
 MonoBehaviour:
   m_ObjectHideFlags: 3

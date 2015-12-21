@@ -16,7 +16,10 @@ namespace ModularBehaviour
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
         {
 #if UNITY_EDITOR
-            UnityEditor.EditorGUILayout.TextField("Name:", methodName);
+            UnityEditor.EditorGUILayout.BeginHorizontal();
+            UnityEngine.GUILayout.Label("Method name:");
+            methodName = UnityEditor.EditorGUILayout.TextField(methodName);
+            UnityEditor.EditorGUILayout.EndHorizontal();
 #endif
         }
     }

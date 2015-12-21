@@ -9,8 +9,337 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ef402280a3d32b49999db9550152f4a, type: 3}
-  m_Name: Zombi
+  m_Name: Zombie
   m_EditorClassIdentifier: 
-  states: []
-  triggers: []
+  states:
+  - {fileID: 11467116}
+  - {fileID: 11403230}
+  - {fileID: 11451364}
+  triggers:
+  - trigger: AttachToNode
+    action: {fileID: 11421382}
   activeState: {fileID: 0}
+--- !u!114 &11401308
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b1fddb650b7d34f96c8df07d65bace, type: 3}
+  m_Name: EnterState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11467116}
+--- !u!114 &11402352
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 11483268}
+  thenAction: {fileID: 11435392}
+--- !u!114 &11403230
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
+  m_Name: GotoTarget
+  m_EditorClassIdentifier: 
+  enterActions:
+  - {fileID: 11442780}
+  updateActions:
+  - {fileID: 11499998}
+  - {fileID: 11438828}
+  exitActions: []
+--- !u!114 &11413630
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d3844d3e508b24db79559d9b204ca4, type: 3}
+  m_Name: VariableIsSet
+  m_EditorClassIdentifier: 
+  varName: target
+--- !u!114 &11421382
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8663dc160f9ff4458f4586cc661d154, type: 3}
+  m_Name: IfThen
+  m_EditorClassIdentifier: 
+  ifAction: {fileID: 11422672}
+  thenAction: {fileID: 11401308}
+  invert: 0
+--- !u!114 &11422672
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71442c073d0cb64c913f256a218fbfc, type: 3}
+  m_Name: SavePassedValue
+  m_EditorClassIdentifier: 
+  saveName: Node
+--- !u!114 &11435392
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11403230}
+--- !u!114 &11438828
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 0
+  ifAction: {fileID: 11495406}
+  thenAction: {fileID: 11499600}
+--- !u!114 &11442258
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 11497188}
+  thenAction: {fileID: 11470720}
+--- !u!114 &11442780
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
+--- !u!114 &11451364
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
+  m_Name: AttackTarget
+  m_EditorClassIdentifier: 
+  enterActions:
+  - {fileID: 11451654}
+  updateActions:
+  - {fileID: 11469164}
+  - {fileID: 11442258}
+  - {fileID: 11402352}
+  exitActions: []
+--- !u!114 &11451654
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
+--- !u!114 &11456576
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ec4b0afe7596b47972221c4f77fa74, type: 3}
+  m_Name: FindTarget
+  m_EditorClassIdentifier: 
+  Type: 0
+  range: 0.5
+  checkLOS: 1
+  saveVar: 1
+  storageVar: target
+--- !u!114 &11464694
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bc05717988f3a4ab0213350fddbad0, type: 3}
+  m_Name: WanderAround
+  m_EditorClassIdentifier: 
+  centerPositionVar: Node
+  minRadius: 0.2
+  maxRadius: 0.5
+  waitChance: 50
+  randomWaitTimeMin: 0
+  randomWaitTimeMax: 0.5
+--- !u!114 &11467116
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
+  m_Name: Zombiefied
+  m_EditorClassIdentifier: 
+  enterActions: []
+  updateActions:
+  - {fileID: 11469322}
+  - {fileID: 11464694}
+  exitActions: []
+--- !u!114 &11468242
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11467116}
+--- !u!114 &11469164
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6000c39f020e4ee4c8c3f2f3c999df93, type: 3}
+  m_Name: Attack
+  m_EditorClassIdentifier: 
+  entityVarName: target
+  damagePerSecond: 20
+--- !u!114 &11469322
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 0
+  ifAction: {fileID: 11456576}
+  thenAction: {fileID: 0}
+--- !u!114 &11470720
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
+  m_Name: Suicide
+  m_EditorClassIdentifier: 
+--- !u!114 &11483268
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d91fc288de3bdf541b6b7ac172829cf5, type: 3}
+  m_Name: IsInRange
+  m_EditorClassIdentifier: 
+  entityVarName: target
+  range: 0.5
+--- !u!114 &11495406
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d91fc288de3bdf541b6b7ac172829cf5, type: 3}
+  m_Name: IsInRange
+  m_EditorClassIdentifier: 
+  entityVarName: target
+  range: 0.5
+--- !u!114 &11497188
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d3844d3e508b24db79559d9b204ca4, type: 3}
+  m_Name: VariableIsSet
+  m_EditorClassIdentifier: 
+  varName: target
+--- !u!114 &11499600
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11451364}
+--- !u!114 &11499998
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 11413630}
+  thenAction: {fileID: 11468242}

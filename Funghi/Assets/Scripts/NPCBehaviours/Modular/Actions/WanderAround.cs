@@ -22,7 +22,12 @@ namespace ModularBehaviour
             Vector3 centerPosVar;
             if (!controller.Storage.TryGetParameter(centerPositionVar, out centerPosVar))
             {
-                return ActionResult.Failed;
+                Entity e;
+                if (!controller.Storage.TryGetParameter(centerPositionVar, out e))
+                {
+                    return ActionResult.Failed;
+                }
+                centerPosVar = e.transform.position;
             }
             Entity.MoveResult res = controller.Owner.MoveTo(centerPosVar + targetPos);
             if (res == Entity.MoveResult.ReachedTarget || res == Entity.MoveResult.TargetNotReachable)
@@ -40,6 +45,7 @@ namespace ModularBehaviour
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
         {
 #if UNITY_EDITOR
+            centerPositionVar = EditorGUILayout.TextField("Center var name", centerPositionVar);
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Radius:", GUILayout.ExpandWidth(false));
             EditorGUILayout.MinMaxSlider(ref minRadius, ref maxRadius, 0f, 2f);

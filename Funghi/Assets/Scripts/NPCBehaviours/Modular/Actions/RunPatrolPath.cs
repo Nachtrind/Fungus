@@ -19,31 +19,34 @@ namespace ModularBehaviour
                 Entity.MoveResult result = controller.Owner.MoveTo(currentPoint.position);
                 if (result == Entity.MoveResult.ReachedTarget)
                 {
-                    switch (currentPoint.action)
+                    if (!ignorePathConfiguration)
                     {
-                        case PatrolPath.PatrolPointActions.Wait:
-                            currentWaitTime = currentPoint.waitTime;
-                            break;
-                        case PatrolPath.PatrolPointActions.ChangePath:
-                            PatrolPath linkedPath = currentPoint.linkedPath;
-                            if (linkedPath != null)
-                            {
-                                controller.LoadPath(linkedPath);
-                                controller.Storage.SetParameter(Intelligence.PathIndexIdentifier, linkedPath.GetNearestPatrolPointIndex(controller.Owner.transform.position));
-                                return ActionResult.Running;
-                            }
-                            break;
-                        case PatrolPath.PatrolPointActions.ExecuteFunction:
-                            switch (currentPoint.target)
-                            {
-                                case PatrolPath.PatrolPoint.FunctionTarget.NPC:
-                                    controller.Owner.BroadcastMessage(currentPoint.functionName, UnityEngine.SendMessageOptions.RequireReceiver);
-                                    break;
-                                case PatrolPath.PatrolPoint.FunctionTarget.PatrolPath:
-                                    path.BroadcastMessage(currentPoint.functionName, UnityEngine.SendMessageOptions.RequireReceiver);
-                                    break;
-                            }
-                            break;
+                        switch (currentPoint.action)
+                        {
+                            case PatrolPath.PatrolPointActions.Wait:
+                                currentWaitTime = currentPoint.waitTime;
+                                break;
+                            case PatrolPath.PatrolPointActions.ChangePath:
+                                PatrolPath linkedPath = currentPoint.linkedPath;
+                                if (linkedPath != null)
+                                {
+                                    controller.LoadPath(linkedPath);
+                                    controller.Storage.SetParameter(Intelligence.PathIndexIdentifier, linkedPath.GetNearestPatrolPointIndex(controller.Owner.transform.position));
+                                    return ActionResult.Running;
+                                }
+                                break;
+                            case PatrolPath.PatrolPointActions.ExecuteFunction:
+                                switch (currentPoint.target)
+                                {
+                                    case PatrolPath.PatrolPoint.FunctionTarget.NPC:
+                                        controller.Owner.BroadcastMessage(currentPoint.functionName, UnityEngine.SendMessageOptions.RequireReceiver);
+                                        break;
+                                    case PatrolPath.PatrolPoint.FunctionTarget.PatrolPath:
+                                        path.BroadcastMessage(currentPoint.functionName, UnityEngine.SendMessageOptions.RequireReceiver);
+                                        break;
+                                }
+                                break;
+                        }
                     }
                     currentIndex++;
                     if (currentIndex >= path.points.Count)
@@ -60,7 +63,7 @@ namespace ModularBehaviour
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
         {
 #if UNITY_EDITOR
-            ignorePathConfiguration = UnityEditor.EditorGUILayout.Toggle("Ignore point-settings", ignorePathConfiguration);
+            ignorePathConfiguration = UnityEditor.EditorGUILayout.Toggle("Ignore point actions", ignorePathConfiguration);
                 #endif
         }
     }

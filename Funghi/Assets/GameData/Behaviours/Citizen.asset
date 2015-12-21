@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2979ee48931fae478eba4c6eb8d6896, type: 3}
   m_Name: RunPatrolPath
   m_EditorClassIdentifier: 
+  ignorePathConfiguration: 0
 --- !u!114 &11428378
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -345,6 +346,17 @@ MonoBehaviour:
   updateActions:
   - {fileID: 11410694}
   exitActions: []
+--- !u!114 &11484686
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11487930
 MonoBehaviour:
   m_ObjectHideFlags: 3
