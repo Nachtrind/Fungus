@@ -27,6 +27,11 @@ public class SlimeHandler: MonoBehaviour
         whiteMaterial.color = Color.green;
     }
 
+    void OnApplicationQuit()
+    {
+        groundMaterial.mainTexture = null;
+    }
+
     public List<Vector3> Smooth(List<Vector3> vectorPath, SimpleSmoothModifier.SmoothType smoothType)
     {
         switch (smoothType)
