@@ -17,10 +17,10 @@ namespace ModularBehaviour
             Message m = new Message(controller.Owner, type, Vector3.zero);
             if (positionVariableName.Length > 0)
             {
-                if (!controller.Storage.TryGetParameter(positionVariableName, out m.position))
+                if (!controller.GetMemoryValue(positionVariableName, out m.position))
                 {
                     Entity e = null;
-                    if (!controller.Storage.TryGetParameter(positionVariableName, out e))
+                    if (!controller.GetMemoryValue(positionVariableName, out e))
                     {
                         return ActionResult.Failed;
                     }

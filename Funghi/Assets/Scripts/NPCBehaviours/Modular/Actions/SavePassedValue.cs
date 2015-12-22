@@ -10,7 +10,7 @@ namespace ModularBehaviour
         public string saveName = "";
         public override ActionResult Fire(IntelligenceController controller, object value = null)
         {
-            controller.Storage.SetParameter(saveName, value);
+            controller.SetMemoryValue(saveName, value);
             return ActionResult.Finished;
         }
 

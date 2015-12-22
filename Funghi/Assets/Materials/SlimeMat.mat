@@ -83,7 +83,7 @@ Material:
           name: _StructureTex
         second:
           m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
-          m_Scale: {x: 3, y: 2}
+          m_Scale: {x: 4, y: 3}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -96,8 +96,15 @@ Material:
         first:
           name: _Ground
         second:
-          m_Texture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
-          m_Scale: {x: 1, y: -0.35}
+          m_Texture: {fileID: 2800000, guid: 681ea79f1bae440be9dc0e8a746eaa8d, type: 3}
+          m_Scale: {x: 150, y: 100}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MainTexture
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
@@ -151,11 +158,11 @@ Material:
       data:
         first:
           name: _Speed
-        second: 0.0215
+        second: 0.05
       data:
         first:
           name: _CutOff
-        second: 0.5
+        second: 0.25
       data:
         first:
           name: _Stencil
@@ -191,7 +198,7 @@ Material:
       data:
         first:
           name: _Strength
-        second: 0.0074
+        second: 0.025
       data:
         first:
           name: _Sharpness
@@ -199,7 +206,31 @@ Material:
       data:
         first:
           name: _Spread
-        second: 0.012
+        second: 1
+      data:
+        first:
+          name: _BlockyNess
+        second: 71.64
+      data:
+        first:
+          name: _GlowSteps
+        second: 3
+      data:
+        first:
+          name: _Blockyness
+        second: 30
+      data:
+        first:
+          name: _PixelBorder
+        second: 0
+      data:
+        first:
+          name: _BorderStrength
+        second: 0.002
+      data:
+        first:
+          name: _GlowWobble
+        second: 0.005
     m_Colors:
       data:
         first:
@@ -208,4 +239,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.32629162, g: 0.75735295, b: 0.077962786, a: 1}
+        second: {r: 0.36551726, g: 1, b: 0, a: 1}
+      data:
+        first:
+          name: _GlowColor
+        second: {r: 1, g: 0.51724136, b: 0, a: 1}

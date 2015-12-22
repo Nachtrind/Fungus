@@ -49,8 +49,16 @@ public abstract class Entity : MonoBehaviour
     #region Behaviour
     [SerializeField, ReadOnlyInInspector]
     protected Intelligence behaviour;
+    /// <summary>
+    /// Direct access to the behaviour, used by the Spawner (for triggers use <seealso cref="TriggerBehaviour(string, object)"/>)
+    /// </summary>
     public Intelligence Behaviour { get { return behaviour; } }
 
+    /// <summary>
+    /// Overrides the behaviour of this entity
+    /// </summary>
+    /// <param name="behaviour">selected behaviour to replace the old one</param>
+    /// <returns></returns>
     public bool SetBehaviour(Intelligence behaviour)
     {
         if (this.behaviour != null) { Destroy(this.behaviour); }
@@ -63,9 +71,25 @@ public abstract class Entity : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Removes the behaviour of this entity, it will no longer react to triggers or make decisions
+    /// </summary>
     public void RemoveBehaviour()
     {
         if (behaviour != null) { Destroy(behaviour); }
+    }
+
+    /// <summary>
+    /// If the behaviour supports <paramref name="triggerName"/> it will be executed and <paramref name="optionalParameter"/> will be passed to it
+    /// </summary>
+    /// <param name="triggerName">the name of trigger specified in the behaviour editor</param>
+    /// <param name="optionalParameter">an optional parameter which the behaviour can use</param>
+    public void TriggerBehaviour(string triggerName, object optionalParameter)
+    {
+        if (behaviour)
+        {
+            behaviour.TryExecuteTrigger(triggerName, optionalParameter);
+        }
     }
     #endregion
 

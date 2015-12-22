@@ -20,11 +20,11 @@ namespace ModularBehaviour
             if (m.type != handledType) { return ActionResult.Failed; }
             if (savePosition)
             {
-                controller.Storage.SetParameter(varName, m.position);
+                controller.SetMemoryValue(varName, m.position);
             }
             if (saveSender)
             {
-                controller.Storage.SetParameter(senderVarName, m.sender);
+                controller.SetMemoryValue(senderVarName, m.sender);
             }
             if (action)
             {

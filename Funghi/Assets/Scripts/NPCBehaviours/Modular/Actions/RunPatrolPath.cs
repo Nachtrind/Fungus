@@ -8,12 +8,12 @@ namespace ModularBehaviour
         {
             if (currentWaitTime > 0) { currentWaitTime = UnityEngine.Mathf.Clamp(currentWaitTime - deltaTime, 0, currentWaitTime); return ActionResult.Running; }
             PatrolPath path = null;
-            if (controller.Storage.TryGetParameter(Intelligence.PathIdentifier, out path))
+            if (controller.GetMemoryValue(Intelligence.PathIdentifier, out path))
             {
                 int currentIndex = 0;
-                if (!controller.Storage.TryGetParameter(Intelligence.PathIndexIdentifier, out currentIndex))
+                if (!controller.GetMemoryValue(Intelligence.PathIndexIdentifier, out currentIndex))
                 {
-                    controller.Storage.SetParameter(Intelligence.PathIndexIdentifier, 0);
+                    controller.SetMemoryValue(Intelligence.PathIndexIdentifier, 0);
                 }
                 PatrolPath.PatrolPoint currentPoint = path.points[currentIndex];
                 Entity.MoveResult result = controller.Owner.MoveTo(currentPoint.position);
@@ -31,7 +31,7 @@ namespace ModularBehaviour
                                 if (linkedPath != null)
                                 {
                                     controller.LoadPath(linkedPath);
-                                    controller.Storage.SetParameter(Intelligence.PathIndexIdentifier, linkedPath.GetNearestPatrolPointIndex(controller.Owner.transform.position));
+                                    controller.SetMemoryValue(Intelligence.PathIndexIdentifier, linkedPath.GetNearestPatrolPointIndex(controller.Owner.transform.position));
                                     return ActionResult.Running;
                                 }
                                 break;
@@ -53,7 +53,7 @@ namespace ModularBehaviour
                     {
                         currentIndex = 0;
                     }
-                    controller.Storage.SetParameter(Intelligence.PathIndexIdentifier, currentIndex);
+                    controller.SetMemoryValue(Intelligence.PathIndexIdentifier, currentIndex);
                 }
                 return ActionResult.Running;
             }

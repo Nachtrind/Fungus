@@ -6,7 +6,9 @@ namespace ModularBehaviour
     public interface IntelligenceController
     {
         void ChangeState(IntelligenceState newState);
-        ParameterStorage Storage { get; }
+        bool HasMemory<T>(string identifier);
+        void SetMemoryValue(string identifier, object value);
+        bool GetMemoryValue<T>(string identifier, out T value);
         bool IsActiveState(string stateName);
         bool WasLastState(string stateName);
         void LoadPath(PatrolPath path);
@@ -29,17 +31,12 @@ namespace ModularBehaviour
         [HideInInspector, SerializeField]
         public List<ActionTrigger> triggers = new List<ActionTrigger>();
 
-        [HideInInspector]
-        ParameterStorage storage = new ParameterStorage();
-        ParameterStorage IntelligenceController.Storage { get { return storage; } }
-
         Entity owner;
         public Entity Owner { get { return owner; } }
 
         public void Initialize(Entity owner)
         {
             this.owner = owner;
-            if (storage == null) { storage = new ParameterStorage(); }
         }
 
         [System.Serializable]
@@ -109,19 +106,57 @@ namespace ModularBehaviour
             }
         }
 
-        public void Store(string name, object value)
+        #region Memory
+        Dictionary<string, object> memory = new Dictionary<string, object>(System.StringComparer.OrdinalIgnoreCase);
+
+        public void SetMemoryValue(string name, object value)
         {
-            storage.SetParameter(name, value);
+            if (memory.ContainsKey(name))
+            {
+                memory[name] = value;
+            }
+            else
+            {
+                memory.Add(name, value);
+            }
         }
+
+        public bool HasMemory<T>(string name)
+        {
+            if (memory.ContainsKey(name) && memory[name] is T && !memory[name].Equals(default(T)))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool GetMemoryValue<T>(string name, out T value)
+        {
+            object existing;
+            if (memory.TryGetValue(name, out existing))
+            {
+                if (existing is T && !existing.Equals(default(T)))
+                {
+                    value = (T)(existing);
+                    return true;
+                }
+                value = default(T);
+                return false;
+            }
+            value = default(T);
+            return false;
+        }
+
+        #endregion
 
         public void LoadPath(PatrolPath path)
         {
-            storage.SetParameter(PathIdentifier, path);
+            SetMemoryValue(PathIdentifier, path);
         }
 
         public void LoadSpecialPath(PatrolPath path)
         {
-            storage.SetParameter(SpecialPathIdentifier, path);
+            SetMemoryValue(SpecialPathIdentifier, path);
         }
 
         public void UpdateTick(float delta)

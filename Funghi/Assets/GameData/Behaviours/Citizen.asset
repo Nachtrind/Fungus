@@ -17,11 +17,14 @@ MonoBehaviour:
   - {fileID: 11493950}
   - {fileID: 11482708}
   - {fileID: 11451718}
+  - {fileID: 11486422}
   triggers:
   - trigger: EnterWorld
     action: {fileID: 11428378}
   - trigger: LeaveWorld
     action: {fileID: 11480146}
+  - trigger: Lure
+    action: {fileID: 11447352}
   activeState: {fileID: 11423596}
 --- !u!114 &11404658
 MonoBehaviour:
@@ -35,6 +38,17 @@ MonoBehaviour:
   m_Name: VariableIsSet
   m_EditorClassIdentifier: 
   varName: target
+--- !u!114 &11405762
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11410694
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -60,7 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: RunToPoliceStation
   m_EditorClassIdentifier: 
-  enterActions: []
+  enterActions:
+  - {fileID: 11471490}
   updateActions:
   - {fileID: 11450780}
   - {fileID: 11443554}
@@ -81,6 +96,30 @@ MonoBehaviour:
   checkLOS: 0
   saveVar: 1
   storageVar: policePosition
+--- !u!114 &11419308
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11423596}
+--- !u!114 &11420152
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11423596}
 --- !u!114 &11423596
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -92,7 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: PartyIdle
   m_EditorClassIdentifier: 
-  enterActions: []
+  enterActions:
+  - {fileID: 11482690}
   updateActions:
   - {fileID: 11472578}
   - {fileID: 11427846}
@@ -121,6 +161,17 @@ MonoBehaviour:
   m_Name: EnterState
   m_EditorClassIdentifier: 
   newState: {fileID: 11451718}
+--- !u!114 &11429444
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11430958
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -133,6 +184,20 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11411318}
+--- !u!114 &11432952
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 0
+  ifAction: {fileID: 11456096}
+  thenAction: {fileID: 11419308}
 --- !u!114 &11433730
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -144,6 +209,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806fdeabd543aff4c8f69a9c5e4b7030, type: 3}
   m_Name: RunSpecialPath
   m_EditorClassIdentifier: 
+--- !u!114 &11439172
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b1fddb650b7d34f96c8df07d65bace, type: 3}
+  m_Name: EnterState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11486422}
 --- !u!114 &11440134
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -155,6 +232,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806fdeabd543aff4c8f69a9c5e4b7030, type: 3}
   m_Name: RunSpecialPath
   m_EditorClassIdentifier: 
+--- !u!114 &11441138
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71442c073d0cb64c913f256a218fbfc, type: 3}
+  m_Name: SavePassedValue
+  m_EditorClassIdentifier: 
+  saveName: Node
 --- !u!114 &11443554
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -185,6 +274,18 @@ MonoBehaviour:
   checkLOS: 1
   saveVar: 1
   storageVar: target
+--- !u!114 &11444790
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d3844d3e508b24db79559d9b204ca4, type: 3}
+  m_Name: VariableIsSet
+  m_EditorClassIdentifier: 
+  varName: Node
 --- !u!114 &11447282
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -197,6 +298,20 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11423596}
+--- !u!114 &11447352
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8663dc160f9ff4458f4586cc661d154, type: 3}
+  m_Name: IfThen
+  m_EditorClassIdentifier: 
+  ifAction: {fileID: 11441138}
+  thenAction: {fileID: 11439172}
+  invert: 0
 --- !u!114 &11450780
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -240,6 +355,18 @@ MonoBehaviour:
   invert: 0
   ifAction: {fileID: 11440134}
   thenAction: {fileID: 11447282}
+--- !u!114 &11456096
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685688ef6ad465f458519a360919a753, type: 3}
+  m_Name: MoveToStoredPos
+  m_EditorClassIdentifier: 
+  storeName: Node
 --- !u!114 &11458760
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -263,6 +390,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
   m_Name: Suicide
   m_EditorClassIdentifier: 
+--- !u!114 &11461302
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 11444790}
+  thenAction: {fileID: 11420152}
 --- !u!114 &11466958
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -289,6 +430,17 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11423596}
+--- !u!114 &11471490
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11472578
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -330,6 +482,17 @@ MonoBehaviour:
   m_Name: EnterState
   m_EditorClassIdentifier: 
   newState: {fileID: 11482708}
+--- !u!114 &11482690
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11482708
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -357,6 +520,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
   m_EditorClassIdentifier: 
+--- !u!114 &11486422
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
+  m_Name: GotoSeduced
+  m_EditorClassIdentifier: 
+  enterActions:
+  - {fileID: 11429444}
+  updateActions:
+  - {fileID: 11461302}
+  - {fileID: 11432952}
+  exitActions: []
 --- !u!114 &11487930
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -406,6 +586,7 @@ MonoBehaviour:
   m_Name: AlarmPolice
   m_EditorClassIdentifier: 
   enterActions:
+  - {fileID: 11405762}
   - {fileID: 11472724}
   updateActions:
   - {fileID: 11493136}

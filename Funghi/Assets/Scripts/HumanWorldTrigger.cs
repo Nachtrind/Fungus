@@ -26,10 +26,7 @@ public class HumanWorldTrigger: MonoBehaviour
         if (e != null)
         {
             if (linkedPath == null) { Destroy(e.gameObject); return; }
-            if (e.Behaviour)
-            {
-                e.Behaviour.TryExecuteTrigger(triggerIdentifier, linkedPath);
-            }
+            e.TriggerBehaviour(triggerIdentifier, linkedPath);
         }
     }
 

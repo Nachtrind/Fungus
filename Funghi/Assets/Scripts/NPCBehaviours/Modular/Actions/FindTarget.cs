@@ -39,7 +39,7 @@ namespace ModularBehaviour
                 }
                 if (saveVar)
                 {
-                    controller.Storage.SetParameter(storageVar, t);
+                    controller.SetMemoryValue(storageVar, t);
                 }
                 return ActionResult.Finished;
             }

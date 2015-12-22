@@ -26,10 +26,7 @@ public class Human : Entity
 
     public override void OnDamage(Entity attacker)
     {
-        if (behaviour)
-        {
-            behaviour.TryExecuteTrigger(damageTriggerIdentifier, attacker);
-        }
+        TriggerBehaviour(damageTriggerIdentifier, attacker);
         particleDamage.Play();
         if (IsDead)
         {

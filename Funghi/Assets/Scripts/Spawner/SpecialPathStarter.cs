@@ -6,10 +6,7 @@ namespace Spawner.Modules
         {
             if (worker.linkedSpawnPath != null)
             {
-                if (e.Behaviour)
-                {
-                    e.Behaviour.TryExecuteTrigger(worker.pathStartIdentifier, worker.linkedSpawnPath);
-                }
+                e.TriggerBehaviour(worker.pathStartIdentifier, worker.linkedSpawnPath);
             }
             worker.ProcessNext(e);
         }

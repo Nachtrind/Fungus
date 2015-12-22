@@ -14,7 +14,7 @@ namespace ModularBehaviour
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
             Entity t = null;
-            if (controller.Storage.TryGetParameter(entityVarName, out t) && t != null)
+            if (controller.GetMemoryValue(entityVarName, out t) && t != null)
             {
                 if (Mathf.Sqrt(AstarMath.SqrMagnitudeXZ(controller.Owner.transform.position, t.transform.position)) < range)
                 {

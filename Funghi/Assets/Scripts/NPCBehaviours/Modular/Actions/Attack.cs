@@ -13,7 +13,7 @@ namespace ModularBehaviour
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
             Entity target;
-            if (controller.Storage.TryGetParameter(entityVarName, out target))
+            if (controller.GetMemoryValue(entityVarName, out target))
             {
                 if (!target.isAttackable) { return ActionResult.Failed; }
                 target.Damage(controller.Owner, (int)(damagePerSecond * deltaTime));

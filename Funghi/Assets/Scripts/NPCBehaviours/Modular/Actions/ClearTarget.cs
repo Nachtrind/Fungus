@@ -7,7 +7,7 @@ namespace ModularBehaviour
     {
         public override ActionResult Fire(IntelligenceController controller)
         {
-            controller.Storage.SetParameter("target", null);
+            controller.SetMemoryValue("target", null);
             return ActionResult.Finished;
         }
     }

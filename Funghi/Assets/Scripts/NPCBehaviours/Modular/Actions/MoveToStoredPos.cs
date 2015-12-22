@@ -11,7 +11,7 @@ namespace ModularBehaviour
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
             Vector3 target = controller.Owner.transform.position;
-            if (controller.Storage.TryGetParameter(storeName, out target))
+            if (controller.GetMemoryValue(storeName, out target))
             {
                 Human.MoveResult res = controller.Owner.MoveTo(target);
                 if (res == Human.MoveResult.ReachedTarget)
@@ -26,7 +26,7 @@ namespace ModularBehaviour
             else
             {
                 Entity t = controller.Owner;
-                if (controller.Storage.TryGetParameter(storeName, out t))
+                if (controller.GetMemoryValue(storeName, out t))
                 {
                     Human.MoveResult res = controller.Owner.MoveTo(t.transform.position);
                     if (res == Human.MoveResult.ReachedTarget)

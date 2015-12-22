@@ -36,10 +36,7 @@ public class PoliceStation: House
 
     public void OnPoliceSpawned(Entity police)
     {
-        if (police.Behaviour)
-        {
-            police.Behaviour.TryExecuteTrigger("Alarm", lastSeenNodePosition);
-        }
+        police.TriggerBehaviour("Alarm", lastSeenNodePosition);
     }
 
     public override void ReceiveBroadcast(Message message)

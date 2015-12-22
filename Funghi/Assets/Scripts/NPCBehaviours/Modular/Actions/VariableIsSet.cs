@@ -12,7 +12,7 @@ namespace ModularBehaviour
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
             object o;
-            if (controller.Storage.TryGetParameter(varName, out o))
+            if (controller.GetMemoryValue(varName, out o))
             {
                 return ActionResult.Finished;
             }

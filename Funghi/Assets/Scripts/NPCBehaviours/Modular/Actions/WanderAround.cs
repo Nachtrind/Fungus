@@ -20,10 +20,10 @@ namespace ModularBehaviour
         {
             if (currentWait > 0) { currentWait = Mathf.Clamp(currentWait - deltaTime, 0, currentWait); return ActionResult.Running; }
             Vector3 centerPosVar;
-            if (!controller.Storage.TryGetParameter(centerPositionVar, out centerPosVar))
+            if (!controller.GetMemoryValue(centerPositionVar, out centerPosVar))
             {
                 Entity e;
-                if (!controller.Storage.TryGetParameter(centerPositionVar, out e))
+                if (!controller.GetMemoryValue(centerPositionVar, out e))
                 {
                     return ActionResult.Failed;
                 }

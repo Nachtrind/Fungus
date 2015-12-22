@@ -27,6 +27,8 @@ MonoBehaviour:
     action: {fileID: 11412358}
   - trigger: EnterWorld
     action: {fileID: 11400892}
+  - trigger: Lure
+    action: {fileID: 11456130}
   activeState: {fileID: 11452240}
 --- !u!114 &11400134
 MonoBehaviour:
@@ -40,7 +42,7 @@ MonoBehaviour:
   m_Name: SavePassedValue
   m_EditorClassIdentifier: 
   saveName: AlarmPosition
---- !u!114 &11400268
+--- !u!114 &11400408
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -48,9 +50,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
-  m_Name: StopMovement
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
   m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 11448214}
+  thenAction: {fileID: 11449678}
 --- !u!114 &11400892
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -161,6 +166,18 @@ MonoBehaviour:
   type: 0
   positionVariableName: target
   radius: 2
+--- !u!114 &11409408
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b1fddb650b7d34f96c8df07d65bace, type: 3}
+  m_Name: EnterState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11472174}
 --- !u!114 &11412188
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -197,6 +214,17 @@ MonoBehaviour:
   m_Name: RunSpecialPath
   m_EditorClassIdentifier: 
 --- !u!114 &11413794
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
+--- !u!114 &11418822
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -353,6 +381,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
   m_EditorClassIdentifier: 
+--- !u!114 &11448214
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d3844d3e508b24db79559d9b204ca4, type: 3}
+  m_Name: VariableIsSet
+  m_EditorClassIdentifier: 
+  varName: AlarmPosition
 --- !u!114 &11449242
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -365,6 +405,18 @@ MonoBehaviour:
   m_Name: EnterState
   m_EditorClassIdentifier: 
   newState: {fileID: 11472174}
+--- !u!114 &11449678
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11452240}
 --- !u!114 &11450178
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -392,7 +444,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: Idle
   m_EditorClassIdentifier: 
-  enterActions: []
+  enterActions:
+  - {fileID: 11418822}
   updateActions:
   - {fileID: 11498860}
   - {fileID: 11402610}
@@ -427,6 +480,20 @@ MonoBehaviour:
   saveSender: 0
   senderVarName: alarmSender
   action: {fileID: 11401576}
+--- !u!114 &11456130
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8663dc160f9ff4458f4586cc661d154, type: 3}
+  m_Name: IfThen
+  m_EditorClassIdentifier: 
+  ifAction: {fileID: 11465852}
+  thenAction: {fileID: 11409408}
+  invert: 0
 --- !u!114 &11457700
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -516,6 +583,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
   m_Name: Suicide
   m_EditorClassIdentifier: 
+--- !u!114 &11465852
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71442c073d0cb64c913f256a218fbfc, type: 3}
+  m_Name: SavePassedValue
+  m_EditorClassIdentifier: 
+  saveName: AlarmPosition
 --- !u!114 &11466660
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -555,8 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: EnterWorld
   m_EditorClassIdentifier: 
-  enterActions:
-  - {fileID: 11400268}
+  enterActions: []
   updateActions:
   - {fileID: 11494696}
   exitActions: []
@@ -574,6 +652,7 @@ MonoBehaviour:
   enterActions:
   - {fileID: 11447768}
   updateActions:
+  - {fileID: 11400408}
   - {fileID: 11497146}
   exitActions: []
 --- !u!114 &11475180
