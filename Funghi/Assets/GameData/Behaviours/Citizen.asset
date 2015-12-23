@@ -26,6 +26,23 @@ MonoBehaviour:
   - trigger: Lure
     action: {fileID: 11447352}
   activeState: {fileID: 11423596}
+--- !u!114 &11400872
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bc05717988f3a4ab0213350fddbad0, type: 3}
+  m_Name: WanderAround
+  m_EditorClassIdentifier: 
+  centerPositionVar: Node
+  minRadius: 1.5
+  maxRadius: 1.6
+  waitChance: 0
+  randomWaitTimeMin: 0
+  randomWaitTimeMax: 0
 --- !u!114 &11404658
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -137,6 +154,22 @@ MonoBehaviour:
   - {fileID: 11472578}
   - {fileID: 11427846}
   exitActions: []
+--- !u!114 &11426012
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c348385380512124eb8ba09fac7aa327, type: 3}
+  m_Name: ExecuteMethod
+  m_EditorClassIdentifier: 
+  methodName: ConnectTo
+  useTargetVar: 1
+  targetVarName: Node
+  paramType: 2
+  paramTypeValue: SpawnedNode
 --- !u!114 &11427846
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -149,6 +182,21 @@ MonoBehaviour:
   m_Name: RunPatrolPath
   m_EditorClassIdentifier: 
   ignorePathConfiguration: 0
+--- !u!114 &11427892
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: SpawnFungusNode
+  m_EditorClassIdentifier: Assembly-CSharp:ModularBehaviour:SpawnFungusNode
+  posVarSource: 0
+  posVarName: target
+  saveAsVar: 1
+  saveVarName: SpawnedNode
 --- !u!114 &11428378
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -418,6 +466,20 @@ MonoBehaviour:
   invert: 0
   ifAction: {fileID: 11416330}
   thenAction: {fileID: 11430958}
+--- !u!114 &11467490
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 0}
+  thenAction: {fileID: 0}
 --- !u!114 &11470726
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -430,6 +492,17 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11423596}
+--- !u!114 &11470888
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11471490
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -591,6 +664,17 @@ MonoBehaviour:
   updateActions:
   - {fileID: 11493136}
   exitActions: []
+--- !u!114 &11495050
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
+  m_Name: Suicide
+  m_EditorClassIdentifier: 
 --- !u!114 &11498882
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -603,3 +687,17 @@ MonoBehaviour:
   m_Name: MoveToStoredPos
   m_EditorClassIdentifier: 
   storeName: policePosition
+--- !u!114 &11498912
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 0}
+  thenAction: {fileID: 0}

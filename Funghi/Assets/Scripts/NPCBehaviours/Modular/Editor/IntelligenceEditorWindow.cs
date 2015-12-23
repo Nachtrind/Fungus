@@ -115,9 +115,11 @@ public class IntelligenceEditorWindow : EditorWindow
     const string downSymbol = "˅";
     const string upSymbol = "˄";
     const int symbolWidth = 20;
+    Vector2 scrollPos;
 
     void OnGUI()
     {
+        scrollPos = GUILayout.BeginScrollView(scrollPos);
         EditorGUILayout.BeginHorizontal();
 
         EditorGUILayout.BeginVertical(GUILayout.Width(200));
@@ -135,7 +137,9 @@ public class IntelligenceEditorWindow : EditorWindow
             SerializedProperty startState = serializedObject.FindProperty("activeState");
             if (startState != null)
             {
-                GUILayout.BeginHorizontal();
+                GUI.backgroundColor = Color.gray;
+                GUILayout.BeginHorizontal(EditorStyles.helpBox);
+                GUI.backgroundColor = Color.white;
                 GUILayout.Label("Start state:", GUILayout.Width(70));
                 if (startState.objectReferenceValue != null)
                 {
@@ -238,7 +242,7 @@ public class IntelligenceEditorWindow : EditorWindow
         {
             bool delete = false;
 
-            GUI.backgroundColor = Color.gray;
+            GUI.backgroundColor = intel.IsActiveState(intel.states[i].name) ? Color.black : Color.gray;
             EditorGUILayout.BeginVertical(EditorStyles.helpBox, GUILayout.Width(150));
             GUI.backgroundColor = Color.white;
 
@@ -417,5 +421,6 @@ public class IntelligenceEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
 
         EditorGUILayout.EndHorizontal();
+        GUILayout.EndScrollView();
     }
 }

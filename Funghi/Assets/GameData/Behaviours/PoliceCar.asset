@@ -207,18 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
   m_EditorClassIdentifier: 
---- !u!114 &11419736
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a6fb68ebe591f4689ee451aab48271, type: 3}
-  m_Name: DebugLog
-  m_EditorClassIdentifier: 
-  debugString: Alarmed
 --- !u!114 &11427674
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -365,7 +353,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: Idle
   m_EditorClassIdentifier: 
-  enterActions: []
+  enterActions:
+  - {fileID: 11472306}
   updateActions:
   - {fileID: 11498860}
   - {fileID: 11402610}
@@ -532,10 +521,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11447768}
-  - {fileID: 11419736}
   updateActions:
   - {fileID: 11497146}
   exitActions: []
+--- !u!114 &11472306
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11475180
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -640,6 +639,10 @@ MonoBehaviour:
   m_Name: ExecuteMethod
   m_EditorClassIdentifier: 
   methodName: SpawnPolice
+  useTargetVar: 0
+  targetVarName: target
+  paramType: 0
+  paramTypeValue: target
 --- !u!114 &11498860
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -17,12 +17,14 @@ public class NavMeshRenderer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
+        string activeSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 		if (lastLevel == "") {
-			lastLevel = EditorApplication.currentScene;
+            //lastLevel = EditorApplication.currentScene;
+            lastLevel = activeSceneName;
 		}
 		
-		if (lastLevel != EditorApplication.currentScene) {
+		if (lastLevel != activeSceneName) {
 #if ASTARDEBUG
 			Debug.Log ("Level change "+lastLevel+" --> "+EditorApplication.currentScene);
 #endif

@@ -45,7 +45,10 @@ namespace ModularBehaviour
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
         {
 #if UNITY_EDITOR
-            centerPositionVar = EditorGUILayout.TextField("Center var name", centerPositionVar);
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("Center var name:");
+            centerPositionVar = EditorGUILayout.TextField(centerPositionVar);
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Radius:", GUILayout.ExpandWidth(false));
             EditorGUILayout.MinMaxSlider(ref minRadius, ref maxRadius, 0f, 2f);

@@ -56,8 +56,9 @@ namespace ModularBehaviour
 
         bool initialized = false;
 
-        bool IntelligenceController.IsActiveState(string stateName)
+        public bool IsActiveState(string stateName)
         {
+            if (activeState == null) { return false; }
             return activeState.name.Equals(stateName, System.StringComparison.OrdinalIgnoreCase);
         }
 
@@ -81,18 +82,23 @@ namespace ModularBehaviour
             }
         }
 
-        public void TryExecuteTrigger(string trigger, object value)
+        public bool TryExecuteTrigger(string trigger, object value)
         {
+            bool success = false;
             for (int i = 0; i < triggers.Count; i++)
             {
                 if (triggers[i].trigger.Equals(trigger, System.StringComparison.OrdinalIgnoreCase))
                 {
                     if (triggers[i].action != null)
                     {
-                        triggers[i].action.Fire(this, value);
+                        if (triggers[i].action.Fire(this, value) == ActionResult.Finished)
+                        {
+                            success = true;
+                        }
                     }
                 }
             }
+            return success;
         }
 
         public void HandleMessageBroadcast(Message m)

@@ -6,6 +6,8 @@ using ModularBehaviour;
 [RequireComponent(typeof(Seeker))]
 public abstract class Entity : MonoBehaviour
 {
+    protected GameWorld world;
+    #region Health
     [Header("State")]
     [SerializeField]
     int currentHealth;
@@ -14,9 +16,6 @@ public abstract class Entity : MonoBehaviour
     int maxHealth;
     public int MaxHealth { get { return maxHealth; } }
 
-    protected GameWorld world;
-
-    #region Health
     public bool isAttackable = true;
 
     public void Damage(Entity attacker, int amount)
@@ -84,12 +83,13 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     /// <param name="triggerName">the name of trigger specified in the behaviour editor</param>
     /// <param name="optionalParameter">an optional parameter which the behaviour can use</param>
-    public void TriggerBehaviour(string triggerName, object optionalParameter)
+    public bool TriggerBehaviour(string triggerName, object optionalParameter = null)
     {
         if (behaviour)
         {
-            behaviour.TryExecuteTrigger(triggerName, optionalParameter);
+            return behaviour.TryExecuteTrigger(triggerName, optionalParameter);
         }
+        return false;
     }
     #endregion
 
