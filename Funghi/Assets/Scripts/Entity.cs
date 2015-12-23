@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using ModularBehaviour;
 
+[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Seeker))]
 public abstract class Entity : MonoBehaviour
 {
@@ -21,11 +22,20 @@ public abstract class Entity : MonoBehaviour
     public void Damage(Entity attacker, int amount)
     {
         SubtractHealth(amount);
+        if (IsDead)
+        {
+            PlaySound(SoundSet.ClipType.Death);
+        }
+        else
+        {
+            PlaySound(SoundSet.ClipType.ReceiveDamage);
+        }
         OnDamage(attacker);
     }
     public virtual void OnDamage(Entity attacker) { }
     public void Kill(Entity murderer)
     {
+        PlaySound(SoundSet.ClipType.Death);
         Damage(murderer, currentHealth);
     }
 
@@ -93,11 +103,56 @@ public abstract class Entity : MonoBehaviour
     }
     #endregion
 
+    #region Sound
+    AudioSource audioSource;
+
+    [SerializeField]
+    [Header("Sound")]
+    SoundSet soundSet;
+    
+    public bool PlaySound(SoundSet.ClipType type)
+    {
+        if (soundSet == null) { return false; }
+        SoundSet.ClipPlayType playType;
+        AudioClip clip = soundSet.GetClip(type, out playType);
+        if (clip)
+        {
+            if (playType == SoundSet.ClipPlayType.OneShot)
+            {
+                audioSource.PlayOneShot(clip);
+                return true;
+            }
+            audioSource.clip = clip;
+            audioSource.Play();
+            return true;
+        }
+        return false;
+    }
+
+    public void PlayOneShotSound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
+    public void OverrideContinuousSound(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+
+    public void StopSound()
+    {
+        audioSource.Stop();
+    }
+
+    #endregion
+
     void Awake()
     {
         world = GameWorld.Instance;
         world.Register(this);
         seeker = GetComponent<Seeker>();
+        audioSource = GetComponent<AudioSource>();
         OnAwake();
     }
 
