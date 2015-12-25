@@ -75,18 +75,6 @@ MonoBehaviour:
   m_Name: EnterState
   m_EditorClassIdentifier: 
   newState: {fileID: 11472174}
---- !u!114 &11402610
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2979ee48931fae478eba4c6eb8d6896, type: 3}
-  m_Name: RunPatrolPath
-  m_EditorClassIdentifier: 
-  ignorePathConfiguration: 0
 --- !u!114 &11402626
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -141,6 +129,8 @@ MonoBehaviour:
   enterActions:
   - {fileID: 11460532}
   - {fileID: 11409164}
+  - {fileID: 11477372}
+  - {fileID: 11427860}
   updateActions:
   - {fileID: 11479330}
   - {fileID: 11480458}
@@ -219,6 +209,19 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11452240}
+--- !u!114 &11427860
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 5
+  interval: 0.5
 --- !u!114 &11428004
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -291,6 +294,18 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11452240}
+--- !u!114 &11446480
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2979ee48931fae478eba4c6eb8d6896, type: 3}
+  m_Name: RunPatrolPath
+  m_EditorClassIdentifier: 
+  ignorePathConfiguration: 0
 --- !u!114 &11447222
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -355,9 +370,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11472306}
+  - {fileID: 11498592}
+  - {fileID: 11460498}
   updateActions:
   - {fileID: 11498860}
-  - {fileID: 11402610}
+  - {fileID: 11446480}
   exitActions: []
 --- !u!114 &11453834
 MonoBehaviour:
@@ -401,6 +418,19 @@ MonoBehaviour:
   invert: 0
   ifAction: {fileID: 11457700}
   thenAction: {fileID: 11465666}
+--- !u!114 &11460498
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 1
+  interval: 0.5
 --- !u!114 &11460532
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -559,6 +589,19 @@ MonoBehaviour:
   m_Name: VariableIsSet
   m_EditorClassIdentifier: 
   varName: target
+--- !u!114 &11477372
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 4
+  interval: 0.5
 --- !u!114 &11479330
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -627,6 +670,18 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11452240}
+--- !u!114 &11498592
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed38ac0c9f5e03741960ef2d310a123f, type: 3}
+  m_Name: StopSound
+  m_EditorClassIdentifier: 
+  type: 5
 --- !u!114 &11498626
 MonoBehaviour:
   m_ObjectHideFlags: 3

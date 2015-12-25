@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class HumanWorldTrigger: MonoBehaviour
+public class EntityTrigger: MonoBehaviour
 {
     public string triggerIdentifier = "LeaveWorld";
     public PatrolPath linkedPath;
@@ -25,7 +25,6 @@ public class HumanWorldTrigger: MonoBehaviour
         Human e = GetComponent<Human>();
         if (e != null)
         {
-            if (linkedPath == null) { Destroy(e.gameObject); return; }
             e.TriggerBehaviour(triggerIdentifier, linkedPath);
         }
     }

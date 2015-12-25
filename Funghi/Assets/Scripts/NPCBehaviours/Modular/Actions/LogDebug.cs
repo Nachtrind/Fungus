@@ -8,7 +8,7 @@ namespace ModularBehaviour
         public override ActionResult Fire(IntelligenceController controller, object value = null)
         {
             Debug.Log(txt);
-            return ActionResult.Finished;
+            return ActionResult.Success;
         }
 
         public override void DrawGUI(Intelligence intelligence, CallbackCollection callbacks)

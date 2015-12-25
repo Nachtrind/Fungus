@@ -5,18 +5,15 @@ namespace ModularBehaviour
 {
     public class IntelligenceState: ScriptableObject
     {
-        public List<OneShotAction> enterActions = new List<OneShotAction>();
+        public List<AIAction> enterActions = new List<AIAction>();
         public List<AIAction> updateActions = new List<AIAction>();
-        public List<OneShotAction> exitActions = new List<OneShotAction>();
+        public List<AIAction> exitActions = new List<AIAction>();
 
         public void OnEnter(IntelligenceController controller)
         {
             for (int i = 0; i < enterActions.Count; i++)
             {
-                if (enterActions[i].Fire(controller)== ActionResult.SkipNext)
-                {
-                    return;
-                }
+                enterActions[i].Fire(controller);
             }
         }
 
@@ -24,10 +21,7 @@ namespace ModularBehaviour
         {
             for (int i = 0; i < exitActions.Count; i++)
             {
-                if (exitActions[i].Fire(controller) == ActionResult.SkipNext)
-                {
-                    return;
-                }
+                exitActions[i].Fire(controller);
             }
         }
 
@@ -35,10 +29,7 @@ namespace ModularBehaviour
         {
             for (int i = 0; i < updateActions.Count; i++)
             {
-                if (updateActions[i].Run(controller, deltaTime) == ActionResult.SkipNext)
-                {
-                    return;
-                }
+                updateActions[i].Run(controller, deltaTime);
             }
         }
 

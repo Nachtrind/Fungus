@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(EntityMover))]
 public class Human : Entity
 {
 

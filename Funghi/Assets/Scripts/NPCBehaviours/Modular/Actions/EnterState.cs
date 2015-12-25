@@ -14,7 +14,7 @@ namespace ModularBehaviour
             if (newState)
             {
                 controller.ChangeState(newState);
-                return ActionResult.SkipNext;
+                return ActionResult.Success;
             }
             return ActionResult.Failed;
         }

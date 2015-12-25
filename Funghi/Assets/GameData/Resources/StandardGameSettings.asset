@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687c35218fe1c104880e49ecd34f606e, type: 3}
+  m_Name: StandardGameSettings
+  m_EditorClassIdentifier: 
+  masterMixer: {fileID: 24100000, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
+  entityGroup: {fileID: 24309398, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
+  ambienceGroup: {fileID: 24364214, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
+  musicGroup: {fileID: 24327000, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
+  baseMaxDistance: 10
+  baseVolume: 0.25

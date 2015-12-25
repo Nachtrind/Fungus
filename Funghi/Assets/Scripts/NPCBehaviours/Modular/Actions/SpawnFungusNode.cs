@@ -2,13 +2,20 @@ using UnityEngine;
 
 namespace ModularBehaviour
 {
-    public class SpawnFungusNode : OneShotAction
+    [ActionUsage(UsageType.AsOneShot, UsageType.AsCondition)]
+    public class SpawnFungusNode : AIAction
     {
         public enum PositionSource { Self, VarValue }
         public PositionSource posVarSource = PositionSource.Self;
         public string posVarName = "target";
         public bool saveAsVar = false;
         public string saveVarName = "SpawnedNode";
+
+        public override ActionResult Run(IntelligenceController controller, float deltaTime)
+        {
+            return Fire(controller);
+        }
+
         public override ActionResult Fire(IntelligenceController controller)
         {
             Vector3 pos;
@@ -35,11 +42,11 @@ namespace ModularBehaviour
                 if (saveVarName.Length > 0)
                 {
                     controller.SetMemoryValue(saveVarName, node);
-                    return ActionResult.Finished;
+                    return ActionResult.Success;
                 }
                 return ActionResult.Failed;
             }
-            return ActionResult.Finished;
+            return ActionResult.Success;
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

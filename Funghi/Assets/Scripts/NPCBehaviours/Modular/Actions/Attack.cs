@@ -6,21 +6,29 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsCondition)]
     public class Attack : AIAction
     {
         public string entityVarName = "target";
-        public int damagePerSecond = 20;
+        public float interval = 0.5f;
+        public int damagePerAttack = 20;
+
+        float lastAttack = 0;
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
-            Entity target;
-            if (controller.GetMemoryValue(entityVarName, out target))
+            if (Time.time - lastAttack > interval)
             {
-                if (!target.isAttackable) { return ActionResult.Failed; }
-                target.Damage(controller.Owner, (int)(damagePerSecond * deltaTime));
-                if (target.IsDead) { return ActionResult.Finished; }
-                return ActionResult.Running;
+                Entity target;
+                if (controller.GetMemoryValue(entityVarName, out target))
+                {
+                    if (!target.isAttackable) { return ActionResult.Failed; }
+                    target.Damage(controller.Owner, (int)(damagePerAttack * deltaTime));
+                    return ActionResult.Success;
+                }
+                lastAttack = Time.time;
             }
-            return ActionResult.Finished;
+            return ActionResult.Running;
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
@@ -30,7 +38,11 @@ namespace ModularBehaviour
             GUILayout.Label("Target var name:");
             entityVarName = EditorGUILayout.TextField(entityVarName);
             EditorGUILayout.EndHorizontal();
-            damagePerSecond = EditorGUILayout.IntField(new GUIContent("Damage:", "per second"), damagePerSecond);
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("Interval:");
+            interval = EditorGUILayout.Slider(interval, 0.1f, 2f);
+            EditorGUILayout.EndHorizontal();
+            damagePerAttack = EditorGUILayout.IntField(new GUIContent("Damage:", "per interval"), damagePerAttack);
 #endif
         }
     }

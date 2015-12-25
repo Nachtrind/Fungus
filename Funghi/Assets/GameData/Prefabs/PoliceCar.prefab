@@ -41,9 +41,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 428514}
   - 114: {fileID: 11426340}
+  - 114: {fileID: 11484972}
   - 114: {fileID: 11472168}
   - 54: {fileID: 5471200}
   - 136: {fileID: 13622708}
+  - 82: {fileID: 8265758}
+  - 114: {fileID: 11493906}
   m_Layer: 0
   m_Name: PoliceCar
   m_TagString: Untagged
@@ -210,6 +213,81 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8265758
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170608}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24309398, guid: 203b3525ddf760a4695a3d52ed00f006,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 1
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 10
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!108 &10848494
 Light:
   m_ObjectHideFlags: 1
@@ -291,9 +369,7 @@ MonoBehaviour:
   maxHealth: 5
   isAttackable: 1
   behaviour: {fileID: 0}
-  moveSpeed: 0.5
-  turnSpeed: 0.3
-  movePathSmoothing: 1
+  soundSet: {fileID: 11400000, guid: 053b6b6847d915348843f20ef32062f5, type: 2}
   policePrefab: {fileID: 11436818, guid: f36e0d5b0eeabfc49aa57982ae942c97, type: 2}
   policeBehaviour: {fileID: 11400000, guid: fccf3140223f98e4f9b0be214ecfb459, type: 2}
   numPoliceInside: 3
@@ -314,7 +390,7 @@ MonoBehaviour:
   drawGizmos: 1
   detailedGizmos: 0
   startEndModifier:
-    priority: 1
+    priority: 2
     addPoints: 0
     exactStartPoint: 3
     exactEndPoint: 3
@@ -328,6 +404,32 @@ MonoBehaviour:
     tagsChange: -1
     tagsSet: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &11484972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bf4d8f68407b6449de4be12ce25985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.5
+  turnSpeed: 0.33
+  extraPathSmoothing: 0
+--- !u!114 &11493906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 1
 --- !u!136 &13622708
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1898,19 +2000,69 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: movePathSmoothing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: moveSpeed
-      value: .5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: turnSpeed
-      value: .300000012
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Shadows.m_NearPlane
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: soundSet
+      value: 
+      objectReference: {fileID: 11400000, guid: 053b6b6847d915348843f20ef32062f5,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24309398, guid: 203b3525ddf760a4695a3d52ed00f006,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startEndModifier.priority
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

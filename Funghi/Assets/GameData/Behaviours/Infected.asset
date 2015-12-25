@@ -18,21 +18,6 @@ MonoBehaviour:
   - trigger: Infect
     action: {fileID: 11477976}
   activeState: {fileID: 0}
---- !u!114 &11402400
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: SpawnFungusNode
-  m_EditorClassIdentifier: Assembly-CSharp:ModularBehaviour:SpawnFungusNode
-  posVarSource: 0
-  posVarName: target
-  saveAsVar: 1
-  saveVarName: SpawnedNode
 --- !u!114 &11410442
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -81,6 +66,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityVarName: SourceNode
   range: 1
+--- !u!114 &11424182
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
+  m_Name: Suicide
+  m_EditorClassIdentifier: 
 --- !u!114 &11438080
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -110,6 +106,21 @@ MonoBehaviour:
   - {fileID: 11484118}
   - {fileID: 11486794}
   exitActions: []
+--- !u!114 &11449428
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a50707b00fd58409c26afb3a454e05, type: 3}
+  m_Name: SpawnFungusNode
+  m_EditorClassIdentifier: 
+  posVarSource: 0
+  posVarName: target
+  saveAsVar: 1
+  saveVarName: SpawnedNode
 --- !u!114 &11454284
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -122,22 +133,11 @@ MonoBehaviour:
   m_Name: InfectionDeath
   m_EditorClassIdentifier: 
   enterActions:
-  - {fileID: 11402400}
+  - {fileID: 11449428}
   - {fileID: 11496452}
-  updateActions:
-  - {fileID: 11460804}
+  - {fileID: 11424182}
+  updateActions: []
   exitActions: []
---- !u!114 &11460804
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
-  m_Name: Suicide
-  m_EditorClassIdentifier: 
 --- !u!114 &11472846
 MonoBehaviour:
   m_ObjectHideFlags: 3

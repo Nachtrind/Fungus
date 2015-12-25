@@ -27,7 +27,7 @@ public class SoundSet: ScriptableObject
         ReceiveDamage,
         DangerSighted,
         Aggroed,
-        Alarmed,
+        Alarm,
         Attack,
         Death
     }

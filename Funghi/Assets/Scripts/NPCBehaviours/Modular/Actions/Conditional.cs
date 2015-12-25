@@ -6,6 +6,7 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsOneShot, UsageType.AsCondition)]
     public class Conditional : AIAction
     {
         public bool invert = false;
@@ -19,7 +20,7 @@ namespace ModularBehaviour
             {
                 default:
                     return ActionResult.Running;
-                case ActionResult.Finished:
+                case ActionResult.Success:
                     if (invert)
                     {
                         return ActionResult.Failed;
@@ -34,6 +35,29 @@ namespace ModularBehaviour
             }
         }
 
+        public override ActionResult Fire(IntelligenceController controller)
+        {
+            if (ifAction == null || thenAction == null) { return ActionResult.Failed; }
+            ActionResult res = ifAction.Fire(controller);
+            switch (res)
+            {
+                default:
+                    return ActionResult.Running;
+                case ActionResult.Success:
+                    if (invert)
+                    {
+                        return ActionResult.Failed;
+                    }
+                    return thenAction.Fire(controller);
+                case ActionResult.Failed:
+                    if (invert)
+                    {
+                        return thenAction.Fire(controller);
+                    }
+                    return ActionResult.Failed;
+            }
+        }
+
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
         {
 #if UNITY_EDITOR
@@ -41,7 +65,7 @@ namespace ModularBehaviour
             GUILayout.Label(string.Format("If{0}:", invert ? " not" : ""));
             if (ifAction == null)
             {
-                Type res = callbacks.RegularActionPopup();
+                Type res = callbacks.ConditionalActionPopup();
                 if (res != null)
                 {
                     
@@ -66,7 +90,7 @@ namespace ModularBehaviour
             GUILayout.Label("Then:");
             if (thenAction == null)
             {
-                Type res = callbacks.RegularActionPopup();
+                Type res = callbacks.ContinuousActionPopup();
                 if (res != null)
                 {
                     thenAction = CreateInstance(res) as AIAction;

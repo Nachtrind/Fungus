@@ -6,15 +6,21 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsCondition)]
     public class VariableIsSet : AIAction
     {
         public string varName = "target";
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
+            return Fire(controller);
+        }
+
+        public override ActionResult Fire(IntelligenceController controller)
+        {
             object o;
             if (controller.GetMemoryValue(varName, out o))
             {
-                return ActionResult.Finished;
+                return ActionResult.Success;
             }
             return ActionResult.Failed;
         }

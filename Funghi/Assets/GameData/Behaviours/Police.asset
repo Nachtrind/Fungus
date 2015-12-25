@@ -80,18 +80,6 @@ MonoBehaviour:
   m_Name: EnterState
   m_EditorClassIdentifier: 
   newState: {fileID: 11472174}
---- !u!114 &11402610
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2979ee48931fae478eba4c6eb8d6896, type: 3}
-  m_Name: RunPatrolPath
-  m_EditorClassIdentifier: 
-  ignorePathConfiguration: 0
 --- !u!114 &11402626
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -146,6 +134,7 @@ MonoBehaviour:
   enterActions:
   - {fileID: 11460532}
   - {fileID: 11409164}
+  - {fileID: 11459540}
   updateActions:
   - {fileID: 11479330}
   - {fileID: 11480458}
@@ -178,6 +167,23 @@ MonoBehaviour:
   m_Name: EnterState
   m_EditorClassIdentifier: 
   newState: {fileID: 11472174}
+--- !u!114 &11412018
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bc05717988f3a4ab0213350fddbad0, type: 3}
+  m_Name: WanderAround
+  m_EditorClassIdentifier: 
+  centerPositionVar: SavedPosition
+  minRadius: 0.3
+  maxRadius: 0.7
+  waitChance: 100
+  randomWaitTimeMin: 1
+  randomWaitTimeMax: 3
 --- !u!114 &11412188
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -286,6 +292,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityVarName: target
   range: 0.5
+--- !u!114 &11429502
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  invert: 1
+  ifAction: {fileID: 11499540}
+  thenAction: {fileID: 11412018}
 --- !u!114 &11430832
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -433,6 +453,19 @@ MonoBehaviour:
   updateActions:
   - {fileID: 11458942}
   exitActions: []
+--- !u!114 &11450746
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 1
+  interval: 0.5
 --- !u!114 &11452240
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -446,9 +479,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11418822}
+  - {fileID: 11450746}
+  - {fileID: 11496280}
   updateActions:
   - {fileID: 11498860}
-  - {fileID: 11402610}
+  - {fileID: 11429502}
   exitActions: []
 --- !u!114 &11453102
 MonoBehaviour:
@@ -462,7 +497,8 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   entityVarName: target
-  damagePerSecond: 20
+  interval: 0.5
+  damagePerAttack: 20
 --- !u!114 &11453834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -519,6 +555,19 @@ MonoBehaviour:
   invert: 0
   ifAction: {fileID: 11457700}
   thenAction: {fileID: 11465666}
+--- !u!114 &11459540
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 4
+  interval: 0.5
 --- !u!114 &11460532
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -721,6 +770,20 @@ MonoBehaviour:
   invert: 0
   ifAction: {fileID: 11412388}
   thenAction: {fileID: 11498554}
+--- !u!114 &11496280
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f6944f9d5f03a645be0ce8f51e35aaf, type: 3}
+  m_Name: SavePosition
+  m_EditorClassIdentifier: 
+  target: 0
+  targetVarName: target
+  varName: SavedPosition
 --- !u!114 &11497146
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -761,3 +824,15 @@ MonoBehaviour:
   invert: 0
   ifAction: {fileID: 11466660}
   thenAction: {fileID: 11475180}
+--- !u!114 &11499540
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2979ee48931fae478eba4c6eb8d6896, type: 3}
+  m_Name: RunPatrolPath
+  m_EditorClassIdentifier: 
+  ignorePathConfiguration: 0

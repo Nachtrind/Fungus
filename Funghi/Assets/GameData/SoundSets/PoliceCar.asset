@@ -11,4 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee07db70d8df52488db96a6d5b2c1de, type: 3}
   m_Name: PoliceCar
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - type: 3
+    playType: 0
+    clip: {fileID: 8300000, guid: ef6b76bfd236aac4396c6ec3539691c2, type: 3}
+  - type: 4
+    playType: 0
+    clip: {fileID: 8300000, guid: ef6b76bfd236aac4396c6ec3539691c2, type: 3}
+  - type: 2
+    playType: 0
+    clip: {fileID: 8300000, guid: 15976ec3214d38d48915af2b4b3bcc88, type: 3}
+  - type: 5
+    playType: 1
+    clip: {fileID: 8300000, guid: 0a98404fdfd6b5c4fb465e485183052d, type: 3}
+  - type: 1
+    playType: 1
+    clip: {fileID: 8300000, guid: 37b60e926a8b9c946b0f26c493752184, type: 3}

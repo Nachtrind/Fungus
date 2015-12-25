@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using Pathfinding;
-using ModularBehaviour;
+﻿using ModularBehaviour;
+using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(Seeker))]
 public abstract class Entity : MonoBehaviour
 {
     protected GameWorld world;
@@ -131,40 +129,69 @@ public abstract class Entity : MonoBehaviour
 
     public void PlayOneShotSound(AudioClip clip)
     {
+        if (clip == null) { return; }
         audioSource.PlayOneShot(clip);
     }
 
     public void OverrideContinuousSound(AudioClip clip)
     {
+        if (clip == null) { return; }
         audioSource.clip = clip;
         audioSource.Play();
     }
 
-    public void StopSound()
+    public bool StopSound(SoundSet.ClipType type)
     {
-        audioSource.Stop();
+        if (soundSet == null) { return false; }
+        SoundSet.ClipPlayType playType;
+        AudioClip clip = soundSet.GetClip(type, out playType);
+        if (clip)
+        {
+            if (playType == SoundSet.ClipPlayType.OneShot)
+            {
+                return true;
+            }
+            if (audioSource.clip == clip)
+            {
+                audioSource.Stop();
+                return true;
+            }
+        }
+        return false;
     }
 
     #endregion
 
     void Awake()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
         world = GameWorld.Instance;
         world.Register(this);
-        seeker = GetComponent<Seeker>();
+        mover = GetComponent<EntityMover>();
         audioSource = GetComponent<AudioSource>();
+        float rndFactor = StandardGameSettings.Get.entityPitchRandomization;
+        audioSource.pitch = Random.Range(1f - rndFactor, 1f + rndFactor);
+        audioSource.playOnAwake = false;
+        audioSource.loop = true;
         OnAwake();
     }
 
     void Start()
-    {
-        lookTarget = transform.position + Vector3.forward;
+    {      
         OnStart();
     }
 
     public void UpdateEntity(float delta)
     {
-        HandleMovement(delta);
+        if (mover)
+        {
+            mover.UpdateMovement(delta);
+        }
         if (behaviour) { behaviour.UpdateTick(delta); }
         OnUpdate(delta);
     }
@@ -181,151 +208,24 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Cleanup() { }
 
     #region Movement
+    EntityMover mover;
+    public EntityMover.MoveResult MoveTo(Vector3 position)
+    {
+        if (!mover) { return EntityMover.MoveResult.NotAllowed; }
+        return mover.MoveTo(position);
+    }
 
-    #region Movement variables
-    public enum MoveResult { Preparing, Moving, ReachedTarget, TargetNotReachable }
-    enum MoveTypes { Direct, Pathing }
-    public enum MovePathSmoothing { NoSmoothing, Force, LikeSlime }
-
-    const float targetReachDistance = 0.025f;
-    Seeker seeker;
-    Vector3 lastRequestedMoveTargetPosition;
-    List<Vector3> pathToTarget = new List<Vector3>();
-    const float repathRate = 0.25f;
-    float lastPathRequestTime;
-    MoveTypes movementType = MoveTypes.Direct;
-    MoveResult moveResult = MoveResult.Preparing;
-    public float moveSpeed = 1f;
-    [Range(0.01f, 0.5f)]
-    public float turnSpeed = 0.1f;
-    public MovePathSmoothing movePathSmoothing = MovePathSmoothing.NoSmoothing;
-    #endregion
+    public EntityMover.MoveResult MoveToDirect(Vector3 position)
+    {
+        if (!mover) { return EntityMover.MoveResult.NotAllowed; }
+        return mover.MoveToDirect(position);
+    }
 
     public void StopMovement()
     {
-        movementType = MoveTypes.Direct;
-        pathToTarget = new List<Vector3> { transform.position };
-        moveResult = MoveResult.ReachedTarget;
+        if (mover) { mover.StopMovement(); }
     }
-
-    /// <summary>
-    /// Uses pathfinding to reach the target
-    /// </summary>
-    public MoveResult MoveTo(Vector3 position)
-    {
-        movementType = MoveTypes.Pathing;
-        if (lastRequestedMoveTargetPosition != position)
-        {
-            pathToTarget.Clear();
-            moveResult = MoveResult.Preparing;
-            lastRequestedMoveTargetPosition = position;
-            if (!RequestPath(lastRequestedMoveTargetPosition))
-            {
-                lastRequestedMoveTargetPosition = Vector3.zero;
-            }
-        }
-        return moveResult;
-    }
-
-    /// <summary>
-    /// ignores pathfinding to reach the target
-    /// </summary>
-    public MoveResult MoveToDirect(Vector3 position)
-    {
-        movementType = MoveTypes.Direct;
-        if (lastRequestedMoveTargetPosition != position)
-        {
-            moveResult = MoveResult.Moving;
-            pathToTarget = new List<Vector3> { position };
-            lastRequestedMoveTargetPosition = position;
-        }
-        return moveResult;
-    }
-
-    bool RequestPath(Vector3 position)
-    {
-        if (movementType != MoveTypes.Pathing)
-        {
-            return false;
-        }
-        if (!seeker.IsDone())
-        {
-            return false;
-        }
-        moveResult = MoveResult.Preparing;
-        seeker.StartPath(transform.position, lastRequestedMoveTargetPosition, OnPathCompleted);
-        return true;
-    }
-
-    void OnPathCompleted(Path p)
-    {
-        if (movementType != MoveTypes.Pathing)
-        {
-            return;
-        }
-        if (p.error)
-        {
-            pathToTarget.Clear();
-            moveResult = MoveResult.TargetNotReachable;
-            return;
-        }
-        switch (movePathSmoothing)
-        {
-            default:
-                pathToTarget = p.vectorPath;
-                break;
-            case MovePathSmoothing.Force:
-                pathToTarget = GameWorld.Instance.SmoothPath(p.vectorPath, false);
-                break;
-            case MovePathSmoothing.LikeSlime:
-                pathToTarget = GameWorld.Instance.SmoothPath(p.vectorPath, true);
-                break;
-        }
-    }
-
-    Vector3 lookTarget;
-
-    protected void HandleMovement(float deltaTime)
-    {
-        if (Time.time - lastPathRequestTime > repathRate)
-        {
-            if (RequestPath(lastRequestedMoveTargetPosition))
-            {
-                lastPathRequestTime = Time.time;
-            }
-        }
-        if (pathToTarget.Count > 0)
-        {
-            if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) <= targetReachDistance)
-            {
-                pathToTarget.RemoveAt(0);
-                if (pathToTarget.Count == 0)
-                {
-                    moveResult = MoveResult.ReachedTarget;
-                    return;
-                }
-                lookTarget = pathToTarget[0] + (pathToTarget[0] - transform.position).normalized;
-            }
-            if (pathToTarget.Count > 0)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, pathToTarget[0], deltaTime * moveSpeed);
-                moveResult = MoveResult.Moving;
-            }
-        }
-        Vector3 lookVector = (lookTarget - transform.position);
-        if (lookVector != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookVector), deltaTime/turnSpeed);
-        }
-    }
-
-    /// <summary>
-    /// only usable when not moving
-    /// </summary>
-    public void LooAt(Vector3 position)
-    {
-        lookTarget = position;
-    }
+    
     #endregion
 
     #region Messaging

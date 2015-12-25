@@ -7,6 +7,7 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsCondition)]
     public class FindTarget : AIAction
     {
         public enum TargetType { Human, Fungus, PoliceStation }
@@ -16,6 +17,11 @@ namespace ModularBehaviour
         public bool saveVar = true;
         public string storageVar = "target";
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
+        {
+            return Fire(controller);
+        }
+
+        public override ActionResult Fire(IntelligenceController controller)
         {
             Entity t = null;
             switch (Type)
@@ -30,7 +36,7 @@ namespace ModularBehaviour
                     t = GameWorld.Instance.GetNearestPoliceStation(controller.Owner.transform.position);
                     break;
             }
-            
+
             if (t && Mathf.Sqrt(AstarMath.SqrMagnitudeXZ(controller.Owner.transform.position, t.transform.position)) <= range)
             {
                 if (checkLOS && !GameWorld.Instance.HasLineOfSight(controller.Owner, t))
@@ -41,7 +47,7 @@ namespace ModularBehaviour
                 {
                     controller.SetMemoryValue(storageVar, t);
                 }
-                return ActionResult.Finished;
+                return ActionResult.Success;
             }
             return ActionResult.Running;
         }

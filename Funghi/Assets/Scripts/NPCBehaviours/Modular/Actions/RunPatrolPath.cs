@@ -1,5 +1,6 @@
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsCondition)]
     public class RunPatrolPath : AIAction
     {
         public bool ignorePathConfiguration = false;
@@ -16,8 +17,8 @@ namespace ModularBehaviour
                     controller.SetMemoryValue(Intelligence.PathIndexIdentifier, 0);
                 }
                 PatrolPath.PatrolPoint currentPoint = path.points[currentIndex];
-                Entity.MoveResult result = controller.Owner.MoveTo(currentPoint.position);
-                if (result == Entity.MoveResult.ReachedTarget)
+                EntityMover.MoveResult result = controller.Owner.MoveTo(currentPoint.position);
+                if (result == EntityMover.MoveResult.ReachedTarget)
                 {
                     if (!ignorePathConfiguration)
                     {
@@ -27,6 +28,7 @@ namespace ModularBehaviour
                                 currentWaitTime = currentPoint.waitTime;
                                 break;
                             case PatrolPath.PatrolPointActions.ChangePath:
+                                if (UnityEngine.Random.Range(0, 100) > currentPoint.changeLikelyness) { break; }
                                 PatrolPath linkedPath = currentPoint.linkedPath;
                                 if (linkedPath != null)
                                 {

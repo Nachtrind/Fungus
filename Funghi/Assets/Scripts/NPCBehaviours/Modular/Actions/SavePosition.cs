@@ -1,6 +1,7 @@
 namespace ModularBehaviour
 {
-    public class SavePosition : OneShotAction
+    [ActionUsage(UsageType.AsOneShot, UsageType.AsCondition)]
+    public class SavePosition : AIAction
     {
         public enum TargetType { Self, TargetVar }
         public TargetType target = TargetType.Self;
@@ -12,15 +13,20 @@ namespace ModularBehaviour
             if (target == TargetType.Self)
             {
                 controller.SetMemoryValue(varName, controller.Owner.transform.position);
-                return ActionResult.Finished;
+                return ActionResult.Success;
             }
             Entity e;
             if (controller.GetMemoryValue(targetVarName, out e))
             {
                 controller.SetMemoryValue(varName, e.transform.position);
-                return ActionResult.Finished;
+                return ActionResult.Success;
             }
             return ActionResult.Failed;
+        }
+
+        public override ActionResult Run(IntelligenceController controller, float deltaTime)
+        {
+            return Fire(controller);
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

@@ -5,7 +5,8 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
-    public class BroadcastEntityMessage : OneShotAction
+    [ActionUsage(UsageType.AsOneShot, UsageType.AsCondition)]
+    public class BroadcastEntityMessage : AIAction
     {
         public enum MessageTarget { Humans, Fungi, PoliceStations }
         public MessageTarget target = MessageTarget.Humans;
@@ -39,7 +40,7 @@ namespace ModularBehaviour
                     GameWorld.Instance.BroadcastToPoliceStations(m, controller.Owner.transform.position, radius);
                     break;
             }
-            return ActionResult.Finished;
+            return ActionResult.Success;
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

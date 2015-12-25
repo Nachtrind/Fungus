@@ -23,6 +23,7 @@
 		_GlowWobble("Glow", Range(0, 0.01)) = 0.001
 		[Header(Light)]
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
+		_Brightness("Slime self glow", Range(0, 1)) = 0.5
 	}
 	SubShader
 	{
@@ -48,6 +49,7 @@
 		fixed _PixelBorder;
 		half _BorderStrength;
 		half _GlowWobble;
+		fixed _Brightness;
 
 		struct Input
 		{
@@ -95,7 +97,8 @@
 			half3 final = lerp(groundTexture, slimeTexture*_Color*2, slime.g);
 
 			o.Smoothness = _Glossiness;
-			o.Albedo = final+(glow*_GlowColor*2);
+			o.Albedo = final + (glow*_GlowColor * 2)*(1-_Brightness);
+			o.Emission = ((slimeTexture*_Color*slime.g) + (glow*_GlowColor * 2))*_Brightness;
 		}
 		ENDCG
 	}

@@ -8,6 +8,7 @@ public class PatrolPathEditor : Editor
     public override void OnInspectorGUI()
     {
         PatrolPath pp = target as PatrolPath;
+        pp.transform.position = new Vector3(pp.transform.position.x, 0, pp.transform.position.z);
         EditorGUILayout.BeginVertical(EditorStyles.textField);
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Point", EditorStyles.miniButtonLeft))
@@ -64,7 +65,7 @@ public class PatrolPathEditor : Editor
                     break;
             }
             EditorGUILayout.EndVertical();
-            if (remove) { pp.points.RemoveAt(i); i -= 1; }
+            if (remove) { pp.points.RemoveAt(i); i -= 1; SceneView.RepaintAll(); }
         }
         EditorGUILayout.EndScrollView();
         EditorGUILayout.EndVertical();
@@ -76,17 +77,7 @@ public class PatrolPathEditor : Editor
         for (int i = pp.points.Count; i-- > 0;)
         {
             pp.points[i].position = Handles.PositionHandle(pp.points[i].position, Quaternion.identity);
-            Handles.color = Color.white;
             Handles.Label(pp.points[i].position, i.ToString());
-            Handles.color = Color.yellow;
-            if (i > 0)
-            {
-                Handles.DrawLine(pp.points[i].position, pp.points[i - 1].position);
-            }
-        }
-        if (pp.points.Count > 2)
-        {
-            Handles.DrawLine(pp.points[pp.points.Count - 1].position, pp.points[0].position);
         }
         if (pp.transform.hasChanged)
         {

@@ -5,6 +5,7 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsCondition)]
     public class WanderAround : AIAction
     {
         public string centerPositionVar = "Node";
@@ -29,12 +30,16 @@ namespace ModularBehaviour
                 }
                 centerPosVar = e.transform.position;
             }
-            Entity.MoveResult res = controller.Owner.MoveTo(centerPosVar + targetPos);
-            if (res == Entity.MoveResult.ReachedTarget || res == Entity.MoveResult.TargetNotReachable)
+            EntityMover.MoveResult res = controller.Owner.MoveTo(centerPosVar + targetPos);
+            if (res == EntityMover.MoveResult.ReachedTarget || res == EntityMover.MoveResult.TargetNotReachable)
             {
                 Vector2 rndPos = Random.insideUnitCircle;
-                targetPos = new Vector3(Mathf.Clamp(rndPos.x, minRadius, maxRadius), 0, Mathf.Clamp(rndPos.y, minRadius, maxRadius));
-                if (Random.Range(0, 100) > waitChance)
+                targetPos.x = Mathf.Clamp(rndPos.x, minRadius, maxRadius);
+                if (rndPos.x < 0) { targetPos.x *= -1; }
+                targetPos.z = Mathf.Clamp(rndPos.y, minRadius, maxRadius);
+                if (rndPos.y < 0) { targetPos.z *= -1; }
+                targetPos.y = 0;
+                if (Random.Range(0, 100) <= waitChance)
                 {
                     currentWait = Random.Range(randomWaitTimeMin, randomWaitTimeMax);
                 }

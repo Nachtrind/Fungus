@@ -11,7 +11,7 @@ namespace ModularBehaviour
         public override ActionResult Fire(IntelligenceController controller, object value = null)
         {
             controller.SetMemoryValue(saveName, value);
-            return ActionResult.Finished;
+            return ActionResult.Success;
         }
 
         public override void DrawGUI(Intelligence intelligence, CallbackCollection callbacks)

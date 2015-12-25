@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11471490}
+  - {fileID: 11476406}
   updateActions:
   - {fileID: 11450780}
   - {fileID: 11443554}
@@ -543,6 +544,19 @@ MonoBehaviour:
   type: 0
   positionVariableName: target
   radius: 1
+--- !u!114 &11476406
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 3
+  interval: 0.5
 --- !u!114 &11480146
 MonoBehaviour:
   m_ObjectHideFlags: 3

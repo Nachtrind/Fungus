@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using ModularBehaviour;
 
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(EntityMover))]
 public class PoliceCar : Entity
 {
+    [Header("Police officer spawning")]
     public Human policePrefab;
     public Intelligence policeBehaviour;
     public int numPoliceInside = 3;

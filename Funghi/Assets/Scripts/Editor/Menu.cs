@@ -34,12 +34,12 @@ public class Menu
         Selection.activeGameObject = go;
     }
 
-    [MenuItem(BaseMenu+"/Create Human World Trigger")]
-    static void CreateEnemyExit()
+    [MenuItem(BaseMenu+"/Create Entity Trigger")]
+    static void CreateEntityTrigger()
     {
-        GameObject go = new GameObject("EnemyExit");
+        GameObject go = new GameObject("EntityTrigger");
         go.transform.position = GetPositionFromView();
-        go.AddComponent<HumanWorldTrigger>();
+        go.AddComponent<EntityTrigger>();
         Selection.activeGameObject = go;
     }
 

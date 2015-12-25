@@ -19,7 +19,7 @@ namespace ModularBehaviour
             {
                 default:
                     return ActionResult.Running;
-                case ActionResult.Finished:
+                case ActionResult.Success:
                     if (invert)
                     {
                         return ActionResult.Failed;

@@ -253,7 +253,8 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   entityVarName: target
-  damagePerSecond: 20
+  interval: 0.5
+  damagePerAttack: 20
 --- !u!114 &11469322
 MonoBehaviour:
   m_ObjectHideFlags: 3

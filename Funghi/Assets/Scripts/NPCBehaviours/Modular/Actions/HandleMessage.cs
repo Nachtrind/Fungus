@@ -30,7 +30,7 @@ namespace ModularBehaviour
             {
                 action.Fire(controller, value);
             }
-            return ActionResult.Finished;
+            return ActionResult.Success;
         }
 
         public override void DrawGUI(Intelligence intelligence, CallbackCollection callbacks)

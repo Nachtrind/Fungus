@@ -4,8 +4,7 @@
     {
         None,
         Running,
-        SkipNext,
-        Finished,
+        Success,
         Failed
     }
 }

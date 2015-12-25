@@ -37,5 +37,19 @@ public class PatrolPath : MonoBehaviour
         return nearest;
     }
 
+    void OnDrawGizmos()
+    {
+        if (points.Count <= 1) { return; }
+        Gizmos.color = Color.yellow;
+        for (int i = 1; i < points.Count; i++)
+        {
+            Gizmos.DrawLine(points[i].position, points[i - 1].position);
+        }
+        if (points.Count > 2)
+        {
+            Gizmos.DrawLine(points[points.Count - 1].position, points[0].position);
+        }
+    }
+
     public List<PatrolPoint> points = new List<PatrolPoint>();
 }

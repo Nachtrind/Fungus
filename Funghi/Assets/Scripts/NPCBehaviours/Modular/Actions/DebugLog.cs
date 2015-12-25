@@ -2,13 +2,19 @@ using UnityEngine;
 
 namespace ModularBehaviour
 {
-    public class DebugLog : OneShotAction
+    [ActionUsage(UsageType.AsOneShot, UsageType.AsContinuous, UsageType.AsCondition)]
+    public class DebugLog : AIAction
     {
         public string debugString = "Fired";
         public override ActionResult Fire(IntelligenceController controller)
         {
             Debug.Log(debugString);
-            return ActionResult.Finished;
+            return ActionResult.Success;
+        }
+
+        public override ActionResult Run(IntelligenceController controller, float deltaTime)
+        {
+            return Fire(controller);
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

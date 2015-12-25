@@ -7,18 +7,24 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsCondition)]
     public class IsInRange : AIAction
     {
         public string entityVarName = "target";
         public float range = 0.5f;
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
+            return Fire(controller);
+        }
+
+        public override ActionResult Fire(IntelligenceController controller)
+        {
             Entity t = null;
             if (controller.GetMemoryValue(entityVarName, out t) && t != null)
             {
                 if (Mathf.Sqrt(AstarMath.SqrMagnitudeXZ(controller.Owner.transform.position, t.transform.position)) < range)
                 {
-                    return ActionResult.Finished;
+                    return ActionResult.Success;
                 }
             }
             return ActionResult.Running;

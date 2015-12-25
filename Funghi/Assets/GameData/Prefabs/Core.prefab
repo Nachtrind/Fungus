@@ -9,8 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 497948}
   - 114: {fileID: 11441898}
+  - 114: {fileID: 11415486}
   - 114: {fileID: 11424470}
   - 122: {fileID: 12239482}
+  - 82: {fileID: 8256568}
+  - 54: {fileID: 5430252}
   m_Layer: 0
   m_Name: Core
   m_TagString: Untagged
@@ -30,6 +33,110 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!54 &5430252
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168438}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!82 &8256568
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168438}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24309398, guid: 203b3525ddf760a4695a3d52ed00f006,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &11415486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bf4d8f68407b6449de4be12ce25985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.25
+  turnSpeed: 0.1
+  movePathSmoothing: 2
 --- !u!114 &11424470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,8 +178,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
-  groundCheckInterval: .330000013
-  moveSpeed: 1
+  isAttackable: 1
+  behaviour: {fileID: 0}
+  soundSet: {fileID: 0}
+  groundCheckInterval: 0.33
 --- !u!122 &12239482
 Halo:
   m_ObjectHideFlags: 1
@@ -83,7 +192,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4294910976
-  m_Size: .300000012
+  m_Size: 0.3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -118,6 +227,39 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Color.rgba
       value: 4288151557
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24309398, guid: 203b3525ddf760a4695a3d52ed00f006,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: moveSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: movePathSmoothing
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

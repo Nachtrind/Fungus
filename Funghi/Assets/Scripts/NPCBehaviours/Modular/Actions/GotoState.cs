@@ -6,15 +6,21 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsCondition)]
     public class GotoState : AIAction
     {
         public IntelligenceState newState;
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
+            return Fire(controller);
+        }
+
+        public override ActionResult Fire(IntelligenceController controller)
+        {
             if (newState)
             {
                 controller.ChangeState(newState);
-                return ActionResult.SkipNext;
+                return ActionResult.Success;
             }
             return ActionResult.Failed;
         }

@@ -1,6 +1,7 @@
 namespace ModularBehaviour
 {
-    public class ExecuteMethod : OneShotAction
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsOneShot, UsageType.AsCondition)]
+    public class ExecuteMethod : AIAction
     {
         public enum ParameterType { None, Self, VarValue, String }
         public string methodName = "Trigger";
@@ -26,24 +27,29 @@ namespace ModularBehaviour
                 {
                     case ParameterType.None:
                         e.BroadcastMessage(methodName);
-                        return ActionResult.Finished;
+                        return ActionResult.Success;
                     case ParameterType.Self:
                         e.BroadcastMessage(methodName, controller.Owner);
-                        return ActionResult.Finished;
+                        return ActionResult.Success;
                     case ParameterType.VarValue:
                         object value;
                         if (controller.GetMemoryValue(paramTypeValue, out value))
                         {
                             e.BroadcastMessage(methodName, value);
-                            return ActionResult.Finished;
+                            return ActionResult.Success;
                         }
                         return ActionResult.Failed;
                     case ParameterType.String:
                         e.BroadcastMessage(methodName, paramTypeValue);
-                        return ActionResult.Finished;
+                        return ActionResult.Success;
                 }
             }
             return ActionResult.Failed;
+        }
+
+        public override ActionResult Run(IntelligenceController controller, float deltaTime)
+        {
+            return Fire(controller);
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

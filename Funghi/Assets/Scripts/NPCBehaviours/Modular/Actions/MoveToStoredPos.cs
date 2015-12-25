@@ -5,6 +5,7 @@ using UnityEditor;
 
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsCondition, UsageType.AsContinuous)]
     public class MoveToStoredPos : AIAction
     {
         public string storeName = "";
@@ -13,12 +14,12 @@ namespace ModularBehaviour
             Vector3 target = controller.Owner.transform.position;
             if (controller.GetMemoryValue(storeName, out target))
             {
-                Human.MoveResult res = controller.Owner.MoveTo(target);
-                if (res == Human.MoveResult.ReachedTarget)
+                EntityMover.MoveResult res = controller.Owner.MoveTo(target);
+                if (res == EntityMover.MoveResult.ReachedTarget)
                 {
-                    return ActionResult.Finished;
+                    return ActionResult.Success;
                 }
-                if (res == Human.MoveResult.TargetNotReachable)
+                if (res == EntityMover.MoveResult.TargetNotReachable)
                 {
                     return ActionResult.Failed;
                 }
@@ -28,12 +29,12 @@ namespace ModularBehaviour
                 Entity t = controller.Owner;
                 if (controller.GetMemoryValue(storeName, out t))
                 {
-                    Human.MoveResult res = controller.Owner.MoveTo(t.transform.position);
-                    if (res == Human.MoveResult.ReachedTarget)
+                    EntityMover.MoveResult res = controller.Owner.MoveTo(t.transform.position);
+                    if (res == EntityMover.MoveResult.ReachedTarget)
                     {
-                        return ActionResult.Finished;
+                        return ActionResult.Success;
                     }
-                    if (res == Human.MoveResult.TargetNotReachable)
+                    if (res == EntityMover.MoveResult.TargetNotReachable)
                     {
                         return ActionResult.Failed;
                     }

@@ -15,31 +15,47 @@ public class IntelligenceEditorWindow : EditorWindow
         GetWindow<IntelligenceEditorWindow>("IntelligenceEditor");
     }
 
-    List<Type> oneShotActions = new List<Type>();
-    string[] oneShotActionNames = new string[0];
+    List<Type> AIActions = new List<Type>();
+    string[] AIActionNames = new string[0];
     List<Type> regularActions = new List<Type>();
     string[] regularActionNames = new string[0];
     List<Type> triggerActions = new List<Type>();
     string[] triggerActionNames = new string[0];
+    List<Type> conditionActions = new List<Type>();
+    string[] conditionActionNames = new string[0];
 
     public Intelligence target;
+
+    bool IsSetForUsage(Type t, AIAction.UsageType usage)
+    {
+        object[] attributes = t.GetCustomAttributes(typeof(ActionUsageAttribute), false);
+        if (attributes.Length == 0) { return false; }
+        return (attributes[0] as ActionUsageAttribute).IsType(usage);
+    }
 
     void CacheUsableTypes()
     {
         string defaultIndicator = "Add";
-        oneShotActions = Assembly.GetAssembly(typeof(Intelligence)).GetTypes().Where(i => i.IsClass && !i.IsAbstract && i.IsSubclassOf(typeof(OneShotAction))).ToList();
-        oneShotActionNames = new string[oneShotActions.Count + 1];
-        oneShotActionNames[0] = defaultIndicator;
-        for (int i = 0; i < oneShotActions.Count; i++)
+        AIActions = Assembly.GetAssembly(typeof(Intelligence)).GetTypes().Where(i => i.IsClass && !i.IsAbstract && i.IsSubclassOf(typeof(AIAction)) && IsSetForUsage(i, AIAction.UsageType.AsOneShot)).ToList();
+        AIActionNames = new string[AIActions.Count + 1];
+        AIActionNames[0] = defaultIndicator;
+        for (int i = 0; i < AIActions.Count; i++)
         {
-            oneShotActionNames[i + 1] = oneShotActions[i].Name;
+            AIActionNames[i + 1] = AIActions[i].Name;
         }
-        regularActions = Assembly.GetAssembly(typeof(Intelligence)).GetTypes().Where(i => i.IsClass && !i.IsAbstract && i.IsSubclassOf(typeof(AIAction))).ToList();
+        regularActions = Assembly.GetAssembly(typeof(Intelligence)).GetTypes().Where(i => i.IsClass && !i.IsAbstract && i.IsSubclassOf(typeof(AIAction)) && IsSetForUsage(i, AIAction.UsageType.AsContinuous)).ToList();
         regularActionNames = new string[regularActions.Count + 1];
         regularActionNames[0] = defaultIndicator;
         for (int i = 0; i < regularActions.Count; i++)
         {
             regularActionNames[i + 1] = regularActions[i].Name;
+        }
+        conditionActions = Assembly.GetAssembly(typeof(Intelligence)).GetTypes().Where(i => i.IsClass && !i.IsAbstract && i.IsSubclassOf(typeof(AIAction)) && IsSetForUsage(i, AIAction.UsageType.AsCondition)).ToList();
+        conditionActionNames = new string[conditionActions.Count + 1];
+        conditionActionNames[0] = defaultIndicator;
+        for (int i = 0; i < conditionActions.Count; i++)
+        {
+            conditionActionNames[i + 1] = conditionActions[i].Name;
         }
         triggerActions = Assembly.GetAssembly(typeof(Intelligence)).GetTypes().Where(i => i.IsClass && !i.IsAbstract && i.IsSubclassOf(typeof(TriggerAction))).ToList();
         triggerActionNames = new string[triggerActions.Count + 1];
@@ -52,20 +68,30 @@ public class IntelligenceEditorWindow : EditorWindow
 
     Type OneShotPopup()
     {
-        int i = EditorGUILayout.Popup(0, oneShotActionNames);
+        int i = EditorGUILayout.Popup(0, AIActionNames);
         if (i > 0)
         {
-            return oneShotActions[i - 1];
+            return AIActions[i - 1];
         }
         return null;
     }
 
-    Type RegularActionPopup()
+    Type ContinuousActionPopup()
     {
         int i = EditorGUILayout.Popup(0, regularActionNames);
         if (i > 0)
         {
             return regularActions[i - 1];
+        }
+        return null;
+    }
+
+    Type ConditionalActionPopup()
+    {
+        int i = EditorGUILayout.Popup(0, conditionActionNames);
+        if (i > 0)
+        {
+            return conditionActions[i - 1];
         }
         return null;
     }
@@ -87,8 +113,9 @@ public class IntelligenceEditorWindow : EditorWindow
         callbackCollection = new CallbackCollection();
         callbackCollection.AddAsset = AddToAsset;
         callbackCollection.RemoveAsset = RemoveAsset;
-        callbackCollection.OneShotPopup = OneShotPopup;
-        callbackCollection.RegularActionPopup = RegularActionPopup;
+        callbackCollection.OneShotActionPopup = OneShotPopup;
+        callbackCollection.ContinuousActionPopup = ContinuousActionPopup;
+        callbackCollection.ConditionalActionPopup = ConditionalActionPopup;
         callbackCollection.TriggerActionPopup = TriggerActionPopup;
         CacheUsableTypes();
     }
@@ -268,7 +295,7 @@ public class IntelligenceEditorWindow : EditorWindow
                 {
                     if (GUILayout.Button(upSymbol, EditorStyles.miniButton, GUILayout.Width(symbolWidth)))
                     {
-                        OneShotAction os = intel.states[i].enterActions[oe];
+                        AIAction os = intel.states[i].enterActions[oe];
                         intel.states[i].enterActions[oe] = intel.states[i].enterActions[oe - 1];
                         intel.states[i].enterActions[oe - 1] = os;
                     }
@@ -277,7 +304,7 @@ public class IntelligenceEditorWindow : EditorWindow
                 {
                     if (GUILayout.Button(downSymbol, EditorStyles.miniButton, GUILayout.Width(symbolWidth)))
                     {
-                        OneShotAction os = intel.states[i].enterActions[oe];
+                        AIAction os = intel.states[i].enterActions[oe];
                         intel.states[i].enterActions[oe] = intel.states[i].enterActions[oe + 1];
                         intel.states[i].enterActions[oe + 1] = os;
                     }
@@ -297,11 +324,11 @@ public class IntelligenceEditorWindow : EditorWindow
                     intel.states[i].enterActions.RemoveAt(oe);
                 }
             }
-            int selectedEnter = EditorGUILayout.Popup(0, oneShotActionNames);
+            int selectedEnter = EditorGUILayout.Popup(0, AIActionNames);
             if (selectedEnter > 0)
             {
-                OneShotAction os = CreateInstance(oneShotActions[selectedEnter - 1]) as OneShotAction;
-                os.name = oneShotActions[selectedEnter - 1].Name;
+                AIAction os = CreateInstance(AIActions[selectedEnter - 1]) as AIAction;
+                os.name = AIActions[selectedEnter - 1].Name;
                 intel.states[i].enterActions.Add(os);
                 AddToAsset(os);
             }
@@ -368,7 +395,7 @@ public class IntelligenceEditorWindow : EditorWindow
                 {
                     if (GUILayout.Button(upSymbol, EditorStyles.miniButton, GUILayout.Width(symbolWidth)))
                     {
-                        OneShotAction os = intel.states[i].exitActions[oe];
+                        AIAction os = intel.states[i].exitActions[oe];
                         intel.states[i].exitActions[oe] = intel.states[i].exitActions[oe - 1];
                         intel.states[i].exitActions[oe - 1] = os;
                     }
@@ -377,7 +404,7 @@ public class IntelligenceEditorWindow : EditorWindow
                 {
                     if (GUILayout.Button(downSymbol, EditorStyles.miniButton, GUILayout.Width(symbolWidth)))
                     {
-                        OneShotAction os = intel.states[i].exitActions[oe];
+                        AIAction os = intel.states[i].exitActions[oe];
                         intel.states[i].exitActions[oe] = intel.states[i].exitActions[oe + 1];
                         intel.states[i].exitActions[oe + 1] = os;
                     }
@@ -397,11 +424,11 @@ public class IntelligenceEditorWindow : EditorWindow
                     intel.states[i].exitActions.RemoveAt(oe);
                 }   
             }
-            int selectedExit = EditorGUILayout.Popup(0, oneShotActionNames);
+            int selectedExit = EditorGUILayout.Popup(0, AIActionNames);
             if (selectedExit > 0)
             {
-                OneShotAction os = CreateInstance(oneShotActions[selectedExit - 1]) as OneShotAction;
-                os.name = oneShotActions[selectedExit - 1].Name;
+                AIAction os = CreateInstance(AIActions[selectedExit - 1]) as AIAction;
+                os.name = AIActions[selectedExit - 1].Name;
                 intel.states[i].exitActions.Add(os);
                 AddToAsset(os);
             }

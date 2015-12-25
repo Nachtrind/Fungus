@@ -1,5 +1,6 @@
 namespace ModularBehaviour
 {
+    [ActionUsage(UsageType.AsContinuous, UsageType.AsCondition, UsageType.AsOneShot)]
     public class TriggerBehaviour : AIAction
     {
         public enum ParameterType { None, Self, VarValue, String }
@@ -9,6 +10,11 @@ namespace ModularBehaviour
         public string paramTypeValue = "target";
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
+            return Fire(controller);
+        }
+
+        public override ActionResult Fire(IntelligenceController controller)
+        {
             Entity e;
             if (controller.GetMemoryValue(targetName, out e))
             {
@@ -17,13 +23,13 @@ namespace ModularBehaviour
                     case ParameterType.None:
                         if (e.TriggerBehaviour(triggerName))
                         {
-                            return ActionResult.Finished;
+                            return ActionResult.Success;
                         }
                         return ActionResult.Failed;
                     case ParameterType.Self:
                         if (e.TriggerBehaviour(triggerName, controller.Owner))
                         {
-                            return ActionResult.Finished;
+                            return ActionResult.Success;
                         }
                         return ActionResult.Failed;
                     case ParameterType.VarValue:
@@ -32,14 +38,14 @@ namespace ModularBehaviour
                         {
                             if (e.TriggerBehaviour(triggerName, value))
                             {
-                                return ActionResult.Finished;
+                                return ActionResult.Success;
                             }
                         }
                         return ActionResult.Failed;
                     case ParameterType.String:
                         if (e.TriggerBehaviour(triggerName, paramTypeValue))
                         {
-                            return ActionResult.Finished;
+                            return ActionResult.Success;
                         }
                         return ActionResult.Failed;
                 }

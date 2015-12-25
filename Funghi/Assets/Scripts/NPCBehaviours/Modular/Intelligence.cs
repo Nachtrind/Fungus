@@ -91,7 +91,7 @@ namespace ModularBehaviour
                 {
                     if (triggers[i].action != null)
                     {
-                        if (triggers[i].action.Fire(this, value) == ActionResult.Finished)
+                        if (triggers[i].action.Fire(this, value) == ActionResult.Success)
                         {
                             success = true;
                         }
@@ -185,8 +185,10 @@ namespace ModularBehaviour
         {
             Vector2 unitPos = Camera.main.WorldToScreenPoint(owner.transform.position);
             unitPos.y = Screen.height - unitPos.y;
-            GUILayout.BeginArea(new Rect(unitPos, new Vector2(150, 25)), GUI.skin.box);
-            GUILayout.Label("State: " + activeState.ToString());
+            string txt = "State: " + activeState.name;
+            Vector2 gSize = GUI.skin.box.CalcSize(new GUIContent(txt));
+            GUILayout.BeginArea(new Rect(unitPos, new Vector2(gSize.x, gSize.y)), GUI.skin.box);
+            GUILayout.Label(txt);
             GUILayout.EndArea();
         }
 
