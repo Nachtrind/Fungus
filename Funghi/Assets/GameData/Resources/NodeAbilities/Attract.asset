@@ -15,6 +15,8 @@ MonoBehaviour:
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: attract
-  radius: 0
+  radius: 5
   cost: 0
-  tickRate: 0
+  tickRate: .100000001
+  attractSpores: {fileID: 161090, guid: 02e6ff77e0c89a447b407c7246ed8436, type: 2}
+  influenceRadius: 1

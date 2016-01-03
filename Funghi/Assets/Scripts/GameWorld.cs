@@ -372,6 +372,16 @@ public class GameWorld : MonoBehaviour
         return nearest;
     }
 
+
+	public FungusCore CoreInRange(Vector3 _position, float _coreInputRange){
+		if(AstarMath.SqrMagnitudeXZ(core.transform.position, _position) < _coreInputRange){
+			return core;
+		}
+
+		return null;
+	}
+
+
     public Vector3 GetDirectionToRandomFungusNode(Vector3 sourcePoint)
     {
         FungusNode node = nodes[UnityEngine.Random.Range(0, nodes.Count - 1)];
@@ -461,7 +471,7 @@ public class GameWorld : MonoBehaviour
     {
         Debug.Log("Core ungrounded");
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPaused = true;
+//        UnityEditor.EditorApplication.isPaused = true;
 #endif
     }
 

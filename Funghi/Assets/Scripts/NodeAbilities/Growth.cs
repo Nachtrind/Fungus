@@ -11,5 +11,12 @@ namespace NodeAbilities
 		{
 			
 		}
+
+		public override void StopExecution (FungusNode node)
+		{
+			
+		}
+
+
 	}
 }

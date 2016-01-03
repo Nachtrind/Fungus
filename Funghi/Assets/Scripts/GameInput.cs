@@ -12,6 +12,7 @@ public class GameInput: MonoBehaviour
 	float requestInterval = 0.1f;
 	private float inputTimer;
 	private float inputTick = 0.2f;
+	float coreInputRange = 0.1f;
 
 	static event Action<Vector3> OnCoreCommand;
 	static event Func<Vector3, FungusNode> OnSpawnFungusCommand;
@@ -24,6 +25,7 @@ public class GameInput: MonoBehaviour
 	public NodeAbility speedup;
 	public NodeAbility zombies;
 	public NodeAbility growth;
+	bool dragCore;
 	
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
@@ -41,7 +43,50 @@ public class GameInput: MonoBehaviour
 		}
 
 
-		if (currentSelection != null && inputTimer > inputTick) {
+		if (dragCore) {
+			////////////////
+			//drag stopped//
+			////////////////
+			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
+
+				Vector3 worldMousePos;
+				//take mouse position or touch position
+				if (Input.GetMouseButtonUp (0)) {
+					worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+				} else {
+					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+				}
+				worldMousePos.y = 0;
+
+
+				if (OnCoreCommand != null) {
+					OnCoreCommand (worldMousePos);
+				}
+
+				inputTimer = 0.0f;
+				dragCore = false;
+			} else if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
+				///////////////////////
+				//dragging core along//
+				///////////////////////
+				Vector3 worldMousePos;
+				//take mouse position or touch position
+				if (Input.GetMouseButton (0)) {
+					worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+				} else {
+					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+				}
+				worldMousePos.y = 0;
+
+				if (OnCoreCommand != null) {
+					OnCoreCommand (worldMousePos);
+				}
+			}
+		} 
+
+
+
+		if (currentSelection != null && inputTimer > inputTick && !dragCore) {
 			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
 
 				//////////////
@@ -55,7 +100,7 @@ public class GameInput: MonoBehaviour
 					} else {
 						worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
 					}
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
 
 					if (!spores.isPlaying) {
 						spores.Play ();
@@ -70,7 +115,6 @@ public class GameInput: MonoBehaviour
 				/////////////////////
 				// Change Ability  //
 				/////////////////////
-				/// Set a node to attract
 				if (currentSelection.buttonName != null && currentSelection.buttonName != ButtonName.ButtonName.NewNode) {
 
 					Vector3 worldMousePos;
@@ -81,7 +125,7 @@ public class GameInput: MonoBehaviour
 						worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
 					}
 
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
 					if (nodesInRadius.Count > 0) {
 						SpecializeNode (nodesInRadius [0]);
 						DeactivateSelection ();
@@ -90,6 +134,7 @@ public class GameInput: MonoBehaviour
 
 
 			}
+
 			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
 				SpawnNewSlimePath ();
 				DeactivateSelection ();
@@ -99,8 +144,8 @@ public class GameInput: MonoBehaviour
 			
 		}
 
-		//Activating Nodes
-		if (currentSelection == null && inputTimer > inputTick) {
+
+		if (currentSelection == null && inputTimer > inputTick && !dragCore) {
 			if (Input.GetMouseButton (0) || Input.touchCount > 0) {
 
 				Vector3 worldMousePos;
@@ -111,11 +156,26 @@ public class GameInput: MonoBehaviour
 					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
 				}
 
-				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.20f);
 
-				if (nodesInRadius.Count > 0) {
-					nodesInRadius [0].ToggleActive ();
-					inputTimer = 0.0f;
+				/////////////////////
+				//Checking for Core//
+				/////////////////////
+				FungusCore core = GameWorld.Instance.CoreInRange (worldMousePos, coreInputRange);
+
+				if (core != null) {
+					dragCore = true;
+
+				} else {
+
+					////////////////////
+					//Activating Nodes//
+					////////////////////
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
+
+					if (nodesInRadius.Count > 0) {
+						nodesInRadius [0].ToggleActive ();
+						inputTimer = 0.0f;
+					}
 				}
 			}
 		}

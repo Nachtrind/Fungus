@@ -16,7 +16,7 @@ public class NavMeshRenderer : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+/**	void Update () {
 #if UNITY_EDITOR
         string activeSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 		if (lastLevel == "") {
@@ -31,5 +31,5 @@ public class NavMeshRenderer : MonoBehaviour {
 			DestroyImmediate (gameObject);
 		}
 		#endif
-	}
+	}*/
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FungusResources : MonoBehaviour
 {
@@ -15,16 +16,20 @@ public class FungusResources : MonoBehaviour
 		}
 	}
 
-	public int CurrentResources { get; set; }
+	public float CurrentResources { get; set; }
 
-	public int MaxResources { get; set; }
+	public float MaxResources { get; set; }
 
-	public int startResources;
+	public float startResources;
+	public Text resourceDisplay;
+
 
 	// Use this for initialization
 	void Start ()
 	{
 		CurrentResources = startResources;
+		MaxResources = CurrentResources;
+		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 	
 	// Update is called once per frame
@@ -33,18 +38,22 @@ public class FungusResources : MonoBehaviour
 	
 	}
 
-	public void AddResources (int _toAdd)
+	public void AddResources (float _toAdd)
 	{
 		CurrentResources += _toAdd;
 
 		if (CurrentResources > MaxResources) {
 			MaxResources = CurrentResources;
 		}
+
+		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 
-	public void SubResources (int _toSub)
+	public void SubResources (float _toSub)
 	{
 		CurrentResources -= _toSub;
+
+		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 
 
