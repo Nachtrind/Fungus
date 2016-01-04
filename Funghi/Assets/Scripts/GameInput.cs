@@ -31,10 +31,24 @@ public class GameInput: MonoBehaviour
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
 	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
+	private Plane plane;
+	private Camera cam;
+
+	//Stuff for camera movement &  zoom
+	public float moveSpeedX = 0.20f;
+	public float moveSpeedZ = 0.20f;
+	private Vector2 scrollDirection = Vector2.zero;
+
+	void Start ()
+	{
+		plane = new Plane (Vector3.up, Vector3.zero);
+		cam = Camera.main;
+
+	}
 
 	void Update ()
 	{
-		if (!Camera.main) {
+		if (!cam) {
 			Debug.LogError ("No Camera tagged as MainCamera");
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPaused = true;
@@ -52,9 +66,9 @@ public class GameInput: MonoBehaviour
 				Vector3 worldMousePos;
 				//take mouse position or touch position
 				if (Input.GetMouseButtonUp (0)) {
-					worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+					worldMousePos = cam.ScreenToWorldPoint (Input.mousePosition);
 				} else {
-					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					worldMousePos = cam.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
 				}
 				worldMousePos.y = 0;
 
@@ -72,9 +86,9 @@ public class GameInput: MonoBehaviour
 				Vector3 worldMousePos;
 				//take mouse position or touch position
 				if (Input.GetMouseButton (0)) {
-					worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+					worldMousePos = cam.ScreenToWorldPoint (Input.mousePosition);
 				} else {
-					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					worldMousePos = cam.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
 				}
 				worldMousePos.y = 0;
 
@@ -96,9 +110,9 @@ public class GameInput: MonoBehaviour
 					Vector3 worldMousePos;
 					//take mouse position or touch position
 					if (Input.GetMouseButton (0)) {
-						worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
 					} else {
-						worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
 					}
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
 
@@ -120,9 +134,9 @@ public class GameInput: MonoBehaviour
 					Vector3 worldMousePos;
 					//take mouse position or touch position
 					if (Input.GetMouseButton (0)) {
-						worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
 					} else {
-						worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
 					}
 
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
@@ -144,16 +158,15 @@ public class GameInput: MonoBehaviour
 			
 		}
 
-
 		if (currentSelection == null && inputTimer > inputTick && !dragCore) {
 			if (Input.GetMouseButton (0) || Input.touchCount > 0) {
 
 				Vector3 worldMousePos;
 				//take mouse position or touch position
 				if (Input.GetMouseButton (0)) {
-					worldMousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
 				} else {
-					worldMousePos = Camera.main.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
 				}
 
 
@@ -175,12 +188,74 @@ public class GameInput: MonoBehaviour
 					if (nodesInRadius.Count > 0) {
 						nodesInRadius [0].ToggleActive ();
 						inputTimer = 0.0f;
+					} else {
+
+						Touch[] touches = Input.touches;
+						
+						///////////////
+						//Move Camera//
+						///////////////
+						if (touches.Length == 1) {
+							if (touches [0].phase == TouchPhase.Began) {
+
+							} else if (touches [0].phase == TouchPhase.Moved) {
+								Vector2 touchMovement = touches [0].deltaPosition;
+								
+								float posX = touchMovement.x * -moveSpeedX * Time.deltaTime;
+								
+								float posZ = touchMovement.y * -moveSpeedZ * Time.deltaTime;
+								
+								cam.transform.position += new Vector3 (posX, 0, posZ);
+								
+
+
+							} 
+
+						}
+
+						///////////////
+						//Zoom Camera//
+						///////////////
+						if (touches.Length == 2) {
+
+							Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+							
+							Touch touchOne = touches [0];
+							Touch touchTwo = touches [1];
+							
+							Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+							Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
+							
+							float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+							float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
+							
+							float lengthDiff = prevTouchLength - touchDeltaLength;
+
+							//TODO: Finish Zoom
+
+						}
 					}
 				}
 			}
 		}
+		
+
 
 		inputTimer += Time.deltaTime;
+
+	}
+
+	public Vector3 GetTouchPosInWorld (Ray _ray)
+	{
+
+		float enter;
+		if (plane.Raycast (_ray, out enter)) {
+			Vector3 point = _ray.GetPoint (enter);
+			return point;
+
+		}
+
+		return new Vector3 (0, 0, 0);
 
 	}
 
