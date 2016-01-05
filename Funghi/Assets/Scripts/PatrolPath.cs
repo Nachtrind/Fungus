@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Pathfinding;
+using UnityEngine.Serialization;
 
 public class PatrolPath : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class PatrolPath : MonoBehaviour
         public PatrolPointActions action;
         public float waitTime = 0;
         public PatrolPath linkedPath;
-        public int changeLikelyness = 100;
+        [FormerlySerializedAs("changeLikelyness")]
+        public int actionProbability = 100;
         public string functionName = "";
         public FunctionTarget target;
     }
@@ -37,10 +39,11 @@ public class PatrolPath : MonoBehaviour
         return nearest;
     }
 
+    public Color gizmoDrawColor = Color.yellow;
     void OnDrawGizmos()
     {
         if (points.Count <= 1) { return; }
-        Gizmos.color = Color.yellow;
+        Gizmos.color = gizmoDrawColor;
         for (int i = 1; i < points.Count; i++)
         {
             Gizmos.DrawLine(points[i].position, points[i - 1].position);
