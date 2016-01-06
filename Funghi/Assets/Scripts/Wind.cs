@@ -19,8 +19,8 @@ public class Wind : MonoBehaviour
 
 	float directionTimer;
 	float directionChangeTick;
-	float minTime = 15.0f;
-	float maxTime = 30.0f;
+	float minTime = 10.0f;
+	float maxTime = 15.0f;
 	Quaternion currentRotation;
 	float eulerZRot;
 	public RectTransform arrowTrans;
@@ -77,8 +77,6 @@ public class Wind : MonoBehaviour
 		directionChangeTick = Random.Range (minTime, maxTime);
 		directionTimer = 0.0f;
 		startTime = Time.time;
-
-		journeyLength = Mathf.Abs (formerRotation.eulerAngles.y - targetRotation.eulerAngles.y);
-
+		journeyLength = Mathf.Abs (formerRotation.eulerAngles.z - targetRotation.eulerAngles.z);
 	}
 }
