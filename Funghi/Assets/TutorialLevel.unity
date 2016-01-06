@@ -1964,7 +1964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.039215688, g: 0.28627452, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5128,7 +5128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.039215688, g: 0.28627452, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5753,19 +5753,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e6c852f7da668134e83a9e279b5ad09c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.49853936
+      value: -0.4985394
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e6c852f7da668134e83a9e279b5ad09c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.50145656
+      value: -0.5014566
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e6c852f7da668134e83a9e279b5ad09c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5014564
+      value: -0.50145644
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e6c852f7da668134e83a9e279b5ad09c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.49853915
+      value: 0.49853918
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e6c852f7da668134e83a9e279b5ad09c, type: 3}
       propertyPath: m_RootOrder
@@ -8935,7 +8935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.039215688, g: 0.28627452, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9775,6 +9775,97 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 3c0ed553487b85148a01e7eeb443ac66, type: 3}
   m_PrefabInternal: {fileID: 1868851806}
+--- !u!1 &1269661694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1269661698}
+  - 33: {fileID: 1269661697}
+  - 23: {fileID: 1269661696}
+  - 65: {fileID: 1269661695}
+  - 114: {fileID: 1269661699}
+  m_Layer: 8
+  m_Name: AbilityIndustries
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1269661695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1269661694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.24, y: 3.28, z: 1}
+  m_Center: {x: -0.55, y: 0, z: 0}
+--- !u!23 &1269661696
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1269661694}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 7d94ce37d9fb94140a830e27c791393a, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &1269661697
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1269661694}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1269661698
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1269661694}
+  m_LocalRotation: {x: 0, y: -0.1871514, z: 0, w: 0.9823311}
+  m_LocalPosition: {x: 2.67, y: 0.3, z: 5.6}
+  m_LocalScale: {x: 1.383604, y: 0.6550068, z: 2.6390529}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+--- !u!114 &1269661699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1269661694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2176efbf3efa5234abc875ac244f9f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: 3ecebf220109a0443bb07fa75dad27f9, type: 2}
+  centerLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!1001 &1269812166
 Prefab:
   m_ObjectHideFlags: 0
@@ -11555,7 +11646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.039215688, g: 0.28627452, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12346,12 +12437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spores: {fileID: 1769867367}
-  beatneat: {fileID: 11400000, guid: e973c5bb2d556434493c2bedd4f57147, type: 2}
-  attract: {fileID: 11400000, guid: e6f40c06a99b59b4ebfe3b3c2f507a4c, type: 2}
-  slowdown: {fileID: 11400000, guid: e11c726891c81bd45a6528135178074b, type: 2}
-  speedup: {fileID: 11400000, guid: d929a1c0c0eca74488e419344be231a5, type: 2}
-  zombies: {fileID: 11400000, guid: 67eb2c8af66d9c745af2dbea91405039, type: 2}
-  growth: {fileID: 11400000, guid: 3ecebf220109a0443bb07fa75dad27f9, type: 2}
   moveSpeedX: 0.2
   moveSpeedZ: 0.2
 --- !u!114 &1695140344
@@ -12365,6 +12450,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd45002938aa3b240aad3211ef201820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatneat: {fileID: 11400000, guid: e973c5bb2d556434493c2bedd4f57147, type: 2}
+  attract: {fileID: 11400000, guid: e6f40c06a99b59b4ebfe3b3c2f507a4c, type: 2}
+  slowdown: {fileID: 11400000, guid: e11c726891c81bd45a6528135178074b, type: 2}
+  speedup: {fileID: 11400000, guid: d929a1c0c0eca74488e419344be231a5, type: 2}
+  zombies: {fileID: 11400000, guid: 67eb2c8af66d9c745af2dbea91405039, type: 2}
+  growth: {fileID: 11400000, guid: 3ecebf220109a0443bb07fa75dad27f9, type: 2}
+  bBeatneat: {fileID: 353482484}
+  bAttract: {fileID: 394548718}
+  bSlowdown: {fileID: 1118672366}
+  bSpeedup: {fileID: 595754673}
+  bZombies: {fileID: 1563409757}
+  bGrowth: {fileID: 221165037}
+  unlockedAbilities: []
   startResources: 50
   resourceDisplay: {fileID: 1305270745}
 --- !u!1001 &1696800159

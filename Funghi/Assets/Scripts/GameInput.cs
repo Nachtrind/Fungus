@@ -19,12 +19,6 @@ public class GameInput: MonoBehaviour
 
 	static InputHandler instance;
 	AbilityButton currentSelection;
-	public NodeAbility beatneat;
-	public NodeAbility attract;
-	public NodeAbility slowdown;
-	public NodeAbility speedup;
-	public NodeAbility zombies;
-	public NodeAbility growth;
 	bool dragCore;
 	
 	//Image Tint Colors
@@ -66,9 +60,9 @@ public class GameInput: MonoBehaviour
 				Vector3 worldMousePos;
 				//take mouse position or touch position
 				if (Input.GetMouseButtonUp (0)) {
-					worldMousePos = cam.ScreenToWorldPoint (Input.mousePosition);
+					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
 				} else {
-					worldMousePos = cam.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
 				}
 				worldMousePos.y = 0;
 
@@ -86,9 +80,9 @@ public class GameInput: MonoBehaviour
 				Vector3 worldMousePos;
 				//take mouse position or touch position
 				if (Input.GetMouseButton (0)) {
-					worldMousePos = cam.ScreenToWorldPoint (Input.mousePosition);
+					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
 				} else {
-					worldMousePos = cam.ScreenToWorldPoint (Input.GetTouch (0).deltaPosition);
+					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
 				}
 				worldMousePos.y = 0;
 
@@ -119,7 +113,6 @@ public class GameInput: MonoBehaviour
 					if (!spores.isPlaying || spores.enableEmission == false) {
 						spores.Play ();
 						spores.enableEmission = true;
-						Debug.Log ("Activating Particles");
 					}
 					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
 
@@ -152,11 +145,9 @@ public class GameInput: MonoBehaviour
 			}
 
 			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
-				Debug.Log ("Deactivate Particles");
 				SpawnNewSlimePath ();
 				DeactivateSelection ();
 				spores.enableEmission = false;
-				Debug.Log ("After Stopping Spores: " + spores.isPlaying);
 			}
 			
 			
@@ -265,21 +256,23 @@ public class GameInput: MonoBehaviour
 
 	public void ClickedButton (AbilityButton _button)
 	{
-		if (_button == currentSelection) {
-			if (_button.isSelected) {
-				this.currentSelection = null;
-				_button.isSelected = false;
-				_button.SetTint (normalTint);
-			}
-		} else {
-			if (currentSelection != null) {
-				currentSelection.isSelected = false;
-				currentSelection.SetTint (normalTint);
-			}
+		if (_button.isUnlocked) {
+			if (_button == currentSelection) {
+				if (_button.isSelected) {
+					this.currentSelection = null;
+					_button.isSelected = false;
+					_button.SetTint (normalTint);
+				}
+			} else {
+				if (currentSelection != null) {
+					currentSelection.isSelected = false;
+					currentSelection.SetTint (normalTint);
+				}
 			
-			currentSelection = _button;
-			_button.isSelected = true;
-			_button.SetTint (selectedTint);
+				currentSelection = _button;
+				_button.isSelected = true;
+				_button.SetTint (selectedTint);
+			}
 		}
 		inputTimer = 0.0f;	
 	}
@@ -298,32 +291,32 @@ public class GameInput: MonoBehaviour
 		switch (currentSelection.buttonName) {
 		case ButtonName.ButtonName.BeatNEat:
 			{
-				fungusNode.Specialize (beatneat);
+				fungusNode.Specialize (FungusResources.Instance.beatneat);
 				break;
 			}
 		case ButtonName.ButtonName.ScentNode:
 			{
-				fungusNode.Specialize (attract);
+				fungusNode.Specialize (FungusResources.Instance.attract);
 				break;
 			}
 		case ButtonName.ButtonName.SlowDown:
 			{
-				fungusNode.Specialize (slowdown);
+				fungusNode.Specialize (FungusResources.Instance.slowdown);
 				break;
 			}
 		case ButtonName.ButtonName.SpeedUp:
 			{
-				fungusNode.Specialize (speedup);
+				fungusNode.Specialize (FungusResources.Instance.speedup);
 				break;
 			}
 		case ButtonName.ButtonName.Zombies:
 			{
-				fungusNode.Specialize (zombies);
+				fungusNode.Specialize (FungusResources.Instance.zombies);
 				break;
 			}
 		case ButtonName.ButtonName.GrowthSpores:
 			{
-				fungusNode.Specialize (growth);
+				fungusNode.Specialize (FungusResources.Instance.growth);
 				break;
 			}
 		}
@@ -398,6 +391,5 @@ public class GameInput: MonoBehaviour
 		}
 
 	}
-
 
 }

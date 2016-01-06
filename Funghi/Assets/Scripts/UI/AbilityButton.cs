@@ -28,6 +28,13 @@ public class AbilityButton : MonoBehaviour
 		image.color = _tint;
 	}
 
+	public void Unlock ()
+	{
+		Debug.Log ("Unlocked " + buttonName);
+		this.isUnlocked = true;
+		SetTint (new Color (255f / 255f, 255f / 255f, 255f / 255f, 1f));
+	}
+
 }
 
 namespace ButtonName
