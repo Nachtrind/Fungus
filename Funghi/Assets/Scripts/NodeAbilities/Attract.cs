@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace NodeAbilities
 {
-	[AbilityIdentifier("Attract")]
-	[CreateAssetMenuAttribute()]
+	[AbilityIdentifier ("Attract")]
+	[CreateAssetMenuAttribute ()]
 	public class Attract: NodeAbility
-	{		
+	{
 		public GameObject attractSpores;
 		GameObject spores;
 		public float influenceRadius;
@@ -25,8 +25,8 @@ namespace NodeAbilities
 
 			Quaternion rotation = Quaternion.Euler (Wind.Instance.arrowTrans.transform.rotation.eulerAngles - Vector3.up * 90);
 			spores.transform.rotation = Quaternion.Euler (spores.transform.rotation.eulerAngles.x, 
-			                                              Wind.Instance.arrowTrans.transform.rotation.eulerAngles.y - 90,  
-			                                              spores.transform.rotation.eulerAngles.z);
+				Wind.Instance.arrowTrans.transform.rotation.eulerAngles.z * -1.0f - 90.0f,  
+				spores.transform.rotation.eulerAngles.z);
 			Vector3 rotatedVector = (rotation * Vector3.up * radius);
 
 			InfluenceEnemiesInArea (node, rotatedVector);
@@ -47,7 +47,7 @@ namespace NodeAbilities
 			Vector3 dir = Vector3.Normalize (rotatedVector);
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
 			int i = 0;
-			while (Vector3.Magnitude(tempVector) < Vector3.Magnitude(rotatedVector)) {
+			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
 				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
 				//TODO: Change Behaviour of Enemies
 				i++;

@@ -35,6 +35,7 @@ public class ImmersiveAudioListener : MonoBehaviour
         if (listener)
         {
             Gizmos.color = new Color(0, 0, 1, 0.1f);
+            Gizmos.DrawLine(listener.transform.position, new Vector3(listener.transform.position.x, 0, listener.transform.position.z));
             Gizmos.DrawWireSphere(listener.transform.position, 0.05f);
         }
     }

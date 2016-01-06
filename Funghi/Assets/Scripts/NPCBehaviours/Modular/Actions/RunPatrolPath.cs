@@ -28,7 +28,7 @@ namespace ModularBehaviour
                                 currentWaitTime = currentPoint.waitTime;
                                 break;
                             case PatrolPath.PatrolPointActions.ChangePath:
-                                if (UnityEngine.Random.Range(0, 100) > currentPoint.changeLikelyness) { break; }
+                                if (UnityEngine.Random.Range(0, 100) > currentPoint.actionProbability) { break; }
                                 PatrolPath linkedPath = currentPoint.linkedPath;
                                 if (linkedPath != null)
                                 {
@@ -38,6 +38,7 @@ namespace ModularBehaviour
                                 }
                                 break;
                             case PatrolPath.PatrolPointActions.ExecuteFunction:
+                                if (UnityEngine.Random.Range(0, 100) > currentPoint.actionProbability) { break; }
                                 switch (currentPoint.target)
                                 {
                                     case PatrolPath.PatrolPoint.FunctionTarget.NPC:

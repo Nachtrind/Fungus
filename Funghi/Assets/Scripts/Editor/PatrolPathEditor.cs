@@ -5,18 +5,45 @@ using UnityEngine;
 public class PatrolPathEditor : Editor
 {
     Vector2 scrollPos;
+    public enum GizmoColor { Set, White, Blue, Red, Yellow, Green, Grey }
     public override void OnInspectorGUI()
     {
         PatrolPath pp = target as PatrolPath;
-        pp.transform.position = new Vector3(pp.transform.position.x, 0, pp.transform.position.z);
+        //pp.transform.position = new Vector3(pp.transform.position.x, 0, pp.transform.position.z);
+        GizmoColor gc = (GizmoColor)EditorGUILayout.EnumPopup("Gizmo color:", GizmoColor.Set);
+        if (gc > 0)
+        {
+            switch (gc)
+            {
+                case GizmoColor.White:
+                    pp.gizmoDrawColor = Color.white;
+                    break;
+                case GizmoColor.Blue:
+                    pp.gizmoDrawColor = Color.blue;
+                    break;
+                case GizmoColor.Red:
+                    pp.gizmoDrawColor = Color.red;
+                    break;
+                case GizmoColor.Yellow:
+                    pp.gizmoDrawColor = Color.yellow;
+                    break;
+                case GizmoColor.Green:
+                    pp.gizmoDrawColor = Color.green;
+                    break;
+                case GizmoColor.Grey:
+                    pp.gizmoDrawColor = Color.grey;
+                    break;
+            }
+            SceneView.RepaintAll();
+        }
         EditorGUILayout.BeginVertical(EditorStyles.textField);
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Point", EditorStyles.miniButtonLeft))
         {
             var p = new PatrolPath.PatrolPoint();
-            if (pp.points.Count > 0)
+            if (pp.points.Count > 1)
             {
-                p.position = pp.points[pp.points.Count - 1].position + Vector3.right;
+                p.position = Vector3.Lerp(pp.points[pp.points.Count - 1].position, pp.points[0].position, 0.5f);
                 scrollPos.y = float.PositiveInfinity;
             }
             else
@@ -53,7 +80,7 @@ public class PatrolPathEditor : Editor
                     pp.points[i].linkedPath = EditorGUILayout.ObjectField("New Path:", pp.points[i].linkedPath, typeof(PatrolPath), true) as PatrolPath;
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Probability:");
-                    pp.points[i].changeLikelyness = EditorGUILayout.IntSlider(pp.points[i].changeLikelyness, 0, 100);
+                    pp.points[i].actionProbability = EditorGUILayout.IntSlider(pp.points[i].actionProbability, 0, 100);
                     GUILayout.EndHorizontal();
                     break;
                 case PatrolPath.PatrolPointActions.ExecuteFunction:
@@ -61,6 +88,7 @@ public class PatrolPathEditor : Editor
                     GUILayout.Label("Function Name:");
                     pp.points[i].functionName = EditorGUILayout.TextField(pp.points[i].functionName);
                     GUILayout.EndHorizontal();
+                    pp.points[i].actionProbability = EditorGUILayout.IntSlider(pp.points[i].actionProbability, 0, 100);
                     pp.points[i].target = (PatrolPath.PatrolPoint.FunctionTarget)EditorGUILayout.EnumPopup("Function Target:", pp.points[i].target);
                     break;
             }
