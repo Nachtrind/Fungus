@@ -51,7 +51,7 @@ public class GameInput: MonoBehaviour
 		if (!cam) {
 			Debug.LogError ("No Camera tagged as MainCamera");
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPaused = true;
+			UnityEditor.EditorApplication.isPaused = true;
 #endif
 			return;
 		}
@@ -116,10 +116,12 @@ public class GameInput: MonoBehaviour
 					}
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
 
-					if (!spores.isPlaying) {
+					if (!spores.isPlaying || spores.enableEmission == false) {
 						spores.Play ();
+						spores.enableEmission = true;
+						Debug.Log ("Activating Particles");
 					}
-					spores.transform.position = new Vector3 (worldMousePos.x, 0, worldMousePos.z);
+					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
 
 					if (nodesInRadius.Count <= 0) {
 						CreateNewSlimePath (worldMousePos);
@@ -150,9 +152,11 @@ public class GameInput: MonoBehaviour
 			}
 
 			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
+				Debug.Log ("Deactivate Particles");
 				SpawnNewSlimePath ();
 				DeactivateSelection ();
-				spores.Stop ();
+				spores.enableEmission = false;
+				Debug.Log ("After Stopping Spores: " + spores.isPlaying);
 			}
 			
 			
