@@ -443,19 +443,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fa09c3b85f44e4397db5661aa773aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoDrawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   points:
   - position: {x: -8.257637, y: 0, z: -5.3658657}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: -8.269571, y: 0, z: -4.2506714}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
 --- !u!4 &69451857
@@ -1019,11 +1020,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
       propertyPath: ShapeModule.radius
-      value: 30.0400009
+      value: 30.04
       objectReference: {fileID: 0}
     - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
       propertyPath: EmissionModule.rate.scalar
-      value: 61.9000015
+      value: 61.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
@@ -5956,26 +5961,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fa09c3b85f44e4397db5661aa773aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoDrawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   points:
   - position: {x: 5.137131, y: 0, z: -5.1256843}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.163401, y: 0, z: -5.799804}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.6990075, y: 0, z: -5.799804}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
 --- !u!4 &757520214
@@ -7503,19 +7509,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fa09c3b85f44e4397db5661aa773aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoDrawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   points:
   - position: {x: 5.349847, y: 0.0000005364418, z: 5.8610544}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.3042674, y: 0.0000005364418, z: 4.811693}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
 --- !u!1001 &988803298
@@ -9489,68 +9496,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fa09c3b85f44e4397db5661aa773aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoDrawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   points:
   - position: {x: 5.3830004, y: 0, z: 3.8813558}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 3.3124247, y: 0, z: 2.5492015}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 0.70446014, y: 0, z: 4.426076}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: -4.313562, y: 0, z: 5.2619696}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: -8.493204, y: 0, z: 3.9994407}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: -7.0623403, y: 0, z: 1.2391102}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: -3.9868639, y: 0, z: 1.758664}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 2.5082085, y: 0, z: 0.8481345}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 4.322013, y: 0, z: 1.4136486}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
 --- !u!4 &1223447246
@@ -10332,75 +10340,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57fa09c3b85f44e4397db5661aa773aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gizmoDrawColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   points:
   - position: {x: -7.048241, y: 0.35546875, z: -4.5712233}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 0.9248991, y: 0.35546875, z: -2.8446093}
     action: 1
     waitTime: 2
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 3.0256045, y: 0.35546875, z: 0.5627552}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.4505444, y: 0.35546875, z: 0.5627552}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.4866123, y: 2.5162687, z: 0.058742404}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 7.2619476, y: 2.8025446, z: -0.068587124}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 7.2770615, y: 2.471016, z: -2.066587}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.6247725, y: 0.35546875, z: -2.5344598}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: 5.086058, y: 0.35546875, z: -4.9903226}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
   - position: {x: -2.690134, y: 0.35546875, z: -5.223857}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
-    changeLikelyness: 100
+    actionProbability: 100
     functionName: 
     target: 0
 --- !u!4 &1329045079
