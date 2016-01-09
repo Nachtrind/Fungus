@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: SlimeMat
-  m_Shader: {fileID: 4800000, guid: b109b70669eeeb64594d9e0fc1acff52, type: 3}
+  m_Shader: {fileID: 4800000, guid: 27e6d1e6077552040810a4e056bf0307, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -35,20 +35,6 @@ Material:
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Ground
-        second:
-          m_Texture: {fileID: 2800000, guid: 64f630a8db7fdfe4084f059bfcf05978, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _StructureTex
-        second:
-          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
-          m_Scale: {x: 4, y: 3}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -94,6 +80,20 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Ground
+        second:
+          m_Texture: {fileID: 2800000, guid: 64f630a8db7fdfe4084f059bfcf05978, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _StructureTex
+        second:
+          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
+          m_Scale: {x: 4, y: 3}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _Displacement
         second:
           m_Texture: {fileID: 2800000, guid: 0f123a3c8fb000544875d79269dc1031, type: 3}
@@ -121,56 +121,16 @@ Material:
         second: 0.6
       data:
         first:
-          name: _PixelBorder
-        second: 0
-      data:
-        first:
-          name: _Blockyness
-        second: 35
-      data:
-        first:
-          name: _GlowSteps
-        second: 3
-      data:
-        first:
-          name: _Spread
-        second: 0.67
-      data:
-        first:
-          name: _CutOff
-        second: 0.243
-      data:
-        first:
-          name: _Speed
-        second: 0.036
-      data:
-        first:
-          name: _Strength
-        second: 0.025
-      data:
-        first:
-          name: _BorderStrength
-        second: 0.002
-      data:
-        first:
-          name: _GlowWobble
-        second: 0.005
-      data:
-        first:
-          name: _Glossiness
-        second: 0
-      data:
-        first:
-          name: _Brightness
-        second: 1
-      data:
-        first:
           name: _Parallax
         second: 0.02
       data:
         first:
           name: _ZWrite
         second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: 0
       data:
         first:
           name: _BumpScale
@@ -195,6 +155,46 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _PixelBorder
+        second: 0
+      data:
+        first:
+          name: _Blockyness
+        second: 35
+      data:
+        first:
+          name: _GlowSteps
+        second: 3
+      data:
+        first:
+          name: _Spread
+        second: 1
+      data:
+        first:
+          name: _CutOff
+        second: 0.201
+      data:
+        first:
+          name: _Speed
+        second: 0.036
+      data:
+        first:
+          name: _Strength
+        second: 0.025
+      data:
+        first:
+          name: _BorderStrength
+        second: 0.002
+      data:
+        first:
+          name: _GlowWobble
+        second: 0.005
+      data:
+        first:
+          name: _Brightness
+        second: 1
       data:
         first:
           name: _Stencil
@@ -247,4 +247,4 @@ Material:
       data:
         first:
           name: _GlowColor
-        second: {r: 0.07531004, g: 0.102941155, b: 0.045415215, a: 1}
+        second: {r: 0.16176468, g: 0.16176468, b: 0.16176468, a: 1}
