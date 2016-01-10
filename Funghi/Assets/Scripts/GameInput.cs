@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System;
+﻿using NodeAbilities;
 using Pathfinding;
-using ButtonName;
+using System;
 using System.Collections.Generic;
-using NodeAbilities;
+using UnityEngine;
 
 public class GameInput: MonoBehaviour
 {
@@ -30,16 +29,20 @@ public class GameInput: MonoBehaviour
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
-	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
-	private Plane plane;
+#pragma warning disable 0414
+    Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
+#pragma warning restore 0414
+    private Plane plane;
 	private Camera cam;
 
 	//Stuff for camera movement &  zoom
 	public float moveSpeedX = 0.20f;
 	public float moveSpeedZ = 0.20f;
-	private Vector2 scrollDirection = Vector2.zero;
+#pragma warning disable 0414
+    private Vector2 scrollDirection = Vector2.zero;
+#pragma warning restore 0414
 
-	void Start ()
+    void Start ()
 	{
 		plane = new Plane (Vector3.up, Vector3.zero);
 		cam = Camera.main;
@@ -116,9 +119,10 @@ public class GameInput: MonoBehaviour
 					}
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
 
-					if (!spores.isPlaying || spores.enableEmission == false) {
+					if (!spores.isPlaying || spores.emission.enabled == false) {
 						spores.Play ();
-						spores.enableEmission = true;
+                        ParticleSystem.EmissionModule em = spores.emission;
+                        em.enabled = true;
 						Debug.Log ("Activating Particles");
 					}
 					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
@@ -131,7 +135,7 @@ public class GameInput: MonoBehaviour
 				/////////////////////
 				// Change Ability  //
 				/////////////////////
-				if (currentSelection.buttonName != null && currentSelection.buttonName != ButtonName.ButtonName.NewNode) {
+				if (currentSelection.buttonName != ButtonName.ButtonName.NewNode) {
 
 					Vector3 worldMousePos;
 					//take mouse position or touch position
@@ -155,8 +159,10 @@ public class GameInput: MonoBehaviour
 				Debug.Log ("Deactivate Particles");
 				SpawnNewSlimePath ();
 				DeactivateSelection ();
-				spores.enableEmission = false;
-				Debug.Log ("After Stopping Spores: " + spores.isPlaying);
+                //spores.enableEmission = false;
+                ParticleSystem.EmissionModule em = spores.emission;
+                em.enabled = false;
+                Debug.Log ("After Stopping Spores: " + spores.isPlaying);
 			}
 			
 			
@@ -222,22 +228,23 @@ public class GameInput: MonoBehaviour
 						///////////////
 						if (touches.Length == 2) {
 
-							Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+#pragma warning disable 0219
+                            Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
 							
 							Touch touchOne = touches [0];
 							Touch touchTwo = touches [1];
 							
 							Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
 							Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
-							
-							float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
-							float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
-							
-							float lengthDiff = prevTouchLength - touchDeltaLength;
 
-							//TODO: Finish Zoom
+                            float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+                            float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
 
-						}
+                            float lengthDiff = prevTouchLength - touchDeltaLength;
+
+                            //TODO: Finish Zoom
+#pragma warning restore 0219
+                        }
 					}
 				}
 			}
@@ -378,7 +385,7 @@ public class GameInput: MonoBehaviour
 
 	private void CreateNewSlimePath (Vector3 _mousePosition)
 	{
-		bool reachable = true;
+		//bool reachable = true;
 		_mousePosition.y = 0;
 		FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode (_mousePosition); //HACK: nearest node is not always shortest path (if needed, compare multiple paths)
 		if (nodeNearCursor) {

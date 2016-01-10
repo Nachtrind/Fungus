@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
 namespace NodeAbilities
 {
-	[AbilityIdentifier("KillAndConsume")]
-	[CreateAssetMenuAttribute()]
-	public class KillAndConsume: NodeAbility
+    [AbilityIdentifier("KillAndConsume")]
+    [CreateAssetMenu(menuName = "Abilities/KillAndConsume")]
+    public class KillAndConsume: NodeAbility
 	{
 		public int damage;
 		 

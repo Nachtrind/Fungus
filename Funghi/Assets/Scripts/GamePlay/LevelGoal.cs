@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using NodeAbilities;
+using UnityEngine.SceneManagement;
 
-public class FungusGoal : MonoBehaviour
+public class LevelGoal : MonoBehaviour
 {
     public NodeAbility unlockedAbility;
-    public string nextLevelName = "";
+    [SerializeField]
+    string nextLevelName = "";
 
     void Update()
     {
@@ -21,6 +23,15 @@ public class FungusGoal : MonoBehaviour
     {
         Gizmos.color = new Color(0, 1f, 0, 0.33f);
         Gizmos.DrawSphere(transform.position, 0.2f);
+    }
+
+    public void LoadConfiguredLevel()
+    {
+        Scene s = SceneManager.GetSceneByName(nextLevelName);
+        if (s.IsValid() && !s.isLoaded)
+        {
+            SceneManager.LoadScene(s.name, LoadSceneMode.Single);
+        }
     }
 
 }

@@ -65,7 +65,17 @@ public class GameWorld : MonoBehaviour
 	[Header ("Masks")]
 	public LayerMask ObstacleLayer;
 
-	void Awake ()
+    LevelEventDispatcher eventDispatcher;
+
+#if UNITY_ANDROID
+    [RuntimeInitializeOnLoadMethod]
+    static void ForceCorrectOrientation()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+    }
+#endif
+
+    void Awake ()
 	{
 		instance = this;
 		slimeHandler = GetComponent<SlimeHandler> ();
@@ -82,12 +92,15 @@ public class GameWorld : MonoBehaviour
 		if (humanUpdater == null) {
 			humanUpdater = StartCoroutine (HumanUpdate ());
 		}
-	}
+        eventDispatcher = FindObjectOfType<LevelEventDispatcher>();
+        if (eventDispatcher == null) { throw new NullReferenceException("No EventDispatcher found in Level"); }
+        eventDispatcher.FireEvent(LevelEventType.Start);
+    }
 
 	void OnLevelWasLoaded ()
 	{
 		levelStartTime = Time.time;
-	}
+    }
 
 	bool gameShuttingDown = false;
 
@@ -149,6 +162,7 @@ public class GameWorld : MonoBehaviour
 		}
 		SpawnFungusNode (start.transform.position);
 		SpawnCore (start.transform.position);
+        deathEventCalled = false;
 	}
 
 	public bool SpawnCore (Vector3 position)
@@ -167,6 +181,40 @@ public class GameWorld : MonoBehaviour
 		FungusNode fn = Instantiate (fungusNodePrefab, position, Quaternion.identity) as FungusNode;
 		return fn;
 	}
+
+    public void RestartCurrentLevel()
+    {
+        Debug.Log("Restarting Level, TODO: reset resources, abilities etc.");
+        RemoveAllEntities();
+        slimeHandler.ClearAllConnections();
+        RemoveAllSlimeTags();
+        Start();
+    }
+
+    void RemoveAllEntities()
+    {
+        if (core) { Destroy(core.gameObject); core = null; }
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            Destroy(nodes[i].gameObject);
+        }
+        nodes.Clear();
+        for (int i = 0; i < policeCars.Count; i++)
+        {
+            Destroy(policeCars[i].gameObject);
+        }
+        policeCars.Clear();
+        for (int i = 0; i < policeStations.Count; i++)
+        {
+            Destroy(policeStations[i].gameObject);
+        }
+        policeStations.Clear();
+        for (int i = 0; i < humans.Count; i++)
+        {
+            Destroy(humans[i].gameObject);
+        }
+        humans.Clear();
+    }
 
 	#region Helper
 
@@ -235,6 +283,7 @@ public class GameWorld : MonoBehaviour
 		FungusNode fn = e as FungusNode;
 		if (fn) {
 			nodes.Remove (fn);
+            CleanupAfterNodes();
 			return;
 		}
 		Human en = e as Human;
@@ -406,6 +455,15 @@ public class GameWorld : MonoBehaviour
 
 	#region Slime
 
+    void CleanupAfterNodes()
+    {
+        if (nodes.Count == 0)
+        {
+            slimeHandler.ClearAllConnections();
+            RemoveAllSlimeTags();
+        }
+    }
+
 	public void SetPositionIsSlime (Vector3 point, float size, bool state)
 	{
 		if (gameShuttingDown) {
@@ -416,7 +474,6 @@ public class GameWorld : MonoBehaviour
 		guo.updatePhysics = false;
 		guo.modifyWalkability = false;
 		guo.setTag = state ? slimeTag : 0;
-		guo.updatePhysics = false;
 		AstarPath.active.UpdateGraphs (guo);
 	}
 
@@ -433,6 +490,18 @@ public class GameWorld : MonoBehaviour
 		}
 		return false;
 	}
+
+    public void RemoveAllSlimeTags()
+    {
+        if (gameShuttingDown) { return; }
+        AstarPath.active.FlushGraphUpdates();
+        GraphUpdateObject guo = new GraphUpdateObject(new Bounds(Vector3.zero, Vector3.one * 10000f));
+        guo.modifyTag = true;
+        guo.updatePhysics = false;
+        guo.modifyWalkability = false;
+        guo.setTag = 0;
+        AstarPath.active.UpdateGraphs(guo);
+    }
 
 	/// <summary>
 	/// untested, may crash
@@ -476,7 +545,7 @@ public class GameWorld : MonoBehaviour
 		}
 	}
 
-	public void OnFungusNodeWasDestroyed (FungusNode node)
+	public void OnFungusNodeWasKilled (FungusNode node)
 	{
 		Destroy (node.gameObject);
 	}
@@ -487,9 +556,15 @@ public class GameWorld : MonoBehaviour
 		Destroy (human.gameObject);
 	}
 
+    bool deathEventCalled = false;
 	public void OnCoreLostGrounding (FungusCore core)
 	{
-		Debug.Log ("Core ungrounded");
+        if (!deathEventCalled)
+        {
+            Debug.Log("Core ungrounded");
+            eventDispatcher.FireEvent(LevelEventType.Death);
+            deathEventCalled = true;
+        }
 #if UNITY_EDITOR
 //        UnityEditor.EditorApplication.isPaused = true;
 #endif
@@ -498,12 +573,13 @@ public class GameWorld : MonoBehaviour
 	public void OnCoreWasKilled (FungusCore core)
 	{
 		Debug.Log ("Core killed");
+        eventDispatcher.FireEvent(LevelEventType.Death);
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPaused = true;
 #endif
 	}
 
-	public void OnCoreTouchedGoal (FungusGoal goal)
+	public void OnCoreTouchedGoal (LevelGoal goal)
 	{
 		if (goal.unlockedAbility) {
 			PlayerRecord.UnlockAbility (goal.unlockedAbility);
@@ -511,6 +587,7 @@ public class GameWorld : MonoBehaviour
 		} else {
 			Debug.Log ("Goal reached");
 		}
+        eventDispatcher.FireEvent(LevelEventType.Goal);
 		//TODO handle new level etc
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPaused = true;
