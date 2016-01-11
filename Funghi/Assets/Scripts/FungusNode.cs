@@ -101,7 +101,7 @@ public class FungusNode : Entity
 
 	public void Specialize (NodeAbility newAbility)
 	{
-		ability = newAbility;
+		ability = Instantiate(newAbility);
 
 
 		switch (newAbility.name) {

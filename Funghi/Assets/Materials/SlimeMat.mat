@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: SlimeMat
-  m_Shader: {fileID: 4800000, guid: 27e6d1e6077552040810a4e056bf0307, type: 3}
+  m_Shader: {fileID: 4800000, guid: b109b70669eeeb64594d9e0fc1acff52, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -82,7 +82,7 @@ Material:
         first:
           name: _Ground
         second:
-          m_Texture: {fileID: 2800000, guid: 64f630a8db7fdfe4084f059bfcf05978, type: 3}
+          m_Texture: {fileID: 2800000, guid: 3b5e691119f780f4c9ec7b4edd1a145e, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -158,15 +158,11 @@ Material:
       data:
         first:
           name: _PixelBorder
-        second: 0
+        second: 0.16
       data:
         first:
           name: _Blockyness
-        second: 35
-      data:
-        first:
-          name: _GlowSteps
-        second: 3
+        second: 71.76
       data:
         first:
           name: _Spread
@@ -174,11 +170,11 @@ Material:
       data:
         first:
           name: _CutOff
-        second: 0.201
+        second: 0.32
       data:
         first:
           name: _Speed
-        second: 0.036
+        second: 0.1
       data:
         first:
           name: _Strength
@@ -186,15 +182,19 @@ Material:
       data:
         first:
           name: _BorderStrength
-        second: 0.002
+        second: 0
       data:
         first:
           name: _GlowWobble
-        second: 0.005
+        second: 0.01
       data:
         first:
           name: _Brightness
-        second: 1
+        second: 0.51
+      data:
+        first:
+          name: _GlowSteps
+        second: 3
       data:
         first:
           name: _Stencil
@@ -247,4 +247,4 @@ Material:
       data:
         first:
           name: _GlowColor
-        second: {r: 0.16176468, g: 0.16176468, b: 0.16176468, a: 1}
+        second: {r: 0.21790805, g: 0.22794116, b: 0.124026805, a: 1}
