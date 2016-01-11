@@ -86,6 +86,11 @@ public class SlimeHandler: MonoBehaviour
         slimePaths.Add(path);
     }
 
+    public void ClearAllConnections()
+    {
+        slimePaths.Clear();
+    }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

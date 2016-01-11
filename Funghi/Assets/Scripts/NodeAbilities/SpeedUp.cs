@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace NodeAbilities
 {
-	[AbilityIdentifier("SpeedUp")]
-	[CreateAssetMenuAttribute()]
-	public class SpeedUp: NodeAbility
+    [AbilityIdentifier("SpeedUp")]
+    [CreateAssetMenu(menuName = "Abilities/SpeedUp")]
+    public class SpeedUp: NodeAbility
 	{		
 
 		public float newSpeed;

@@ -24,9 +24,11 @@ public class InputHandler : MonoBehaviour
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
-	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
-	
-	public static InputHandler Instance {
+#pragma warning disable 0414
+    Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
+#pragma warning restore 0414
+
+    public static InputHandler Instance {
 		get {
 			if (instance == null) {
 				instance = FindObjectOfType<InputHandler> ();

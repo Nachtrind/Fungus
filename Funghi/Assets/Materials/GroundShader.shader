@@ -27,10 +27,10 @@
 	}
 	SubShader
 	{
-		Tags { "RenderType" = "Opaque" }
+		Tags { "RenderType" = "Opaque" "Queue" = "Geometry" }
 
 		CGPROGRAM
-		#pragma surface surf Standard addshadow
+		#pragma surface surf Lambert addshadow
 		#pragma target 2.0
 
 		sampler2D _MainTex;
@@ -58,7 +58,7 @@
 			float4 screenPos;
 		};
 
-		void surf(Input IN, inout SurfaceOutputStandard o)
+		void surf(Input IN, inout SurfaceOutput o)
 		{
 			half aspect = _ScreenParams.x / _ScreenParams.y;
 			IN.screenPos.w += 0.00001;
@@ -96,7 +96,7 @@
 			half3 glow = clamp(mask.g - slime.g, 0, 1);
 			half3 final = lerp(groundTexture, slimeTexture*_Color*2, slime.g);
 
-			o.Smoothness = _Glossiness;
+			//o.Smoothness = _Glossiness;
 			o.Albedo = final + (glow*_GlowColor * 2)*(1-_Brightness);
 			o.Emission = ((slimeTexture*_Color*slime.g) + (glow*_GlowColor * 2))*_Brightness;
 		}

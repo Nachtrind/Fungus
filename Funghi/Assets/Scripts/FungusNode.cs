@@ -101,7 +101,7 @@ public class FungusNode : Entity
 
 	public void Specialize (NodeAbility newAbility)
 	{
-		ability = newAbility;
+		ability = Instantiate(newAbility);
 
 
 		switch (newAbility.name) {
@@ -205,7 +205,7 @@ public class FungusNode : Entity
 	public override void OnDamage (Entity attacker)
 	{
 		if (IsDead) {
-			world.OnFungusNodeWasDestroyed (this);
+			world.OnFungusNodeWasKilled (this);
 		}
 	}
     #endregion

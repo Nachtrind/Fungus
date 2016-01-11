@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace NodeAbilities
 {
-	[AbilityIdentifier("SlowDown")]
-	[CreateAssetMenuAttribute()]
-	public class SlowDown: NodeAbility
+    [AbilityIdentifier("SlowDown")]
+    [CreateAssetMenu(menuName = "Abilities/SlowDown")]
+    public class SlowDown: NodeAbility
 	{		
 		public float slowDownSpeed;
 		public float slowDownTime;

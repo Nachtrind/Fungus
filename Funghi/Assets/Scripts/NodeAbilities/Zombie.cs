@@ -1,13 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace NodeAbilities
 {
-	[AbilityIdentifier ("Zombie")]
-	[CreateAssetMenuAttribute ()]
-	public class Zombie: NodeAbility
-	{
+
+    [AbilityIdentifier("Zombie")]
+    [CreateAssetMenu(menuName = "Abilities/Zombie")]
+    public class Zombie: NodeAbility
+	{		
+	
 		public GameObject zombieSpores;
 		GameObject spores;
 		public float influenceRadius;
@@ -52,15 +53,17 @@ namespace NodeAbilities
 			Vector3 dir = Vector3.Normalize (rotatedVector);
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
 			int i = 0;
+			
 			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
+			
 				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
 				//TODO: Change Behaviour of Enemies
 				i++;
 				tempVector = dir * (i * influenceRadius);
 			}
 			
-			
-			
-		}
-	}
+
+
+        }
+    }
 }
