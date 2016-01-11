@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 646b6b3a68ea3ee449d218b4071c65ca
-timeCreated: 1450099877
+guid: ea15a241f1a5fb146904fd103017f443
+timeCreated: 1452499446
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Box021
+    4300000: Cube
     6400000: //RootNode
   materials:
     importMaterials: 1
@@ -35,12 +35,12 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
-    meshCompression: 1
+    globalScale: 0.075
+    meshCompression: 0
     addColliders: 1
     importBlendShapes: 0
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -51,9 +51,9 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 0
-    normalImportMode: 1
-    tangentImportMode: 4
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
   importAnimation: 0
   copyAvatar: 0
   humanDescription:

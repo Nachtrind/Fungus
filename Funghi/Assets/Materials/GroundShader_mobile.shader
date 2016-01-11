@@ -21,7 +21,6 @@
 		_BorderStrength("Slime Edge", Range(0, 0.01)) = 0
 		_GlowWobble("Glow", Range(0, 0.01)) = 0.001
 		[Header(Light)]
-		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Brightness("Slime self glow", Range(0, 1)) = 0.5
 	}
 	SubShader
@@ -36,7 +35,6 @@
 		sampler2D _StructureTex;
 		fixed _Blockyness;
 		sampler2D _Ground;
-		half _Glossiness;
 		fixed3 _Color;
 		fixed3 _GlowColor;
 		fixed _Speed;
