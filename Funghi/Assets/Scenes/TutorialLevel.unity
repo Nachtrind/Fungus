@@ -1669,6 +1669,22 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.027121263
       objectReference: {fileID: 0}
+    - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
+      propertyPath: InitialModule.startSize.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19858174, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
+      propertyPath: scalingMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ae2fe3add9040f4b9e475bc850172f2, type: 2}
   m_IsPrefabParent: 0

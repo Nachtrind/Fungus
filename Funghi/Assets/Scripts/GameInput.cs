@@ -129,14 +129,19 @@ public class GameInput: MonoBehaviour
 						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
 					}
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
+					ParticleSystem.EmissionModule em = spores.emission;
 
 					if (!spores.isPlaying || spores.emission.enabled == false) {
 						spores.Play ();
-						ParticleSystem.EmissionModule em = spores.emission;
 						em.enabled = true;
+						//ParticleSystem.EmissionModule em = spores.emission;
+						//em.rate = 60;
 			
 					}
+
+					em.rate = new ParticleSystem.MinMaxCurve(60.0f);
 					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
+					//spores.Emit (30);
 
 					if (nodesInRadius.Count <= 0) {
 						CreateNewSlimePath (worldMousePos);
@@ -171,7 +176,8 @@ public class GameInput: MonoBehaviour
 				DeactivateSelection ();
 				//spores.enableEmission = false;
 				ParticleSystem.EmissionModule em = spores.emission;
-				em.enabled = false;
+				em.rate = new ParticleSystem.MinMaxCurve(0.0f);
+				//em.enabled = false;
 		
 			}
 			
