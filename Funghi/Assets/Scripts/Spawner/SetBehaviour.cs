@@ -19,6 +19,7 @@ namespace Spawner.Modules
                 {
                     e.Behaviour.LoadSpecialPath(worker.linkedSpawnPath);
                 }
+                e.Behaviour.name = new System.Random().Next().ToString();
             }
             worker.ProcessNext(e);
         }

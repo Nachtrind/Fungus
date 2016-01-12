@@ -11,6 +11,7 @@ public class PatrolPathEditor : Editor
         PatrolPath pp = target as PatrolPath;
         //pp.transform.position = new Vector3(pp.transform.position.x, 0, pp.transform.position.z);
         GizmoColor gc = (GizmoColor)EditorGUILayout.EnumPopup("Gizmo color:", GizmoColor.Set);
+        pp.drawCircle = EditorGUILayout.Toggle("Draw circle:", pp.drawCircle);
         if (gc > 0)
         {
             switch (gc)
@@ -41,14 +42,22 @@ public class PatrolPathEditor : Editor
         if (GUILayout.Button("Add Point", EditorStyles.miniButtonLeft))
         {
             var p = new PatrolPath.PatrolPoint();
-            if (pp.points.Count > 1)
+            //if (pp.points.Count > 1)
+            //{
+            //    p.position = Vector3.Lerp(pp.points[pp.points.Count - 1].position, pp.points[0].position, 0.5f);
+            //    scrollPos.y = float.PositiveInfinity;
+            //}
+            //else
+            //{
+                //p.position = pp.transform.position + Vector3.right;
+            //}
+            if (pp.points.Count > 0)
             {
-                p.position = Vector3.Lerp(pp.points[pp.points.Count - 1].position, pp.points[0].position, 0.5f);
-                scrollPos.y = float.PositiveInfinity;
+                p.position = pp.points[pp.points.Count - 1].position + (Vector3.forward+Vector3.right) * 0.25f;
             }
             else
             {
-                p.position = pp.transform.position + Vector3.right;
+                p.position = pp.transform.position + (Vector3.forward + Vector3.right) * 0.25f;
             }
             pp.points.Add(p);
             SceneView.RepaintAll();
@@ -99,13 +108,15 @@ public class PatrolPathEditor : Editor
         EditorGUILayout.EndVertical();
     }
 
+    GUIStyle labelStyle;
     public void OnSceneGUI()
     {
         PatrolPath pp = target as PatrolPath;
+        if (labelStyle == null) { labelStyle = new GUIStyle(GUI.skin.label); labelStyle.normal.textColor = Color.white; }
         for (int i = pp.points.Count; i-- > 0;)
         {
             pp.points[i].position = Handles.PositionHandle(pp.points[i].position, Quaternion.identity);
-            Handles.Label(pp.points[i].position, i.ToString());
+            Handles.Label(pp.points[i].position, i.ToString(), labelStyle);
         }
         if (pp.transform.hasChanged)
         {

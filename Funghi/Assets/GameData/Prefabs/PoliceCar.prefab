@@ -46,7 +46,7 @@ GameObject:
   - 54: {fileID: 5471200}
   - 136: {fileID: 13622708}
   - 82: {fileID: 8265758}
-  - 114: {fileID: 11493906}
+  - 114: {fileID: 11450728}
   m_Layer: 0
   m_Name: PoliceCar
   m_TagString: Untagged
@@ -376,6 +376,28 @@ MonoBehaviour:
   doorOffsetLeft: {x: 0.15, y: 0, z: 0}
   doorOffsetRight: {x: -0.15, y: 0, z: 0}
   debug: 0
+--- !u!114 &11450728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b090bec917bbe4c3bbc612ef13f7c4a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 1
+  useRaycasting: 1
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  thickRaycast: 0
+  thickRaycastRadius: 0
+  raycastOffset: {x: 0, y: 0, z: 0}
+  subdivideEveryIter: 0
+  iterations: 2
+  useGraphRaycasting: 1
 --- !u!114 &11472168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -417,19 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
   turnSpeed: 0.33
-  extraPathSmoothing: 0
---- !u!114 &11493906
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 1
+  extraPathSmoothing: 1
 --- !u!136 &13622708
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2063,6 +2073,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: startEndModifier.priority
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: extraPathSmoothing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: useGraphRaycasting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: subdivideEveryIter
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

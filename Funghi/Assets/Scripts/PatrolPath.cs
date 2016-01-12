@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class PatrolPath : MonoBehaviour
 {
     public enum PatrolPointActions { Continue, Wait, ChangePath, ExecuteFunction }
+    public bool drawCircle = true;
 
     [System.Serializable]
 	public class PatrolPoint
@@ -47,8 +48,18 @@ public class PatrolPath : MonoBehaviour
         for (int i = 1; i < points.Count; i++)
         {
             Gizmos.DrawLine(points[i].position, points[i - 1].position);
+            if (points[i].action == PatrolPointActions.ChangePath && points[i].linkedPath)
+            {
+                int index = points[i].linkedPath.GetNearestPatrolPointIndex(points[i].position);
+                if (index >= 0)
+                {
+                    Gizmos.color = Color.gray;
+                    Gizmos.DrawLine(points[i].position, points[i].linkedPath.points[index].position);
+                    Gizmos.color = gizmoDrawColor;
+                }
+            }
         }
-        if (points.Count > 2)
+        if (points.Count > 2 && drawCircle)
         {
             Gizmos.DrawLine(points[points.Count - 1].position, points[0].position);
         }

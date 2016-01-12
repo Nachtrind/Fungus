@@ -35,6 +35,7 @@ namespace Spawner
                 {
                     SpawnCompletedCallback(e);
                 }
+                Restart();
             }
         }
     }

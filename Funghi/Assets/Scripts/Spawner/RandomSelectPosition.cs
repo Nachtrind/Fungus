@@ -14,7 +14,7 @@ namespace Spawner.Modules
         {
             if (positions.Count > 0)
             {
-                e.transform.position = positions[Random.Range(0, positions.Count - 1)];
+                e.transform.position = positions[Random.Range(0, positions.Count)];
             }
             worker.ProcessNext(e);
         }
