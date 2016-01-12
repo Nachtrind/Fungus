@@ -10318,12 +10318,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1269661694}
-  m_LocalRotation: {x: 0, y: -0.1871514, z: 0, w: 0.9823311}
-  m_LocalPosition: {x: 2.67, y: 0.3, z: 5.6}
+  m_LocalRotation: {x: 0, y: -0.23139717, z: 0, w: 0.9728594}
+  m_LocalPosition: {x: 2.74, y: 0.3, z: 6.81}
   m_LocalScale: {x: 1.383604, y: 0.6550068, z: 2.6390529}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 14
 --- !u!114 &1269661699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10491,6 +10491,7 @@ GameObject:
   - 114: {fileID: 1273105136}
   - 114: {fileID: 1273105135}
   - 114: {fileID: 1273105134}
+  - 114: {fileID: 1273105138}
   m_Layer: 5
   m_Name: New Node
   m_TagString: Untagged
@@ -10614,6 +10615,36 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1273105132}
+--- !u!114 &1273105138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1273105132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1695140343}
+          m_MethodName: ClickedButton
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1273105134}
+            m_ObjectArgumentAssemblyTypeName: AbilityButton, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!1001 &1288938662
 Prefab:
   m_ObjectHideFlags: 0
@@ -13191,7 +13222,7 @@ MonoBehaviour:
   destroyDisconnectedNodes: 1
   slimeHandler: {fileID: 1695140340}
   entityHolder: {fileID: 1211615653}
-  corePrefab: {fileID: 11441898, guid: 9d2ecf9c6d3baad45bc6380fe661450e, type: 2}
+  corePrefab: {fileID: 11441898, guid: 9d918c1fbb87c8848a07f6d31e98c194, type: 2}
   fungusNodePrefab: {fileID: 11451118, guid: 266ab57f4a593f045a899e345c13fb52, type: 2}
   ObstacleLayer:
     serializedVersion: 2
@@ -13222,6 +13253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695026c0fed4f8e4d85e2d648a27827b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ground: {fileID: 1748831980}
   spores: {fileID: 1769867367}
   moveSpeedX: 0.2
   moveSpeedZ: 0.2

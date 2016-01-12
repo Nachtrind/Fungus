@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class GameInput: MonoBehaviour
 {
+
+	public Renderer ground;
+
+
 	public ParticleSystem spores;
 	float lastRequest;
 	float requestInterval = 0.1f;
@@ -23,23 +27,36 @@ public class GameInput: MonoBehaviour
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
-#pragma warning disable 0414
-    Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
-#pragma warning restore 0414
-    private Plane plane;
+	#pragma warning disable 0414
+	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
+	#pragma warning restore 0414
+	private Plane plane;
 	private Camera cam;
 
 	//Stuff for camera movement &  zoom
 	public float moveSpeedX = 0.20f;
 	public float moveSpeedZ = 0.20f;
-#pragma warning disable 0414
-    private Vector2 scrollDirection = Vector2.zero;
-#pragma warning restore 0414
+	#pragma warning disable 0414
+	private Vector2 scrollDirection = Vector2.zero;
+	#pragma warning restore 0414
 
-    void Start ()
+	float levelSizeY;
+	float levelSizeX;
+
+	float leftBorder;
+	float rightBorder;
+	float upperBorder;
+	float lowerBorder;
+
+	void Start ()
 	{
 		plane = new Plane (Vector3.up, Vector3.zero);
 		cam = Camera.main;
+
+		levelSizeY = ground.bounds.extents.y;
+		levelSizeX = ground.bounds.extents.x;
+
+		CalcLevelBorders ();
 
 	}
 
@@ -115,8 +132,8 @@ public class GameInput: MonoBehaviour
 
 					if (!spores.isPlaying || spores.emission.enabled == false) {
 						spores.Play ();
-                        ParticleSystem.EmissionModule em = spores.emission;
-                        em.enabled = true;
+						ParticleSystem.EmissionModule em = spores.emission;
+						em.enabled = true;
 			
 					}
 					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
@@ -152,9 +169,9 @@ public class GameInput: MonoBehaviour
 			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
 				SpawnNewSlimePath ();
 				DeactivateSelection ();
-                //spores.enableEmission = false;
-                ParticleSystem.EmissionModule em = spores.emission;
-                em.enabled = false;
+				//spores.enableEmission = false;
+				ParticleSystem.EmissionModule em = spores.emission;
+				em.enabled = false;
 		
 			}
 			
@@ -209,6 +226,8 @@ public class GameInput: MonoBehaviour
 								float posZ = touchMovement.y * -moveSpeedZ * Time.deltaTime;
 								
 								cam.transform.position += new Vector3 (posX, 0, posZ);
+
+								//ClampCamPos ();
 								
 
 
@@ -216,13 +235,14 @@ public class GameInput: MonoBehaviour
 
 						}
 
+
 						///////////////
 						//Zoom Camera//
 						///////////////
 						if (touches.Length == 2) {
 
 #pragma warning disable 0219
-                            Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+							Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
 							
 							Touch touchOne = touches [0];
 							Touch touchTwo = touches [1];
@@ -230,14 +250,14 @@ public class GameInput: MonoBehaviour
 							Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
 							Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
 
-                            float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
-                            float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
+							float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+							float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
 
-                            float lengthDiff = prevTouchLength - touchDeltaLength;
+							float lengthDiff = prevTouchLength - touchDeltaLength;
 
-                            //TODO: Finish Zoom
+							//TODO: Finish Zoom
 #pragma warning restore 0219
-                        }
+						}
 					}
 				}
 			}
@@ -247,6 +267,25 @@ public class GameInput: MonoBehaviour
 
 		inputTimer += Time.deltaTime;
 
+	}
+
+
+	private void CalcLevelBorders ()
+	{
+		float vSize = cam.orthographicSize;
+		float hSize = cam.orthographicSize * Screen.width / Screen.height;
+		leftBorder = hSize - levelSizeX / 2.0f;
+		rightBorder = levelSizeX / 2.0f - hSize;
+		upperBorder = vSize - levelSizeY / 2.0f;
+		lowerBorder = levelSizeY / 2.0f - vSize;
+	}
+
+	private void ClampCamPos ()
+	{
+		Vector3 limitedCameraPosition = cam.transform.position;
+		limitedCameraPosition.x = Mathf.Clamp (limitedCameraPosition.x, leftBorder, rightBorder);
+		limitedCameraPosition.z = Mathf.Clamp (limitedCameraPosition.z, upperBorder, lowerBorder);
+		cam.transform.position = limitedCameraPosition;
 	}
 
 	public Vector3 GetTouchPosInWorld (Ray _ray)
@@ -265,6 +304,7 @@ public class GameInput: MonoBehaviour
 
 	public void ClickedButton (AbilityButton _button)
 	{
+		Debug.Log ("ClickButton");
 		if (_button.isUnlocked) {
 			if (_button == currentSelection) {
 				if (_button.isSelected) {
