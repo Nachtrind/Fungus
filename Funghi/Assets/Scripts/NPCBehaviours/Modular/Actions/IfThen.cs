@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -104,17 +105,17 @@ namespace ModularBehaviour
             }
         }
 
-        public override void DeepClone()
+        public override void DeepClone(List<Action<Func<IntelligenceState, IntelligenceState>>> stateCloneCallbacks)
         {
             if (ifAction)
             {
                 ifAction = Instantiate(ifAction);
-                ifAction.DeepClone();
+                ifAction.DeepClone(stateCloneCallbacks);
             }
             if (thenAction)
             {
                 thenAction = Instantiate(thenAction);
-                thenAction.DeepClone();
+                thenAction.DeepClone(stateCloneCallbacks);
             }
         }
     }

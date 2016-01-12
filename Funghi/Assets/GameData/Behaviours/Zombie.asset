@@ -42,9 +42,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
   m_Name: Conditional
   m_EditorClassIdentifier: 
-  invert: 1
   ifAction: {fileID: 11483268}
-  thenAction: {fileID: 11435392}
+  thenAction: {fileID: 0}
+  elseAction: {fileID: 11487892}
 --- !u!114 &11403230
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -100,18 +100,6 @@ MonoBehaviour:
   m_Name: SavePassedValue
   m_EditorClassIdentifier: 
   saveName: Node
---- !u!114 &11435392
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
-  m_Name: GotoState
-  m_EditorClassIdentifier: 
-  newState: {fileID: 11403230}
 --- !u!114 &11438828
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -123,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
   m_Name: Conditional
   m_EditorClassIdentifier: 
-  invert: 0
   ifAction: {fileID: 11495406}
   thenAction: {fileID: 11499600}
+  elseAction: {fileID: 0}
 --- !u!114 &11442258
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -137,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
   m_Name: Conditional
   m_EditorClassIdentifier: 
-  invert: 1
   ifAction: {fileID: 11497188}
-  thenAction: {fileID: 11470720}
+  thenAction: {fileID: 0}
+  elseAction: {fileID: 11454788}
 --- !u!114 &11442780
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -180,6 +168,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
   m_EditorClassIdentifier: 
+--- !u!114 &11454788
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
+  m_Name: Suicide
+  m_EditorClassIdentifier: 
 --- !u!114 &11456576
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -196,6 +195,18 @@ MonoBehaviour:
   checkLOS: 1
   saveVar: 1
   storageVar: target
+--- !u!114 &11462304
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11403230}
 --- !u!114 &11464694
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -229,18 +240,6 @@ MonoBehaviour:
   - {fileID: 11469322}
   - {fileID: 11464694}
   exitActions: []
---- !u!114 &11468242
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
-  m_Name: GotoState
-  m_EditorClassIdentifier: 
-  newState: {fileID: 11467116}
 --- !u!114 &11469164
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -266,10 +265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
   m_Name: Conditional
   m_EditorClassIdentifier: 
-  invert: 0
   ifAction: {fileID: 11456576}
-  thenAction: {fileID: 0}
---- !u!114 &11470720
+  thenAction: {fileID: 11462304}
+  elseAction: {fileID: 0}
+--- !u!114 &11479910
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -277,9 +276,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
-  m_Name: Suicide
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
   m_EditorClassIdentifier: 
+  newState: {fileID: 11467116}
 --- !u!114 &11483268
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -293,6 +293,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityVarName: target
   range: 0.5
+--- !u!114 &11487892
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
+  m_Name: GotoState
+  m_EditorClassIdentifier: 
+  newState: {fileID: 11403230}
 --- !u!114 &11495406
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -341,6 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b60953089f60b439b01b2f6d319456, type: 3}
   m_Name: Conditional
   m_EditorClassIdentifier: 
-  invert: 1
   ifAction: {fileID: 11413630}
-  thenAction: {fileID: 11468242}
+  thenAction: {fileID: 0}
+  elseAction: {fileID: 11479910}

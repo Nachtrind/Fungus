@@ -27,7 +27,7 @@ namespace ModularBehaviour
                     return ActionResult.Success;
                 }
             }
-            return ActionResult.Running;
+            return ActionResult.Failed;
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

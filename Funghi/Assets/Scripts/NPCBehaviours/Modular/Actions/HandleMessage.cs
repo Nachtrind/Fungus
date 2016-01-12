@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -86,12 +87,12 @@ namespace ModularBehaviour
             if (action) { action.OnDelete(callbacks); callbacks.RemoveAsset(action); }
         }
 
-        public override void DeepClone()
+        public override void DeepClone(List<System.Action<System.Func<IntelligenceState, IntelligenceState>>> stateCloneCallbacks)
         {
             if (action)
             {
                 action = Instantiate(action);
-                action.DeepClone();
+                action.DeepClone(stateCloneCallbacks);
             }
         }
     }

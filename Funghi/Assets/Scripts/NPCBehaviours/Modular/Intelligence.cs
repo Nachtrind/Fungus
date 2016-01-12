@@ -57,6 +57,19 @@ namespace ModularBehaviour
 
         bool initialized = false;
 
+        IntelligenceState GetStateFromCloned(IntelligenceState unClonedState)
+        {
+            if (unClonedState == null) { return null; }
+            for (int i = 0; i < states.Count; i++)
+            {
+                if (states[i].name.Equals(unClonedState.name, System.StringComparison.OrdinalIgnoreCase) | states[i].name.Equals(unClonedState.name+"(Clone)", System.StringComparison. OrdinalIgnoreCase))
+                {
+                    return states[i];
+                }
+            }
+            return activeState;
+        }
+
         public bool IsActiveState(string stateName)
         {
             if (activeState == null) { return false; }
@@ -208,20 +221,25 @@ namespace ModularBehaviour
 
         void DeepClone()
         {
+            var stateCloneCallbacks = new List<System.Action<System.Func<IntelligenceState, IntelligenceState>>>();
             for (int i = 0; i < states.Count; i++)
             {
                 bool isStartState = states[i] == activeState;
                 states[i] = Instantiate(states[i]);
                 if (isStartState) { activeState = states[i]; }
-                states[i].DeepClone();
+                states[i].DeepClone(stateCloneCallbacks);
             }
             for (int i = 0; i < triggers.Count; i++)
             {
                 if (triggers[i].action)
                 {
                     triggers[i].action = Instantiate(triggers[i].action);
-                    triggers[i].action.DeepClone();
+                    triggers[i].action.DeepClone(stateCloneCallbacks);
                 }
+            }
+            for (int i = 0; i < stateCloneCallbacks.Count; i++)
+            {
+                stateCloneCallbacks[i](GetStateFromCloned);
             }
         }
     }

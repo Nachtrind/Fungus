@@ -36,12 +36,11 @@ namespace ModularBehaviour
                     t = GameWorld.Instance.GetNearestPoliceStation(controller.Owner.transform.position);
                     break;
             }
-
             if (t && Mathf.Sqrt(AstarMath.SqrMagnitudeXZ(controller.Owner.transform.position, t.transform.position)) <= range)
             {
                 if (checkLOS && !GameWorld.Instance.HasLineOfSight(controller.Owner, t))
                 {
-                    return ActionResult.Running;
+                    return ActionResult.Failed;
                 }
                 if (saveVar)
                 {
@@ -49,7 +48,7 @@ namespace ModularBehaviour
                 }
                 return ActionResult.Success;
             }
-            return ActionResult.Running;
+            return ActionResult.Failed;
         }
 
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)

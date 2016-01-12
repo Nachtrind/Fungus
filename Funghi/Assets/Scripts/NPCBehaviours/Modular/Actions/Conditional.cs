@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,27 +10,29 @@ namespace ModularBehaviour
     [ActionUsage(UsageType.AsContinuous, UsageType.AsOneShot, UsageType.AsCondition)]
     public class Conditional : AIAction
     {
-        public bool invert = false;
         public AIAction ifAction;
         public AIAction thenAction;
+        public AIAction elseAction;
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
-            if (ifAction == null || thenAction == null) { return ActionResult.Failed; }
+            if (ifAction == null) { return ActionResult.Failed; }
             ActionResult res = ifAction.Run(controller, deltaTime);
             switch (res)
             {
                 default:
                     return ActionResult.Running;
                 case ActionResult.Success:
-                    if (invert)
-                    {
-                        return ActionResult.Failed;
-                    }
-                    return thenAction.Run(controller, deltaTime);
-                case ActionResult.Failed:
-                    if (invert)
+                    if (thenAction)
                     {
                         return thenAction.Run(controller, deltaTime);
+                        //return ActionResult.Success;
+                    }
+                    return ActionResult.Failed;
+                case ActionResult.Failed:
+                    if (elseAction)
+                    {
+                        return elseAction.Run(controller, deltaTime);
+                        //return ActionResult.Success;
                     }
                     return ActionResult.Failed;
             }
@@ -44,15 +47,15 @@ namespace ModularBehaviour
                 default:
                     return ActionResult.Running;
                 case ActionResult.Success:
-                    if (invert)
-                    {
-                        return ActionResult.Failed;
-                    }
-                    return thenAction.Fire(controller);
-                case ActionResult.Failed:
-                    if (invert)
+                    if (thenAction)
                     {
                         return thenAction.Fire(controller);
+                    }
+                    return ActionResult.Failed;
+                case ActionResult.Failed:
+                    if (elseAction)
+                    {
+                        return elseAction.Fire(controller);
                     }
                     return ActionResult.Failed;
             }
@@ -61,8 +64,7 @@ namespace ModularBehaviour
         public override void DrawGUI(IntelligenceState parentState, Intelligence intelligence, CallbackCollection callbacks)
         {
 #if UNITY_EDITOR
-            invert = EditorGUILayout.Toggle("Invert:", invert);
-            GUILayout.Label(string.Format("If{0}:", invert ? " not" : ""));
+            GUILayout.Label("If:");
             if (ifAction == null)
             {
                 Type res = callbacks.ConditionalActionPopup();
@@ -111,6 +113,30 @@ namespace ModularBehaviour
                 thenAction.DrawGUI(parentState, intelligence, callbacks);
                 EditorGUILayout.EndVertical();
             }
+            GUILayout.Label("Else:");
+            if (elseAction == null)
+            {
+                Type res = callbacks.ContinuousActionPopup();
+                if (res != null)
+                {
+                    elseAction = CreateInstance(res) as AIAction;
+                    elseAction.name = res.Name;
+                    callbacks.AddAsset(elseAction);
+                }
+            }
+            else
+            {
+                EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Label(elseAction.name);
+                if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(20)))
+                {
+                    callbacks.RemoveAsset(elseAction);
+                }
+                EditorGUILayout.EndHorizontal();
+                elseAction.DrawGUI(parentState, intelligence, callbacks);
+                EditorGUILayout.EndVertical();
+            }
 #endif
             }
 
@@ -126,19 +152,29 @@ namespace ModularBehaviour
                 thenAction.OnDelete(callbacks);
                 callbacks.RemoveAsset(thenAction);
             }
+            if (elseAction)
+            {
+                elseAction.OnDelete(callbacks);
+                callbacks.RemoveAsset(elseAction);
+            }
         }
 
-        public override void DeepClone()
+        public override void DeepClone(List<Action<Func<IntelligenceState, IntelligenceState>>> stateCloneCallbacks)
         {
             if (ifAction)
             {
                 ifAction = Instantiate(ifAction);
-                ifAction.DeepClone();
+                ifAction.DeepClone(stateCloneCallbacks);
             }
             if (thenAction)
             {
                 thenAction = Instantiate(thenAction);
-                thenAction.DeepClone();
+                thenAction.DeepClone(stateCloneCallbacks);
+            }
+            if (elseAction)
+            {
+                elseAction = Instantiate(elseAction);
+                elseAction.DeepClone(stateCloneCallbacks);
             }
         }
     }

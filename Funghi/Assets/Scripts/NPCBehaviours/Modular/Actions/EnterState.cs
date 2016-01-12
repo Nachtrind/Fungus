@@ -47,6 +47,16 @@ namespace ModularBehaviour
             }
 #endif
         }
+
+        void SetState(System.Func<IntelligenceState, IntelligenceState> GetState)
+        {
+            newState = GetState(newState);
+        }
+
+        public override void DeepClone(List<System.Action<System.Func<IntelligenceState, IntelligenceState>>> stateCloneCallbacks)
+        {
+            stateCloneCallbacks.Add(SetState);
+        }
     }
 
 }
