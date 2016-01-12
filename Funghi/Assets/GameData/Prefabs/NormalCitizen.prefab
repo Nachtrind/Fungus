@@ -234,7 +234,7 @@ MonoBehaviour:
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 11400000, guid: 3cac328f54201a942b82dec638d14678, type: 2}
-  debug: 1
+  debug: 0
   damageTriggerIdentifier: OnDamage
   resourceValue: 0
 --- !u!114 &11440514
@@ -1876,7 +1876,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: debug
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

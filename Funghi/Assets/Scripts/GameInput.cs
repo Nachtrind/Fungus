@@ -23,7 +23,7 @@ public class GameInput: MonoBehaviour
 	static InputHandler instance;
 	AbilityButton currentSelection;
 	bool dragCore;
-	
+
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
@@ -34,8 +34,8 @@ public class GameInput: MonoBehaviour
 	private Camera cam;
 
 	//Stuff for camera movement &  zoom
-	public float moveSpeedX = 0.20f;
-	public float moveSpeedZ = 0.20f;
+	public float moveSpeedX = 2.0000f;
+	public float moveSpeedZ = 2.00f;
 	#pragma warning disable 0414
 	private Vector2 scrollDirection = Vector2.zero;
 	#pragma warning restore 0414
@@ -226,13 +226,13 @@ public class GameInput: MonoBehaviour
 
 							} else if (touches [0].phase == TouchPhase.Moved) {
 								Vector2 touchMovement = touches [0].deltaPosition;
-								
-								float posX = touchMovement.x * -moveSpeedX * Time.deltaTime;
-								
-								float posZ = touchMovement.y * -moveSpeedZ * Time.deltaTime;
-								
-								cam.transform.position += new Vector3 (posX, 0, posZ);
 
+								float posX = touchMovement.x * -moveSpeedX;
+								
+								float posZ = touchMovement.y * -moveSpeedZ;
+
+
+								cam.transform.position += new Vector3 (posX, 0, posZ);
 								//ClampCamPos ();
 								
 

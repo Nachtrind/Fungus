@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using ModularBehaviour;
 
 namespace NodeAbilities
 {
@@ -8,6 +9,7 @@ namespace NodeAbilities
 	public class Attract: NodeAbility
 	{
 		public GameObject attractSpores;
+		public Intelligence attract;
 		GameObject spores;
 		public float influenceRadius;
 
@@ -50,6 +52,9 @@ namespace NodeAbilities
             while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
 				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
 				//TODO: Change Behaviour of Enemies
+				foreach (Human h in enemiesInRadius) {
+					//h.SetBehaviour (Instantiate (attract));
+				}
 				i++;
 				tempVector = dir * (i * influenceRadius);
 			}
