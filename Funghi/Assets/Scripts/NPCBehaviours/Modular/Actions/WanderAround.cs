@@ -17,9 +17,14 @@ namespace ModularBehaviour
 
         Vector3 targetPos;
         float currentWait = 0;
+        float lastCheck = 0;
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
-            if (currentWait > 0) { currentWait = Mathf.Clamp(currentWait - deltaTime, 0, currentWait); return ActionResult.Running; }
+            if (currentWait > 0) {
+                currentWait = Mathf.Clamp(currentWait - (Time.time-lastCheck), 0, currentWait);
+                lastCheck = Time.time;
+                return ActionResult.Running;
+            }
             Vector3 centerPosVar;
             if (!controller.GetMemoryValue(centerPositionVar, out centerPosVar))
             {
@@ -39,9 +44,10 @@ namespace ModularBehaviour
                 targetPos.z = Mathf.Clamp(rndPos.y, minRadius, maxRadius);
                 if (rndPos.y < 0) { targetPos.z *= -1; }
                 targetPos.y = 0;
-                if (Random.Range(0, 100) <= waitChance)
+                if (Random.Range(0, 90) <= waitChance)
                 {
                     currentWait = Random.Range(randomWaitTimeMin, randomWaitTimeMax);
+                    lastCheck = Time.time;
                 }
             }
             return ActionResult.Running;

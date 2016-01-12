@@ -127,5 +127,19 @@ namespace ModularBehaviour
                 callbacks.RemoveAsset(thenAction);
             }
         }
+
+        public override void DeepClone()
+        {
+            if (ifAction)
+            {
+                ifAction = Instantiate(ifAction);
+                ifAction.DeepClone();
+            }
+            if (thenAction)
+            {
+                thenAction = Instantiate(thenAction);
+                thenAction.DeepClone();
+            }
+        }
     }
 }

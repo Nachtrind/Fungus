@@ -8,5 +8,6 @@ namespace ModularBehaviour
         public abstract ActionResult Fire(IntelligenceController controller, object value = null);
         public virtual void DrawGUI(Intelligence intelligence, CallbackCollection callbacks) { }
         public virtual void OnDelete(CallbackCollection callbacks) { }
+        public virtual void DeepClone() { }
     }
 }

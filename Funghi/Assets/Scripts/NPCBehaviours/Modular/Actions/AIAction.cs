@@ -16,6 +16,7 @@ namespace ModularBehaviour
         public virtual void OnDelete(CallbackCollection callbacks) { }
         public virtual ActionResult Run(IntelligenceController controller, float deltaTime) { return ActionResult.Failed; }
         public virtual ActionResult Fire(IntelligenceController controller) { return ActionResult.Failed; }
+        public virtual void DeepClone() { }
     }
 
 }

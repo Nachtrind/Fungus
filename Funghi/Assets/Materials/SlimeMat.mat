@@ -38,6 +38,20 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _Ground
+        second:
+          m_Texture: {fileID: 2800000, guid: 3b5e691119f780f4c9ec7b4edd1a145e, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _StructureTex
+        second:
+          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
+          m_Scale: {x: 4, y: 3}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -80,20 +94,6 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Ground
-        second:
-          m_Texture: {fileID: 2800000, guid: 3b5e691119f780f4c9ec7b4edd1a145e, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _StructureTex
-        second:
-          m_Texture: {fileID: 2800000, guid: d995e450f057f8342b76924af2444c0a, type: 3}
-          m_Scale: {x: 4, y: 3}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Displacement
         second:
           m_Texture: {fileID: 2800000, guid: 0f123a3c8fb000544875d79269dc1031, type: 3}
@@ -119,42 +119,6 @@ Material:
         first:
           name: _Cutoff
         second: 0.6
-      data:
-        first:
-          name: _Glossiness
-        second: 0
-      data:
-        first:
-          name: _Parallax
-        second: 0.02
-      data:
-        first:
-          name: _ZWrite
-        second: 1
-      data:
-        first:
-          name: _BumpScale
-        second: 1
-      data:
-        first:
-          name: _OcclusionStrength
-        second: 1
-      data:
-        first:
-          name: _DetailNormalMapScale
-        second: 1
-      data:
-        first:
-          name: _UVSec
-        second: 0
-      data:
-        first:
-          name: _Mode
-        second: 0
-      data:
-        first:
-          name: _Metallic
-        second: 0
       data:
         first:
           name: _PixelBorder
@@ -195,6 +159,42 @@ Material:
         first:
           name: _GlowSteps
         second: 3
+      data:
+        first:
+          name: _Glossiness
+        second: 0
+      data:
+        first:
+          name: _Parallax
+        second: 0.02
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 0
       data:
         first:
           name: _Stencil

@@ -37,6 +37,7 @@ namespace ModularBehaviour
         public void Initialize(Entity owner)
         {
             this.owner = owner;
+            DeepClone();
         }
 
         [System.Serializable]
@@ -158,11 +159,19 @@ namespace ModularBehaviour
         public void LoadPath(PatrolPath path)
         {
             SetMemoryValue(PathIdentifier, path);
+            if (path)
+            {
+                SetMemoryValue(PathIndexIdentifier, path.GetNearestPatrolPointIndex(owner.transform.position));
+            }
         }
 
         public void LoadSpecialPath(PatrolPath path)
         {
             SetMemoryValue(SpecialPathIdentifier, path);
+            if (path)
+            {
+                SetMemoryValue(SpecialPathIndexIdentifier, path.GetNearestPatrolPointIndex(owner.transform.position));
+            }
         }
 
         public void UpdateTick(float delta)
@@ -195,6 +204,25 @@ namespace ModularBehaviour
         public void DrawGizmos(Entity e)
         {
 
+        }
+
+        void DeepClone()
+        {
+            for (int i = 0; i < states.Count; i++)
+            {
+                bool isStartState = states[i] == activeState;
+                states[i] = Instantiate(states[i]);
+                if (isStartState) { activeState = states[i]; }
+                states[i].DeepClone();
+            }
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                if (triggers[i].action)
+                {
+                    triggers[i].action = Instantiate(triggers[i].action);
+                    triggers[i].action.DeepClone();
+                }
+            }
         }
     }
 }

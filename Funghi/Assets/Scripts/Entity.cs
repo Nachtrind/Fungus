@@ -81,16 +81,16 @@ public abstract class Entity : MonoBehaviour
 	/// <summary>
 	/// Overrides the behaviour of this entity
 	/// </summary>
-	/// <param name="behaviour">selected behaviour to replace the old one</param>
+	/// <param name="newBehaviour">selected behaviour to replace the old one</param>
 	/// <returns></returns>
-	public bool SetBehaviour (Intelligence behaviour)
+	public bool SetBehaviour (Intelligence newBehaviour)
 	{
-		if (this.behaviour != null) {
-			Destroy (this.behaviour);
+		if (behaviour != null) {
+			Destroy (behaviour);
 		}
-		if (behaviour) {
-			this.behaviour = Instantiate (behaviour);
-			this.behaviour.Initialize (this);
+		if (newBehaviour) {
+			behaviour = Instantiate (newBehaviour);
+            behaviour.Initialize (this);
 			return true;
 		}
 		return false;

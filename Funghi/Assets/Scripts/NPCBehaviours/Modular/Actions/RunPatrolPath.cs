@@ -5,8 +5,13 @@ namespace ModularBehaviour
     {
         public bool ignorePathConfiguration = false;
         float currentWaitTime = 0;
+
+        bool repeated = false; //minimize progress delay
+
         public override ActionResult Run(IntelligenceController controller, float deltaTime)
         {
+            repeated = false;
+        REPEAT:
             if (currentWaitTime > 0) { currentWaitTime = UnityEngine.Mathf.Clamp(currentWaitTime - deltaTime, 0, currentWaitTime); return ActionResult.Running; }
             PatrolPath path = null;
             if (controller.GetMemoryValue(Intelligence.PathIdentifier, out path))
@@ -57,6 +62,11 @@ namespace ModularBehaviour
                         currentIndex = 0;
                     }
                     controller.SetMemoryValue(Intelligence.PathIndexIdentifier, currentIndex);
+                    if (!repeated)
+                    {
+                        repeated = true;
+                        goto REPEAT;
+                    }
                 }
                 return ActionResult.Running;
             }

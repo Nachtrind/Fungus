@@ -48,5 +48,24 @@ namespace ModularBehaviour
                 exitActions[i].OnDelete(callbacks);
             }
         }
+
+        public void DeepClone()
+        {
+            for (int i = 0; i < enterActions.Count; i++)
+            {
+                enterActions[i] = Instantiate(enterActions[i]);
+                enterActions[i].DeepClone();
+            }
+            for (int i = 0; i < updateActions.Count; i++)
+            {
+                updateActions[i] = Instantiate(updateActions[i]);
+                updateActions[i].DeepClone();
+            }
+            for (int i = 0; i < exitActions.Count; i++)
+            {
+                exitActions[i] = Instantiate(exitActions[i]);
+                exitActions[i].DeepClone();
+            }
+        }
     }
 }

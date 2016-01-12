@@ -18,7 +18,7 @@ namespace Spawner.Modules
             yield return new WaitForSeconds(delay);
             if (prefab != null)
             {
-                worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.identity) as Entity);
+                worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up)) as Entity);
             }
         }
     }

@@ -16,15 +16,17 @@ namespace Spawner.Modules
         IEnumerator Execute(ModuleWorker worker)
         {
             yield return new WaitForSeconds(delay);
-            worker.Restart();
             float partTime = timeSpan / Mathf.Max(1f, amount);
             for (int i = 0; i < amount; i++)
             {
                 if (prefab != null)
                 {
-                    worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.identity) as Entity);
+                    Entity e = Instantiate(prefab, worker.source.transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up)) as Entity;
+                    e.name = e.GetInstanceID().ToString();
+                    worker.ProcessNext(e);
                 }
                 yield return new WaitForSeconds(partTime);
+                worker.Restart();
             }
         }
     }
