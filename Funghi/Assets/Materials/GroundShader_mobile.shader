@@ -28,7 +28,7 @@
 		Tags { "RenderType" = "Opaque" "Queue" = "Geometry" }
 
 		CGPROGRAM
-		#pragma surface surf Lambert addshadow
+		#pragma surface surf Lambert vertex:vert addshadow
 
 		sampler2D _MainTex;
 		uniform float4 _MainTex_TexelSize;
@@ -45,27 +45,34 @@
 		half _BorderStrength;
 		half _GlowWobble;
 		fixed _Brightness;
+		float4x4 _projMatrix;
 
 		struct Input
 		{
 			float2 uv_StructureTex;
 			float2 uv_Ground;
-			float4 screenPos;
+			float2 projectedUV;
 		};
+
+		void vert(inout appdata_full v, out Input o)
+		{
+			UNITY_INITIALIZE_OUTPUT(Input, o);
+			float4 posProj = mul(_projMatrix, v.vertex);
+			posProj.xy /= posProj.w;
+			posProj.xy = posProj.xy*0.5 + 0.5;
+			o.projectedUV = posProj.xy;
+		}
 
 		void surf(Input IN, inout SurfaceOutput o)
 		{
-			half aspect = _ScreenParams.x / _ScreenParams.y;
-			IN.screenPos.w += 0.00001;
-			half2 screenSpace = IN.screenPos.xy / IN.screenPos.w;
 			half movement = frac(_Speed*_Time.g);
 			fixed wobbleStrength = _Strength;
 			half3 displacer = tex2D(_StructureTex, IN.uv_StructureTex + movement);
 			half3 displacer2 = tex2D(_StructureTex, IN.uv_StructureTex - movement);
 			half gray = dot(lerp(displacer.rgb, displacer2.rgb, 0.5), fixed3(0.3, 0.59, 0.11));
-			half2 disp = fixed2(gray*_ScreenParams.z, gray*_ScreenParams.w);
+			half2 disp = fixed2(gray, gray);
 
-			half3 slime = tex2D(_MainTex, lerp(screenSpace, disp, _BorderStrength));
+			half3 slime = tex2D(_MainTex, IN.projectedUV);
 			half2 slimeUV = lerp(IN.uv_StructureTex, disp, wobbleStrength); 
 			slimeUV = round(slimeUV * _Blockyness) / _Blockyness;
 			half3 slimeTexture = tex2D(_StructureTex, slimeUV);
@@ -79,7 +86,7 @@
 			{
 				for (fixed y = -_GlowSteps;y <= _GlowSteps;y++)
 				{
-					fixed2 maskUV = fixed2(screenSpace.x + (x*spread), screenSpace.y + (y*spread*aspect));
+					fixed2 maskUV = fixed2(IN.projectedUV.x + (x*spread), IN.projectedUV.y + (y*spread));
 					maskUV = lerp(maskUV, disp, _GlowWobble);
 					mask += tex2D(_MainTex, maskUV);
 				}
