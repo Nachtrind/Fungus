@@ -7,10 +7,8 @@ public class SlimeRenderer : MonoBehaviour
     Material whiteMaterial;
     RenderTexture slimeTex;
     public Material groundMaterial;
+    StandardGameSettings sgs;
 
-    [Range(0, 10)]
-    [Header("Performance Settings")]
-    public int skipRenderFrames = 1;
     int framesSkipped = 0;
 
     [Range(1, 4)]
@@ -23,6 +21,7 @@ public class SlimeRenderer : MonoBehaviour
 
     void Start()
     {
+        sgs = StandardGameSettings.Get;
         whiteMaterial = new Material(Shader.Find("Unlit/Color"));
         whiteMaterial.color = Color.green;
         CreateRenderTex();
@@ -55,7 +54,7 @@ public class SlimeRenderer : MonoBehaviour
             prevSampleSize = textureSize;
         }
 #endif
-        if (framesSkipped < skipRenderFrames)
+        if (framesSkipped < sgs.renderFrameSkip)
         {
             framesSkipped++;
             return;

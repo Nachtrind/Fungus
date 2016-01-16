@@ -67,13 +67,14 @@ public class GameWorld : MonoBehaviour
 
     LevelEventDispatcher eventDispatcher;
 
-#if UNITY_ANDROID
+
     [RuntimeInitializeOnLoadMethod]
-    static void ForceCorrectOrientation()
+    static void InitApplication()
     {
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-    }
+#if UNITY_ANDROID
+        Screen.orientation = StandardGameSettings.Get.androidScreenOrientation;
 #endif
+    }
 
     void Awake ()
 	{

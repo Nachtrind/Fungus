@@ -15,6 +15,13 @@ public class StandardGameSettings:ScriptableObject
         }
     }
 
+    [Header("Main")]
+    public int frameLimit = 60;
+    public ScreenOrientation androidScreenOrientation = ScreenOrientation.LandscapeLeft;
+
+    [Header("Slime"), Range(0, 10)]
+    public int renderFrameSkip = 1;
+
     [Header("Sound")]
     public AudioMixer masterMixer;
     public AudioMixerGroup entityGroup;
