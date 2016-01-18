@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687c35218fe1c104880e49ecd34f606e, type: 3}
   m_Name: StandardGameSettings
   m_EditorClassIdentifier: 
+  frameLimit: 60
+  androidScreenOrientation: 3
+  renderFrameSkip: 1
   masterMixer: {fileID: 24100000, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
   entityGroup: {fileID: 24309398, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
   ambienceGroup: {fileID: 24364214, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
   musicGroup: {fileID: 24327000, guid: 203b3525ddf760a4695a3d52ed00f006, type: 2}
+  entityPitchRandomization: 0.05
   baseMaxDistance: 10
   baseVolume: 0.25
