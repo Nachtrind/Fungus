@@ -5,16 +5,11 @@ using UnityEngine;
 
 public class FungusNode : Entity
 {
-	[Header("Node")]
-	public float
-		slimeExtend = 0.3f;
-
 	public bool isActive { get; set; }
 
 	float attackTimer;
 	[Header("Materials & Sprites")]
-	public Material
-		matActive;
+	public Material matActive;
 	public Material matInactive;
 	public Sprite beatneat;
 	public Sprite attract;
@@ -27,7 +22,7 @@ public class FungusNode : Entity
 
 	protected override void OnStart ()
 	{
-		world.SetPositionIsSlime (transform.position, slimeExtend, true);
+		world.SetPositionIsSlime (transform.position, StandardGameSettings.Get.nodeSlimeExtend, true);
 		CreateConnections ();
 		isActive = false;
 		attackTimer = 0.0f;
@@ -43,7 +38,7 @@ public class FungusNode : Entity
 				nodeConnections [i].DisconnectionFrom (this);
 			}
 		}
-		world.SetPositionIsSlime (transform.position, slimeExtend, false);
+		world.SetPositionIsSlime (transform.position, StandardGameSettings.Get.nodeSlimeExtend, false);
 	}
 
 	protected override void OnUpdate (float deltaTime)

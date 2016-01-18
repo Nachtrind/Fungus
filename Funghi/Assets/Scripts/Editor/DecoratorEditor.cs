@@ -11,30 +11,30 @@ using UnityEngine;
 /// </summary>
 public abstract class DecoratorEditor : Editor
 {
-	// empty array for invoking methods using reflection
-	private static readonly object[] EMPTY_ARRAY = new object[0];
-	
-	#region Editor Fields
-	
-	/// <summary>
-	/// Type object for the internally used (decorated) editor.
-	/// </summary>
-	private System.Type decoratedEditorType;
-	
-	/// <summary>
-	/// Type object for the object that is edited by this editor.
-	/// </summary>
-	private System.Type editedObjectType;
-	
-	private Editor editorInstance;
-	
-	#endregion
+    // empty array for invoking methods using reflection
+    static readonly object[] EMPTY_ARRAY = new object[0];
 
-	private static Dictionary<string, MethodInfo> decoratedMethods = new Dictionary<string, MethodInfo>();
-	
-	private static Assembly editorAssembly = Assembly.GetAssembly(typeof(Editor));
-	
-	protected Editor EditorInstance
+    #region Editor Fields
+
+    /// <summary>
+    /// Type object for the internally used (decorated) editor.
+    /// </summary>
+    System.Type decoratedEditorType;
+
+    /// <summary>
+    /// Type object for the object that is edited by this editor.
+    /// </summary>
+    System.Type editedObjectType;
+
+    Editor editorInstance;
+
+    #endregion
+
+    static Dictionary<string, MethodInfo> decoratedMethods = new Dictionary<string, MethodInfo>();
+
+    static Assembly editorAssembly = Assembly.GetAssembly(typeof(Editor));
+
+    protected Editor EditorInstance
 	{
 		get
 		{
@@ -54,7 +54,7 @@ public abstract class DecoratorEditor : Editor
 	
 	public DecoratorEditor (string editorTypeName)
 	{
-		this.decoratedEditorType = editorAssembly.GetTypes().Where(t => t.Name == editorTypeName).FirstOrDefault();
+		decoratedEditorType = editorAssembly.GetTypes().Where(t => t.Name == editorTypeName).FirstOrDefault();
 		
 		Init ();
 		
@@ -69,7 +69,7 @@ public abstract class DecoratorEditor : Editor
 		}
 	}
 	
-	private System.Type GetCustomEditorType(System.Type type)
+	System.Type GetCustomEditorType(System.Type type)
 	{
 		var flags = BindingFlags.NonPublic	| BindingFlags.Instance;
 		
@@ -78,18 +78,18 @@ public abstract class DecoratorEditor : Editor
 		
 		return field.GetValue(attributes[0]) as System.Type;
 	}
-	
-	private void Init()
-	{		
-		var flags = BindingFlags.NonPublic	| BindingFlags.Instance;
-		
-		var attributes = this.GetType().GetCustomAttributes(typeof(CustomEditor), true) as CustomEditor[];
-		var field = attributes.Select(editor => editor.GetType().GetField("m_InspectedType", flags)).First();
-		
-		editedObjectType = field.GetValue(attributes[0]) as System.Type;
-	}
 
-	void OnDisable()
+    void Init()
+    {
+        var flags = BindingFlags.NonPublic | BindingFlags.Instance;
+
+        var attributes = this.GetType().GetCustomAttributes(typeof(CustomEditor), true) as CustomEditor[];
+        var field = attributes.Select(editor => editor.GetType().GetField("m_InspectedType", flags)).First();
+
+        editedObjectType = field.GetValue(attributes[0]) as System.Type;
+    }
+
+    void OnDisable()
 	{
 		if (editorInstance != null)
 		{

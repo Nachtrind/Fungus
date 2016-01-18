@@ -6,10 +6,6 @@ using UnityEngine;
 public class Human : Entity
 {
 
-#if UNITY_EDITOR
-    public bool debug = false;
-#endif
-
     public string damageTriggerIdentifier = "OnDamage";
 
     public int resourceValue;
@@ -44,10 +40,10 @@ public class Human : Entity
         }
     }
 
-#if UNITY_EDITOR
+#if DEBUG
     void OnGUI()
     {
-        if (debug && behaviour)
+        if (showDebug && behaviour)
         {
             behaviour.DrawDebugInfos(this);
         }

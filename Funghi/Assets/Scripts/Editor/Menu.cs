@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
-public class Menu
+public static class Menu
 {
 
     const string BaseMenu = "Fungus";
@@ -10,7 +10,7 @@ public class Menu
     [MenuItem(BaseMenu + "/Create Spawner")]
     static void CreateEnemySpawner()
     {
-        GameObject go = new GameObject("SpawnPoint");
+        var go = new GameObject("SpawnPoint");
         go.transform.position = GetPositionFromView();
         go.AddComponent<EntitySpawner>();
         Selection.activeGameObject = go;
@@ -28,7 +28,7 @@ public class Menu
     [MenuItem(BaseMenu + "/Create Path")]
     static void CreatePath()
     {
-        GameObject go = new GameObject("Path");
+        var go = new GameObject("Path");
         go.transform.position = GetPositionFromView();
         go.AddComponent<PatrolPath>();
         Selection.activeGameObject = go;
@@ -37,7 +37,7 @@ public class Menu
     [MenuItem(BaseMenu + "/Create Entity Trigger")]
     static void CreateEntityTrigger()
     {
-        GameObject go = new GameObject("EntityTrigger");
+        var go = new GameObject("EntityTrigger");
         go.transform.position = GetPositionFromView();
         go.AddComponent<EntityTrigger>();
         Selection.activeGameObject = go;
@@ -46,7 +46,7 @@ public class Menu
     [MenuItem(BaseMenu + "/Create PoliceStation")]
     static void CreatePoliceStation()
     {
-        GameObject go = new GameObject("PoliceStation");
+        var go = new GameObject("PoliceStation");
         go.transform.position = GetPositionFromView();
         go.AddComponent<PoliceStation>();
         Selection.activeGameObject = go;

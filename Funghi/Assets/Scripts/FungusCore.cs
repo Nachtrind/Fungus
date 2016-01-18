@@ -4,6 +4,8 @@ public class FungusCore : Entity
 {
 
     public float groundCheckInterval = 0.33f;
+    float lastGroundCheck = 0;
+    public float groundedTimeForReport = 1f;
 
     protected override void OnStart()
     {
@@ -14,9 +16,23 @@ public class FungusCore : Entity
         GameInput.ReleaseCoreMoveCallback(TryMoveTo);
     }
 
+    float firstUngrounded = 0;
+    bool lastGroundState = true;
     protected override void OnUpdate(float deltaTime)
     {
-        if (!IsOnValidGround) { world.OnCoreLostGrounding(this); return; }
+        if (Time.time - lastGroundCheck >= groundCheckInterval)
+        {
+            bool newState = IsOnValidGround;
+            if (newState != lastGroundState && newState == false)
+            {
+                firstUngrounded = Time.time;
+            }
+            lastGroundState = newState;
+        }
+        if (lastGroundState == false && Time.time-firstUngrounded > groundedTimeForReport)
+        {
+            world.OnCoreLostGrounding(this);
+        }
     }
 
     public void TryMoveTo(Vector3 position)

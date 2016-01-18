@@ -31,6 +31,7 @@ public class SlimeRenderer : MonoBehaviour
     {
         if (slimeTex != null)
         {
+            slimeTex.DiscardContents();
             slimeTex.Release();
         }
         int sampleSize = 128 * textureSize;
@@ -40,12 +41,17 @@ public class SlimeRenderer : MonoBehaviour
     void OnApplicationQuit()
     {
         groundMaterial.mainTexture = null;
+        if (slimeTex)
+        {
+            slimeTex.DiscardContents();
+            slimeTex.Release();
+        }
     }
 
 #if UNITY_EDITOR
     int prevSampleSize = 2;
 #endif
-    void OnRenderObject()
+    void OnPreRender()
     {
 #if UNITY_EDITOR
         if (prevSampleSize != textureSize)
@@ -59,7 +65,9 @@ public class SlimeRenderer : MonoBehaviour
             framesSkipped++;
             return;
         }
+        if (slimeTex == null) { CreateRenderTex(); }
         framesSkipped = 0;
+        slimeTex.DiscardContents(true, true);
         RenderTexture previousRT = RenderTexture.active;
         RenderTexture.active = slimeTex;
         GridGraph gg = AstarPath.active.astarData.gridGraph;
@@ -73,7 +81,7 @@ public class SlimeRenderer : MonoBehaviour
         GL.Color(Color.green);
         for (int i = 0; i < gg.nodes.Length; i++)
         {
-            if (gg.nodes[i].Tag != GameWorld.slimeTag || !gg.nodes[i].Walkable)
+            if (gg.nodes[i].Tag != SlimeHandler.slimeTag || !gg.nodes[i].Walkable)
             {
                 continue;
             }

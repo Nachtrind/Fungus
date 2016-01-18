@@ -25,6 +25,8 @@ public abstract class Entity : MonoBehaviour
 	bool isSpeedInfluenced;
 	float influencedTimer;
 
+    public static bool showDebug = false;
+
 	//Speed influence by nodes
 	public void ChangeSpeed (float _speed, Entity _attacker, float _timeAmount)
 	{

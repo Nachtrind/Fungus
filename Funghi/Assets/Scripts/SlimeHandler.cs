@@ -5,22 +5,20 @@ using Pathfinding;
 public class SlimeHandler: MonoBehaviour
 {
 
+    public const int slimeTag = 0x1;
     public float slimeUpdateInterval = 0.5f;
     public bool smooth = false;
     float lastUpdate;
 
-    public float slimeSize = 0.3f;
-
     List<SlimePath> slimePaths = new List<SlimePath>();
-
-    GameWorld world;
+    StandardGameSettings sgs;
 
     [SerializeField]
     SimpleSmoothModifier pathSmoother;
 
     void Awake()
     {
-        world = GameWorld.Instance;
+        sgs = StandardGameSettings.Get;
     }
     public List<Vector3> Smooth(List<Vector3> vectorPath, SimpleSmoothModifier.SmoothType smoothType)
     {
@@ -107,14 +105,11 @@ public class SlimeHandler: MonoBehaviour
                 default:
                     for (int v = 0; v < slimePaths[i].path.Count; v++)
                     {
-                        world.SetPositionIsSlime(slimePaths[i].path[v], slimeSize, true);
+                        pendingAdds.Add(GetUpdateObject(slimePaths[i].path[v], sgs.connectionSlimeWidth, true));
                     }
                     break;
-                //case SlimePath.BuildState.Building:
-                //    world.SetPositionIsSlime(result.point, slimeSize, true);
-                //    break;
                 case SlimePath.BuildState.Removing:
-                    world.SetPositionIsSlime(result.point, slimeSize, false);
+                    pendingRemoves.Add(GetUpdateObject(result.point, sgs.connectionSlimeWidth, false));
                     break;
                 case SlimePath.BuildState.Invalidated:
                     CheckRemoveDisconnected(slimePaths[i].a);
@@ -123,12 +118,64 @@ public class SlimeHandler: MonoBehaviour
                     continue;
             }
         }
+        for (int i = 0; i < pendingRemoves.Count; i++)
+        {
+            AstarPath.active.UpdateGraphs(pendingRemoves[i]);
+        }
+        pendingRemoves.Clear();
+        for (int i = 0; i < pendingAdds.Count; i++)
+        {
+            AstarPath.active.UpdateGraphs(pendingAdds[i]);
+        }
+        pendingAdds.Clear();
         lastUpdate = Time.time;
+    }
+
+    List<GraphUpdateObject> pendingAdds = new List<GraphUpdateObject>();
+    List<GraphUpdateObject> pendingRemoves = new List<GraphUpdateObject>();
+
+    public void QueueSlimeUpdate(Vector3 point, float size, bool state)
+    {
+        if (state == true)
+        {
+            pendingAdds.Add(GetUpdateObject(point, size, true));
+        }
+        else
+        {
+            pendingRemoves.Add(GetUpdateObject(point, size, false));
+        }
+        
+    }
+
+    GraphUpdateObject GetUpdateObject(Vector3 point, float radius, bool state)
+    {
+        GraphUpdateObject guo = new GraphUpdateObject(new Bounds(point, Vector3.one * radius));
+        guo.modifyTag = true;
+        guo.updatePhysics = false;
+        guo.modifyWalkability = false;
+        guo.setTag = state ? slimeTag : 0;
+        return guo;
+    }
+
+    public bool GetPositionIsSlime(Vector3 point, float toleranceRadius)
+    {
+        point.y = 0;
+        NNConstraint slimeConstraint = new NNConstraint();
+        slimeConstraint.constrainTags = true;
+        slimeConstraint.tags = ~slimeTag;
+        NNInfo nn = AstarPath.active.GetNearest(point, slimeConstraint);
+        if (AstarMath.SqrMagnitudeXZ(nn.clampedPosition, point) <= toleranceRadius * toleranceRadius)
+        {
+            Debug.DrawLine(nn.clampedPosition, point);
+            return true;
+        }
+        return false;
     }
 
     void CheckRemoveDisconnected(FungusNode node)
     {
         if (node == null) { return; }
+        pendingAdds.Add(GetUpdateObject(node.transform.position, sgs.nodeSlimeExtend, true));
         if (!node.IsConnected)
         {
             GameWorld.Instance.OnNodeWasDisconnected(node);

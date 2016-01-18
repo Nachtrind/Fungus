@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using System;
 using Pathfinding;
@@ -9,7 +10,6 @@ public class GameWorld : MonoBehaviour
 {
 	#region Global
 
-	public const int slimeTag = 0x1;
 	[Header ("Updating")]
 	Coroutine humanUpdater;
 	public float humanTickInterval = 0.1f;
@@ -41,9 +41,13 @@ public class GameWorld : MonoBehaviour
 	#endregion
 
 	List<FungusNode> nodes = new List<FungusNode> ();
+    public ReadOnlyCollection<FungusNode> Nodes { get { return nodes.AsReadOnly(); } }
 	List<Human> humans = new List<Human> ();
+    public ReadOnlyCollection<Human> Humans { get { return humans.AsReadOnly(); } }
 	List<PoliceStation> policeStations = new List<PoliceStation> ();
+    public ReadOnlyCollection<PoliceStation> PoliceStations { get { return policeStations.AsReadOnly(); } }
 	List<PoliceCar> policeCars = new List<PoliceCar> ();
+    public ReadOnlyCollection<PoliceCar> PoliceCars { get { return policeCars.AsReadOnly(); } }
 	FungusCore core;
 
 	public FungusCore Core { get { return core; } }
@@ -67,10 +71,12 @@ public class GameWorld : MonoBehaviour
 
     LevelEventDispatcher eventDispatcher;
 
-
     [RuntimeInitializeOnLoadMethod]
     static void InitApplication()
     {
+#if DEBUG
+        new GameObject("DebugHelper").AddComponent<DebugHelper>();
+#endif
 #if UNITY_ANDROID
         Screen.orientation = StandardGameSettings.Get.androidScreenOrientation;
 #endif
@@ -85,9 +91,9 @@ public class GameWorld : MonoBehaviour
 
 	void Start ()
 	{
-		SpawnNodeAndCenter ();
+        GameInput.ReleaseSpawnFungusCallback(SpawnFungusNode);
 		GameInput.RegisterSpawnFungusCallback (SpawnFungusNode);
-		if (nodeUpdater == null) {
+        if (nodeUpdater == null) {
 			nodeUpdater = StartCoroutine (NodeUpdate ());
 		}
 		if (humanUpdater == null) {
@@ -151,7 +157,7 @@ public class GameWorld : MonoBehaviour
 		goto RESTART;
 	}
 
-	void SpawnNodeAndCenter ()
+	public void SpawnNodeAndCenter ()
 	{
 		FungusStart start = FindObjectOfType<FungusStart> ();
 		if (!start) {
@@ -435,7 +441,6 @@ public class GameWorld : MonoBehaviour
 		return nearest;
 	}
 
-
 	public FungusCore CoreInRange (Vector3 _position, float _coreInputRange)
 	{
 		if (AstarMath.SqrMagnitudeXZ (core.transform.position, _position) < _coreInputRange) {
@@ -444,7 +449,6 @@ public class GameWorld : MonoBehaviour
 
 		return null;
 	}
-
 
 	public Vector3 GetDirectionToRandomFungusNode (Vector3 sourcePoint)
 	{
@@ -467,29 +471,14 @@ public class GameWorld : MonoBehaviour
 
 	public void SetPositionIsSlime (Vector3 point, float size, bool state)
 	{
-		if (gameShuttingDown) {
-			return;
-		}
-		GraphUpdateObject guo = new GraphUpdateObject (new Bounds (point, Vector3.one * size));
-		guo.modifyTag = true;
-		guo.updatePhysics = false;
-		guo.modifyWalkability = false;
-		guo.setTag = state ? slimeTag : 0;
-		AstarPath.active.UpdateGraphs (guo);
+		if (gameShuttingDown) { return; }
+        slimeHandler.QueueSlimeUpdate(point, size, state);
 	}
 
 	public bool GetPositionIsSlime (Vector3 point, float toleranceRadius)
 	{
-		point.y = 0;
-		NNConstraint slimeConstraint = new NNConstraint ();
-		slimeConstraint.constrainTags = true;
-		slimeConstraint.tags = ~slimeTag;
-		NNInfo nn = AstarPath.active.GetNearest (point, slimeConstraint);
-		if (AstarMath.SqrMagnitudeXZ (nn.clampedPosition, point) <= toleranceRadius * toleranceRadius) {
-			Debug.DrawLine (nn.clampedPosition, point);
-			return true;
-		}
-		return false;
+        if (gameShuttingDown) { return false; }
+        return slimeHandler.GetPositionIsSlime(point, toleranceRadius);
 	}
 
     public void RemoveAllSlimeTags()
@@ -541,7 +530,7 @@ public class GameWorld : MonoBehaviour
 
 	public void OnNodeWasDisconnected (FungusNode node)
 	{
-		if (destroyDisconnectedNodes) {
+		if (destroyDisconnectedNodes && nodes.Count > 1) {
 			Destroy (node.gameObject);
 		}
 	}

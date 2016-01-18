@@ -160,7 +160,7 @@ public class IntelligenceEditorWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         if (intel.states.Count > 0)
         {
-            SerializedObject serializedObject = new SerializedObject(intel);
+            var serializedObject = new SerializedObject(intel);
             SerializedProperty startState = serializedObject.FindProperty("activeState");
             if (startState != null)
             {
@@ -179,7 +179,7 @@ public class IntelligenceEditorWindow : EditorWindow
                 }
                 else
                 {
-                    List<string> stateNames = new List<string>();
+                    var stateNames = new List<string>();
                     stateNames.Add("Select");
                     for (int i = 0; i < intel.states.Count; i++)
                     {
@@ -214,10 +214,7 @@ public class IntelligenceEditorWindow : EditorWindow
                 GUI.backgroundColor = Color.white;
                 EditorGUILayout.BeginHorizontal();
                 intel.triggers[i].trigger = EditorGUILayout.TextField(intel.triggers[i].trigger);
-                if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(20)))
-                {
-                    delete = true;
-                }
+                delete |= GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(20));
                 EditorGUILayout.EndHorizontal();
                 if (intel.triggers[i].action != null)
                 {
@@ -240,7 +237,7 @@ public class IntelligenceEditorWindow : EditorWindow
                     Type res = TriggerActionPopup();
                     if (res != null)
                     {
-                        TriggerAction os = CreateInstance(res) as TriggerAction;
+                        var os = CreateInstance(res) as TriggerAction;
                         os.name = res.Name;
                         intel.triggers[i].action = os;
                         AddToAsset(os);
@@ -276,10 +273,7 @@ public class IntelligenceEditorWindow : EditorWindow
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label(i.ToString(), GUILayout.Width(20));
             intel.states[i].name = GUILayout.TextField(intel.states[i].name, 80);
-            if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22)))
-            {
-                delete = true;
-            }
+            delete |= GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22));
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -310,10 +304,7 @@ public class IntelligenceEditorWindow : EditorWindow
                     }
                 }
                 //end moving
-                if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22)))
-                {
-                    removeAction = true;
-                }
+                removeAction |= GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22));
                 EditorGUILayout.EndHorizontal();
                 intel.states[i].enterActions[oe].DrawGUI(intel.states[i], intel, callbackCollection);
                 EditorGUILayout.EndVertical();
@@ -327,7 +318,7 @@ public class IntelligenceEditorWindow : EditorWindow
             int selectedEnter = EditorGUILayout.Popup(0, AIActionNames);
             if (selectedEnter > 0)
             {
-                AIAction os = CreateInstance(AIActions[selectedEnter - 1]) as AIAction;
+                var os = CreateInstance(AIActions[selectedEnter - 1]) as AIAction;
                 os.name = AIActions[selectedEnter - 1].Name;
                 intel.states[i].enterActions.Add(os);
                 AddToAsset(os);
@@ -360,10 +351,7 @@ public class IntelligenceEditorWindow : EditorWindow
                     }
                 }
                 //end moving
-                if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22)))
-                {
-                    removeAction = true;
-                }
+                removeAction |= GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22));
                 EditorGUILayout.EndHorizontal();
                 intel.states[i].updateActions[ou].DrawGUI(intel.states[i], intel, callbackCollection);
                 EditorGUILayout.EndVertical();
@@ -377,7 +365,7 @@ public class IntelligenceEditorWindow : EditorWindow
             int selectedUpdate = EditorGUILayout.Popup(0, regularActionNames);
             if (selectedUpdate > 0)
             {
-                AIAction rs = CreateInstance(regularActions[selectedUpdate - 1]) as AIAction;
+                var rs = CreateInstance(regularActions[selectedUpdate - 1]) as AIAction;
                 rs.name = regularActions[selectedUpdate - 1].Name;
                 intel.states[i].updateActions.Add(rs);
                 AddToAsset(rs);
@@ -410,10 +398,7 @@ public class IntelligenceEditorWindow : EditorWindow
                     }
                 }
                 //end moving
-                if (GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22)))
-                {
-                    removeAction = true;
-                }
+                removeAction |= GUILayout.Button("x", EditorStyles.miniButton, GUILayout.Width(22));
                 EditorGUILayout.EndHorizontal();
                 intel.states[i].exitActions[oe].DrawGUI(intel.states[i], intel, callbackCollection);
                 EditorGUILayout.EndVertical();   
@@ -427,7 +412,7 @@ public class IntelligenceEditorWindow : EditorWindow
             int selectedExit = EditorGUILayout.Popup(0, AIActionNames);
             if (selectedExit > 0)
             {
-                AIAction os = CreateInstance(AIActions[selectedExit - 1]) as AIAction;
+                var os = CreateInstance(AIActions[selectedExit - 1]) as AIAction;
                 os.name = AIActions[selectedExit - 1].Name;
                 intel.states[i].exitActions.Add(os);
                 AddToAsset(os);

@@ -11,7 +11,7 @@ class AudioSourcePresetLoader: DecoratorEditor
     {
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         GUILayout.Label("Load Fungus base settings:");
-        SettingsType st = (SettingsType)EditorGUILayout.EnumPopup("For:", SettingsType.Select);
+        var st = (SettingsType)EditorGUILayout.EnumPopup("For:", SettingsType.Select);
         EditorGUILayout.EndVertical();
         switch (st)
         {

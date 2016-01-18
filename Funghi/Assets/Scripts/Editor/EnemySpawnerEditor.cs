@@ -10,7 +10,7 @@ using Spawner.Modules;
 public class EnemySpawnerEditor : Editor
 {
 
-    Dictionary<Type, List<ModuleInfo>> cachedModuleTypes = new Dictionary<Type, List<ModuleInfo>>();
+    readonly Dictionary<Type, List<ModuleInfo>> cachedModuleTypes = new Dictionary<Type, List<ModuleInfo>>();
 
     class ModuleInfo
     {
@@ -35,7 +35,7 @@ public class EnemySpawnerEditor : Editor
     void CacheModules(Type baseType)
     {
         List<Type> moduleTypes = Assembly.GetAssembly(typeof(EntitySpawner)).GetTypes().Where(i => i.IsClass && i.IsSubclassOf(baseType)).ToList();
-        List<ModuleInfo> infos = new List<ModuleInfo>();
+        var infos = new List<ModuleInfo>();
         for (int i = 0; i < moduleTypes.Count; i++)
         {
             infos.Add(new ModuleInfo(moduleTypes[i], moduleTypes[i].Name));
@@ -55,7 +55,7 @@ public class EnemySpawnerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        EntitySpawner esp = target as EntitySpawner;
+        var esp = target as EntitySpawner;
         GUILayout.BeginVertical(EditorStyles.helpBox);
         esp.autoActivateOnStart = EditorGUILayout.Toggle("AutoStart", esp.autoActivateOnStart);
         if (!esp.autoActivateOnStart)
@@ -82,7 +82,7 @@ public class EnemySpawnerEditor : Editor
         SerializedProperty module = serializedObject.FindProperty("positionModule");
         if (module != null)
         {
-            PositionModule pm = module.objectReferenceValue as PositionModule;
+            var pm = module.objectReferenceValue as PositionModule;
             if (pm != null)
             {
                 pm.DrawHandles();
@@ -111,16 +111,13 @@ public class EnemySpawnerEditor : Editor
         if (module.objectReferenceValue != null)
         {
             bool ret = true;
-            SerializedObject so = new SerializedObject(module.objectReferenceValue);
+            var so = new SerializedObject(module.objectReferenceValue);
             GUI.backgroundColor = Color.grey;
             GUILayout.BeginVertical(EditorStyles.helpBox);
             GUI.backgroundColor = Color.white;
             GUILayout.BeginHorizontal(EditorStyles.helpBox);
             GUILayout.Label(so.targetObject.GetType().Name);
-            if (GUILayout.Button("x", GUILayout.Width(20)))
-            {
-                ret = false;
-            }
+            ret &= !GUILayout.Button("x", GUILayout.Width(20));
             GUILayout.EndHorizontal();
             string desc = GetModuleDescription(so.targetObject.GetType());
             if (desc != string.Empty)
@@ -147,10 +144,7 @@ public class EnemySpawnerEditor : Editor
                                 bool deleteEntry = false;
                                 GUILayout.BeginHorizontal();
                                 EditorGUILayout.PropertyField(sp.GetArrayElementAtIndex(i));
-                                if (GUILayout.Button("x", EditorStyles.miniButton))
-                                {
-                                    deleteEntry = true;
-                                }
+                                deleteEntry |= GUILayout.Button("x", EditorStyles.miniButton);
                                 GUILayout.EndHorizontal();
                                 if (deleteEntry)
                                 {

@@ -8,9 +8,9 @@ public class PatrolPathEditor : Editor
     public enum GizmoColor { Set, White, Blue, Red, Yellow, Green, Grey }
     public override void OnInspectorGUI()
     {
-        PatrolPath pp = target as PatrolPath;
+        var pp = target as PatrolPath;
         //pp.transform.position = new Vector3(pp.transform.position.x, 0, pp.transform.position.z);
-        GizmoColor gc = (GizmoColor)EditorGUILayout.EnumPopup("Gizmo color:", GizmoColor.Set);
+        var gc = (GizmoColor)EditorGUILayout.EnumPopup("Gizmo color:", GizmoColor.Set);
         pp.drawCircle = EditorGUILayout.Toggle("Draw circle:", pp.drawCircle);
         if (gc > 0)
         {
@@ -75,7 +75,7 @@ public class PatrolPathEditor : Editor
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label(i.ToString(), EditorStyles.helpBox);
-            if (GUILayout.Button("x", GUILayout.Width(20))) { remove = true; }
+            remove |= GUILayout.Button("x", GUILayout.Width(20));
             EditorGUILayout.EndHorizontal();
             pp.points[i].action = (PatrolPath.PatrolPointActions)EditorGUILayout.EnumPopup("Action:", pp.points[i].action);
             switch (pp.points[i].action)
@@ -111,7 +111,7 @@ public class PatrolPathEditor : Editor
     GUIStyle labelStyle;
     public void OnSceneGUI()
     {
-        PatrolPath pp = target as PatrolPath;
+        var pp = target as PatrolPath;
         if (labelStyle == null) { labelStyle = new GUIStyle(GUI.skin.label); labelStyle.normal.textColor = Color.white; }
         for (int i = pp.points.Count; i-- > 0;)
         {
@@ -139,7 +139,7 @@ public class PatrolPathEditor : Editor
     void OnEnable()
     {
         //Tools.hidden = true;
-        PatrolPath pp = target as PatrolPath;
+        var pp = target as PatrolPath;
         lastPosition = pp.transform.position;
     }
 

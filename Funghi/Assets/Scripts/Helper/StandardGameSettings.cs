@@ -21,6 +21,8 @@ public class StandardGameSettings:ScriptableObject
 
     [Header("Slime"), Range(0, 10)]
     public int renderFrameSkip = 1;
+    public float nodeSlimeExtend = 0.3f;
+    public float connectionSlimeWidth = 0.3f;
 
     [Header("Sound")]
     public AudioMixer masterMixer;
