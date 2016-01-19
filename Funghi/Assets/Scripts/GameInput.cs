@@ -26,7 +26,8 @@ public class GameInput: MonoBehaviour
 
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
-	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
+	//Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
+	public Color selectedTint;
 	#pragma warning disable 0414
 	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
 	#pragma warning restore 0414
@@ -48,6 +49,8 @@ public class GameInput: MonoBehaviour
 	float upperBorder;
 	float lowerBorder;
 
+	private GameObject skillMenu;
+
 	void Start ()
 	{
 		plane = new Plane (Vector3.up, Vector3.zero);
@@ -57,6 +60,10 @@ public class GameInput: MonoBehaviour
 		levelSizeX = ground.bounds.extents.x;
 
 		CalcLevelBorders ();
+
+		//Find and Deativate Skill Menu
+		skillMenu = GameObject.Find ("SkillMenu");
+		skillMenu.SetActive (false);
 
 	}
 
@@ -70,207 +77,51 @@ public class GameInput: MonoBehaviour
 			return;
 		}
 
+		///////////////
+		//Get Touches//
+		///////////////
+		Touch[] touches = Input.touches;
 
-		if (dragCore) {
-			////////////////
-			//drag stopped//
-			////////////////
-			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
+		///////////////
+		//Move Camera//
+		///////////////
+		if (touches.Length == 1) {
+			if (touches [0].phase == TouchPhase.Began) {
 
-				Vector3 worldMousePos;
-				//take mouse position or touch position
-				if (Input.GetMouseButtonUp (0)) {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-				} else {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-				}
-				worldMousePos.y = 0;
+			} else if (touches [0].phase == TouchPhase.Moved) {
+				Vector2 touchMovement = touches [0].deltaPosition;
 
-
-				if (OnCoreCommand != null) {
-					OnCoreCommand (worldMousePos);
-				}
-
-				inputTimer = 0.0f;
-				dragCore = false;
-			} else if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
-				///////////////////////
-				//dragging core along//
-				///////////////////////
-				Vector3 worldMousePos;
-				//take mouse position or touch position
-				if (Input.GetMouseButton (0)) {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-				} else {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-				}
-				worldMousePos.y = 0;
-
-				if (OnCoreCommand != null) {
-					OnCoreCommand (worldMousePos);
-				}
-			}
-		} 
+				float posX = touchMovement.x * -moveSpeedX;
+								
+				float posZ = touchMovement.y * -moveSpeedZ;
 
 
+				cam.transform.position += new Vector3 (posX, 0, posZ);
+				//ClampCamPos ();
+			} 
 
-		if (currentSelection != null && inputTimer > inputTick && !dragCore) {
-			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
-
-				//////////////
-				// NEW NODE //
-				//////////////
-				if (currentSelection.buttonName == ButtonName.ButtonName.NewNode) {
-					Vector3 worldMousePos;
-					//take mouse position or touch position
-					if (Input.GetMouseButton (0)) {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-					} else {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-					}
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
-					ParticleSystem.EmissionModule em = spores.emission;
-
-					if (!spores.isPlaying || spores.emission.enabled == false) {
-						spores.Play ();
-						em.enabled = true;
-						//ParticleSystem.EmissionModule em = spores.emission;
-						//em.rate = 60;
-			
-					}
-
-					em.rate = new ParticleSystem.MinMaxCurve(60.0f);
-					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
-					//spores.Emit (30);
-
-					if (nodesInRadius.Count <= 0) {
-						CreateNewSlimePath (worldMousePos);
-					}
-				}
-
-				/////////////////////
-				// Change Ability  //
-				/////////////////////
-				if (currentSelection.buttonName != ButtonName.ButtonName.NewNode) {
-
-					Vector3 worldMousePos;
-					//take mouse position or touch position
-					if (Input.GetMouseButton (0)) {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-					} else {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-					}
-
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
-					if (nodesInRadius.Count > 0) {
-						SpecializeNode (nodesInRadius [0]);
-						DeactivateSelection ();
-					}
-				}
-
-
-			}
-
-			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
-				SpawnNewSlimePath ();
-				DeactivateSelection ();
-				//spores.enableEmission = false;
-				ParticleSystem.EmissionModule em = spores.emission;
-				em.rate = new ParticleSystem.MinMaxCurve(0.0f);
-				//em.enabled = false;
-		
-			}
-			
-			
 		}
 
-		if (currentSelection == null && inputTimer > inputTick && !dragCore) {
-			if (Input.GetMouseButton (0) || Input.touchCount > 0) {
-
-				Vector3 worldMousePos;
-				//take mouse position or touch position
-				if (Input.GetMouseButton (0)) {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-				} else {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-				}
-
-
-				/////////////////////
-				//Checking for Core//
-				/////////////////////
-				FungusCore core = GameWorld.Instance.CoreInRange (worldMousePos, coreInputRange);
-
-				if (core != null) {
-					dragCore = true;
-
-				} else {
-
-					////////////////////
-					//Activating Nodes//
-					////////////////////
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
-
-					if (nodesInRadius.Count > 0) {
-						nodesInRadius [0].ToggleActive ();
-						inputTimer = 0.0f;
-					} else {
-
-						Touch[] touches = Input.touches;
-						
-						///////////////
-						//Move Camera//
-						///////////////
-						if (touches.Length == 1) {
-							if (touches [0].phase == TouchPhase.Began) {
-
-							} else if (touches [0].phase == TouchPhase.Moved) {
-								Vector2 touchMovement = touches [0].deltaPosition;
-
-								float posX = touchMovement.x * -moveSpeedX;
-								
-								float posZ = touchMovement.y * -moveSpeedZ;
-
-
-								cam.transform.position += new Vector3 (posX, 0, posZ);
-								//ClampCamPos ();
-								
-
-
-							} 
-
-						}
-
-
-						///////////////
-						//Zoom Camera//
-						///////////////
-						if (touches.Length == 2) {
-
-#pragma warning disable 0219
-							Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+		///////////////
+		//Zoom Camera//
+		///////////////
+		if (touches.Length == 2) {
+			Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
 							
-							Touch touchOne = touches [0];
-							Touch touchTwo = touches [1];
+			Touch touchOne = touches [0];
+			Touch touchTwo = touches [1];
 							
-							Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-							Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
+			Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+			Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
 
-							float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
-							float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
+			float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+			float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
 
-							float lengthDiff = prevTouchLength - touchDeltaLength;
+			float lengthDiff = prevTouchLength - touchDeltaLength;
 
-							//TODO: Finish Zoom
-#pragma warning restore 0219
-						}
-					}
-				}
-			}
+			//TODO: Finish Zoom
 		}
-		
-
-
+				
 		inputTimer += Time.deltaTime;
 
 	}
@@ -331,6 +182,13 @@ public class GameInput: MonoBehaviour
 		}
 		inputTimer = 0.0f;	
 	}
+
+	public void ToggleSkillMenu ()
+	{
+
+	}
+
+
 
 	void DeactivateSelection ()
 	{
