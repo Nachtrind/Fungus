@@ -106,7 +106,7 @@ public class GameInput: MonoBehaviour
 			///////////////////
 			if (currentState == InputState.BuildMode) {				
 				if (touches [0].phase == TouchPhase.Began) {
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 1.4f);
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
 					if (nodesInRadius.Count > 0) {
 						if (!spores.isPlaying || spores.emission.enabled == false) {
 							ParticleSystem.EmissionModule em = spores.emission;
@@ -147,23 +147,32 @@ public class GameInput: MonoBehaviour
 				}
 			}
 
-			///////////////
-			//Move Camera//
-			///////////////
+
 			if (currentState == InputState.NoMode) {
-				if (touches [0].phase == TouchPhase.Began) {
 
-				} else if (touches [0].phase == TouchPhase.Moved) {
-					Vector2 touchMovement = touches [0].deltaPosition;
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
+				if (nodesInRadius.Count > 0) {
+					if (touches [0].phase == TouchPhase.Began) {
+						GameWorld.Instance.GetNearestFungusNode (touchWorldPoint).ToggleActive ();
+					}
+				} else {
+					///////////////
+					//Move Camera//
+					///////////////
+					if (touches [0].phase == TouchPhase.Began) {
 
-					float posX = touchMovement.x * -moveSpeedX;
+					} else if (touches [0].phase == TouchPhase.Moved) {
+						Vector2 touchMovement = touches [0].deltaPosition;
+
+						float posX = touchMovement.x * -moveSpeedX * Time.deltaTime;
 								
-					float posZ = touchMovement.y * -moveSpeedZ;
+						float posZ = touchMovement.y * -moveSpeedZ * Time.deltaTime;
 
 
-					cam.transform.position += new Vector3 (posX, 0, posZ);
-					//ClampCamPos ();
-				} 
+						cam.transform.position += new Vector3 (posX, 0, posZ);
+						//ClampCamPos ();
+					} 
+				}
 			}
 		}
 
@@ -222,7 +231,6 @@ public class GameInput: MonoBehaviour
 		if (plane.Raycast (_ray, out enter)) {
 			Vector3 point = _ray.GetPoint (enter);
 			return point;
-
 		}
 
 		return new Vector3 (0, 0, 0);
