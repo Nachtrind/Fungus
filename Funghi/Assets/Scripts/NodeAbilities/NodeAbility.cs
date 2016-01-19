@@ -6,14 +6,12 @@ namespace NodeAbilities
 	{
         #region Presentation
 		[Header("AudioVisual")]
-		public Texture2D
-			icon;
+		public Color color;
 		public AudioClip executionSound;
 		public AudioClip deathSound;
         #endregion
 		[Header("Skill")]
-		public new string
-			name;
+		public new string name;
 		public float radius;
 		public float cost;
 		public float tickRate;
