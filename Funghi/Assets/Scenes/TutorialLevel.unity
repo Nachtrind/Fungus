@@ -21062,7 +21062,7 @@ MonoBehaviour:
   slimeHandler: {fileID: 1695140340}
   entityHolder: {fileID: 1211615653}
   corePrefab: {fileID: 11441898, guid: 9d2ecf9c6d3baad45bc6380fe661450e, type: 2}
-  fungusNodePrefab: {fileID: 11451118, guid: 266ab57f4a593f045a899e345c13fb52, type: 2}
+  fungusNodePrefab: {fileID: 11407298, guid: fb64dbd07da42974c81eb2d4e627e8a9, type: 2}
   ObstacleLayer:
     serializedVersion: 2
     m_Bits: 256

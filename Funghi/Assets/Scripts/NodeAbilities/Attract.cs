@@ -17,6 +17,7 @@ namespace NodeAbilities
 		{
 			if (spores == null) {
 				spores = Instantiate (attractSpores,new Vector3 (node.transform.position.x, node.transform.position.y + 0.5f, node.transform.position.z), Quaternion.Euler (Vector3.zero)) as GameObject;
+                spores.transform.parent = node.transform;
 				spores.GetComponent<ParticleSystem> ().Play ();
 			}
 
