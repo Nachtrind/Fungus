@@ -12,11 +12,11 @@ namespace NodeAbilities
 		public Intelligence attract;
 		GameObject spores;
 		public float influenceRadius;
-
+       
 		public override void Execute (FungusNode node)
 		{
 			if (spores == null) {
-				spores = Instantiate (attractSpores, node.transform.position, Quaternion.Euler (Vector3.zero)) as GameObject;
+				spores = Instantiate (attractSpores,new Vector3 (node.transform.position.x, node.transform.position.y + 0.5f, node.transform.position.z), Quaternion.Euler (Vector3.zero)) as GameObject;
 				spores.GetComponent<ParticleSystem> ().Play ();
 			}
 

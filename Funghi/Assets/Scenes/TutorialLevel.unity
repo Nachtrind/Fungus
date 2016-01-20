@@ -9131,6 +9131,7 @@ GameObject:
   - 223: {fileID: 634838531}
   - 114: {fileID: 634838530}
   - 114: {fileID: 634838529}
+  - 95: {fileID: 634838532}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -9213,6 +9214,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!95 &634838532
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 634838527}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: beb81b1f89f44cc4592adab7af09970f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &635412618
 Prefab:
   m_ObjectHideFlags: 0
@@ -12413,7 +12431,7 @@ Transform:
   - {fileID: 265820823}
   - {fileID: 2036983508}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
 --- !u!1001 &944179266
 Prefab:
   m_ObjectHideFlags: 0
@@ -21655,7 +21673,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!1001 &1710590549
 Prefab:
   m_ObjectHideFlags: 0
