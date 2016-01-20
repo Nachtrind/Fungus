@@ -6,14 +6,12 @@ namespace NodeAbilities
 	{
         #region Presentation
 		[Header("AudioVisual")]
-		public Texture2D
-			icon;
+		public Color color;
 		public AudioClip executionSound;
 		public AudioClip deathSound;
         #endregion
 		[Header("Skill")]
-		public new string
-			name;
+		public new string name;
 		public float radius;
 		public float cost;
 		public float tickRate;
@@ -21,6 +19,8 @@ namespace NodeAbilities
 		public abstract void Execute (FungusNode node);
 
 		public abstract void StopExecution (FungusNode node);
+
+        public virtual float GetRange() { return radius; }
 
 	}
 }

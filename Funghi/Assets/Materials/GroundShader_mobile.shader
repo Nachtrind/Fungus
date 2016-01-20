@@ -1,4 +1,4 @@
-﻿Shader "Fungus/Mobile/GroundShader"
+﻿Shader "Fungus/GroundShader"
 {
 	Properties
 	{
@@ -26,6 +26,8 @@
 	SubShader
 	{
 		Tags { "RenderType" = "Opaque" "Queue" = "Geometry" }
+		
+		zwrite On
 
 		CGPROGRAM
 		#pragma surface surf Lambert vertex:vert addshadow

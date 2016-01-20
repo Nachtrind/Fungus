@@ -11,12 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f577841a4dcadc24ab813938e60cd8d3, type: 3}
   m_Name: SpeedUp
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  color: {r: 0.62626773, g: 0.50735295, b: 1, a: 1}
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: speedup
   radius: 1
   cost: 2
-  tickRate: .5
+  tickRate: 0.5
   newSpeed: 2
   speedUpTime: 3

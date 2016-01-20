@@ -23,7 +23,6 @@ public class DebugHelper : MonoBehaviour
         public readonly string msg = "None";
         public readonly string stackTrace = "Empty";
         public LogType type;
-        readonly int hashCode = 0;
         public LogMessage(string msg, string stackTrace, LogType type)
         {
             this.msg = msg;

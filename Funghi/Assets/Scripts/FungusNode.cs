@@ -5,30 +5,41 @@ using UnityEngine;
 
 public class FungusNode : Entity
 {
-	public bool isActive { get; set; }
+    bool isActive;
+	public bool IsActive
+    {
+        get { return isActive; }
+        set
+        {
+            isActive = value;
+            if (OnToggleActive != null)
+            {
+                OnToggleActive(isActive);
+            }
+        }
+    }
 
 	float attackTimer;
 	[Header("Materials & Sprites")]
 	public Material matActive;
 	public Material matInactive;
-	public Sprite beatneat;
-	public Sprite attract;
-	public Sprite slowdown;
-	public Sprite speedup;
-	public Sprite zombie;
-	public Sprite growth;
+	//public Sprite beatneat;
+	//public Sprite attract;
+	//public Sprite slowdown;
+	//public Sprite speedup;
+	//public Sprite zombie;
+	//public Sprite growth;
 	SpriteRenderer abilityDisplay;
-	Light activeLight;
+
+    public event System.Action<bool> OnToggleActive;
 
 	protected override void OnStart ()
 	{
 		world.SetPositionIsSlime (transform.position, StandardGameSettings.Get.nodeSlimeExtend, true);
 		CreateConnections ();
-		isActive = false;
+		IsActive = false;
 		attackTimer = 0.0f;
 		abilityDisplay = GetComponentInChildren<SpriteRenderer> ();
-		activeLight = GetComponentInChildren<Light> ();
-		activeLight.enabled = false;
 	}
 
 	protected override void Cleanup ()
@@ -80,8 +91,13 @@ public class FungusNode : Entity
 
 	[Header("Node specialization")]
 	[SerializeField]
-	NodeAbility
-		ability;
+	NodeAbility ability;
+    
+    public float GetAbilityRange()
+    {
+        if (!ability) { return 0f; }
+        return ability.GetRange();
+    }
 
 	public void ExecuteAbility ()
 	{
@@ -97,41 +113,41 @@ public class FungusNode : Entity
 	public void Specialize (NodeAbility newAbility)
 	{
 		ability = Instantiate(newAbility);
+        abilityDisplay.color = ability.color;
 
-
-		switch (newAbility.name) {
-		case "beatneat":
-			{
-				Debug.Log ("BEATNEAT");
-				abilityDisplay.sprite = beatneat;
-				break;
-			}
-		case "attract":
-			{
-				abilityDisplay.sprite = attract;
-				break;
-			}
-		case "slowdown":
-			{
-				abilityDisplay.sprite = slowdown;
-				break;
-			}
-		case "zombie":
-			{
-				abilityDisplay.sprite = zombie;
-				break;
-			}
-		case "speedup":
-			{
-				abilityDisplay.sprite = speedup;
-				break;
-			}
-		case "growth":
-			{
-				abilityDisplay.sprite = growth;
-				break;
-			}
-		}
+		//switch (newAbility.name) {
+		//case "beatneat":
+		//	{
+		//		Debug.Log ("BEATNEAT");
+		//		abilityDisplay.sprite = beatneat;
+		//		break;
+		//	}
+		//case "attract":
+		//	{
+		//		abilityDisplay.sprite = attract;
+		//		break;
+		//	}
+		//case "slowdown":
+		//	{
+		//		abilityDisplay.sprite = slowdown;
+		//		break;
+		//	}
+		//case "zombie":
+		//	{
+		//		abilityDisplay.sprite = zombie;
+		//		break;
+		//	}
+		//case "speedup":
+		//	{
+		//		abilityDisplay.sprite = speedup;
+		//		break;
+		//	}
+		//case "growth":
+		//	{
+		//		abilityDisplay.sprite = growth;
+		//		break;
+		//	}
+		//}
 
 	}
     #endregion
@@ -210,13 +226,11 @@ public class FungusNode : Entity
 		if (isActive) {
 			GetComponent<MeshRenderer> ().material = matInactive;
 			attackTimer = ability.tickRate * 2.0f;
-			isActive = false;
-			activeLight.enabled = false;
+			IsActive = false;
 			ability.StopExecution (this);
 		} else {
 			GetComponent<MeshRenderer> ().material = matActive;
-			isActive = true;
-			activeLight.enabled = true;
+			IsActive = true;
 		}
 	}
 

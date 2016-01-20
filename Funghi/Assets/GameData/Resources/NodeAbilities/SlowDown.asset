@@ -11,12 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5935f35a6028d594bb106e6df435a2ee, type: 3}
   m_Name: SlowDown
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  color: {r: 0.41176468, g: 0.70791084, b: 1, a: 1}
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: slowdown
   radius: 1
   cost: 1
-  tickRate: .5
-  slowDownSpeed: .300000012
+  tickRate: 0.5
+  slowDownSpeed: 0.3
   slowDownTime: 3

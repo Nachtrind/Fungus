@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93d253cd79856e49a9cbb84347dcdb8, type: 3}
   m_Name: Growth
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  color: {r: 0, g: 1, b: 0.7931032, a: 1}
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: growth
-  radius: 1.20000005
+  radius: 1.2
   cost: 2
-  tickRate: .5
+  tickRate: 0.5

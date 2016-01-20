@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f7ea6d2484b3847b69e10b6e74593d, type: 3}
   m_Name: Attract
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  color: {r: 0.9294118, g: 0.4039216, b: 0.4784314, a: 1}
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: attract
   radius: 5
   cost: 0
-  tickRate: .100000001
+  tickRate: 0.1
   attractSpores: {fileID: 161090, guid: 02e6ff77e0c89a447b407c7246ed8436, type: 2}
+  attract: {fileID: 0}
   influenceRadius: 1

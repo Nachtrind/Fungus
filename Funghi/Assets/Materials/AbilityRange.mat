@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AbilityRange
+  m_Shader: {fileID: 4800000, guid: 113a8b6a3fcb60b4496a8a5466b5ffc8, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 20923d97c03d6f146b609007b82a90ee, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ScaleTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 22dcddb0be441fe41b90cbd0ea05adad, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _HPTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 267ef3750781c6a49980be92d6843c03, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _HealthMarginSize
+        second: 0.1
+      data:
+        first:
+          name: _HP
+        second: 0.798
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 0.1102941, g: 0.1102941, b: 0.1102941, a: 1}
+      data:
+        first:
+          name: _ColorMargin
+        second: {r: 0.07586192, g: 1, b: 0, a: 1}
+      data:
+        first:
+          name: _ColorHP
+        second: {r: 1, g: 0, b: 0, a: 1}

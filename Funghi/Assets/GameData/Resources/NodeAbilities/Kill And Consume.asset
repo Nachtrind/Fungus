@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c474c7f710c4574e91b202771219228, type: 3}
   m_Name: Kill And Consume
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  color: {r: 0.7176471, g: 0.8196079, b: 0.4039216, a: 1}
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: beatneat
-  radius: .5
+  radius: 0.5
   cost: 0
   tickRate: 1
   damage: 5

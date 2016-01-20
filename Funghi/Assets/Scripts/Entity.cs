@@ -9,16 +9,19 @@ public abstract class Entity : MonoBehaviour
     #region Health
 	[Header("State")]
 	[SerializeField]
-	int
-		currentHealth;
+	int currentHealth;
 
 	public int Health { get { return currentHealth; } }
 
 	[SerializeField]
-	int
-		maxHealth;
+	int maxHealth;
 
 	public int MaxHealth { get { return maxHealth; } }
+
+    /// <summary>
+    /// CurrentHealth, MaxHealth
+    /// </summary>
+    public event System.Action<float, float> OnHealthChanged;
 
 	public bool isAttackable = true;
 	float originalSpeed;
@@ -46,9 +49,7 @@ public abstract class Entity : MonoBehaviour
 		OnDamage (attacker);
 	}
 
-	public virtual void OnDamage (Entity attacker)
-	{
-	}
+	public virtual void OnDamage (Entity attacker) { }
 
 	public void Kill (Entity murderer)
 	{
@@ -64,6 +65,10 @@ public abstract class Entity : MonoBehaviour
 	protected void SubtractHealth (int amount)
 	{
 		currentHealth = Mathf.Clamp (currentHealth - amount, 0, maxHealth);
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(currentHealth, maxHealth);
+        }
 	}
 
 	public bool IsDead {
