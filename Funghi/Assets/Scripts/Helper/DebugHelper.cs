@@ -112,6 +112,11 @@ public class DebugHelper : MonoBehaviour
     {
         return GameWorld.Instance.Nodes.Count.ToString();
     }
+
+    string GetTickerItemsInQueue()
+    {
+        return NewsTicker.ItemsInQueue.ToString();
+    }
     #endregion
 
     void OnLevelWasLoaded()
@@ -174,6 +179,7 @@ public class DebugHelper : MonoBehaviour
         AddDebugValue("PoliceCars", GetNumPoliceCars);
         AddDebugValue("PoliceStations", GetNumPoliceStations);
         AddDebugValue("Nodes", GetNumNodes);
+        AddDebugValue("Queued NewsTicker Entries", GetTickerItemsInQueue);
     }
 
     Vector2 detailScroll;
