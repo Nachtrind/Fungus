@@ -3,9 +3,21 @@ using Pathfinding;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameInput: MonoBehaviour
 {
+
+	enum InputState
+	{
+		SkillMode,
+		BuildMode,
+		MoveBrainMode,
+		NoMode}
+
+	;
+
+	InputState currentState;
 
 	public Renderer ground;
 
@@ -22,41 +34,49 @@ public class GameInput: MonoBehaviour
 
 	static InputHandler instance;
 	AbilityButton currentSelection;
-	bool dragCore;
+
+	//Stuff for Building a new Node
+	private Vector3 touchWorldPoint;
+	private Vector3 mouseWorldPoint;
+	private bool canBuildNode;
+	private Vector2 lastMousePos;
+	private bool moveMouse;
 
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
-	Color selectedTint = new Color (110 / 255f, 143 / 255f, 67 / 255f, 1f);
-	#pragma warning disable 0414
+	public Color selectedTint;
 	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
-	#pragma warning restore 0414
 	private Plane plane;
 	private Camera cam;
 
 	//Stuff for camera movement &  zoom
 	public float moveSpeedX = 2.0000f;
 	public float moveSpeedZ = 2.00f;
-	#pragma warning disable 0414
 	private Vector2 scrollDirection = Vector2.zero;
-	#pragma warning restore 0414
 
 	float levelSizeY;
 	float levelSizeX;
 
+	//Level Borders
 	float leftBorder;
 	float rightBorder;
 	float upperBorder;
 	float lowerBorder;
+
+	private GameObject skillMenu;
 
 	void Start ()
 	{
 		plane = new Plane (Vector3.up, Vector3.zero);
 		cam = Camera.main;
 
-		levelSizeY = ground.bounds.extents.y;
-		levelSizeX = ground.bounds.extents.x;
-
 		CalcLevelBorders ();
+
+		currentState = InputState.NoMode;
+
+		//Find and Deativate Skill Menu
+		skillMenu = GameObject.Find ("SkillMenu");
+		skillMenu.SetActive (false);
 
 	}
 
@@ -69,229 +89,258 @@ public class GameInput: MonoBehaviour
 #endif
 			return;
 		}
-
-
-		if (dragCore) {
-			////////////////
-			//drag stopped//
-			////////////////
-			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
-
-				Vector3 worldMousePos;
-				//take mouse position or touch position
-				if (Input.GetMouseButtonUp (0)) {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-				} else {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-				}
-				worldMousePos.y = 0;
-
-
-				if (OnCoreCommand != null) {
-					OnCoreCommand (worldMousePos);
-				}
-
-				inputTimer = 0.0f;
-				dragCore = false;
-			} else if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
-				///////////////////////
-				//dragging core along//
-				///////////////////////
-				Vector3 worldMousePos;
-				//take mouse position or touch position
-				if (Input.GetMouseButton (0)) {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-				} else {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-				}
-				worldMousePos.y = 0;
-
-				if (OnCoreCommand != null) {
-					OnCoreCommand (worldMousePos);
-				}
-			}
-		} 
-
-
-
-		if (currentSelection != null && inputTimer > inputTick && !dragCore) {
-			if (Input.touchCount > 0 || Input.GetMouseButton (0)) {
-
-				//////////////
-				// NEW NODE //
-				//////////////
-				if (currentSelection.buttonName == ButtonName.ButtonName.NewNode) {
-					Vector3 worldMousePos;
-					//take mouse position or touch position
-					if (Input.GetMouseButton (0)) {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-					} else {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-					}
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.4f);
-					ParticleSystem.EmissionModule em = spores.emission;
-
-					if (!spores.isPlaying || spores.emission.enabled == false) {
-						spores.Play ();
-						em.enabled = true;
-						//ParticleSystem.EmissionModule em = spores.emission;
-						//em.rate = 60;
 			
-					}
 
-					em.rate = new ParticleSystem.MinMaxCurve(60.0f);
-					spores.transform.position = new Vector3 (worldMousePos.x, 0.5f, worldMousePos.z);
-					//spores.Emit (30);
 
-					if (nodesInRadius.Count <= 0) {
-						CreateNewSlimePath (worldMousePos);
-					}
+		///////////////
+		//Get Touches//
+		///////////////
+		Touch[] touches = Input.touches;
+
+		if (touches.Length == 1) {
+
+			//Transform Touch to WorldPosition
+			touchWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).position));
+
+			///////////////////
+			//Build New Nodes//
+			///////////////////
+			if (currentState == InputState.BuildMode) {				
+				if (touches [0].phase == TouchPhase.Began) {
+					BeginBuild (touchWorldPoint);
 				}
 
-				/////////////////////
-				// Change Ability  //
-				/////////////////////
-				if (currentSelection.buttonName != ButtonName.ButtonName.NewNode) {
-
-					Vector3 worldMousePos;
-					//take mouse position or touch position
-					if (Input.GetMouseButton (0)) {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-					} else {
-						worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
-					}
-
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
-					if (nodesInRadius.Count > 0) {
-						SpecializeNode (nodesInRadius [0]);
-						DeactivateSelection ();
-					}
+				if (touches [0].phase == TouchPhase.Moved && canBuildNode) {
+					TrackBuild (touchWorldPoint);
 				}
 
+				if (touches [0].phase == TouchPhase.Ended && canBuildNode) {
+					EndBuild ();
+				}
 
 			}
 
-			if ((Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) || Input.GetMouseButtonUp (0)) {
-				SpawnNewSlimePath ();
-				DeactivateSelection ();
-				//spores.enableEmission = false;
-				ParticleSystem.EmissionModule em = spores.emission;
-				em.rate = new ParticleSystem.MinMaxCurve(0.0f);
-				//em.enabled = false;
-		
-			}
-			
-			
-		}
-
-		if (currentSelection == null && inputTimer > inputTick && !dragCore) {
-			if (Input.GetMouseButton (0) || Input.touchCount > 0) {
-
-				Vector3 worldMousePos;
-				//take mouse position or touch position
-				if (Input.GetMouseButton (0)) {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
-				} else {
-					worldMousePos = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).deltaPosition));
+			//////////////
+			//Move Brain//
+			//////////////
+			if (currentState == InputState.MoveBrainMode) {
+				//Touch	
+				if (touches [0].phase == TouchPhase.Ended) {
+					if (OnCoreCommand != null) {
+						OnCoreCommand (touchWorldPoint);
+					}
 				}
+			}
 
+			/////////////////////////
+			//Activate & Deactivate//
+			/////////////////////////
+			if (currentState == InputState.NoMode) {
 
-				/////////////////////
-				//Checking for Core//
-				/////////////////////
-				FungusCore core = GameWorld.Instance.CoreInRange (worldMousePos, coreInputRange);
-
-				if (core != null) {
-					dragCore = true;
-
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
+				if (nodesInRadius.Count > 0) {
+					if (touches [0].phase == TouchPhase.Began) {
+						GameWorld.Instance.GetNearestFungusNode (touchWorldPoint).ToggleActive ();
+					}
 				} else {
+					///////////////
+					//Move Camera//
+					///////////////
 
-					////////////////////
-					//Activating Nodes//
-					////////////////////
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (worldMousePos, 0.40f);
+					if (touches [0].phase == TouchPhase.Began) {
 
-					if (nodesInRadius.Count > 0) {
-						nodesInRadius [0].ToggleActive ();
-						inputTimer = 0.0f;
-					} else {
+					} else if (touches [0].phase == TouchPhase.Moved) {
+						Vector2 touchMovement = touches [0].deltaPosition;
 
-						Touch[] touches = Input.touches;
-						
-						///////////////
-						//Move Camera//
-						///////////////
-						if (touches.Length == 1) {
-							if (touches [0].phase == TouchPhase.Began) {
-
-							} else if (touches [0].phase == TouchPhase.Moved) {
-								Vector2 touchMovement = touches [0].deltaPosition;
-
-								float posX = touchMovement.x * -moveSpeedX;
+						float posX = touchMovement.x * -moveSpeedX * Time.deltaTime;
 								
-								float posZ = touchMovement.y * -moveSpeedZ;
+						float posZ = touchMovement.y * -moveSpeedZ * Time.deltaTime;
 
 
-								cam.transform.position += new Vector3 (posX, 0, posZ);
-								//ClampCamPos ();
-								
-
-
-							} 
-
-						}
-
-
-						///////////////
-						//Zoom Camera//
-						///////////////
-						if (touches.Length == 2) {
-
-#pragma warning disable 0219
-							Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
-							
-							Touch touchOne = touches [0];
-							Touch touchTwo = touches [1];
-							
-							Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-							Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
-
-							float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
-							float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
-
-							float lengthDiff = prevTouchLength - touchDeltaLength;
-
-							//TODO: Finish Zoom
-#pragma warning restore 0219
-						}
-					}
+						cam.transform.position += new Vector3 (posX, 0, posZ);
+						//ClampCamPos ();
+					} 
 				}
 			}
 		}
-		
 
 
+		///////////////
+		//Zoom Camera//
+		///////////////
+		if (touches.Length == 2) {
+			Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+							
+			Touch touchOne = touches [0];
+			Touch touchTwo = touches [1];
+							
+			Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+			Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
+
+			float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+			float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
+
+			float lengthDiff = prevTouchLength - touchDeltaLength;
+
+			//TODO: Finish Zoom
+		}
+
+
+
+
+		/////////////////
+		//Mouse Control//
+		/////////////////
+
+		//Left Mouse Click
+		if (Input.GetMouseButtonUp (0)) {
+			//Transform Touch to WorldPosition
+			mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+			//////////////
+			//Move Brain//
+			//////////////
+			if (currentState == InputState.MoveBrainMode) {
+				if (OnCoreCommand != null) {
+					OnCoreCommand (mouseWorldPoint);
+				}
+			}
+
+
+		}
+
+		///////////////////
+		//Build New Nodes//
+		///////////////////
+		if (Input.GetMouseButtonUp (0) || Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
+			mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+			if (currentState == InputState.BuildMode) {				
+				if (Input.GetMouseButtonDown (0)) {
+					BeginBuild (mouseWorldPoint);
+				}
+
+				if (Input.GetMouseButton (0) && canBuildNode) {
+					TrackBuild (mouseWorldPoint);
+				}
+
+				if (Input.GetMouseButtonUp (0) && canBuildNode) {
+					EndBuild ();
+				}
+
+			}
+		}
+
+		/////////////////////////
+		//Activate & Deactivate//
+		/////////////////////////
+		if (currentState == InputState.NoMode) {
+
+			if (Input.GetMouseButtonUp (0) || Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
+				mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (mouseWorldPoint, 0.4f);
+				if (nodesInRadius.Count > 0 && inputTimer > inputTick) {
+					GameWorld.Instance.GetNearestFungusNode (mouseWorldPoint).ToggleActive ();
+					inputTimer = 0.0f;
+				} else if (inputTimer > inputTick) {
+					///////////////
+					//Move Camera//
+					///////////////
+					if (Input.GetMouseButtonDown (0)) {
+						lastMousePos = Input.mousePosition;
+					} else if (Input.GetMouseButton (0)) {
+						Vector2 current = Input.mousePosition;
+						Vector2 deltaMouse = current - lastMousePos;
+
+						float posX = deltaMouse.x * -moveSpeedX * Time.deltaTime;
+
+						float posZ = deltaMouse.y * -moveSpeedZ * Time.deltaTime;
+
+
+						cam.transform.position += new Vector3 (posX, 0, posZ);
+						//ClampCamPos ();
+					} 
+				}
+			}
+		}
+
+
+				
 		inputTimer += Time.deltaTime;
 
 	}
 
+	private void ClampCamPos ()
+	{
+		
+		Vector3 limitedCameraPosition = cam.transform.position;
+
+		Debug.Log ("Original Cam Pos: " + limitedCameraPosition);
+
+		float distance;
+		if (plane.Raycast (cam.ScreenPointToRay (new Vector3 (0, 0)), out distance)) {
+
+			float frustumHeight = 2.0f * distance * Mathf.Tan (cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+			float frustumWidth = frustumHeight * cam.aspect;
+
+
+			limitedCameraPosition.x = Mathf.Clamp (limitedCameraPosition.x, leftBorder + frustumWidth / 2, rightBorder - frustumWidth / 2);
+			limitedCameraPosition.z = Mathf.Clamp (limitedCameraPosition.z, upperBorder - frustumHeight / 2, lowerBorder + frustumHeight / 2);
+			Debug.Log ("Limited Cam Pos: " + limitedCameraPosition);
+			cam.transform.position = limitedCameraPosition;
+
+		}
+	}
+
+	private FungusNode GetNodeAroundTouch (Vector3 _touchPos)
+	{
+		FungusNode node = GameWorld.Instance.GetNearestFungusNode (_touchPos);
+		return node;
+	}
+
+	private void BeginBuild (Vector3 _pos)
+	{
+
+		List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (_pos, 0.4f);
+		if (nodesInRadius.Count > 0) {
+			if (!spores.isPlaying || spores.emission.enabled == false) {
+				ParticleSystem.EmissionModule em = spores.emission;
+				spores.Play ();
+				em.enabled = true;
+				spores.transform.position = new Vector3 (_pos.x, 0.5f, _pos.z);
+			}
+			canBuildNode = true;
+		}
+	}
+
+	private void TrackBuild (Vector3 _pos)
+	{
+		List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (_pos, 0.4f);
+		spores.transform.position = new Vector3 (_pos.x, 0.5f, _pos.z);
+
+		if (nodesInRadius.Count <= 0) {
+			CreateNewSlimePath (_pos);
+		}
+	}
+
+	private void EndBuild ()
+	{
+
+		SpawnNewSlimePath ();
+		ParticleSystem.EmissionModule em = spores.emission;
+		em.enabled = false;
+		canBuildNode = false;
+
+	}
 
 	private void CalcLevelBorders ()
 	{
-		float vSize = cam.orthographicSize;
-		float hSize = cam.orthographicSize * Screen.width / Screen.height;
-		leftBorder = hSize - levelSizeX / 2.0f;
-		rightBorder = levelSizeX / 2.0f - hSize;
-		upperBorder = vSize - levelSizeY / 2.0f;
-		lowerBorder = levelSizeY / 2.0f - vSize;
-	}
+		levelSizeY = ground.bounds.extents.z;
+		levelSizeX = ground.bounds.extents.x;
 
-	private void ClampCamPos ()
-	{
-		Vector3 limitedCameraPosition = cam.transform.position;
-		limitedCameraPosition.x = Mathf.Clamp (limitedCameraPosition.x, leftBorder, rightBorder);
-		limitedCameraPosition.z = Mathf.Clamp (limitedCameraPosition.z, upperBorder, lowerBorder);
-		cam.transform.position = limitedCameraPosition;
+		leftBorder = ground.transform.position.x - levelSizeX;
+		rightBorder = ground.transform.position.x + levelSizeX;
+		lowerBorder = ground.transform.position.z - levelSizeY;
+		upperBorder = ground.transform.position.z + levelSizeY;
+
 	}
 
 	public Vector3 GetTouchPosInWorld (Ray _ray)
@@ -301,7 +350,6 @@ public class GameInput: MonoBehaviour
 		if (plane.Raycast (_ray, out enter)) {
 			Vector3 point = _ray.GetPoint (enter);
 			return point;
-
 		}
 
 		return new Vector3 (0, 0, 0);
@@ -310,7 +358,6 @@ public class GameInput: MonoBehaviour
 
 	public void ClickedButton (AbilityButton _button)
 	{
-		Debug.Log ("ClickButton");
 		if (_button.isUnlocked) {
 			if (_button == currentSelection) {
 				if (_button.isSelected) {
@@ -331,6 +378,43 @@ public class GameInput: MonoBehaviour
 		}
 		inputTimer = 0.0f;	
 	}
+
+	public void ToggleSkillMenu (Image _buttonImg)
+	{
+		bool current = this.skillMenu.activeSelf;
+		this.skillMenu.SetActive (!current);
+		if (this.skillMenu.activeSelf) {
+			currentState = InputState.SkillMode;
+			_buttonImg.color = selectedTint;
+		} else {
+			currentState = InputState.NoMode;
+			_buttonImg.color = Color.white;
+		}
+	}
+
+	public void ToggleBuildMode (Image _buttonImg)
+	{
+		if (currentState == InputState.BuildMode) {
+			currentState = InputState.NoMode;
+			_buttonImg.color = Color.white;
+		} else {
+			currentState = InputState.BuildMode;
+			_buttonImg.color = selectedTint;
+		}
+	}
+
+	public void ToggleBrainMode (Image _buttonImg)
+	{
+		if (currentState == InputState.MoveBrainMode) {
+			currentState = InputState.NoMode;
+			_buttonImg.color = Color.white;
+		} else {
+			currentState = InputState.MoveBrainMode;
+			_buttonImg.color = selectedTint;
+		}
+	}
+
+
 
 	void DeactivateSelection ()
 	{
@@ -426,7 +510,6 @@ public class GameInput: MonoBehaviour
 
 	private void CreateNewSlimePath (Vector3 _mousePosition)
 	{
-		//bool reachable = true;
 		_mousePosition.y = 0;
 		FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode (_mousePosition); //HACK: nearest node is not always shortest path (if needed, compare multiple paths)
 		if (nodeNearCursor) {
@@ -445,6 +528,16 @@ public class GameInput: MonoBehaviour
 			pathToCursorLength = float.PositiveInfinity;
 		}
 
+	}
+
+
+	void OnDrawGizmos ()
+	{
+		Gizmos.color = Color.cyan;
+		Gizmos.DrawSphere (new Vector3 (0, 0, lowerBorder), 0.5f);
+		Gizmos.DrawSphere (new Vector3 (0, 0, upperBorder), 0.5f);
+		Gizmos.DrawSphere (new Vector3 (rightBorder, 0, 0), 0.5f);
+		Gizmos.DrawSphere (new Vector3 (leftBorder, 0, 0), 0.5f);
 	}
 
 }
