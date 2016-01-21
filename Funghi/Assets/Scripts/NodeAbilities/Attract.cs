@@ -54,7 +54,7 @@ namespace NodeAbilities
 				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
 				//TODO: Change Behaviour of Enemies
 				foreach (Human h in enemiesInRadius) {
-					//h.SetBehaviour (Instantiate (attract));
+					h.TriggerBehaviour("Lure", node);
 				}
 				i++;
 				tempVector = dir * (i * influenceRadius);
