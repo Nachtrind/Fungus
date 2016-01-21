@@ -3,6 +3,7 @@ using Pathfinding;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameInput: MonoBehaviour
 {
@@ -36,7 +37,10 @@ public class GameInput: MonoBehaviour
 
 	//Stuff for Building a new Node
 	private Vector3 touchWorldPoint;
+	private Vector3 mouseWorldPoint;
 	private bool canBuildNode;
+	private Vector2 lastMousePos;
+	private bool moveMouse;
 
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
@@ -66,9 +70,6 @@ public class GameInput: MonoBehaviour
 		plane = new Plane (Vector3.up, Vector3.zero);
 		cam = Camera.main;
 
-		levelSizeY = ground.bounds.extents.y;
-		levelSizeX = ground.bounds.extents.x;
-
 		CalcLevelBorders ();
 
 		currentState = InputState.NoMode;
@@ -88,13 +89,13 @@ public class GameInput: MonoBehaviour
 #endif
 			return;
 		}
+			
+
 
 		///////////////
 		//Get Touches//
 		///////////////
 		Touch[] touches = Input.touches;
-
-
 
 		if (touches.Length == 1) {
 
@@ -106,32 +107,15 @@ public class GameInput: MonoBehaviour
 			///////////////////
 			if (currentState == InputState.BuildMode) {				
 				if (touches [0].phase == TouchPhase.Began) {
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
-					if (nodesInRadius.Count > 0) {
-						if (!spores.isPlaying || spores.emission.enabled == false) {
-							ParticleSystem.EmissionModule em = spores.emission;
-							spores.Play ();
-							em.enabled = true;
-							spores.transform.position = new Vector3 (touchWorldPoint.x, 0.5f, touchWorldPoint.z);
-						}
-						canBuildNode = true;
-					}
+					BeginBuild (touchWorldPoint);
 				}
 
 				if (touches [0].phase == TouchPhase.Moved && canBuildNode) {
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
-					spores.transform.position = new Vector3 (touchWorldPoint.x, 0.5f, touchWorldPoint.z);
-
-					if (nodesInRadius.Count <= 0) {
-						CreateNewSlimePath (touchWorldPoint);
-					}
+					TrackBuild (touchWorldPoint);
 				}
 
 				if (touches [0].phase == TouchPhase.Ended && canBuildNode) {
-					SpawnNewSlimePath ();
-					ParticleSystem.EmissionModule em = spores.emission;
-					em.enabled = false;
-					canBuildNode = false;
+					EndBuild ();
 				}
 
 			}
@@ -139,7 +123,8 @@ public class GameInput: MonoBehaviour
 			//////////////
 			//Move Brain//
 			//////////////
-			if (currentState == InputState.MoveBrainMode) {	
+			if (currentState == InputState.MoveBrainMode) {
+				//Touch	
 				if (touches [0].phase == TouchPhase.Ended) {
 					if (OnCoreCommand != null) {
 						OnCoreCommand (touchWorldPoint);
@@ -147,7 +132,9 @@ public class GameInput: MonoBehaviour
 				}
 			}
 
-
+			/////////////////////////
+			//Activate & Deactivate//
+			/////////////////////////
 			if (currentState == InputState.NoMode) {
 
 				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
@@ -159,6 +146,7 @@ public class GameInput: MonoBehaviour
 					///////////////
 					//Move Camera//
 					///////////////
+
 					if (touches [0].phase == TouchPhase.Began) {
 
 					} else if (touches [0].phase == TouchPhase.Moved) {
@@ -175,6 +163,7 @@ public class GameInput: MonoBehaviour
 				}
 			}
 		}
+
 
 		///////////////
 		//Zoom Camera//
@@ -195,9 +184,110 @@ public class GameInput: MonoBehaviour
 
 			//TODO: Finish Zoom
 		}
+
+
+
+
+		/////////////////
+		//Mouse Control//
+		/////////////////
+
+		//Left Mouse Click
+		if (Input.GetMouseButtonUp (0)) {
+			//Transform Touch to WorldPosition
+			mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+			//////////////
+			//Move Brain//
+			//////////////
+			if (currentState == InputState.MoveBrainMode) {
+				if (OnCoreCommand != null) {
+					OnCoreCommand (mouseWorldPoint);
+				}
+			}
+
+
+		}
+
+		///////////////////
+		//Build New Nodes//
+		///////////////////
+		if (Input.GetMouseButtonUp (0) || Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
+			mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+			if (currentState == InputState.BuildMode) {				
+				if (Input.GetMouseButtonDown (0)) {
+					BeginBuild (mouseWorldPoint);
+				}
+
+				if (Input.GetMouseButton (0) && canBuildNode) {
+					TrackBuild (mouseWorldPoint);
+				}
+
+				if (Input.GetMouseButtonUp (0) && canBuildNode) {
+					EndBuild ();
+				}
+
+			}
+		}
+
+		/////////////////////////
+		//Activate & Deactivate//
+		/////////////////////////
+		if (currentState == InputState.NoMode) {
+
+			if (Input.GetMouseButtonUp (0) || Input.GetMouseButtonDown (0) || Input.GetMouseButton (0)) {
+				mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (mouseWorldPoint, 0.4f);
+				if (nodesInRadius.Count > 0 && inputTimer > inputTick) {
+					GameWorld.Instance.GetNearestFungusNode (mouseWorldPoint).ToggleActive ();
+					inputTimer = 0.0f;
+				} else if (inputTimer > inputTick) {
+					///////////////
+					//Move Camera//
+					///////////////
+					if (Input.GetMouseButtonDown (0)) {
+						lastMousePos = Input.mousePosition;
+					} else if (Input.GetMouseButton (0)) {
+						Vector2 current = Input.mousePosition;
+						Vector2 deltaMouse = current - lastMousePos;
+
+						float posX = deltaMouse.x * -moveSpeedX * Time.deltaTime;
+
+						float posZ = deltaMouse.y * -moveSpeedZ * Time.deltaTime;
+
+
+						cam.transform.position += new Vector3 (posX, 0, posZ);
+						//ClampCamPos ();
+					} 
+				}
+			}
+		}
+
+
 				
 		inputTimer += Time.deltaTime;
 
+	}
+
+	private void ClampCamPos ()
+	{
+		
+		Vector3 limitedCameraPosition = cam.transform.position;
+
+		Debug.Log ("Original Cam Pos: " + limitedCameraPosition);
+
+		float distance;
+		if (plane.Raycast (cam.ScreenPointToRay (new Vector3 (0, 0)), out distance)) {
+
+			float frustumHeight = 2.0f * distance * Mathf.Tan (cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+			float frustumWidth = frustumHeight * cam.aspect;
+
+
+			limitedCameraPosition.x = Mathf.Clamp (limitedCameraPosition.x, leftBorder + frustumWidth / 2, rightBorder - frustumWidth / 2);
+			limitedCameraPosition.z = Mathf.Clamp (limitedCameraPosition.z, upperBorder - frustumHeight / 2, lowerBorder + frustumHeight / 2);
+			Debug.Log ("Limited Cam Pos: " + limitedCameraPosition);
+			cam.transform.position = limitedCameraPosition;
+
+		}
 	}
 
 	private FungusNode GetNodeAroundTouch (Vector3 _touchPos)
@@ -206,22 +296,51 @@ public class GameInput: MonoBehaviour
 		return node;
 	}
 
-	private void CalcLevelBorders ()
+	private void BeginBuild (Vector3 _pos)
 	{
-		float vSize = cam.orthographicSize;
-		float hSize = cam.orthographicSize * Screen.width / Screen.height;
-		leftBorder = hSize - levelSizeX / 2.0f;
-		rightBorder = levelSizeX / 2.0f - hSize;
-		upperBorder = vSize - levelSizeY / 2.0f;
-		lowerBorder = levelSizeY / 2.0f - vSize;
+
+		List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (_pos, 0.4f);
+		if (nodesInRadius.Count > 0) {
+			if (!spores.isPlaying || spores.emission.enabled == false) {
+				ParticleSystem.EmissionModule em = spores.emission;
+				spores.Play ();
+				em.enabled = true;
+				spores.transform.position = new Vector3 (_pos.x, 0.5f, _pos.z);
+			}
+			canBuildNode = true;
+		}
 	}
 
-	private void ClampCamPos ()
+	private void TrackBuild (Vector3 _pos)
 	{
-		Vector3 limitedCameraPosition = cam.transform.position;
-		limitedCameraPosition.x = Mathf.Clamp (limitedCameraPosition.x, leftBorder, rightBorder);
-		limitedCameraPosition.z = Mathf.Clamp (limitedCameraPosition.z, upperBorder, lowerBorder);
-		cam.transform.position = limitedCameraPosition;
+		List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (_pos, 0.4f);
+		spores.transform.position = new Vector3 (_pos.x, 0.5f, _pos.z);
+
+		if (nodesInRadius.Count <= 0) {
+			CreateNewSlimePath (_pos);
+		}
+	}
+
+	private void EndBuild ()
+	{
+
+		SpawnNewSlimePath ();
+		ParticleSystem.EmissionModule em = spores.emission;
+		em.enabled = false;
+		canBuildNode = false;
+
+	}
+
+	private void CalcLevelBorders ()
+	{
+		levelSizeY = ground.bounds.extents.z;
+		levelSizeX = ground.bounds.extents.x;
+
+		leftBorder = ground.transform.position.x - levelSizeX;
+		rightBorder = ground.transform.position.x + levelSizeX;
+		lowerBorder = ground.transform.position.z - levelSizeY;
+		upperBorder = ground.transform.position.z + levelSizeY;
+
 	}
 
 	public Vector3 GetTouchPosInWorld (Ray _ray)
@@ -260,32 +379,38 @@ public class GameInput: MonoBehaviour
 		inputTimer = 0.0f;	
 	}
 
-	public void ToggleSkillMenu ()
+	public void ToggleSkillMenu (Image _buttonImg)
 	{
 		bool current = this.skillMenu.activeSelf;
 		this.skillMenu.SetActive (!current);
 		if (this.skillMenu.activeSelf) {
 			currentState = InputState.SkillMode;
+			_buttonImg.color = selectedTint;
 		} else {
 			currentState = InputState.NoMode;
+			_buttonImg.color = Color.white;
 		}
 	}
 
-	public void ToggleBuildMode ()
+	public void ToggleBuildMode (Image _buttonImg)
 	{
 		if (currentState == InputState.BuildMode) {
 			currentState = InputState.NoMode;
+			_buttonImg.color = Color.white;
 		} else {
 			currentState = InputState.BuildMode;
+			_buttonImg.color = selectedTint;
 		}
 	}
 
-	public void ToggleBrainMode ()
+	public void ToggleBrainMode (Image _buttonImg)
 	{
 		if (currentState == InputState.MoveBrainMode) {
 			currentState = InputState.NoMode;
+			_buttonImg.color = Color.white;
 		} else {
 			currentState = InputState.MoveBrainMode;
+			_buttonImg.color = selectedTint;
 		}
 	}
 
@@ -406,10 +531,13 @@ public class GameInput: MonoBehaviour
 	}
 
 
-	void OnDrawGizmo ()
+	void OnDrawGizmos ()
 	{
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawSphere (touchWorldPoint, 0.5f);
+		Gizmos.DrawSphere (new Vector3 (0, 0, lowerBorder), 0.5f);
+		Gizmos.DrawSphere (new Vector3 (0, 0, upperBorder), 0.5f);
+		Gizmos.DrawSphere (new Vector3 (rightBorder, 0, 0), 0.5f);
+		Gizmos.DrawSphere (new Vector3 (leftBorder, 0, 0), 0.5f);
 	}
 
 }
