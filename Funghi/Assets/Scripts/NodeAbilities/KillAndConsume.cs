@@ -12,6 +12,9 @@ namespace NodeAbilities
 		public override void Execute (FungusNode node)
 		{
 			List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position, radius);
+
+			Debug.Log ("Enemies to Attack: " + enemiesInRadius.Count);
+
 			for (int i = 0; i < enemiesInRadius.Count; i++) {
 				enemiesInRadius [i].Damage (node, damage);
 				FungusResources.Instance.AddResources (5.0f);

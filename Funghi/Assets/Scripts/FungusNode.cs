@@ -5,22 +5,20 @@ using UnityEngine;
 
 public class FungusNode : Entity
 {
-    bool isActive;
-	public bool IsActive
-    {
-        get { return isActive; }
-        set
-        {
-            isActive = value;
-            if (OnToggleActive != null)
-            {
-                OnToggleActive(isActive);
-            }
-        }
-    }
+	bool isActive;
+
+	public bool IsActive {
+		get { return isActive; }
+		set {
+			isActive = value;
+			if (OnToggleActive != null) {
+				OnToggleActive (isActive);
+			}
+		}
+	}
 
 	float attackTimer;
-	[Header("Materials & Sprites")]
+	[Header ("Materials & Sprites")]
 	public Material matActive;
 	public Material matInactive;
 	//public Sprite beatneat;
@@ -31,7 +29,7 @@ public class FungusNode : Entity
 	//public Sprite growth;
 	SpriteRenderer abilityDisplay;
 
-    public event System.Action<bool> OnToggleActive;
+	public event System.Action<bool> OnToggleActive;
 
 	protected override void OnStart ()
 	{
@@ -87,17 +85,19 @@ public class FungusNode : Entity
 		}
 	}
 
-    #region Abilities
+	#region Abilities
 
-	[Header("Node specialization")]
+	[Header ("Node specialization")]
 	[SerializeField]
 	NodeAbility ability;
-    
-    public float GetAbilityRange()
-    {
-        if (!ability) { return 0f; }
-        return ability.GetRange();
-    }
+
+	public float GetAbilityRange ()
+	{
+		if (!ability) {
+			return 0f;
+		}
+		return ability.GetRange ();
+	}
 
 	public void ExecuteAbility ()
 	{
@@ -112,8 +112,9 @@ public class FungusNode : Entity
 
 	public void Specialize (NodeAbility newAbility)
 	{
-		ability = Instantiate(newAbility);
-        abilityDisplay.color = ability.color;
+		ability.StopExecution (this);
+		ability = Instantiate (newAbility);
+		abilityDisplay.color = ability.color;
 
 		//switch (newAbility.name) {
 		//case "beatneat":
@@ -150,9 +151,10 @@ public class FungusNode : Entity
 		//}
 
 	}
-    #endregion
 
-    #region Network
+	#endregion
+
+	#region Network
 
 	public bool IsConnected {
 		get { return nodeConnections.Count > 0; }
@@ -210,16 +212,19 @@ public class FungusNode : Entity
 			}
 		}
 	}
-    #endregion
 
-    #region State
+	#endregion
+
+	#region State
+
 	public override void OnDamage (Entity attacker)
 	{
 		if (IsDead) {
 			world.OnFungusNodeWasKilled (this);
 		}
 	}
-    #endregion
+
+	#endregion
 
 	public void ToggleActive ()
 	{

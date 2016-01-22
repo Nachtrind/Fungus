@@ -46,6 +46,8 @@ public class GameInput: MonoBehaviour
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	public Color selectedTint;
 	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
+
+	//Plane + Camera
 	private Plane plane;
 	private Camera cam;
 
@@ -118,6 +120,20 @@ public class GameInput: MonoBehaviour
 					EndBuild ();
 				}
 
+			}
+
+			////////////////////
+			//Specialize Nodes//
+			////////////////////
+			if (currentState == InputState.SkillMode) {	
+				if (touches [0].phase == TouchPhase.Ended) {
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
+					if (nodesInRadius.Count > 0) {
+						if (currentSelection != null) {
+							this.SpecializeNode (GameWorld.Instance.GetNearestFungusNode (touchWorldPoint));
+						}
+					}
+				}
 			}
 
 			//////////////
@@ -228,6 +244,23 @@ public class GameInput: MonoBehaviour
 
 			}
 		}
+
+
+		////////////////////
+		//Specialize Nodes//
+		////////////////////
+		if (currentState == InputState.SkillMode) {	
+			if (Input.GetMouseButtonUp (0)) {
+				mouseWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.mousePosition));
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (mouseWorldPoint, 0.4f);
+				if (nodesInRadius.Count > 0) {
+					if (currentSelection != null) {
+						this.SpecializeNode (GameWorld.Instance.GetNearestFungusNode (mouseWorldPoint));
+					}
+				}
+			}
+		}
+
 
 		/////////////////////////
 		//Activate & Deactivate//

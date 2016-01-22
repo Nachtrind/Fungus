@@ -66,7 +66,7 @@ public class FungusResources : MonoBehaviour
 			MaxResources = CurrentResources;
 		}
 
-		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+//		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 
 	public void SubResources (float _toSub)
