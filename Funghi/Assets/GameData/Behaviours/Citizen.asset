@@ -304,6 +304,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806fdeabd543aff4c8f69a9c5e4b7030, type: 3}
   m_Name: RunSpecialPath
   m_EditorClassIdentifier: 
+--- !u!114 &11434422
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
+  m_Name: Suicide
+  m_EditorClassIdentifier: 
 --- !u!114 &11439172
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -433,7 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ifAction: {fileID: 11440934}
   thenAction: {fileID: 11456904}
-  elseAction: {fileID: 0}
+  elseAction: {fileID: 11434422}
 --- !u!114 &11450780
 MonoBehaviour:
   m_ObjectHideFlags: 3

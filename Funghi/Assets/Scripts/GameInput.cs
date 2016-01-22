@@ -52,8 +52,8 @@ public class GameInput: MonoBehaviour
 	private Camera cam;
 
 	//Stuff for camera movement &  zoom
-	public float moveSpeedX = 2.0000f;
-	public float moveSpeedZ = 2.00f;
+	public float moveSpeedX = 0.000100f;
+	public float moveSpeedZ = 0.0001f;
 	private Vector2 scrollDirection = Vector2.zero;
 
 	float levelSizeY;
@@ -153,7 +153,7 @@ public class GameInput: MonoBehaviour
 			/////////////////////////
 			if (currentState == InputState.NoMode) {
 
-				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
+				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 1.0f);
 				if (nodesInRadius.Count > 0) {
 					if (touches [0].phase == TouchPhase.Began) {
 						GameWorld.Instance.GetNearestFungusNode (touchWorldPoint).ToggleActive ();
@@ -162,18 +162,16 @@ public class GameInput: MonoBehaviour
 					///////////////
 					//Move Camera//
 					///////////////
+					if (touches [0].phase == TouchPhase.Moved) {
+						Vector2 touchMovement = touches [0].deltaPosition * 0.02f;
+						Debug.Log (touchMovement);
+						float posX = touchMovement.x * -moveSpeedX * touches [0].deltaTime;
 
-					if (touches [0].phase == TouchPhase.Began) {
+						float posZ = touchMovement.y * -moveSpeedZ * touches [0].deltaTime;
 
-					} else if (touches [0].phase == TouchPhase.Moved) {
-						Vector2 touchMovement = touches [0].deltaPosition;
-
-						float posX = touchMovement.x * -moveSpeedX * Time.deltaTime;
-								
-						float posZ = touchMovement.y * -moveSpeedZ * Time.deltaTime;
-
-
+						Debug.Log (cam.transform.position.x);
 						cam.transform.position += new Vector3 (posX, 0, posZ);
+						Debug.Log (cam.transform.position.x);
 						//ClampCamPos ();
 					} 
 				}
@@ -283,9 +281,9 @@ public class GameInput: MonoBehaviour
 						Vector2 current = Input.mousePosition;
 						Vector2 deltaMouse = current - lastMousePos;
 
-						float posX = deltaMouse.x * -moveSpeedX * Time.deltaTime;
+						float posX = deltaMouse.x * -moveSpeedX;
 
-						float posZ = deltaMouse.y * -moveSpeedZ * Time.deltaTime;
+						float posZ = deltaMouse.y * -moveSpeedZ;
 
 
 						cam.transform.position += new Vector3 (posX, 0, posZ);
