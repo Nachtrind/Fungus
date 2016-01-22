@@ -46,7 +46,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -78,8 +78,140 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
-    human: []
-    skeleton: []
+    human:
+    - boneName: Head
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: ArmLeft
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: ShoulderRight
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: ArmRight
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: HipLeft
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: HipRight
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LegLeft
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LegRight
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Woman(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Head
+      position: {x: -1.1493481, y: 1.0500531, z: -1.3602592e-17}
+      rotation: {x: -0.0014852613, y: -0.0015850855, z: -0.71393627, w: 0.7002073}
+      scale: {x: 1.0000001, y: 1, z: 1}
+      transformModified: 1
+    - name: HeadFemale
+      position: {x: -1.0498432, y: -0.025598258, z: -0.01824252}
+      rotation: {x: 0.49619308, y: 0.50592893, z: 0.5037294, w: 0.4940496}
+      scale: {x: 4.0476255, y: 4.047625, z: 4.047625}
+      transformModified: 1
+    - name: Spine
+      position: {x: -0.37874615, y: 0.000000114440915, z: 0}
+      rotation: {x: -0.0000031065576, y: 0.0000002082688, z: 0.009708341, w: 0.9999529}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1}
+      transformModified: 1
+    - name: HipLeft
+      position: {x: -0.27940902, y: 0, z: -0.00000006616116}
+      rotation: {x: -1.6212465e-10, y: -1.6710992e-10, z: 0.71773154, w: 0.69631994}
+      scale: {x: 0.9999998, y: 0.9999998, z: 1}
+      transformModified: 1
+    - name: LegLeft
+      position: {x: -0.12137844, y: 0, z: 0.00000002324581}
+      rotation: {x: -0.000000085815955, y: -0.000000082045396, z: -0.722045, w: 0.69184613}
+      scale: {x: 0.9040447, y: 1, z: 1}
+      transformModified: 1
+    - name: HipRight
+      position: {x: -0.27940902, y: 0, z: 0.000000028163194}
+      rotation: {x: -0.00000007328254, y: -0.00000024055464, z: -0.7071029, w: 0.70711064}
+      scale: {x: 0.99999964, y: 0.99999964, z: 1}
+      transformModified: 1
+    - name: LegRight
+      position: {x: -0.110293575, y: 0.000000028610229, z: 0}
+      rotation: {x: 0.000000092731696, y: 0.00000009065822, z: 0.6982874, w: 0.7158175}
+      scale: {x: 0.8234062, y: 0.99999994, z: 1}
+      transformModified: 1
+    - name: ShoulderRight
+      position: {x: -0.37874615, y: 0.000000114440915, z: 0}
+      rotation: {x: -0.0018788949, y: -0.0018620188, z: -0.99177414, w: 0.12797286}
+      scale: {x: 0.8928709, y: 1, z: 1}
+      transformModified: 1
+    - name: ArmRight
+      position: {x: -0.2758296, y: 0.000004005432, z: 0}
+      rotation: {x: 0.0000000042934585, y: -0.0000000041293893, z: 0.706626, w: 0.70758724}
+      scale: {x: 0.8599641, y: 1.0000001, z: 1}
+      transformModified: 1
+    - name: ShoulderLeft
+      position: {x: -0.37874615, y: 0.000000114440915, z: -0.0000000013411044}
+      rotation: {x: -0.00000049221813, y: 0.00000057172514, z: 0.7236757, w: 0.6901402}
+      scale: {x: 0.9150027, y: 1, z: 1}
+      transformModified: 1
+    - name: ArmLeft
+      position: {x: -0.2868606, y: 0.0000019454956, z: -0.00000004917383}
+      rotation: {x: 0.00000009648757, y: -0.000000111724084, z: -0.7210548, w: 0.69287807}
+      scale: {x: 0.8911034, y: 1.0000001, z: 0.99999994}
+      transformModified: 1
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -90,7 +222,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
