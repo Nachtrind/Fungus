@@ -46,7 +46,10 @@ public class FungusResources : MonoBehaviour
 	{
 		CurrentResources = startResources;
 		MaxResources = CurrentResources;
+	    Debug.Log("Die folgende Zeile im Code wirft eine nullref");
+        /*
 		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+        */
 	}
 	
 	// Update is called once per frame
