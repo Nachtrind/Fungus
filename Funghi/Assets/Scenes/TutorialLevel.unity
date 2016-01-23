@@ -21312,6 +21312,7 @@ GameObject:
   - 114: {fileID: 1695140340}
   - 114: {fileID: 1695140343}
   - 114: {fileID: 1695140344}
+  - 114: {fileID: 1695140345}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -21382,6 +21383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 1748831980}
+  camClampComponent: {fileID: 1695140345}
   spores: {fileID: 1769867367}
   selectedTint: {r: 0.43137255, g: 0.56078434, b: 0.2627451, a: 1}
   moveSpeedX: 1
@@ -21412,6 +21414,21 @@ MonoBehaviour:
   unlockedAbilities: []
   startResources: 50
   resourceDisplay: {fileID: 0}
+--- !u!114 &1695140345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1695140339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2985a00f3035d43b46ef805d698d1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left: -11.32
+  top: 12.4
+  right: 26.7
+  bottom: -11
 --- !u!1001 &1696800159
 Prefab:
   m_ObjectHideFlags: 0
@@ -25966,50 +25983,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: d29f48256637322409bb6f0dd3943f05, type: 3}
   m_PrefabInternal: {fileID: 2005506775}
---- !u!1 &2018029459
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2018029461}
-  - 114: {fileID: 2018029460}
-  m_Layer: 0
-  m_Name: ClampTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2018029460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2018029459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818ed200af7ebe840aee7ce51da39b99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  left: -0.7
-  top: 6.22
-  right: 16.3
-  bottom: -6.3
-  testClampCam: 0
---- !u!4 &2018029461
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2018029459}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.3, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 19
 --- !u!1001 &2027660037
 Prefab:
   m_ObjectHideFlags: 0

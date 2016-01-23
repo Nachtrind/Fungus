@@ -21,6 +21,8 @@ public class GameInput: MonoBehaviour
 
 	public Renderer ground;
 
+    [SerializeField] ClampCamera camClampComponent;
+
 
 	public ParticleSystem spores;
 	float lastRequest;
@@ -316,7 +318,8 @@ public class GameInput: MonoBehaviour
 						cam.transform.position += new Vector3 (x, 0, z);
 
 						lastMousePos = current;
-						//ClampCamPos ();
+					    camClampComponent.ClampCamViewPos(cam);
+					    //ClampCamPos ();
 					} 
 				}
 			}
