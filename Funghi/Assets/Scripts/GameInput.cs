@@ -52,8 +52,8 @@ public class GameInput: MonoBehaviour
 	private Camera cam;
 
 	//Stuff for camera movement &  zoom
-	public float moveSpeedX = 0.000100f;
-	public float moveSpeedZ = 0.0001f;
+	public float moveSpeedX = 2.1f;
+	public float moveSpeedZ = 2.1f;
 	private Vector2 scrollDirection = Vector2.zero;
 
 	float levelSizeY;
@@ -174,6 +174,27 @@ public class GameInput: MonoBehaviour
 						Debug.Log (cam.transform.position.x);
 						//ClampCamPos ();
 					} 
+
+					if (touches [0].phase == TouchPhase.Began) {
+						lastMousePos = touches [0].position;
+					} else if (Input.GetMouseButton (0)) {
+						Vector2 current = Input.mousePosition;
+
+						Vector3 lastMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (lastMousePos));
+						Vector3 currentMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (current));
+
+						float x = (currentMouseInWorldPos.x - lastMouseInWorldPos.x) * -moveSpeedX;
+						float z = (currentMouseInWorldPos.z - lastMouseInWorldPos.z) * -moveSpeedZ;
+
+						cam.transform.position += new Vector3 (x, 0, z);
+
+						lastMousePos = current;
+						//ClampCamPos ();
+					} 
+
+
+
+
 				}
 			}
 		}
@@ -281,12 +302,20 @@ public class GameInput: MonoBehaviour
 						Vector2 current = Input.mousePosition;
 						Vector2 deltaMouse = current - lastMousePos;
 
+						Vector3 lastMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (lastMousePos));
+						Vector3 currentMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (current));
+
+						float x = (currentMouseInWorldPos.x - lastMouseInWorldPos.x) * -moveSpeedX;
+						float z = (currentMouseInWorldPos.z - lastMouseInWorldPos.z) * -moveSpeedZ;
+
 						float posX = deltaMouse.x * -moveSpeedX;
 
 						float posZ = deltaMouse.y * -moveSpeedZ;
 
 
-						cam.transform.position += new Vector3 (posX, 0, posZ);
+						cam.transform.position += new Vector3 (x, 0, z);
+
+						lastMousePos = current;
 						//ClampCamPos ();
 					} 
 				}

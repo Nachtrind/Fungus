@@ -21384,8 +21384,8 @@ MonoBehaviour:
   ground: {fileID: 1748831980}
   spores: {fileID: 1769867367}
   selectedTint: {r: 0.43137255, g: 0.56078434, b: 0.2627451, a: 1}
-  moveSpeedX: 0.2
-  moveSpeedZ: 0.2
+  moveSpeedX: 1
+  moveSpeedZ: 1
 --- !u!114 &1695140344
 MonoBehaviour:
   m_ObjectHideFlags: 0
