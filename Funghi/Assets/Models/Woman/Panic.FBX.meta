@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 4c60007af3b4d5041a835e9e492d4d53
+timeCreated: 1453557586
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Head
+    100002: HeadFemale
+    100004: LeftArm
+    100006: LeftHip
+    100008: LeftLeg
+    100010: LeftShoulder
+    100012: //RootNode
+    100014: RightArm
+    100016: RightHip
+    100018: RightLeg
+    100020: RightShoulder
+    100022: Spine
+    400000: Head
+    400002: HeadFemale
+    400004: LeftArm
+    400006: LeftHip
+    400008: LeftLeg
+    400010: LeftShoulder
+    400012: //RootNode
+    400014: RightArm
+    400016: RightHip
+    400018: RightLeg
+    400020: RightShoulder
+    400022: Spine
+    4300000: HeadFemale
+    7400000: Panic
+    9500000: //RootNode
+    13700000: HeadFemale
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Panic
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/HeadFemale
+        weight: 1
+      - path: Spine/LeftHip
+        weight: 1
+      - path: Spine/LeftHip/LeftLeg
+        weight: 1
+      - path: Spine/LeftShoulder
+        weight: 1
+      - path: Spine/LeftShoulder/LeftArm
+        weight: 1
+      - path: Spine/RightHip
+        weight: 1
+      - path: Spine/RightHip/RightLeg
+        weight: 1
+      - path: Spine/RightShoulder
+        weight: 1
+      - path: Spine/RightShoulder/RightArm
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
