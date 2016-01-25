@@ -12,6 +12,7 @@ namespace ModularBehaviour
     {
         public enum TargetType { Human, Fungus, PoliceStation }
         public TargetType Type = TargetType.Human;
+        public IntelligenceType targetClassification = IntelligenceType.Undefined;
         public float range = 2f;
         public bool checkLOS = true;
         public bool saveVar = true;

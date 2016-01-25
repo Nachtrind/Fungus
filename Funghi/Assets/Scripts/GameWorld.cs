@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using System;
+using ModularBehaviour;
 using Pathfinding;
 
 [RequireComponent (typeof(SlimeHandler))]
@@ -393,7 +394,39 @@ public class GameWorld : MonoBehaviour
 		return nearest;
 	}
 
-	public PoliceStation GetNearestPoliceStation (Vector3 position)
+    public Human GetNearestHuman(Vector3 position, IntelligenceType typeFilter)
+    {
+        if (typeFilter == IntelligenceType.Undefined)
+        {
+            return GetNearestHuman(position);
+        }
+        if (humans.Count == 0)
+        {
+            return null;
+        }
+        Human nearest = humans[0];
+        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
+        for (int i = 1; i < humans.Count; i++)
+        {
+            if (!humans[i].Behaviour || humans[i].Behaviour.Classification != typeFilter)
+            {
+                continue;
+            }
+            float curDist = AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position);
+            if (curDist < dist)
+            {
+                nearest = humans[i];
+                dist = curDist;
+            }
+        }
+        if (!nearest.Behaviour || nearest.Behaviour.Classification != typeFilter)
+        {
+            return null;
+        }
+        return nearest;
+    }
+
+    public PoliceStation GetNearestPoliceStation (Vector3 position)
 	{
 		if (policeStations.Count == 0) {
 			return null;

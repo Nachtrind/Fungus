@@ -15,9 +15,25 @@ namespace ModularBehaviour
         Entity Owner { get; }
     }
 
+    public enum IntelligenceType
+    {
+        Undefined,
+        Human,
+        Citizen,
+        Police,
+        PoliceCar,
+        Zombie,
+        Infected,
+        FungusNode,
+        FungusCore
+    }
+
     [CreateAssetMenu(menuName ="Behaviour/Intelligence", fileName ="Behaviour")]
     public class Intelligence : ScriptableObject, IntelligenceController
     {
+
+        public IntelligenceType Classification;
+
         #region const
         public const string PathIdentifier = "Path";
         public const string PathIndexIdentifier = "PathIndex";

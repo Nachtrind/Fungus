@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef402280a3d32b49999db9550152f4a, type: 3}
   m_Name: Infected
   m_EditorClassIdentifier: 
+  Classification: 5
   states:
   - {fileID: 11438592}
   - {fileID: 11454284}

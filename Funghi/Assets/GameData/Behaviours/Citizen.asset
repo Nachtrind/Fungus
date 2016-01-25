@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef402280a3d32b49999db9550152f4a, type: 3}
   m_Name: Citizen
   m_EditorClassIdentifier: 
+  Classification: 1
   states:
   - {fileID: 11423596}
   - {fileID: 11411318}
@@ -167,6 +168,7 @@ MonoBehaviour:
   m_Name: FindTarget
   m_EditorClassIdentifier: 
   Type: 2
+  targetClassification: 0
   range: 5
   checkLOS: 0
   saveVar: 1
@@ -389,6 +391,7 @@ MonoBehaviour:
   m_Name: FindTarget
   m_EditorClassIdentifier: 
   Type: 1
+  targetClassification: 0
   range: 1.5
   checkLOS: 1
   saveVar: 1
