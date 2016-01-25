@@ -314,9 +314,9 @@ public class GameInput: MonoBehaviour
 						float x = (currentMouseInWorldPos.x - lastMouseInWorldPos.x) * -moveSpeedX;
 						float z = (currentMouseInWorldPos.z - lastMouseInWorldPos.z) * -moveSpeedZ;
 
-						float posX = deltaMouse.x * -moveSpeedX;
+						//float posX = deltaMouse.x * -moveSpeedX;
 
-						float posZ = deltaMouse.y * -moveSpeedZ;
+						//float posZ = deltaMouse.y * -moveSpeedZ;
 
 
 						cam.transform.position += new Vector3 (x, 0, z);
