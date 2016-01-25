@@ -22,8 +22,7 @@ namespace ModularBehaviour
                 }
                 fleeSource = e.transform.position;
             }
-            Vector3 fleeDirection = controller.Owner.transform.position - fleeSource;
-            EntityMover.MoveResult res = controller.Owner.MoveTo(controller.Owner.transform.position + fleeDirection);
+            EntityMover.MoveResult res = controller.Owner.FleeFrom(fleeSource);
             if (res == EntityMover.MoveResult.ReachedTarget || res == EntityMover.MoveResult.TargetNotReachable)
             {
                 return ActionResult.Success;

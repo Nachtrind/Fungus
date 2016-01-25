@@ -283,6 +283,15 @@ public abstract class Entity : MonoBehaviour
 		return mover.MoveToDirect (position);
 	}
 
+    public EntityMover.MoveResult FleeFrom(Vector3 position)
+    {
+        if (!mover)
+        {
+            return EntityMover.MoveResult.NotAllowed;
+        }
+        return mover.FleeFrom(position);
+    }
+
 	public void StopMovement ()
 	{
 		if (mover) {

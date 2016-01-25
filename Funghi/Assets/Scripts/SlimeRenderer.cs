@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
-using Pathfinding;
 
 public class SlimeRenderer : MonoBehaviour
 {
+    int framesSkipped;
+    public Material groundMaterial;
+
+#if UNITY_EDITOR
+    int prevSampleSize = 2;
+#endif
+
+    [SerializeField] Camera projectorCam;
+
+    StandardGameSettings sgs;
+    RenderTexture slimeTex;
+
+    [Range(1, 4)] [Header("multiples of 128")] public int textureSize = 2;
 
     Material whiteMaterial;
-    RenderTexture slimeTex;
-    public Material groundMaterial;
-    StandardGameSettings sgs;
 
-    int framesSkipped = 0;
+    Texture2D slimeTexDirect;
 
-    [Range(1, 4)]
-    [Header("multiples of 128")]
-    public int textureSize = 2;
-
-
-    [SerializeField]
-    Camera projectorCam;
+    public bool useDirectMethod = false;
 
     void Start()
     {
@@ -34,8 +37,14 @@ public class SlimeRenderer : MonoBehaviour
             slimeTex.DiscardContents();
             slimeTex.Release();
         }
-        int sampleSize = 128 * textureSize;
+        var sampleSize = 128*textureSize;
         slimeTex = new RenderTexture(sampleSize, sampleSize, 0);
+    }
+
+    void CreateRenderTexDirect()
+    {
+        var gg = AstarPath.active.astarData.gridGraph;
+        slimeTexDirect = new Texture2D(gg.Width, gg.Depth);
     }
 
     void OnApplicationQuit()
@@ -48,11 +57,22 @@ public class SlimeRenderer : MonoBehaviour
         }
     }
 
-#if UNITY_EDITOR
-    int prevSampleSize = 2;
-#endif
+
+    bool previousState = false;
     void OnPreRender()
     {
+        if (useDirectMethod != previousState)
+        {
+            previousState = useDirectMethod;
+            if (useDirectMethod)
+            {
+                groundMaterial.shader = Shader.Find("Fungus/GroundShaderDirect");
+            }
+            else
+            {
+                groundMaterial.shader = Shader.Find("Fungus/GroundShader");
+            }
+        }
 #if UNITY_EDITOR
         if (prevSampleSize != textureSize)
         {
@@ -65,12 +85,51 @@ public class SlimeRenderer : MonoBehaviour
             framesSkipped++;
             return;
         }
-        if (slimeTex == null) { CreateRenderTex(); }
         framesSkipped = 0;
+        if (useDirectMethod)
+        {
+            RenderSlimeDirect();
+        }
+        else
+        {
+            RenderSlimeFromCam();
+        }
+    }
+
+    Color32 red = new Color32(255, 0, 0, 255);
+    Color32 green = new Color32(0, 255, 0, 255);
+    void RenderSlimeDirect()
+    {
+        if (slimeTexDirect == null)
+        {
+            CreateRenderTexDirect();
+        }
+        var gg = AstarPath.active.astarData.gridGraph;
+        var cols = slimeTexDirect.GetPixels32();
+        for (var i = 0; i < gg.nodes.Length; i++)
+        {
+            if (gg.nodes[i].Tag != SlimeHandler.slimeTag || !gg.nodes[i].Walkable)
+            {
+                cols[i] = red;
+                continue;
+            }
+            cols[i] = green;
+        }
+        slimeTexDirect.SetPixels32(cols);
+        slimeTexDirect.Apply();
+        groundMaterial.mainTexture = slimeTexDirect;
+    }
+
+    void RenderSlimeFromCam()
+    {
+        if (slimeTex == null)
+        {
+            CreateRenderTex();
+        }
         slimeTex.DiscardContents(true, true);
-        RenderTexture previousRT = RenderTexture.active;
+        var previousRT = RenderTexture.active;
         RenderTexture.active = slimeTex;
-        GridGraph gg = AstarPath.active.astarData.gridGraph;
+        var gg = AstarPath.active.astarData.gridGraph;
         whiteMaterial.SetPass(0);
         GL.Clear(true, true, Color.red);
         GL.PushMatrix();
@@ -79,15 +138,15 @@ public class SlimeRenderer : MonoBehaviour
         GL.MultMatrix(projectorCam.worldToCameraMatrix);
         GL.Begin(GL.QUADS);
         GL.Color(Color.green);
-        for (int i = 0; i < gg.nodes.Length; i++)
+        for (var i = 0; i < gg.nodes.Length; i++)
         {
             if (gg.nodes[i].Tag != SlimeHandler.slimeTag || !gg.nodes[i].Walkable)
             {
                 continue;
             }
-            Vector3 bottomLeft = (Vector3)gg.nodes[i].position;
-            bottomLeft.x -= (gg.nodeSize * 0.5f);
-            bottomLeft.z -= (gg.nodeSize * 0.5f);
+            var bottomLeft = (Vector3) gg.nodes[i].position;
+            bottomLeft.x -= gg.nodeSize*0.5f;
+            bottomLeft.z -= gg.nodeSize*0.5f;
             GL.Vertex(bottomLeft);
             GL.Vertex3(bottomLeft.x, 0, bottomLeft.z + gg.nodeSize);
             GL.Vertex3(bottomLeft.x + gg.nodeSize, 0, bottomLeft.z + gg.nodeSize);
@@ -96,7 +155,7 @@ public class SlimeRenderer : MonoBehaviour
         GL.End();
         GL.PopMatrix();
         RenderTexture.active = previousRT;
+        groundMaterial.SetMatrix("_projMatrix", projectorCam.projectionMatrix*projectorCam.worldToCameraMatrix);
         groundMaterial.mainTexture = slimeTex;
-        groundMaterial.SetMatrix("_projMatrix", (projectorCam.projectionMatrix * projectorCam.worldToCameraMatrix));
     }
 }

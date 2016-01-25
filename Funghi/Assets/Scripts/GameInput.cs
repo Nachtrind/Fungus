@@ -166,14 +166,14 @@ public class GameInput: MonoBehaviour
 					///////////////
 					if (touches [0].phase == TouchPhase.Moved) {
 						Vector2 touchMovement = touches [0].deltaPosition * 0.02f;
-						Debug.Log (touchMovement);
+						//Debug.Log (touchMovement);
 						float posX = touchMovement.x * -moveSpeedX * touches [0].deltaTime;
 
 						float posZ = touchMovement.y * -moveSpeedZ * touches [0].deltaTime;
 
-						Debug.Log (cam.transform.position.x);
+						//Debug.Log (cam.transform.position.x);
 						cam.transform.position += new Vector3 (posX, 0, posZ);
-						Debug.Log (cam.transform.position.x);
+						//Debug.Log (cam.transform.position.x);
 						//ClampCamPos ();
 					} 
 

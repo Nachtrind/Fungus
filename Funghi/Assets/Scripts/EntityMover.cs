@@ -7,7 +7,7 @@ public class EntityMover: MonoBehaviour
 {
     #region Movement variables
     public enum MoveResult { Preparing, Moving, ReachedTarget, TargetNotReachable, NotAllowed }
-    enum MoveTypes { Direct, Pathing }
+    enum MoveTypes { Direct, Pathing, FleePathing }
     public enum MovePathSmoothing { NoSmoothing, Force, LikeSlime }
 
     const float targetReachDistance = 0.025f;
@@ -57,6 +57,22 @@ public class EntityMover: MonoBehaviour
         return moveResult;
     }
 
+    public MoveResult FleeFrom(Vector3 position)
+    {
+        movementType = MoveTypes.FleePathing;
+        if (lastRequestedMoveTargetPosition != position)
+        {
+            pathToTarget.Clear();
+            moveResult = MoveResult.Preparing;
+            lastRequestedMoveTargetPosition = position;
+            if (!RequestFleePath(position))
+            {
+                lastRequestedMoveTargetPosition = Vector3.zero;
+            }
+        }
+        return moveResult;
+    }
+
     /// <summary>
     /// ignores pathfinding to reach the target
     /// </summary>
@@ -95,9 +111,27 @@ public class EntityMover: MonoBehaviour
         return true;
     }
 
+    bool RequestFleePath(Vector3 fromPosition)
+    {
+        if (movementType != MoveTypes.FleePathing)
+        {
+            return false;
+        }
+        if (!seeker.IsDone())
+        {
+            return false;
+        }
+        moveResult = MoveResult.Preparing;
+        var fp = FleePath.Construct(transform.position, fromPosition, 2000);
+        fp.aim = (transform.position- fromPosition) *10;
+        fp.aimStrength = 5f;
+        seeker.StartPath(fp, OnPathCompleted);
+        return true;
+    }
+
     void OnPathCompleted(Path p)
     {
-        if (movementType != MoveTypes.Pathing)
+        if (movementType != MoveTypes.Pathing && movementType != MoveTypes.FleePathing)
         {
             return;
         }
@@ -125,9 +159,19 @@ public class EntityMover: MonoBehaviour
     {
         if (Time.time - lastPathRequestTime > repathRate)
         {
-            if (RequestPath(lastRequestedMoveTargetPosition))
+            if (movementType == MoveTypes.Pathing)
             {
-                lastPathRequestTime = Time.time;
+                if (RequestPath(lastRequestedMoveTargetPosition))
+                {
+                    lastPathRequestTime = Time.time;
+                }
+            }
+            if (movementType == MoveTypes.FleePathing)
+            {
+                if (RequestFleePath(lastRequestedMoveTargetPosition))
+                {
+                    lastPathRequestTime = Time.time;
+                }
             }
         }
         if (pathToTarget.Count > 0)

@@ -14,6 +14,7 @@ public class DebugHelper : MonoBehaviour
     bool showEntityDebug = false;
     bool restartConfirmation = false;
     Material groundMaterialCached;
+    SlimeRenderer slimeRendererCached;
     List<DisplayObject> displayCallbacks = new List<DisplayObject>();
     List<LogMessage> lastConsoleMessages = new List<LogMessage>();
     LogMessage activeDisplayedMessage;
@@ -130,6 +131,7 @@ public class DebugHelper : MonoBehaviour
         var slimeRenderer = FindObjectOfType<SlimeRenderer>();
         if (slimeRenderer)
         {
+            slimeRendererCached = slimeRenderer;
             groundMaterialCached = slimeRenderer.groundMaterial;
         }
         Application.logMessageReceived -= ConsoleLogCallback;
@@ -205,6 +207,10 @@ public class DebugHelper : MonoBehaviour
         {
             Entity.showDebug = showStates;
             showEntityDebug = showStates;
+        }
+        if (slimeRendererCached)
+        {
+            slimeRendererCached.useDirectMethod = GUILayout.Toggle(slimeRendererCached.useDirectMethod, "Alternative SlimeRender method");
         }
         for (int i = 0; i < displayCallbacks.Count; i++)
         {

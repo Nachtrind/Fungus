@@ -437,6 +437,14 @@ Prefab:
       propertyPath: turnSpeed
       value: 0.492
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: radius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: detail
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 168438}
