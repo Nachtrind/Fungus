@@ -82,6 +82,8 @@ namespace NodeAbilities
 					if (h.gameObject.tag.Equals ("Citizen")) {
 						h.SetBehaviour (zombieIntelligence);
 						h.TriggerBehaviour ("AttachToNode", node);
+						Debug.Log ("Zombified a Human");
+						h.gameObject.tag = "Zombie";
 					}
 				}
 				i++;

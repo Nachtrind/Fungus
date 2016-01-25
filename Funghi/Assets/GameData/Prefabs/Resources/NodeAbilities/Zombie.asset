@@ -19,4 +19,6 @@ MonoBehaviour:
   cost: 3
   tickRate: 0.5
   zombieSpores: {fileID: 153816, guid: 0c930ff4c7d439940a15cef6f7c06239, type: 2}
+  sporeAnimObjPrefab: {fileID: 106630, guid: 9972c3bd0c6b1514c933a69462fa6fee, type: 2}
   influenceRadius: 1
+  zombieIntelligence: {fileID: 11400000, guid: 767a19ff654efc84589a9327b73777e7, type: 2}

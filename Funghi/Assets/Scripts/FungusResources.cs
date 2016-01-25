@@ -73,7 +73,7 @@ public class FungusResources : MonoBehaviour
 	{
 		CurrentResources -= _toSub;
 
-		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+		//resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 
 
