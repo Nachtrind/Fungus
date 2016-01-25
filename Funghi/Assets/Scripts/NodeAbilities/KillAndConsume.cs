@@ -26,9 +26,10 @@ namespace NodeAbilities
 				attackAnim = attackAnimObj.GetComponent<Animator> ();
 			}
 
-			attackAnim.SetTrigger ("Attack");
-
 			List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position, radius);
+			if (enemiesInRadius.Count > 0) {
+				attackAnim.SetTrigger ("Attack");
+			}
 			for (int i = 0; i < enemiesInRadius.Count; i++) {
 				enemiesInRadius [i].Damage (node, damage);
 				FungusResources.Instance.AddResources (5.0f);

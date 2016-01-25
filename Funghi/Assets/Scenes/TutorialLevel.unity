@@ -818,7 +818,7 @@ RectTransform:
   m_GameObject: {fileID: 76905571}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.90585786, y: 0.90585804, z: 0.90585804}
   m_Children:
   - {fileID: 1521826368}
   - {fileID: 1687932955}
@@ -826,7 +826,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: -51.1}
+  m_AnchoredPosition: {x: 2.8, y: -41}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &76905573
@@ -1993,11 +1993,11 @@ RectTransform:
   - {fileID: 684063423}
   m_Father: {fileID: 634838528}
   m_RootOrder: 2
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -6.1, y: 383.4}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -3.7, y: -2.6}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &131289699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3306,7 +3306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonName: 5
   isSelected: 0
-  isUnlocked: 0
+  isUnlocked: 1
 --- !u!1 &225895463
 GameObject:
   m_ObjectHideFlags: 0
@@ -5738,14 +5738,14 @@ RectTransform:
   m_GameObject: {fileID: 386358109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.90585786, y: 0.90585804, z: 0.90585804}
   m_Children:
   - {fileID: 643047978}
   m_Father: {fileID: 634838528}
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 47.6, y: -24.2}
+  m_AnchoredPosition: {x: 44.6, y: -12}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &386358111
@@ -8977,7 +8977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonName: 6
   isSelected: 0
-  isUnlocked: 0
+  isUnlocked: 1
 --- !u!1 &606816016
 GameObject:
   m_ObjectHideFlags: 0
@@ -15895,7 +15895,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonName: 2
   isSelected: 0
-  isUnlocked: 0
+  isUnlocked: 1
 --- !u!1001 &1120539105
 Prefab:
   m_ObjectHideFlags: 0
@@ -17257,14 +17257,14 @@ RectTransform:
   m_GameObject: {fileID: 1271525845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.90585786, y: 0.90585804, z: 0.90585804}
   m_Children:
   - {fileID: 1687224129}
   m_Father: {fileID: 634838528}
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.19995117, y: 0.7000122}
+  m_AnchoredPosition: {x: 1, y: 6}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1271525847
@@ -21613,7 +21613,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 58.55, y: 30}
+  m_SizeDelta: {x: 35.71, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1687224130
 MonoBehaviour:
@@ -21892,6 +21892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ground: {fileID: 1748831980}
+  nodeCost: 5
   camClampComponent: {fileID: 1695140345}
   spores: {fileID: 1769867367}
   selectedTint: {r: 0.43137255, g: 0.56078434, b: 0.2627451, a: 1}
@@ -23254,14 +23255,14 @@ RectTransform:
   m_GameObject: {fileID: 1775961905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.90585786, y: 0.90585804, z: 0.90585804}
   m_Children:
   - {fileID: 1657275766}
   m_Father: {fileID: 634838528}
   m_RootOrder: 5
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: 55.6}
+  m_AnchoredPosition: {x: 1, y: 53}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1775961907

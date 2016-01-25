@@ -21,6 +21,8 @@ public class GameInput: MonoBehaviour
 
 	public Renderer ground;
 
+	public float nodeCost;
+
 	[SerializeField] ClampCamera camClampComponent;
 
 
@@ -120,6 +122,7 @@ public class GameInput: MonoBehaviour
 
 				if (touches [0].phase == TouchPhase.Ended && canBuildNode) {
 					EndBuild ();
+					FungusResources.Instance.SubResources (nodeCost);
 				}
 
 			}
@@ -261,6 +264,7 @@ public class GameInput: MonoBehaviour
 
 				if (Input.GetMouseButtonUp (0) && canBuildNode) {
 					EndBuild ();
+					FungusResources.Instance.SubResources (nodeCost);
 				}
 
 			}

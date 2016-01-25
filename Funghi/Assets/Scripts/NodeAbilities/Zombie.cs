@@ -70,7 +70,6 @@ namespace NodeAbilities
 
 		private void InfluenceEnemiesInArea (FungusNode node, Vector3 rotatedVector)
 		{
-			
 			Vector3 dir = Vector3.Normalize (rotatedVector);
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
 			int i = 0;
@@ -82,14 +81,12 @@ namespace NodeAbilities
 					if (h.gameObject.tag.Equals ("Citizen")) {
 						h.SetBehaviour (zombieIntelligence);
 						h.TriggerBehaviour ("AttachToNode", node);
-						Debug.Log ("Zombified a Human");
 						h.gameObject.tag = "Zombie";
 					}
 				}
 				i++;
 				tempVector = dir * (i * influenceRadius);
 			}
-
 		}
 	}
 }

@@ -7,6 +7,7 @@ public class FungusNode : Entity
 {
 	bool isActive;
 
+
 	public bool IsActive {
 		get { return isActive; }
 		set {
@@ -18,6 +19,7 @@ public class FungusNode : Entity
 	}
 
 	float attackTimer;
+
 	[Header ("Materials & Sprites")]
 	public Material matActive;
 	public Material matInactive;

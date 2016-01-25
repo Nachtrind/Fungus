@@ -1,40 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &153816
+--- !u!1 &150168
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 492530}
-  - 198: {fileID: 19864808}
-  - 199: {fileID: 19986362}
+  - 4: {fileID: 426010}
+  - 198: {fileID: 19862452}
+  - 199: {fileID: 19901172}
   m_Layer: 0
-  m_Name: ZombieSpores
+  m_Name: GrowthSpores
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &492530
+--- !u!4 &426010
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153816}
+  m_GameObject: {fileID: 150168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.961707, y: 22.177734, z: -6.8408985}
+  m_LocalPosition: {x: -2.776792, y: 0.00000067155673, z: -3.0756173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!198 &19864808
+--- !u!198 &19862452
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153816}
+  m_GameObject: {fileID: 150168}
   serializedVersion: 2
   lengthInSec: 5
   startDelay:
@@ -239,7 +239,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4291646617
+        rgba: 4282693351
       minMaxState: 0
     startSize:
       scalar: 1
@@ -1523,12 +1523,12 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!199 &19986362
+--- !u!199 &19901172
 ParticleSystemRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153816}
+  m_GameObject: {fileID: 150168}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1570,20 +1570,8 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: moveWithTransform
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.startColor.maxColor.rgba
-      value: 4291646617
-      objectReference: {fileID: 0}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 153816}
+  m_RootGameObject: {fileID: 150168}
   m_IsPrefabParent: 1

@@ -46,10 +46,9 @@ public class FungusResources : MonoBehaviour
 	{
 		CurrentResources = startResources;
 		MaxResources = CurrentResources;
-	    Debug.Log("Die folgende Zeile im Code wirft eine nullref");
-        /*
-		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
-        */
+		resourceDisplay = GameObject.Find ("ResourceCount").GetComponent<Text> ();
+		resourceDisplay.text = CurrentResources.ToString ();
+
 	}
 	
 	// Update is called once per frame
@@ -66,14 +65,14 @@ public class FungusResources : MonoBehaviour
 			MaxResources = CurrentResources;
 		}
 
-//		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 
 	public void SubResources (float _toSub)
 	{
 		CurrentResources -= _toSub;
 
-		//resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
 	}
 
 

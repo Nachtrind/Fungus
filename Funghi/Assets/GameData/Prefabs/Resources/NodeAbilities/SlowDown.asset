@@ -20,3 +20,4 @@ MonoBehaviour:
   tickRate: 0.5
   slowDownSpeed: 0.3
   slowDownTime: 3
+  attackAnimObjPrefab: {fileID: 181464, guid: 1c0836f10c8cfb54ea4ab46da70839c6, type: 2}
