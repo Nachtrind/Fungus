@@ -21,7 +21,7 @@ public class GameInput: MonoBehaviour
 
 	public Renderer ground;
 
-    [SerializeField] ClampCamera camClampComponent;
+	[SerializeField] ClampCamera camClampComponent;
 
 
 	public ParticleSystem spores;
@@ -318,8 +318,8 @@ public class GameInput: MonoBehaviour
 						cam.transform.position += new Vector3 (x, 0, z);
 
 						lastMousePos = current;
-					    camClampComponent.ClampCamViewPos(cam);
-					    //ClampCamPos ();
+						camClampComponent.ClampCamViewPos (cam);
+						//ClampCamPos ();
 					} 
 				}
 			}
@@ -493,7 +493,7 @@ public class GameInput: MonoBehaviour
 		switch (currentSelection.buttonName) {
 		case ButtonName.ButtonName.BeatNEat:
 			{
-				fungusNode.Specialize (FungusResources.Instance.beatneat);
+				fungusNode.Specialize (Instantiate (FungusResources.Instance.beatneat) as NodeAbility);
 				break;
 			}
 		case ButtonName.ButtonName.ScentNode:

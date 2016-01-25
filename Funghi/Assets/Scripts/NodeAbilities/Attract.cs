@@ -9,12 +9,29 @@ namespace NodeAbilities
 	public class Attract: NodeAbility
 	{
 		public GameObject attractSpores;
-		public Intelligence attract;
 		GameObject spores;
+		public GameObject sporeAnimObjPrefab;
+		GameObject sporeAnimObj;
+		Animator sporeAnim;
 		public float influenceRadius;
 
 		public override void Execute (FungusNode node)
 		{
+			//Create Animation Sprite Object
+			if (sporeAnimObj == null) {
+				sporeAnimObj = Instantiate (sporeAnimObjPrefab, node.transform.position, node.transform.rotation) as GameObject;
+				sporeAnimObj.transform.SetParent (node.transform);
+				sporeAnimObj.transform.localPosition = new Vector3 (0, 0.57f, 0);
+				sporeAnimObj.transform.localRotation = Quaternion.Euler (90.0f, 0, 0);
+			}
+
+			if (sporeAnim == null) {
+				sporeAnim = sporeAnimObj.GetComponent<Animator> ();
+			}
+
+			sporeAnim.SetTrigger ("Attack");
+
+			//Particles
 			if (spores == null) {
 				spores = Instantiate (attractSpores, new Vector3 (node.transform.position.x, node.transform.position.y + 0.5f, node.transform.position.z), Quaternion.Euler (Vector3.zero)) as GameObject;
 				spores.transform.parent = node.transform;
@@ -46,6 +63,7 @@ namespace NodeAbilities
 				ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
 				em.enabled = false;
 			}
+			GameObject.Destroy (sporeAnimObj);
 
 		}
 
@@ -55,19 +73,14 @@ namespace NodeAbilities
 			Vector3 dir = Vector3.Normalize (rotatedVector);
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
 			int i = 0;
-#pragma warning disable 0219
 			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
 				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
-				//TODO: Change Behaviour of Enemies
 				foreach (Human h in enemiesInRadius) {
 					h.TriggerBehaviour ("Lure", node);
 				}
 				i++;
 				tempVector = dir * (i * influenceRadius);
 			}
-#pragma warning restore 0219
-
-
 		}
 	}
 }

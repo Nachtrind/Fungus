@@ -21,12 +21,6 @@ public class FungusNode : Entity
 	[Header ("Materials & Sprites")]
 	public Material matActive;
 	public Material matInactive;
-	//public Sprite beatneat;
-	//public Sprite attract;
-	//public Sprite slowdown;
-	//public Sprite speedup;
-	//public Sprite zombie;
-	//public Sprite growth;
 	SpriteRenderer abilityDisplay;
 
 	public event System.Action<bool> OnToggleActive;
@@ -38,6 +32,7 @@ public class FungusNode : Entity
 		IsActive = false;
 		attackTimer = 0.0f;
 		abilityDisplay = GetComponentInChildren<SpriteRenderer> ();
+		ability = Instantiate (ability);
 	}
 
 	protected override void Cleanup ()
@@ -115,40 +110,6 @@ public class FungusNode : Entity
 		ability.StopExecution (this);
 		ability = Instantiate (newAbility);
 		abilityDisplay.color = ability.color;
-
-		//switch (newAbility.name) {
-		//case "beatneat":
-		//	{
-		//		Debug.Log ("BEATNEAT");
-		//		abilityDisplay.sprite = beatneat;
-		//		break;
-		//	}
-		//case "attract":
-		//	{
-		//		abilityDisplay.sprite = attract;
-		//		break;
-		//	}
-		//case "slowdown":
-		//	{
-		//		abilityDisplay.sprite = slowdown;
-		//		break;
-		//	}
-		//case "zombie":
-		//	{
-		//		abilityDisplay.sprite = zombie;
-		//		break;
-		//	}
-		//case "speedup":
-		//	{
-		//		abilityDisplay.sprite = speedup;
-		//		break;
-		//	}
-		//case "growth":
-		//	{
-		//		abilityDisplay.sprite = growth;
-		//		break;
-		//	}
-		//}
 
 	}
 

@@ -429,7 +429,7 @@ GameObject:
   - 122: {fileID: 12201540}
   m_Layer: 0
   m_Name: NormalCitizen
-  m_TagString: Untagged
+  m_TagString: Citizen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3133,6 +3133,10 @@ Prefab:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 400022, guid: 1bd4718d7e6b91543ba68920c4bfbacf, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Citizen
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 178984}

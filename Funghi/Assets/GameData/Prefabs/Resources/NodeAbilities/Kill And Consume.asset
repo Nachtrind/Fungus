@@ -19,3 +19,4 @@ MonoBehaviour:
   cost: 0
   tickRate: 1
   damage: 5
+  attackAnimObjPrefab: {fileID: 108858, guid: f21b8cc28b434a04fbc4a86c689020ad, type: 2}
