@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef402280a3d32b49999db9550152f4a, type: 3}
   m_Name: Police
   m_EditorClassIdentifier: 
-  Classification: 2
+  Classification: 3
   states:
   - {fileID: 11452240}
   - {fileID: 11408666}

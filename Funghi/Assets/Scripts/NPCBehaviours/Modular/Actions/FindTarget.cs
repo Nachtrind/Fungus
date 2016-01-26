@@ -56,6 +56,7 @@ namespace ModularBehaviour
         {
 #if UNITY_EDITOR
             Type = (TargetType)EditorGUILayout.EnumPopup("Type:", Type);
+            targetClassification = (IntelligenceType) EditorGUILayout.EnumPopup("Classification:", targetClassification);
             range = EditorGUILayout.FloatField("Range:", range);
             checkLOS = EditorGUILayout.Toggle("Check LOS:", checkLOS);
             saveVar = EditorGUILayout.Toggle("Save", saveVar);

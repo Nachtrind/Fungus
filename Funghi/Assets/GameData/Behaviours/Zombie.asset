@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef402280a3d32b49999db9550152f4a, type: 3}
   m_Name: Zombie
   m_EditorClassIdentifier: 
-  Classification: 4
+  Classification: 5
   states:
   - {fileID: 11467116}
   - {fileID: 11403230}
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: FindTarget
   m_EditorClassIdentifier: 
   Type: 0
-  targetClassification: 0
+  targetClassification: 1
   range: 0.5
   checkLOS: 1
   saveVar: 1
