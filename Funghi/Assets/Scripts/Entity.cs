@@ -40,6 +40,7 @@ public abstract class Entity : MonoBehaviour
 
 	public void Damage (Entity attacker, int amount)
 	{
+	    TriggerAnimator("Attacked");
 		SubtractHealth (amount);
 		if (IsDead) {
 			PlaySound (SoundSet.ClipType.Death);
@@ -131,8 +132,7 @@ public abstract class Entity : MonoBehaviour
 	AudioSource audioSource;
 	[SerializeField]
 	[Header("Sound")]
-	SoundSet
-		soundSet;
+	SoundSet soundSet;
     
 	public bool PlaySound (SoundSet.ClipType type)
 	{
@@ -264,8 +264,18 @@ public abstract class Entity : MonoBehaviour
 	{
 	}
 
+    #region Animator
+    public void TriggerAnimator(string triggerID)
+    {
+        if (mover)
+        {
+            mover.TriggerAnimator(triggerID);
+        }
+    }
+    #endregion
+
     #region Movement
-	EntityMover mover;
+    EntityMover mover;
 
 	public EntityMover.MoveResult MoveTo (Vector3 position)
 	{

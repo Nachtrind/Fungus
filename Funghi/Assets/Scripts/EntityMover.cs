@@ -25,10 +25,51 @@ public class EntityMover: MonoBehaviour
     Vector3 lookDirection;
     #endregion
 
+    #region Animator
+    [SerializeField]
+    Animator anim;
+
+    int speedHash;
+
+    const float NotMoving = 0f;
+    const float Moving = 0.5f;
+    const float Running = 1f;
+    #endregion
+
+
+
     void Awake()
     {
+        if (!anim)
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
+        if (anim)
+        {
+            InitializeAnimator();
+        }
         seeker = GetComponent<Seeker>();
         lookDirection = transform.forward;
+    }
+
+    void InitializeAnimator()
+    {
+        speedHash = Animator.StringToHash("Speed");
+        anim.logWarnings = false;
+    }
+
+    void SetAnimatorSpeed(float normalizedValue)
+    {
+        if (anim)
+        {
+            anim.SetFloat(speedHash, normalizedValue);
+        }
+    }
+
+    public void TriggerAnimator(string triggerID)
+    {
+        if (!anim) return;
+        anim.SetTrigger(triggerID);
     }
 
     public void StopMovement()
@@ -36,6 +77,7 @@ public class EntityMover: MonoBehaviour
         movementType = MoveTypes.Direct;
         pathToTarget = new List<Vector3> { transform.position };
         moveResult = MoveResult.ReachedTarget;
+        SetAnimatorSpeed(NotMoving);
     }
 
     /// <summary>
@@ -107,7 +149,7 @@ public class EntityMover: MonoBehaviour
             return false;
         }
         moveResult = MoveResult.Preparing;
-        seeker.StartPath(transform.position, lastRequestedMoveTargetPosition, OnPathCompleted);
+        seeker.StartPath(transform.position, position, OnPathCompleted);
         return true;
     }
 
@@ -139,6 +181,7 @@ public class EntityMover: MonoBehaviour
         {
             pathToTarget.Clear();
             moveResult = MoveResult.TargetNotReachable;
+            SetAnimatorSpeed(NotMoving);
             return;
         }
         switch (extraPathSmoothing)
@@ -176,12 +219,14 @@ public class EntityMover: MonoBehaviour
         }
         if (pathToTarget.Count > 0)
         {
+            SetAnimatorSpeed(Moving);
             if (AstarMath.SqrMagnitudeXZ(pathToTarget[0], transform.position) <= targetReachDistance)
             {
                 pathToTarget.RemoveAt(0);
                 if (pathToTarget.Count == 0)
                 {
                     moveResult = MoveResult.ReachedTarget;
+                    SetAnimatorSpeed(NotMoving);
                     return;
                 }
                 LookAt(pathToTarget[0]);

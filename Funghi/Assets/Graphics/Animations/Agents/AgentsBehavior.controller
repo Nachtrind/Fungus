@@ -8,6 +8,12 @@ AnimatorController:
   m_Name: AgentsBehavior
   serializedVersion: 5
   m_AnimatorParameters:
+  - m_Name: Speed
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   - m_Name: OnDamage
     m_Type: 9
     m_DefaultFloat: 0
@@ -22,12 +28,6 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: Zombie
     m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: Speed
-    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0

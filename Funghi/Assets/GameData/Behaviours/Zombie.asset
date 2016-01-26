@@ -237,7 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: Zombiefied
   m_EditorClassIdentifier: 
-  enterActions: []
+  enterActions:
+  - {fileID: 11482416}
   updateActions:
   - {fileID: 11469322}
   - {fileID: 11464694}
@@ -282,6 +283,18 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11467116}
+--- !u!114 &11482416
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91cba1b1e56c97e4aa6d51c774ce54b4, type: 3}
+  m_Name: TriggerAnimator
+  m_EditorClassIdentifier: 
+  triggerID: Attack
 --- !u!114 &11483268
 MonoBehaviour:
   m_ObjectHideFlags: 3

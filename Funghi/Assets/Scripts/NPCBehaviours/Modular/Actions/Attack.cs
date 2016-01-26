@@ -24,6 +24,7 @@ namespace ModularBehaviour
                 {
                     if (!target.isAttackable) { return ActionResult.Failed; }
                     target.Damage(controller.Owner, (int)(damagePerAttack * deltaTime));
+                    controller.Owner.TriggerAnimator("Attack");
                     return ActionResult.Success;
                 }
                 lastAttack = Time.time;
