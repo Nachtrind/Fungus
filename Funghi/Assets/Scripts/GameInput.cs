@@ -132,7 +132,7 @@ public class GameInput: MonoBehaviour
 			////////////////////
 			if (currentState == InputState.SkillMode) {	
 				if (touches [0].phase == TouchPhase.Ended) {
-					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.4f);
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.55f);
 					if (nodesInRadius.Count > 0) {
 						if (currentSelection != null) {
 							this.SpecializeNode (GameWorld.Instance.GetNearestFungusNode (touchWorldPoint));
@@ -169,15 +169,11 @@ public class GameInput: MonoBehaviour
 					///////////////
 					if (touches [0].phase == TouchPhase.Moved) {
 						Vector2 touchMovement = touches [0].deltaPosition * 0.02f;
-						//Debug.Log (touchMovement);
-						float posX = touchMovement.x * -moveSpeedX * touches [0].deltaTime;
 
+						float posX = touchMovement.x * -moveSpeedX * touches [0].deltaTime;
 						float posZ = touchMovement.y * -moveSpeedZ * touches [0].deltaTime;
 
-						//Debug.Log (cam.transform.position.x);
 						cam.transform.position += new Vector3 (posX, 0, posZ);
-						//Debug.Log (cam.transform.position.x);
-						//ClampCamPos ();
 					} 
 
 					if (touches [0].phase == TouchPhase.Began) {
@@ -196,10 +192,6 @@ public class GameInput: MonoBehaviour
 						lastMousePos = current;
 						//ClampCamPos ();
 					} 
-
-
-
-
 				}
 			}
 		}
@@ -266,7 +258,6 @@ public class GameInput: MonoBehaviour
 					EndBuild ();
 					FungusResources.Instance.SubResources (nodeCost);
 				}
-
 			}
 		}
 
@@ -595,16 +586,6 @@ public class GameInput: MonoBehaviour
 			pathToCursorLength = float.PositiveInfinity;
 		}
 
-	}
-
-
-	void OnDrawGizmos ()
-	{
-		Gizmos.color = Color.cyan;
-		Gizmos.DrawSphere (new Vector3 (0, 0, lowerBorder), 0.5f);
-		Gizmos.DrawSphere (new Vector3 (0, 0, upperBorder), 0.5f);
-		Gizmos.DrawSphere (new Vector3 (rightBorder, 0, 0), 0.5f);
-		Gizmos.DrawSphere (new Vector3 (leftBorder, 0, 0), 0.5f);
 	}
 
 }

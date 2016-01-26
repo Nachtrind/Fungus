@@ -40,7 +40,7 @@ Material:
       data:
         first:
           name: _HealthMarginSize
-        second: 0.1
+        second: 0.305
       data:
         first:
           name: _HP
