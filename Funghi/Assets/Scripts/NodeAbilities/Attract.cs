@@ -74,7 +74,7 @@ namespace NodeAbilities
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
 			int i = 0;
 			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
-				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
+				List<Human> enemiesInRadius = GameWorld.Instance.GetHumans (node.transform.position + tempVector, influenceRadius);
 				foreach (Human h in enemiesInRadius) {
 					h.TriggerBehaviour ("Lure", node);
 				}

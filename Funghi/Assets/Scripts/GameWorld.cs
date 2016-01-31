@@ -363,10 +363,10 @@ public class GameWorld : MonoBehaviour
 		}
 	}
 
-	public List<Human> GetEnemies (Vector3 position, float radius, Human except = null)
+	public List<Human> GetHumans (Vector3 position, float radius, Human except = null)
 	{
-		List<Human> rangeQuery = new List<Human> ();
-		for (int i = 0; i < humans.Count; i++) {
+		var rangeQuery = new List<Human> ();
+		for (var i = 0; i < humans.Count; i++) {
 			if (except == humans [i]) {
 				continue;
 			}
@@ -376,6 +376,39 @@ public class GameWorld : MonoBehaviour
 		}
 		return rangeQuery;
 	}
+
+    public List<Human> GetHumans(Vector3 position, float radius, IntelligenceType filter)
+    {
+        var rangeQuery = new List<Human>();
+        for (var i = 0; i < humans.Count; i++)
+        {
+            if (!humans[i].Behaviour)
+            {
+                continue;
+            }
+            var humanClassification = humans[i].Behaviour.Classification;
+            if (filter == IntelligenceType.Human)
+            {
+                if (humanClassification != IntelligenceType.Human || humanClassification != IntelligenceType.Citizen ||
+                    humanClassification != IntelligenceType.Police)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if (humanClassification != filter)
+                {
+                    continue;
+                }
+            }
+            if (AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position) <= radius * radius)
+            {
+                rangeQuery.Add(humans[i]);
+            }
+        }
+        return rangeQuery;
+    } 
 
 	public Human GetNearestHuman (Vector3 position)
 	{

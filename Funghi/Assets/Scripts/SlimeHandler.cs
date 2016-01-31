@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ModularBehaviour;
 using UnityEngine;
 using Pathfinding;
 
@@ -9,6 +10,11 @@ public class SlimeHandler: MonoBehaviour
     public float slimeUpdateInterval = 0.5f;
     public bool smooth = false;
     float lastUpdate;
+
+    [Tooltip("performancewise only works when growing (not on existing)")]
+    public bool killHumans = true;
+
+    public bool citizensOnly = true;
 
     List<SlimePath> slimePaths = new List<SlimePath>();
     StandardGameSettings sgs;
@@ -103,6 +109,12 @@ public class SlimeHandler: MonoBehaviour
             switch (result.state)
             {
                 default:
+                    if (killHumans)
+                    {
+                        KillHumansInSlimeRadius(slimePaths[i].a??slimePaths[i].b, result.point);
+                        //Debug.Log(result.state);
+                        //Debug.DrawRay(result.point, Vector3.up, Color.red, 2f);
+                    }
                     for (int v = 0; v < slimePaths[i].path.Count; v++)
                     {
                         pendingAdds.Add(GetUpdateObject(slimePaths[i].path[v], sgs.connectionSlimeWidth, true));
@@ -134,9 +146,20 @@ public class SlimeHandler: MonoBehaviour
     List<GraphUpdateObject> pendingAdds = new List<GraphUpdateObject>();
     List<GraphUpdateObject> pendingRemoves = new List<GraphUpdateObject>();
 
+    void KillHumansInSlimeRadius(FungusNode growSource, Vector3 point)
+    {
+        var humans = citizensOnly
+            ? GameWorld.Instance.GetHumans(point, StandardGameSettings.Get.connectionSlimeWidth*0.75f, IntelligenceType.Citizen)
+            : GameWorld.Instance.GetHumans(point, StandardGameSettings.Get.connectionSlimeWidth*0.75f, IntelligenceType.Human);
+        for (var i = 0; i < humans.Count; i++)
+        {
+            humans[i].Kill(growSource);
+        }
+    }
+
     public void QueueSlimeUpdate(Vector3 point, float size, bool state)
     {
-        if (state == true)
+        if (state)
         {
             pendingAdds.Add(GetUpdateObject(point, size, true));
         }

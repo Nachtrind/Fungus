@@ -71,7 +71,7 @@ namespace NodeAbilities
 
 			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
 
-				List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position + tempVector, influenceRadius);
+				List<Human> enemiesInRadius = GameWorld.Instance.GetHumans (node.transform.position + tempVector, influenceRadius);
 				foreach (Human h in enemiesInRadius) {
 					if (h.gameObject.tag.Equals ("Citizen")) {
 						h.SetBehaviour (growthIntelligence);

@@ -26,7 +26,7 @@ namespace NodeAbilities
 				attackAnim = attackAnimObj.GetComponent<Animator> ();
 			}
 
-			List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position, radius);
+			List<Human> enemiesInRadius = GameWorld.Instance.GetHumans (node.transform.position, radius);
 			if (enemiesInRadius.Count > 0) {
 				attackAnim.SetTrigger ("Attack");
 			}
