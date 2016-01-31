@@ -16,6 +16,8 @@ public class SlimeHandler: MonoBehaviour
 
     public bool citizensOnly = true;
 
+    public bool explodePoliceCars = true;
+
     List<SlimePath> slimePaths = new List<SlimePath>();
     StandardGameSettings sgs;
 
@@ -112,8 +114,10 @@ public class SlimeHandler: MonoBehaviour
                     if (killHumans)
                     {
                         KillHumansInSlimeRadius(slimePaths[i].a??slimePaths[i].b, result.point);
-                        //Debug.Log(result.state);
-                        //Debug.DrawRay(result.point, Vector3.up, Color.red, 2f);
+                    }
+                    if (explodePoliceCars)
+                    {
+                        ExplodePoliceCarsInSlimeRadius(result.point);
                     }
                     for (int v = 0; v < slimePaths[i].path.Count; v++)
                     {
@@ -154,6 +158,15 @@ public class SlimeHandler: MonoBehaviour
         for (var i = 0; i < humans.Count; i++)
         {
             humans[i].Kill(growSource);
+        }
+    }
+
+    void ExplodePoliceCarsInSlimeRadius(Vector3 point)
+    {
+        var policeCars = GameWorld.Instance.GetPoliceCars(point, StandardGameSettings.Get.connectionSlimeWidth * 0.75f);
+        for (var i = 0; i < policeCars.Count; i++)
+        {
+            policeCars[i].Explode();
         }
     }
 

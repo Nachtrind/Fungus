@@ -522,6 +522,19 @@ public class GameWorld : MonoBehaviour
 		return (node.transform.position - sourcePoint).normalized;
 	}
 
+    public List<PoliceCar> GetPoliceCars(Vector3 position, float radius)
+    {
+        var rangeQuery = new List<PoliceCar>();
+        for (int i = 0; i < policeCars.Count; i++)
+        {
+            if (AstarMath.SqrMagnitudeXZ(policeCars[i].transform.position, position) <= radius*radius)
+            {
+                rangeQuery.Add(policeCars[i]);
+            }
+        }
+        return rangeQuery;
+    } 
+
 	#endregion
 
 	#region Slime
