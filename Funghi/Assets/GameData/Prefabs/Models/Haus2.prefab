@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417094}
   - 212: {fileID: 21267490}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 476172}
   - 212: {fileID: 21250138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,8 @@ GameObject:
   - 4: {fileID: 421964}
   - 33: {fileID: 3393996}
   - 23: {fileID: 2395272}
-  m_Layer: 0
+  - 64: {fileID: 6488136}
+  m_Layer: 8
   m_Name: HausKerstin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +58,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 414266}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Haus2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409858}
   - 212: {fileID: 21201376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +90,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 415438}
   - 212: {fileID: 21292814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +106,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 424184}
   - 212: {fileID: 21240558}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +122,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 405452}
   - 212: {fileID: 21276588}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +138,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 456596}
   - 212: {fileID: 21272752}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,9 +176,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142938}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5484614, y: 0.552, z: -5.09}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.014908398, z: 0, w: 0.99988896}
+  m_LocalPosition: {x: 4.714, y: 1.026, z: 1.057}
+  m_LocalScale: {x: 0.76051337, y: 0.76051337, z: 0.76051337}
   m_Children:
   - {fileID: 421964}
   - {fileID: 409858}
@@ -292,6 +293,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 125630}
+  m_Mesh: {fileID: 4300000, guid: 71eed8a8f23db9d44a88319965bc846a, type: 3}
+--- !u!64 &6488136
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: 71eed8a8f23db9d44a88319965bc846a, type: 3}
 --- !u!212 &21201376
 SpriteRenderer:
@@ -509,7 +522,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142938}

@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 407290}
   - 212: {fileID: 21238148}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438946}
   - 212: {fileID: 21274040}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 482308}
   - 212: {fileID: 21287028}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,8 @@ GameObject:
   - 4: {fileID: 426730}
   - 33: {fileID: 3373440}
   - 23: {fileID: 2343956}
-  m_Layer: 0
+  - 64: {fileID: 6427250}
+  m_Layer: 8
   m_Name: HausKerstin1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +75,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 470692}
   - 212: {fileID: 21253744}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +92,8 @@ GameObject:
   - 4: {fileID: 476314}
   - 33: {fileID: 3337968}
   - 23: {fileID: 2324370}
-  m_Layer: 0
+  - 64: {fileID: 6406220}
+  m_Layer: 8
   m_Name: HausKerstin1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +109,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 421662}
   - 212: {fileID: 21221986}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +125,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 460138}
   - 212: {fileID: 21209380}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1 (2)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +141,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 463988}
   - 212: {fileID: 21214296}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +158,8 @@ GameObject:
   - 4: {fileID: 473484}
   - 33: {fileID: 3323016}
   - 23: {fileID: 2307750}
-  m_Layer: 0
+  - 64: {fileID: 6498636}
+  m_Layer: 8
   m_Name: HausKerstin1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +175,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 453794}
   - 212: {fileID: 21245460}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +192,7 @@ GameObject:
   - 4: {fileID: 487006}
   - 33: {fileID: 3320234}
   - 23: {fileID: 2371428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pfahl (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +208,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 427956}
   - 212: {fileID: 21232176}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +223,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 449534}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Haus4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +239,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 480124}
   - 212: {fileID: 21270336}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +255,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430950}
   - 212: {fileID: 21274166}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +271,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 471498}
   - 212: {fileID: 21260592}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +287,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 495360}
   - 212: {fileID: 21255768}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +304,8 @@ GameObject:
   - 4: {fileID: 421504}
   - 33: {fileID: 3356748}
   - 23: {fileID: 2377022}
-  m_Layer: 0
+  - 64: {fileID: 6463276}
+  m_Layer: 8
   m_Name: HausKerstin1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +321,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442332}
   - 212: {fileID: 21229360}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +337,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 419638}
   - 212: {fileID: 21208582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +353,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 461032}
   - 212: {fileID: 21201740}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +369,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 410298}
   - 212: {fileID: 21259372}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +385,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442650}
   - 212: {fileID: 21272968}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +402,7 @@ GameObject:
   - 4: {fileID: 451242}
   - 33: {fileID: 3303222}
   - 23: {fileID: 2372538}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pfahl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +418,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 461792}
   - 212: {fileID: 21250232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1 (2)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +434,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 408830}
   - 212: {fileID: 21233870}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,9 +599,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151830}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 7.918769, y: 1.023, z: -8.837004}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalRotation: {x: 0, y: 0.3675951, z: 0, w: -0.929986}
+  m_LocalPosition: {x: 8.542, y: 1.2893, z: 5.078}
+  m_LocalScale: {x: 0.9251347, y: 0.9251349, z: 0.9251348}
   m_Children:
   - {fileID: 451242}
   - {fileID: 487006}
@@ -984,6 +988,54 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 106668}
+  m_Mesh: {fileID: 4300000, guid: fbf670876cbc5fe49aa956c550b11ce2, type: 3}
+--- !u!64 &6406220
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112914}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: fbf670876cbc5fe49aa956c550b11ce2, type: 3}
+--- !u!64 &6427250
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106668}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: fbf670876cbc5fe49aa956c550b11ce2, type: 3}
+--- !u!64 &6463276
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: fbf670876cbc5fe49aa956c550b11ce2, type: 3}
+--- !u!64 &6498636
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132224}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: fbf670876cbc5fe49aa956c550b11ce2, type: 3}
 --- !u!212 &21201740
 SpriteRenderer:
@@ -1591,7 +1643,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151830}

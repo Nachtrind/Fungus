@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 404284}
   - 212: {fileID: 21239024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,8 @@ GameObject:
   - 4: {fileID: 449672}
   - 33: {fileID: 3353412}
   - 23: {fileID: 2387952}
-  m_Layer: 0
+  - 64: {fileID: 6460108}
+  m_Layer: 8
   m_Name: HausKerstin3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +43,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 479624}
   - 212: {fileID: 21236662}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +59,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 411376}
   - 212: {fileID: 21221534}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +76,8 @@ GameObject:
   - 4: {fileID: 400670}
   - 33: {fileID: 3378586}
   - 23: {fileID: 2319210}
-  m_Layer: 0
+  - 64: {fileID: 6452762}
+  m_Layer: 8
   m_Name: HausKerstin3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +93,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 475360}
   - 212: {fileID: 21256794}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +109,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 498680}
   - 212: {fileID: 21241346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +125,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438556}
   - 212: {fileID: 21222376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +141,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 498604}
   - 212: {fileID: 21249074}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1 (2)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +156,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 420370}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Haus3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +172,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 414980}
   - 212: {fileID: 21285626}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +188,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 458794}
   - 212: {fileID: 21208372}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +204,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 433252}
   - 212: {fileID: 21207736}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +220,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 473092}
   - 212: {fileID: 21268304}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +236,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417098}
   - 212: {fileID: 21258198}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +252,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 454392}
   - 212: {fileID: 21246736}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCr_1 (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +268,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 405898}
   - 212: {fileID: 21238436}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fenster (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +284,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 412226}
   - 212: {fileID: 21212364}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +301,8 @@ GameObject:
   - 4: {fileID: 486018}
   - 33: {fileID: 3334880}
   - 23: {fileID: 2367206}
-  m_Layer: 0
+  - 64: {fileID: 6421712}
+  m_Layer: 8
   m_Name: HausKerstin3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +319,8 @@ GameObject:
   - 4: {fileID: 400138}
   - 33: {fileID: 3343854}
   - 23: {fileID: 2380652}
-  m_Layer: 0
+  - 64: {fileID: 6437336}
+  m_Layer: 8
   m_Name: HausKerstin3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +336,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 452336}
   - 212: {fileID: 21219892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "T\xFCrSchr\xE4g 1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,9 +450,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140192}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.35716, y: 0.677, z: -5.1489167}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.30149728, z: 0, w: 0.9534671}
+  m_LocalPosition: {x: 6.9273, y: 1.1791, z: 4.8075}
+  m_LocalScale: {x: 0.70570266, y: 0.7057026, z: 0.70570266}
   m_Children:
   - {fileID: 454392}
   - {fileID: 498604}
@@ -742,6 +746,54 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 124656}
+  m_Mesh: {fileID: 4300000, guid: 1edf9622ea2341543a37b93365a9610f, type: 3}
+--- !u!64 &6421712
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192942}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 1edf9622ea2341543a37b93365a9610f, type: 3}
+--- !u!64 &6437336
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 1edf9622ea2341543a37b93365a9610f, type: 3}
+--- !u!64 &6452762
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124656}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 1edf9622ea2341543a37b93365a9610f, type: 3}
+--- !u!64 &6460108
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119770}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: 1edf9622ea2341543a37b93365a9610f, type: 3}
 --- !u!212 &21207736
 SpriteRenderer:
@@ -1229,7 +1281,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 140192}
