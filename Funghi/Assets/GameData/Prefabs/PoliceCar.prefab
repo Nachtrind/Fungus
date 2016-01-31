@@ -365,9 +365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14bf4d8f68407b6449de4be12ce25985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
+  BaseMoveSpeed: 0.4
   turnSpeed: 0.33
   extraPathSmoothing: 1
+  anim: {fileID: 0}
 --- !u!114 &11499180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2129,6 +2130,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BaseMoveSpeed
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -7,7 +7,7 @@ namespace NodeAbilities
 	[CreateAssetMenu (menuName = "Abilities/SlowDown")]
 	public class SlowDown: NodeAbility
 	{
-		public float slowDownSpeed;
+		public EntityMover.SpeedModType slowDownSpeed;
 		public float slowDownTime;
 
 		public GameObject attackAnimObjPrefab;
@@ -30,14 +30,15 @@ namespace NodeAbilities
 			attackAnim.SetTrigger ("Attack");
 
 			List<Human> enemiesInRadius = GameWorld.Instance.GetEnemies (node.transform.position, radius);
-			for (int i = 0; i < enemiesInRadius.Count; i++) {
-				enemiesInRadius [i].ChangeSpeed (slowDownSpeed, node, slowDownTime);
+			for (int i = 0; i < enemiesInRadius.Count; i++)
+			{
+			    enemiesInRadius[i].ApplySpeedMod(slowDownSpeed, node, slowDownTime);
 			}
 		}
 
 		public override void StopExecution (FungusNode node)
 		{
-			GameObject.Destroy (attackAnimObj);
+			Destroy (attackAnimObj);
 		}
 	}
 }

@@ -24,19 +24,8 @@ public abstract class Entity : MonoBehaviour
     public event System.Action<float, float> OnHealthChanged;
 
 	public bool isAttackable = true;
-	float originalSpeed;
-	bool isSpeedInfluenced;
-	float influencedTimer;
 
     public static bool showDebug = false;
-
-	//Speed influence by nodes
-	public void ChangeSpeed (float _speed, Entity _attacker, float _timeAmount)
-	{
-		mover.moveSpeed = _speed;
-		influencedTimer = _timeAmount;
-		isSpeedInfluenced = true;
-	}
 
 	public void Damage (Entity attacker, int amount)
 	{
@@ -79,8 +68,7 @@ public abstract class Entity : MonoBehaviour
 
     #region Behaviour
 	[SerializeField, ReadOnlyInInspector]
-	protected Intelligence
-		behaviour;
+	protected Intelligence behaviour;
 	/// <summary>
 	/// Direct access to the behaviour, used by the Spawner (for triggers use <seealso cref="TriggerBehaviour(string, object)"/>)
 	/// </summary>
@@ -207,9 +195,6 @@ public abstract class Entity : MonoBehaviour
 		audioSource.playOnAwake = false;
 		audioSource.loop = true;
 		OnAwake ();
-		if (mover != null) {
-			originalSpeed = GetComponent<EntityMover> ().moveSpeed;
-		}
 	}
 
 	void Start ()
@@ -226,18 +211,6 @@ public abstract class Entity : MonoBehaviour
 			behaviour.UpdateTick (delta);
 		}
 		OnUpdate (delta);
-
-
-		//checking for speed influences by nodes
-		if (isSpeedInfluenced) {
-			if (influencedTimer <= 0.0f) {
-				mover.moveSpeed = originalSpeed;
-				isSpeedInfluenced = false;
-			} else {
-				influencedTimer -= delta;
-			}
-		}
-
 	}
 
 	void OnDestroy ()
@@ -308,6 +281,28 @@ public abstract class Entity : MonoBehaviour
 			mover.StopMovement ();
 		}
 	}
+
+    /// <summary>
+    /// Applies a movement speed modifying effect, timeouts greater than 0 makes it so existing effects from the source are replaced by this new application
+    /// </summary>
+    /// <returns>the modifier id, can be used to revoke it manually</returns>
+    public int ApplySpeedMod(EntityMover.SpeedModType type, Entity source, float timeOut = -1)
+    {
+        if (!mover) return -1;
+        return mover.ApplySpeedMod(source, type, timeOut);
+    }
+
+    public void RevokeSpeedMod(int modID)
+    {
+        if (!mover) return;
+        mover.RevokeSpeedMod(modID);
+    }
+
+    public void RevokeAllSpeedMods(Entity owner)
+    {
+        if (!mover) return;
+        mover.RevokeAllSpeedMods(owner);
+    }
     
     #endregion
 

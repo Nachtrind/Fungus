@@ -59,6 +59,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11442780}
+  - {fileID: 11444062}
   updateActions:
   - {fileID: 11499998}
   - {fileID: 11438828}
@@ -115,6 +116,21 @@ MonoBehaviour:
   ifAction: {fileID: 11495406}
   thenAction: {fileID: 11499600}
   elseAction: {fileID: 0}
+--- !u!114 &11439960
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f63dcc9acfeaf4fb03fc0ce2a77186, type: 3}
+  m_Name: ModifySpeed
+  m_EditorClassIdentifier: 
+  type: 4
+  timeout: -1
+  saveAsVar: 0
+  varName: SpeedMod
 --- !u!114 &11442258
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -139,6 +155,17 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
+  m_EditorClassIdentifier: 
+--- !u!114 &11444062
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cad1d33fd224d4fbd024d6ed7fed63, type: 3}
+  m_Name: RemoveOwnedSpeedMods
   m_EditorClassIdentifier: 
 --- !u!114 &11451364
 MonoBehaviour:
@@ -239,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11482416}
+  - {fileID: 11439960}
   updateActions:
   - {fileID: 11469322}
   - {fileID: 11464694}

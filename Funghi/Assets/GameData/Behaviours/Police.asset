@@ -124,6 +124,7 @@ MonoBehaviour:
   - {fileID: 11460532}
   - {fileID: 11409164}
   - {fileID: 11459540}
+  - {fileID: 11447000}
   updateActions:
   - {fileID: 11479330}
   - {fileID: 11480458}
@@ -212,6 +213,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
   m_Name: StopMovement
   m_EditorClassIdentifier: 
+--- !u!114 &11420594
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f63dcc9acfeaf4fb03fc0ce2a77186, type: 3}
+  m_Name: ModifySpeed
+  m_EditorClassIdentifier: 
+  type: 3
+  timeout: -1
+  saveAsVar: 0
+  varName: SpeedMod
 --- !u!114 &11421118
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -361,6 +377,21 @@ MonoBehaviour:
   m_Name: GotoState
   m_EditorClassIdentifier: 
   newState: {fileID: 11452240}
+--- !u!114 &11447000
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f63dcc9acfeaf4fb03fc0ce2a77186, type: 3}
+  m_Name: ModifySpeed
+  m_EditorClassIdentifier: 
+  type: 3
+  timeout: -1
+  saveAsVar: 0
+  varName: SpeedMod
 --- !u!114 &11447222
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -452,10 +483,22 @@ MonoBehaviour:
   - {fileID: 11418822}
   - {fileID: 11450746}
   - {fileID: 11496280}
+  - {fileID: 11452812}
   updateActions:
   - {fileID: 11498860}
   - {fileID: 11429502}
   exitActions: []
+--- !u!114 &11452812
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cad1d33fd224d4fbd024d6ed7fed63, type: 3}
+  m_Name: RemoveOwnedSpeedMods
+  m_EditorClassIdentifier: 
 --- !u!114 &11453834
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -575,6 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11430832}
+  - {fileID: 11466212}
   updateActions:
   - {fileID: 11403302}
   - {fileID: 11425902}
@@ -614,6 +658,17 @@ MonoBehaviour:
   m_Name: SavePassedValue
   m_EditorClassIdentifier: 
   saveName: AlarmPosition
+--- !u!114 &11466212
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cad1d33fd224d4fbd024d6ed7fed63, type: 3}
+  m_Name: RemoveOwnedSpeedMods
+  m_EditorClassIdentifier: 
 --- !u!114 &11466660
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -683,6 +738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enterActions:
   - {fileID: 11447768}
+  - {fileID: 11420594}
   updateActions:
   - {fileID: 11400408}
   - {fileID: 11497146}
