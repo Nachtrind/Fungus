@@ -212,11 +212,11 @@ public class GameWorld : MonoBehaviour
             Destroy(policeCars[i].gameObject);
         }
         policeCars.Clear();
-        for (int i = 0; i < policeStations.Count; i++)
-        {
-            Destroy(policeStations[i].gameObject);
-        }
-        policeStations.Clear();
+        //for (int i = 0; i < policeStations.Count; i++)
+        //{
+        //    Destroy(policeStations[i].gameObject);
+        //}
+        //policeStations.Clear();
         for (int i = 0; i < humans.Count; i++)
         {
             Destroy(humans[i].gameObject);
