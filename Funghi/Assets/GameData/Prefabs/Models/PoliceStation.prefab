@@ -104,7 +104,8 @@ GameObject:
   - 4: {fileID: 470938}
   - 33: {fileID: 3339462}
   - 23: {fileID: 2364524}
-  m_Layer: 0
+  - 64: {fileID: 6437024}
+  m_Layer: 8
   m_Name: PoliceStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +241,8 @@ GameObject:
   - 4: {fileID: 446284}
   - 33: {fileID: 3304486}
   - 23: {fileID: 2300952}
-  m_Layer: 0
+  - 64: {fileID: 6467336}
+  m_Layer: 8
   m_Name: PoliceGarage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -671,6 +673,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &6437024
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153768}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 8623ccf3032da4543b0abcd92f85df15, type: 3}
+--- !u!64 &6467336
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195404}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 4c79e1a3bb077ff43956461d1bdbd829, type: 3}
 --- !u!82 &8240558
 AudioSource:
   m_ObjectHideFlags: 1
