@@ -69,13 +69,18 @@ public static class Menu
     [MenuItem(BaseMenu + "/Tutorial/Create")]
     static void CreateTutorial()
     {
-        Tutorial t = GameObject.FindObjectOfType<Tutorial>();
+        var t = GameObject.FindObjectOfType<Tutorial>();
         if (t)
         {
             Selection.activeGameObject = t.gameObject;
             return;
         }
         t = new GameObject("Tutorial").AddComponent<Tutorial>();
+        var uiPanelObject = GameObject.Find("TutorialPanel");
+        if (uiPanelObject)
+        {
+            t.UIAnchor = uiPanelObject.transform as RectTransform;
+        }
         Selection.activeGameObject = t.gameObject;
     }
 }

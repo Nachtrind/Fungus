@@ -5,10 +5,9 @@ namespace Tutorials
 {
     public abstract class TutorialAction: ScriptableObject
     {
-#if UNITY_EDITOR
-        public bool Preview = false;
-#endif
-        public Tutorial.HookType Hook;
+        public Tutorial.TutorialEventType Event;
+        public bool NeedsTag = false;
+        public string RequiredTag = "";
         public float Timeout = -1;
         protected float StartTime;
         public bool PauseGame = false;

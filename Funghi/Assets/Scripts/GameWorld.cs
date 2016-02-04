@@ -200,6 +200,11 @@ public class GameWorld : MonoBehaviour
         RemoveAllEntities();
         slimeHandler.ClearAllConnections();
         RemoveAllSlimeTags();
+        var t = FindObjectOfType<Tutorials.Tutorial>();
+        if (t)
+        {
+            t.Reset();
+        }
         Start();
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NodeAbilities;
 using UnityEngine;
 
@@ -7,9 +8,10 @@ namespace Tutorials
     public class Tutorial: MonoBehaviour
     {
         public RectTransform UIAnchor;
-        public List<TutorialAction> EventActions = new List<TutorialAction>(); 
+        public List<TutorialAction> EventActions = new List<TutorialAction>();
+        List<TutorialAction> actionBackup = new List<TutorialAction>(); 
 
-        public enum HookType
+        public enum TutorialEventType
         {
             SpawnerSpawned,
             HumanDamaged,
@@ -33,6 +35,28 @@ namespace Tutorials
                 Debug.Log("No UI anchor specified. Disabling Tutorial to prevent Exceptions");
                 Destroy(gameObject);
             }
+            actionBackup.Clear();
+            for (var i = 0; i < EventActions.Count; i++)
+            {
+                actionBackup.Add(Instantiate(EventActions[i]));
+            }
+            RegisterHooks();
+        }
+
+        public void Reset()
+        {
+            for (var i = 0; i < EventActions.Count; i++)
+            {
+                EventActions[i].OnCleanup(this);
+            }
+            EventActions.Clear();
+            UnregisterHooks();
+            for (var i = 0; i < actionBackup.Count; i++)
+            {
+                EventActions.Add(Instantiate(actionBackup[i]));
+            }
+            policeAlarmHandled = false;
+            citizenPanicHandled = false;
             RegisterHooks();
         }
 
@@ -43,7 +67,7 @@ namespace Tutorials
 
         public class HookEventInfo
         {
-            public HookType type;
+            public TutorialEventType type;
             public Entity LinkedEntity;
             public NodeAbility LinkedAbility;
             public int linkedValue;
@@ -75,16 +99,30 @@ namespace Tutorials
             GameWorld.OnCoreKilled -= OnCoreKilled;
         }
 
+        bool policeAlarmHandled = false;
+        bool citizenPanicHandled = false; 
         void DispatchMessageType(Message m)
         {
             switch (m.type)
             {
                 case NotificationType.PoliceAlarm:
-                    OnPoliceAlarmed(m.sender);
+                    if (policeAlarmHandled) break;
+                    if (OnPoliceAlarmed(m.sender))
+                    {
+                        policeAlarmHandled = true;
+                    }
                     break;
                 case NotificationType.FungusInSight:
-                    OnCitizenPanic(m.sender);
+                    if (citizenPanicHandled) break;
+                    if (OnCitizenPanic(m.sender))
+                    {
+                        citizenPanicHandled = true;
+                    }
                     break;
+            }
+            if (policeAlarmHandled && citizenPanicHandled)
+            {
+                GameWorld.OnMessageBroadcast -= DispatchMessageType;
             }
         }
 
@@ -99,71 +137,92 @@ namespace Tutorials
             }
         }
 
-        void CallActions(HookEventInfo info)
+        bool CallActions(HookEventInfo info)
         {
             for (var i = EventActions.Count; i-->0;)
             {
-                if (EventActions[i].Hook != info.type) continue;
+                if (EventActions[i].Event != info.type) continue;
+                if (EventActions[i].NeedsTag & EventActions[i].RequiredTag.Equals(info.tag, StringComparison.OrdinalIgnoreCase)) continue;
                 EventActions[i].CachedEventInfo = info;
                 EventActions[i].OnInitialize(this, Time.realtimeSinceStartup);
+                return true;
             }
+            return false;
         }
 
         void OnSpawnerSpawned(Entity e, EntitySpawner spawner, string tutorialtag)
         {
             if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() {LinkedEntity = e, LinkedSpawner = spawner, tag = tutorialtag, type = HookType.SpawnerSpawned};
-            CallActions(he);
+            var he = new HookEventInfo() {LinkedEntity = e, LinkedSpawner = spawner, tag = tutorialtag, type = TutorialEventType.SpawnerSpawned};
+            if (CallActions(he))
+            {
+                EntitySpawner.OnSpawn -= OnSpawnerSpawned;
+            }
         }
 
         void OnEntityDamaged(Entity e)
         {
             if (EventActions.Count == 0) return;
             if (!(e is Human)) return;
-            var he = new HookEventInfo() {LinkedEntity = e, type = HookType.HumanDamaged};
-            CallActions(he);
+            var he = new HookEventInfo() {LinkedEntity = e, type = TutorialEventType.HumanDamaged};
+            if (CallActions(he))
+            {
+                Entity.OnDamaged -= OnEntityDamaged;
+            }
         }
 
         void OnResourceGained()
         {
             if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() { type = HookType.ResourceGained };
-            CallActions(he);
+            var he = new HookEventInfo() { type = TutorialEventType.ResourceGained };
+            if (CallActions(he))
+            {
+                FungusResources.OnResourceGain -= OnResourceGained;
+            }
         }
 
         void OnAbilityGained(NodeAbility ability)
         {
             if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() { LinkedAbility = ability, type = HookType.AbilityGained };
-            CallActions(he);
+            var he = new HookEventInfo() { LinkedAbility = ability, type = TutorialEventType.AbilityGained };
+            if (CallActions(he))
+            {
+                AbilityBuilding.OnAbilityGained -= OnAbilityGained;
+            }
         }
 
-        void OnPoliceAlarmed(Entity e)
+        bool OnPoliceAlarmed(Entity e)
         {
-            if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() { LinkedEntity = e, type = HookType.PoliceAlarmed };
-            CallActions(he);
+            if (EventActions.Count == 0) return false;
+            var he = new HookEventInfo() { LinkedEntity = e, type = TutorialEventType.PoliceAlarmed };
+            return CallActions(he);
         }
 
-        void OnCitizenPanic(Entity e)
+        bool OnCitizenPanic(Entity e)
         {
-            if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() { LinkedEntity = e, type = HookType.CitizenPanic };
-            CallActions(he);
+            if (EventActions.Count == 0) return false;
+            var he = new HookEventInfo() { LinkedEntity = e, type = TutorialEventType.CitizenPanic };
+            return CallActions(he);
         }
 
         void OnNodeDestroyed(Entity e)
         {
             if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() { LinkedEntity = e, type = HookType.NodeDestroyed };
-            CallActions(he);
+            var he = new HookEventInfo() { LinkedEntity = e, type = TutorialEventType.NodeDestroyed };
+            if (CallActions(he))
+            {
+                GameWorld.OnNodeDestroyed -= OnNodeDestroyed;
+            }
         }
 
         void OnCoreKilled(Entity e)
         {
             if (EventActions.Count == 0) return;
-            var he = new HookEventInfo() { LinkedEntity = e, type = HookType.CoreDied };
-            CallActions(he);
+            var he = new HookEventInfo() { LinkedEntity = e, type = TutorialEventType.CoreDied };
+            if (CallActions(he))
+            {
+                GameWorld.OnCoreKilled -= OnCoreKilled;
+            }
         }
 #endregion
     }
