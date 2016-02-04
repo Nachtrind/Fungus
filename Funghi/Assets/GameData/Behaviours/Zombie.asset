@@ -224,6 +224,18 @@ MonoBehaviour:
   checkLOS: 1
   saveVar: 1
   storageVar: target
+--- !u!114 &11458696
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5acb23b3fb47de41b1bf18bd80b23bf, type: 3}
+  m_Name: SetGlowColor
+  m_EditorClassIdentifier: 
+  color: {r: 0.19852942, g: 0.43620688, b: 1, a: 1}
 --- !u!114 &11462304
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -267,6 +279,7 @@ MonoBehaviour:
   enterActions:
   - {fileID: 11482416}
   - {fileID: 11439960}
+  - {fileID: 11458696}
   updateActions:
   - {fileID: 11469322}
   - {fileID: 11464694}

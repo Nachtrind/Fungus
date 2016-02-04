@@ -55,6 +55,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
   m_Name: Suicide
   m_EditorClassIdentifier: 
+--- !u!114 &11424746
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5acb23b3fb47de41b1bf18bd80b23bf, type: 3}
+  m_Name: SetGlowColor
+  m_EditorClassIdentifier: 
+  color: {r: 0.032980084, g: 0.89705884, b: 0.074694306, a: 1}
+--- !u!114 &11430420
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7551963b2f0b94e81768fb28cf0f3c, type: 3}
+  m_Name: DisplaySlimeOnHead
+  m_EditorClassIdentifier: 
 --- !u!114 &11437366
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -89,7 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c0ef746f581f4888f4a550e340e5e, type: 3}
   m_Name: RunAway
   m_EditorClassIdentifier: 
-  enterActions: []
+  enterActions:
+  - {fileID: 11430420}
+  - {fileID: 11424746}
   updateActions:
   - {fileID: 11472846}
   - {fileID: 11484118}
