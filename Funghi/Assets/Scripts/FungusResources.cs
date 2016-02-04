@@ -20,6 +20,8 @@ public class FungusResources : MonoBehaviour
 	public AbilityButton bZombies;
 	public AbilityButton bGrowth;
 
+    public static event System.Action OnResourceGain;
+
 	static FungusResources instance;
 
 	public List<NodeAbility> unlockedAbilities;
@@ -50,15 +52,13 @@ public class FungusResources : MonoBehaviour
 		resourceDisplay.text = CurrentResources.ToString ();
 
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	
-	}
 
 	public void AddResources (float _toAdd)
 	{
+	    if (OnResourceGain != null)
+	    {
+	        OnResourceGain();
+	    }
 		CurrentResources += _toAdd;
 
 		if (CurrentResources > MaxResources) {

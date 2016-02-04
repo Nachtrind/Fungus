@@ -23,7 +23,11 @@ public class GameWorld : MonoBehaviour
 	public float coreTickInterval = 0.1f;
 	float lastCoreUpdate = 0;
 
-	public const float nodeConnectionDistance = 3f;
+    public static event Action<Message> OnMessageBroadcast;
+    public static event Action<Entity> OnNodeDestroyed;
+    public static event Action<Entity> OnCoreKilled;
+
+    public const float nodeConnectionDistance = 3f;
 
 	static GameWorld instance;
 
@@ -327,7 +331,7 @@ public class GameWorld : MonoBehaviour
 	}
 
 	public void BroadcastToHumans (Message message, Vector3 position, float radius = float.PositiveInfinity)
-	{
+	{    
 		for (int i = 0; i < humans.Count; i++) {
 			if (humans [i] == message.sender) {
 				continue;
@@ -336,8 +340,11 @@ public class GameWorld : MonoBehaviour
 				humans [i].ReceiveBroadcast (message);
 			}
 		}
-
-	}
+        if (OnMessageBroadcast != null)
+        {
+            OnMessageBroadcast(message);
+        }
+    }
 
 	public void BroadcastToNodes (Message message, Vector3 position, float radius = float.PositiveInfinity)
 	{
@@ -616,6 +623,10 @@ public class GameWorld : MonoBehaviour
 
 	public void OnFungusNodeWasKilled (FungusNode node)
 	{
+	    if (OnNodeDestroyed != null)
+	    {
+	        OnNodeDestroyed(node);
+	    }
 		Destroy (node.gameObject);
 	}
 
@@ -630,6 +641,10 @@ public class GameWorld : MonoBehaviour
 	{
         if (!deathEventCalled)
         {
+            if (OnCoreKilled != null)
+            {
+                OnCoreKilled(core);
+            }
             Debug.Log("Core ungrounded");
             eventDispatcher.FireEvent(LevelEventType.Death);
             deathEventCalled = true;
