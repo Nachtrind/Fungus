@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Tutorials;
 using UnityEditor;
 
 public static class Menu
@@ -63,5 +64,18 @@ public static class Menu
         {
             Debug.LogWarning("Not found!");
         }
+    }
+
+    [MenuItem(BaseMenu + "/Tutorial/Create")]
+    static void CreateTutorial()
+    {
+        Tutorial t = GameObject.FindObjectOfType<Tutorial>();
+        if (t)
+        {
+            Selection.activeGameObject = t.gameObject;
+            return;
+        }
+        t = new GameObject("Tutorial").AddComponent<Tutorial>();
+        Selection.activeGameObject = t.gameObject;
     }
 }

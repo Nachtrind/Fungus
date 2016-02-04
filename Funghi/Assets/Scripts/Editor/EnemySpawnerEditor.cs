@@ -58,6 +58,7 @@ public class EnemySpawnerEditor : Editor
         var esp = target as EntitySpawner;
         GUILayout.BeginVertical(EditorStyles.helpBox);
         esp.autoActivateOnStart = EditorGUILayout.Toggle("AutoStart", esp.autoActivateOnStart);
+        esp.tutorialTag = EditorGUILayout.TextField("Tutorial tag", esp.tutorialTag);
         if (!esp.autoActivateOnStart)
         {
             EditorGUILayout.HelpBox("Activate() must be called manually", MessageType.Info);

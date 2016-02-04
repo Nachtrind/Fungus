@@ -1938,6 +1938,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 131289697}
+--- !u!1 &132847823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 132847825}
+  - 114: {fileID: 132847824}
+  m_Layer: 0
+  m_Name: Tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &132847824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132847823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2cac4d24ce3c9047a797468cc2249fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIAnchor: {fileID: 0}
+  EventActions: []
+--- !u!4 &132847825
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 132847823}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 38
 --- !u!1001 &134988915
 Prefab:
   m_ObjectHideFlags: 0
@@ -3994,6 +4035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 1826291537}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 580015034}
@@ -4491,6 +4533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 1955995718}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 203795186}
@@ -4790,6 +4833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 1596203054}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 1051423923}
@@ -7268,6 +7312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 1337605466}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 523913500}
@@ -10303,6 +10348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 897978242}
   positionModule: {fileID: 1626284509}
   behaviourModule: {fileID: 423908478}
@@ -11748,6 +11794,7 @@ RectTransform:
   - {fileID: 386358110}
   - {fileID: 76905572}
   - {fileID: 1775961906}
+  - {fileID: 1221902288}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_AnchorMin: {x: 0, y: 0}
@@ -11850,6 +11897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 595677981}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 0}
@@ -18857,6 +18905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 1633808884}
   positionModule: {fileID: 137197337}
   behaviourModule: {fileID: 327787475}
@@ -21941,6 +21990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 1162962798}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 1524906135}
@@ -22578,6 +22628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 145006516}
   positionModule: {fileID: 1996979670}
   behaviourModule: {fileID: 1427329842}
@@ -23135,6 +23186,45 @@ MeshCollider:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: c53a80df8da9e094ba2b4cd5522e4f44, type: 3}
   m_PrefabInternal: {fileID: 1219358050}
+--- !u!1 &1221902287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1221902288}
+  - 222: {fileID: 1221902289}
+  m_Layer: 5
+  m_Name: TutorialPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1221902288
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1221902287}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 634838528}
+  m_RootOrder: 6
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1221902289
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1221902287}
 --- !u!1001 &1230142461
 Prefab:
   m_ObjectHideFlags: 0
@@ -25829,6 +25919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 480315771}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 529231423}
@@ -30298,6 +30389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 1562241387}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 414553288}
@@ -36125,6 +36217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 544787246}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 390203432}
@@ -38498,6 +38591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
+  tutorialTag: 
   spawnModule: {fileID: 367540716}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 1961871875}
@@ -39537,6 +39631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 1911082162}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 1191306751}
@@ -40014,6 +40109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
+  tutorialTag: 
   spawnModule: {fileID: 2080103132}
   positionModule: {fileID: 308129660}
   behaviourModule: {fileID: 2085286070}

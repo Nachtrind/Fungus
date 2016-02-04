@@ -6,6 +6,8 @@ public class EntitySpawner: MonoBehaviour
 {
     public bool autoActivateOnStart = true;
 
+    public string tutorialTag = "";
+
     #region Settings
     [SerializeField, HideInInspector]
     SpawnModule spawnModule;
@@ -39,12 +41,17 @@ public class EntitySpawner: MonoBehaviour
     }
 
     public event System.Action<Entity> OnSpawned;
+    public static event System.Action<Entity, EntitySpawner, string> OnSpawn;
 
     void OnSpawnCompleted(Entity e)
     {
         if (OnSpawned != null)
         {
             OnSpawned(e);
+        }
+        if (OnSpawn != null)
+        {
+            OnSpawn(e, this, tutorialTag);
         }
     }
 

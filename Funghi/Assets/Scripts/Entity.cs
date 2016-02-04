@@ -23,6 +23,8 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     public event System.Action<float, float> OnHealthChanged;
 
+    public static event System.Action<Entity> OnDamaged;
+
 	public bool isAttackable = true;
 
     public static bool showDebug = false;
@@ -36,6 +38,10 @@ public abstract class Entity : MonoBehaviour
 		} else {
 			PlaySound (SoundSet.ClipType.ReceiveDamage);
 		}
+	    if (OnDamaged != null)
+	    {
+	        OnDamaged(this);
+	    }
 		OnDamage (attacker);
 	}
 
