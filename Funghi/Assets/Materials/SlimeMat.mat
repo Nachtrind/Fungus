@@ -82,7 +82,7 @@ Material:
         first:
           name: _Ground
         second:
-          m_Texture: {fileID: 2800000, guid: 3b5e691119f780f4c9ec7b4edd1a145e, type: 3}
+          m_Texture: {fileID: 2800000, guid: d2ae81806ef3b2c4daf84f3ff9490926, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -158,11 +158,11 @@ Material:
       data:
         first:
           name: _PixelBorder
-        second: 0.16
+        second: 0.99
       data:
         first:
           name: _Blockyness
-        second: 71.76
+        second: 71.05
       data:
         first:
           name: _Spread

@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   targetClassification: 0
-  range: 5
+  range: 10
   checkLOS: 0
   saveVar: 1
   storageVar: policePosition
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c0c15c44b779c4982bd6e4cfb26875, type: 3}
   m_Name: Flee
   m_EditorClassIdentifier: 
-  desiredDistance: 2
+  desiredDistance: 5
   fleeFrom: target
 --- !u!114 &11441138
 MonoBehaviour:
