@@ -5132,7 +5132,7 @@ Transform:
   - {fileID: 101509385}
   - {fileID: 681938317}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
 --- !u!1 &180937422
 GameObject:
   m_ObjectHideFlags: 0
@@ -8005,7 +8005,7 @@ Transform:
   - {fileID: 47559429}
   - {fileID: 1912620151}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 23
 --- !u!114 &271490767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13604,7 +13604,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!114 &516834629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16777,7 +16777,7 @@ RectTransform:
   - {fileID: 76905572}
   - {fileID: 1775961906}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -20615,7 +20615,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
 --- !u!4 &767241403 stripped
 Transform:
   m_PrefabParentObject: {fileID: 413084, guid: 52e05c89cd82753459adb2cc4d837f3f, type: 2}
@@ -25496,7 +25496,7 @@ Transform:
   - {fileID: 265820823}
   - {fileID: 2036983508}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 22
 --- !u!1001 &932601929
 Prefab:
   m_ObjectHideFlags: 0
@@ -43905,7 +43905,7 @@ Transform:
   - {fileID: 1211615653}
   - {fileID: 2146080608}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!114 &1695140343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45714,7 +45714,7 @@ Transform:
   m_LocalScale: {x: 38.785774, y: 24.176767, z: 2.0597868}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!95 &1748831984
 Animator:
   serializedVersion: 3
@@ -46297,7 +46297,7 @@ Transform:
   - {fileID: 1698868463}
   - {fileID: 1336438481}
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 24
 --- !u!1001 &1779002834
 Prefab:
   m_ObjectHideFlags: 0
@@ -46663,7 +46663,7 @@ Transform:
   - {fileID: 1418021162}
   - {fileID: 1720754546}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!1001 &1791321593
 Prefab:
   m_ObjectHideFlags: 0
@@ -52471,7 +52471,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!114 &2045501691
 MonoBehaviour:
   m_ObjectHideFlags: 0
