@@ -7,7 +7,8 @@ public class AbilityBuilding : MonoBehaviour
 
 	public NodeAbility ability;
 	public LayerMask centerLayer;
-    public static event System.Action<NodeAbility> OnAbilityGained;
+
+	public static event System.Action<NodeAbility> OnAbilityGained;
 
 	// Use this for initialization
 	void Start ()
@@ -25,10 +26,9 @@ public class AbilityBuilding : MonoBehaviour
 	{
 		if (other.tag.Equals ("FungusCore")) {
 			FungusResources.Instance.UnlockAbility (ability);
-		    if (OnAbilityGained != null)
-		    {
-		        OnAbilityGained(ability);
-		    }
+			if (OnAbilityGained != null) {
+				OnAbilityGained (ability);
+			}
 		}
 	}
 }
