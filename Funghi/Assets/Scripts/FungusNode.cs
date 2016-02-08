@@ -21,8 +21,6 @@ public class FungusNode : Entity
 	float attackTimer;
 
 	[Header ("Materials & Sprites")]
-	public Material matActive;
-	public Material matInactive;
 	SpriteRenderer abilityDisplay;
 
 	public event System.Action<bool> OnToggleActive;
@@ -192,12 +190,10 @@ public class FungusNode : Entity
 	public void ToggleActive ()
 	{
 		if (isActive) {
-			GetComponent<MeshRenderer> ().material = matInactive;
 			attackTimer = ability.tickRate * 2.0f;
 			IsActive = false;
 			ability.StopExecution (this);
 		} else {
-			GetComponent<MeshRenderer> ().material = matActive;
 			IsActive = true;
 		}
 	}
