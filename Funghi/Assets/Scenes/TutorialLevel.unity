@@ -223,6 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 425738955}
   positionModule: {fileID: 973166506}
   behaviourModule: {fileID: 1408219990}
@@ -813,7 +815,7 @@ Transform:
   - {fileID: 1197497122}
   - {fileID: 316518435}
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
 --- !u!1001 &55383962
 Prefab:
   m_ObjectHideFlags: 0
@@ -2343,6 +2345,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 859620437}
   positionModule: {fileID: 874211981}
   behaviourModule: {fileID: 1805739860}
@@ -2944,6 +2948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1506928358}
   positionModule: {fileID: 775068800}
   behaviourModule: {fileID: 895061134}
@@ -4100,6 +4106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1596524357}
   positionModule: {fileID: 845496381}
   behaviourModule: {fileID: 1708647131}
@@ -4393,6 +4401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 504923616}
   positionModule: {fileID: 781462431}
   behaviourModule: {fileID: 9373139}
@@ -5132,7 +5142,7 @@ Transform:
   - {fileID: 101509385}
   - {fileID: 681938317}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
 --- !u!1 &180937422
 GameObject:
   m_ObjectHideFlags: 0
@@ -7782,6 +7792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  deathParticles: {fileID: 0}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 0}
@@ -7888,6 +7899,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1596203054}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 1051423923}
@@ -8005,7 +8018,7 @@ Transform:
   - {fileID: 47559429}
   - {fileID: 1912620151}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
 --- !u!114 &271490767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8426,6 +8439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1733098006}
   positionModule: {fileID: 1096007623}
   behaviourModule: {fileID: 23896605}
@@ -8441,7 +8456,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 40
+  m_RootOrder: 41
 --- !u!1001 &300963866
 Prefab:
   m_ObjectHideFlags: 0
@@ -8611,6 +8626,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1926003069}
   positionModule: {fileID: 516834629}
   behaviourModule: {fileID: 1339147020}
@@ -10268,6 +10285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1918877006}
   positionModule: {fileID: 779531890}
   behaviourModule: {fileID: 404437978}
@@ -10460,6 +10479,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 402513312}
   positionModule: {fileID: 319755520}
   behaviourModule: {fileID: 662543557}
@@ -14495,6 +14516,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 897978242}
   positionModule: {fileID: 1626284509}
   behaviourModule: {fileID: 423908478}
@@ -15385,6 +15408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1928053499}
   positionModule: {fileID: 2100090386}
   behaviourModule: {fileID: 91618034}
@@ -16754,12 +16779,12 @@ GameObject:
   - 114: {fileID: 634838530}
   - 114: {fileID: 634838529}
   m_Layer: 5
-  m_Name: UI
+  m_Name: UI_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &634838528
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16777,7 +16802,7 @@ RectTransform:
   - {fileID: 76905572}
   - {fileID: 1775961906}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -16879,6 +16904,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 595677981}
   positionModule: {fileID: 117728781}
   behaviourModule: {fileID: 1353427537}
@@ -18190,7 +18217,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 36
+  m_RootOrder: 37
 --- !u!1 &681938316
 GameObject:
   m_ObjectHideFlags: 0
@@ -18484,6 +18511,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 907249947}
   positionModule: {fileID: 784327896}
   behaviourModule: {fileID: 208465292}
@@ -18662,7 +18691,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
 --- !u!1 &686811970
 GameObject:
   m_ObjectHideFlags: 0
@@ -19149,6 +19178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1917934099}
   positionModule: {fileID: 376268535}
   behaviourModule: {fileID: 1211661962}
@@ -19194,6 +19225,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 88515547}
   positionModule: {fileID: 1766733786}
   behaviourModule: {fileID: 675698813}
@@ -19768,6 +19801,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1223172941}
   positionModule: {fileID: 1921283841}
   behaviourModule: {fileID: 188790555}
@@ -20551,6 +20586,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1103351732}
   positionModule: {fileID: 271490767}
   behaviourModule: {fileID: 517479008}
@@ -20615,7 +20652,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 18
 --- !u!4 &767241403 stripped
 Transform:
   m_PrefabParentObject: {fileID: 413084, guid: 52e05c89cd82753459adb2cc4d837f3f, type: 2}
@@ -21472,6 +21509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 996715721}
   positionModule: {fileID: 1013100096}
   behaviourModule: {fileID: 294224278}
@@ -22798,6 +22837,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 226501118}
   positionModule: {fileID: 963474085}
   behaviourModule: {fileID: 288887614}
@@ -24253,7 +24294,7 @@ Transform:
   - {fileID: 388904239}
   - {fileID: 1308500716}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
 --- !u!114 &880245257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24972,6 +25013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 5
   maxHealth: 5
+  deathParticles: {fileID: 0}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 11400000, guid: 053b6b6847d915348843f20ef32062f5, type: 2}
@@ -25496,7 +25538,7 @@ Transform:
   - {fileID: 265820823}
   - {fileID: 2036983508}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
 --- !u!1001 &932601929
 Prefab:
   m_ObjectHideFlags: 0
@@ -27073,6 +27115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1633808884}
   positionModule: {fileID: 137197337}
   behaviourModule: {fileID: 327787475}
@@ -27973,6 +28017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 5
   maxHealth: 5
+  deathParticles: {fileID: 0}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 11400000, guid: 053b6b6847d915348843f20ef32062f5, type: 2}
@@ -28023,6 +28068,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 371659836}
   positionModule: {fileID: 240063176}
   behaviourModule: {fileID: 349189535}
@@ -28282,7 +28329,7 @@ Transform:
   - {fileID: 305884168}
   - {fileID: 1405209240}
   m_Father: {fileID: 0}
-  m_RootOrder: 41
+  m_RootOrder: 42
 --- !u!114 &1053906922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29041,7 +29088,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 36
 --- !u!4 &1078047439 stripped
 Transform:
   m_PrefabParentObject: {fileID: 409308, guid: 65f6a3e3dc7d1434a975f47a979387ea, type: 2}
@@ -31457,6 +31504,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 145006516}
   positionModule: {fileID: 1996979670}
   behaviourModule: {fileID: 1427329842}
@@ -32140,6 +32189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 964209238}
   positionModule: {fileID: 2120381194}
   behaviourModule: {fileID: 1072453000}
@@ -33222,6 +33273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1600523282}
   positionModule: {fileID: 1680224852}
   behaviourModule: {fileID: 691370798}
@@ -33376,7 +33429,7 @@ Transform:
   m_Children:
   - {fileID: 685421860}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
 --- !u!114 &1269661699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33865,7 +33918,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 37
+  m_RootOrder: 38
 --- !u!1 &1284548934
 GameObject:
   m_ObjectHideFlags: 0
@@ -34705,6 +34758,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 859789980}
   positionModule: {fileID: 540714181}
   behaviourModule: {fileID: 1833675065}
@@ -37069,6 +37124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1389564683}
   positionModule: {fileID: 966768173}
   behaviourModule: {fileID: 1926207237}
@@ -37987,7 +38044,7 @@ Transform:
   - {fileID: 9732380}
   - {fileID: 604094545}
   m_Father: {fileID: 0}
-  m_RootOrder: 38
+  m_RootOrder: 39
 --- !u!1 &1442669792
 GameObject:
   m_ObjectHideFlags: 0
@@ -39437,7 +39494,7 @@ Transform:
   - {fileID: 1001726486}
   - {fileID: 1242319656}
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
 --- !u!114 &1492296967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39564,6 +39621,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 250243864}
   positionModule: {fileID: 1088929931}
   behaviourModule: {fileID: 822458833}
@@ -39579,7 +39638,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 39
+  m_RootOrder: 40
 --- !u!1 &1497329825
 GameObject:
   m_ObjectHideFlags: 0
@@ -40054,6 +40113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 867181923}
   positionModule: {fileID: 1727222055}
   behaviourModule: {fileID: 880245257}
@@ -40170,6 +40231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1492296967}
   positionModule: {fileID: 123741225}
   behaviourModule: {fileID: 118348225}
@@ -40409,6 +40472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1250863371}
   positionModule: {fileID: 829272841}
   behaviourModule: {fileID: 550174721}
@@ -40588,7 +40653,7 @@ Transform:
   - {fileID: 1916487149}
   - {fileID: 2117767132}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
 --- !u!1001 &1560656995
 Prefab:
   m_ObjectHideFlags: 0
@@ -40957,7 +41022,7 @@ Transform:
   - {fileID: 140054784}
   - {fileID: 1254618201}
   m_Father: {fileID: 0}
-  m_RootOrder: 33
+  m_RootOrder: 34
 --- !u!4 &1586067740 stripped
 Transform:
   m_PrefabParentObject: {fileID: 409308, guid: 65f6a3e3dc7d1434a975f47a979387ea, type: 2}
@@ -41143,6 +41208,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1158221117}
   positionModule: {fileID: 858161347}
   behaviourModule: {fileID: 642725208}
@@ -42102,6 +42169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1562241387}
   positionModule: {fileID: 0}
   behaviourModule: {fileID: 414553288}
@@ -43211,7 +43280,7 @@ Transform:
   - {fileID: 687303716}
   - {fileID: 840950907}
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
 --- !u!1001 &1674050433
 Prefab:
   m_ObjectHideFlags: 0
@@ -43326,7 +43395,7 @@ Transform:
   - {fileID: 920455368}
   - {fileID: 1314026147}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
 --- !u!114 &1680224852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43905,7 +43974,7 @@ Transform:
   - {fileID: 1211615653}
   - {fileID: 2146080608}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
 --- !u!114 &1695140343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44244,7 +44313,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &1703078577
 GameObject:
   m_ObjectHideFlags: 0
@@ -44512,7 +44581,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!1001 &1707973057
 Prefab:
   m_ObjectHideFlags: 0
@@ -45246,7 +45315,7 @@ Transform:
   - {fileID: 1407072395}
   - {fileID: 395896968}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
 --- !u!1001 &1730733853
 Prefab:
   m_ObjectHideFlags: 0
@@ -45373,6 +45442,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 428435806}
   positionModule: {fileID: 34517835}
   behaviourModule: {fileID: 679902915}
@@ -46297,7 +46368,7 @@ Transform:
   - {fileID: 1698868463}
   - {fileID: 1336438481}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 29
 --- !u!1001 &1779002834
 Prefab:
   m_ObjectHideFlags: 0
@@ -46663,7 +46734,7 @@ Transform:
   - {fileID: 1418021162}
   - {fileID: 1720754546}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
 --- !u!1001 &1791321593
 Prefab:
   m_ObjectHideFlags: 0
@@ -47868,6 +47939,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1187297160}
   positionModule: {fileID: 556000152}
   behaviourModule: {fileID: 1445993154}
@@ -48549,6 +48622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1398538674}
   positionModule: {fileID: 1961233810}
   behaviourModule: {fileID: 1246186966}
@@ -50726,6 +50801,236 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 492250, guid: 380c70e2789b80c4c99a93cc9e820d0a, type: 2}
   m_PrefabInternal: {fileID: 1965555238}
+--- !u!1001 &1966063169
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22492046, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 104894, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_Name
+      value: UI (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 22413990, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22413990, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22413990, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22413990, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22413990, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22413990, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22419890, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22419890, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22419890, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22419890, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22419890, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22419890, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22454542, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22454542, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22454542, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22454542, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22454542, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22454542, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22474224, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22474224, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22474224, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22474224, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22474224, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22474224, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464260, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464260, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464260, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464260, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464260, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464260, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22470134, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22470134, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22470134, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22470134, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22470134, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22470134, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e58ab65c5c6d8514893c5b6251f56d5a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1973598145
 GameObject:
   m_ObjectHideFlags: 0
@@ -51161,6 +51466,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 0
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 831150841}
   positionModule: {fileID: 1588202659}
   behaviourModule: {fileID: 1053906922}
@@ -52163,7 +52470,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 33
 --- !u!1 &2036983507
 GameObject:
   m_ObjectHideFlags: 0
@@ -52208,6 +52515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 0
+  deathParticles: {fileID: 0}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 0}
@@ -52314,6 +52622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 517197323}
   positionModule: {fileID: 1227076610}
   behaviourModule: {fileID: 1460804000}
@@ -52653,7 +52963,7 @@ Transform:
   - {fileID: 158168780}
   - {fileID: 800666280}
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 35
 --- !u!1001 &2070198363
 Prefab:
   m_ObjectHideFlags: 0
@@ -52761,6 +53071,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 2080103132}
   positionModule: {fileID: 308129660}
   behaviourModule: {fileID: 2085286070}
@@ -53702,6 +54014,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoActivateOnStart: 1
   tutorialTag: 
+  triggerNewsTicker: 0
+  triggerNewsCategory: 0
   spawnModule: {fileID: 1173155686}
   positionModule: {fileID: 346312718}
   behaviourModule: {fileID: 2144326390}

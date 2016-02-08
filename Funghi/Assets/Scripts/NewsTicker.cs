@@ -43,11 +43,14 @@ public class NewsTicker : MonoBehaviour
     Coroutine scrollRoutine;
     Coroutine fadeRoutine;
 
+    Canvas canvas;
+
     void Awake()
     {
         instance = this;
         fader.alpha = 0;
         InvokeRepeating("RegularCheck", 1f, 1f);
+        canvas = GetComponentInParent<Canvas>();
     }
 
     void Update()
@@ -178,8 +181,8 @@ public class NewsTicker : MonoBehaviour
         csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         rt.localScale = Vector3.one;
         Canvas.ForceUpdateCanvases();
-        var right = panel.rect.x + (panel.rect.width*0.5f);
-        right += (rt.rect.width) * 0.5f;
+        var right = panel.rect.x + (panel.rect.width*0.5f*canvas.scaleFactor);
+        right += (rt.rect.width*canvas.scaleFactor) * 0.5f;
         rt.anchoredPosition = new Vector2(right, 0);
         return new TransformTrack(rt);
     }
@@ -193,13 +196,13 @@ public class NewsTicker : MonoBehaviour
                 TransformTrack upItem = upperPanelItems[i];
                 upItem.t.anchoredPosition = new Vector2(upItem.t.anchoredPosition.x - upperPanelSpeed, upItem.t.anchoredPosition.y);
                 //_______________________________________________________________________________
-                if (!upItem.triggered && upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f < upperPanel.rect.x+upperPanel.rect.width*0.5f)
+                if (!upItem.triggered && upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f*canvas.scaleFactor < upperPanel.rect.x+upperPanel.rect.width*0.5f*canvas.scaleFactor)
                 {
                     upItem.triggered = true;
                     DisplayNextItem(upperPanel);
                 }
                 //_______________________________________________________________________________
-                if (upperPanel.anchoredPosition.x-(upperPanel.rect.width*0.5f) > upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f)
+                if (upperPanel.anchoredPosition.x-(upperPanel.rect.width*0.5f*canvas.scaleFactor) > upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f*canvas.scaleFactor)
                 {
                     Destroy(upItem.t.gameObject);
                     upperPanelItems.RemoveAt(i);
@@ -210,7 +213,7 @@ public class NewsTicker : MonoBehaviour
                 TransformTrack lowItem = lowerPanelItems[i];
                 lowItem.t.anchoredPosition = new Vector2(lowItem.t.anchoredPosition.x - lowerPanelSpeed, lowItem.t.anchoredPosition.y);
                 //_______________________________________________________________________________
-                if (!lowItem.triggered && lowItem.t.anchoredPosition.x+lowItem.t.rect.width*0.5f < lowerPanel.rect.x+lowerPanel.rect.width*0.5f)
+                if (!lowItem.triggered && lowItem.t.anchoredPosition.x+lowItem.t.rect.width*0.5f*canvas.scaleFactor < lowerPanel.rect.x+lowerPanel.rect.width*0.5f*canvas.scaleFactor)
                 {
                     lowItem.triggered = true;
                     DisplayNextItem(lowerPanel);

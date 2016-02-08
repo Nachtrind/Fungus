@@ -134,8 +134,11 @@ public class GameWorld : MonoBehaviour
 		if (core) {
 			if (Time.time - lastCoreUpdate >= coreTickInterval) {
 				core.UpdateEntity (coreTickInterval);
-                triggerCollection.EvaluateForCore(core.transform.position);
-                lastCoreUpdate = Time.time;
+			    if (triggerCollection)
+			    {
+			        triggerCollection.EvaluateForCore(core.transform.position);
+			    }
+			    lastCoreUpdate = Time.time;
 			}
 		}
 	}
@@ -261,8 +264,11 @@ public class GameWorld : MonoBehaviour
 			if (!nodes.Contains (fn)) {
 				nodes.Add (fn);
 				fn.transform.parent = entityHolder;
-                triggerCollection.EvaluateForNode(fn.transform.position);
-            }
+			    if (triggerCollection)
+			    {
+			        triggerCollection.EvaluateForNode(fn.transform.position);
+			    }
+			}
 			return;
 		}
 		Human en = e as Human;

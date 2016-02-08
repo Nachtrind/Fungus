@@ -25,6 +25,8 @@ public abstract class Entity : MonoBehaviour
 
     public static event System.Action<Entity> OnDamaged;
 
+    public ParticleEffect deathParticles;
+
 	public bool isAttackable = true;
 
     public static bool showDebug = false;
@@ -35,6 +37,10 @@ public abstract class Entity : MonoBehaviour
 		SubtractHealth (amount);
 		if (IsDead) {
 			PlaySound (SoundSet.ClipType.Death);
+		    if (deathParticles)
+		    {
+		        deathParticles.Fire(transform.position);
+		    }
 		} else {
 			PlaySound (SoundSet.ClipType.ReceiveDamage);
 		}
