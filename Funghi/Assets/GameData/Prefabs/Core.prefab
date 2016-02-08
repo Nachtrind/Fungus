@@ -31,7 +31,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442672}
   - 212: {fileID: 21201250}
-  - 95: {fileID: 9504228}
+  - 114: {fileID: 11405728}
   m_Layer: 13
   m_Name: CoreSprite
   m_TagString: Untagged
@@ -166,23 +166,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!95 &9504228
-Animator:
-  serializedVersion: 3
+--- !u!114 &11405728
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197424}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f29431c18b105e0458f30fa575c7e456, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4af842b670507543b424375edd7034e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eyeSprites:
+  - {fileID: 21300000, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300002, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300004, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300006, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300008, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300010, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300012, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  - {fileID: 21300014, guid: d9e94abf09ac0c54fa498c77acb45da4, type: 3}
+  RandomTimebetweenMin: 0.2
+  RandomTimebetweenMax: 2
 --- !u!114 &11415486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -194,9 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14bf4d8f68407b6449de4be12ce25985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.25
+  BaseMoveSpeed: 1
+  _effectiveMovespeed: 1
   turnSpeed: 0.492
   extraPathSmoothing: 0
+  anim: {fileID: 0}
 --- !u!114 &11424470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
+  deathParticles: {fileID: 0}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 0}
