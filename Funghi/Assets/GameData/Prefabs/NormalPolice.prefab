@@ -640,7 +640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 5
   maxHealth: 5
-  deathParticles: {fileID: 11454634, guid: dc9b35b77931b0d4a9b4c228615a3d26, type: 2}
+  deathParticles: {fileID: 11466330, guid: 2c236c5bb44353f41b38ebac1e879b85, type: 2}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 11400000, guid: 3cac328f54201a942b82dec638d14678, type: 2}
@@ -950,7 +950,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: deathParticles
       value: 
-      objectReference: {fileID: 11454634, guid: dc9b35b77931b0d4a9b4c228615a3d26,
+      objectReference: {fileID: 11466330, guid: 2c236c5bb44353f41b38ebac1e879b85,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

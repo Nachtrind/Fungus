@@ -9,6 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 464784}
   - 114: {fileID: 11407298}
+  - 33: {fileID: 3398846}
+  - 23: {fileID: 2375244}
   - 82: {fileID: 8234958}
   - 54: {fileID: 5422366}
   m_Layer: 0
@@ -73,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -14.775364, y: -12.303985, z: -9.838043}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 453608}
@@ -92,6 +94,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 464784}
   m_RootOrder: 1
+--- !u!23 &2375244
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155104}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 57759f648c189ac42931521674997fa8, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &2389220
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -125,6 +153,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164380}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &3398846
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155104}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &5422366
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -257,10 +292,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 100
   maxHealth: 100
-  deathParticles: {fileID: 0}
+  deathParticles: {fileID: 11423238, guid: 0e01f2fcd3f8a1e489f8301010e3111f, type: 2}
   isAttackable: 1
   behaviour: {fileID: 0}
   soundSet: {fileID: 0}
+  matActive: {fileID: 2100000, guid: 09fe560858de1c84c9e44a581e769ca2, type: 2}
+  matInactive: {fileID: 2100000, guid: 57759f648c189ac42931521674997fa8, type: 2}
   ability: {fileID: 11400000, guid: e973c5bb2d556434493c2bedd4f57147, type: 2}
 --- !u!114 &11442920
 MonoBehaviour:
@@ -304,7 +341,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 9825557449b67014f8662b8632881e59, type: 3}
-  m_Color: {r: 0.8827691, g: 1, b: 0.52205884, a: 1}
+  m_Color: {r: 0.657708, g: 1, b: 0.007352948, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
@@ -338,6 +375,23 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.r
+      value: 0.657708
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.b
+      value: 0.007352948
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathParticles
+      value: 
+      objectReference: {fileID: 11423238, guid: 0e01f2fcd3f8a1e489f8301010e3111f,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 155104}
