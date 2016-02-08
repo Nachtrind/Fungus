@@ -1,4 +1,4 @@
-﻿Shader "Fungus/SpecialBuildings" {
+﻿Shader "Fungus/SelfGlowShader" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_GlowColor ("Glow Color", Color) = (1,1,1,1)
