@@ -192,12 +192,12 @@ public class FungusNode : Entity
 	public void ToggleActive ()
 	{
 		if (isActive) {
-			GetComponent<MeshRenderer> ().material = matInactive;
+			//GetComponent<MeshRenderer> ().material = matInactive;
 			attackTimer = ability.tickRate * 2.0f;
 			IsActive = false;
 			ability.StopExecution (this);
 		} else {
-			GetComponent<MeshRenderer> ().material = matActive;
+			//GetComponent<MeshRenderer> ().material = matActive;
 			IsActive = true;
 		}
 	}
