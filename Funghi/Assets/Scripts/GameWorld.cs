@@ -76,6 +76,8 @@ public class GameWorld : MonoBehaviour
 
     LevelEventDispatcher eventDispatcher;
 
+    SpawnerTriggerCollection triggerCollection;
+
     [RuntimeInitializeOnLoadMethod]
     static void InitApplication()
     {
@@ -96,6 +98,10 @@ public class GameWorld : MonoBehaviour
 
 	void Start ()
 	{
+	    if (triggerCollection == null)
+	    {
+	        triggerCollection = FindObjectOfType<SpawnerTriggerCollection>();
+        }
         GameInput.ReleaseSpawnFungusCallback(SpawnFungusNode);
 		GameInput.RegisterSpawnFungusCallback (SpawnFungusNode);
         if (nodeUpdater == null) {
@@ -128,7 +134,8 @@ public class GameWorld : MonoBehaviour
 		if (core) {
 			if (Time.time - lastCoreUpdate >= coreTickInterval) {
 				core.UpdateEntity (coreTickInterval);
-				lastCoreUpdate = Time.time;
+                triggerCollection.EvaluateForCore(core.transform.position);
+                lastCoreUpdate = Time.time;
 			}
 		}
 	}
@@ -190,7 +197,7 @@ public class GameWorld : MonoBehaviour
 	public FungusNode SpawnFungusNode (Vector3 position)
 	{
 		//TODO limit?
-		FungusNode fn = Instantiate (fungusNodePrefab, position, Quaternion.identity) as FungusNode;
+		var fn = Instantiate (fungusNodePrefab, position, Quaternion.identity) as FungusNode;
 		return fn;
 	}
 
@@ -254,7 +261,8 @@ public class GameWorld : MonoBehaviour
 			if (!nodes.Contains (fn)) {
 				nodes.Add (fn);
 				fn.transform.parent = entityHolder;
-			}
+                triggerCollection.EvaluateForNode(fn.transform.position);
+            }
 			return;
 		}
 		Human en = e as Human;

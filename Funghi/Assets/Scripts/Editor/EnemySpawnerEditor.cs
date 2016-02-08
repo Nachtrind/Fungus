@@ -59,6 +59,11 @@ public class EnemySpawnerEditor : Editor
         GUILayout.BeginVertical(EditorStyles.helpBox);
         esp.autoActivateOnStart = EditorGUILayout.Toggle("AutoStart", esp.autoActivateOnStart);
         esp.tutorialTag = EditorGUILayout.TextField("Tutorial tag", esp.tutorialTag);
+        esp.triggerNewsTicker = EditorGUILayout.Toggle("Trigger NewsTicker", esp.triggerNewsTicker);
+        if (esp.triggerNewsTicker)
+        {
+            esp.triggerNewsCategory = (NewsTickerCategory)EditorGUILayout.EnumPopup("Category", esp.triggerNewsCategory);
+        }
         if (!esp.autoActivateOnStart)
         {
             EditorGUILayout.HelpBox("Activate() must be called manually", MessageType.Info);

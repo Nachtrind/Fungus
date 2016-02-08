@@ -8,6 +8,9 @@ public class EntitySpawner: MonoBehaviour
 
     public string tutorialTag = "";
 
+    public bool triggerNewsTicker = false;
+    public NewsTickerCategory triggerNewsCategory;
+
     #region Settings
     [SerializeField, HideInInspector]
     SpawnModule spawnModule;
@@ -45,6 +48,10 @@ public class EntitySpawner: MonoBehaviour
 
     void OnSpawnCompleted(Entity e)
     {
+        if (triggerNewsTicker)
+        {
+            NewsTicker.Trigger(triggerNewsCategory);
+        }
         if (OnSpawned != null)
         {
             OnSpawned(e);

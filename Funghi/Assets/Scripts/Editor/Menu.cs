@@ -83,4 +83,17 @@ public static class Menu
         }
         Selection.activeGameObject = t.gameObject;
     }
+
+    [MenuItem(BaseMenu + "/Create SpawnerTriggerCollection")]
+    static void CreateSPTC()
+    {
+        var sp = GameObject.FindObjectOfType<SpawnerTriggerCollection>();
+        if (sp)
+        {
+            Selection.activeGameObject = sp.gameObject;
+            return;
+        }
+        sp = new GameObject("SpawnerTriggerCollection").AddComponent<SpawnerTriggerCollection>();
+        Selection.activeGameObject = sp.gameObject;
+    }
 }
