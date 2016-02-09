@@ -55,6 +55,8 @@ public class GameWorld : MonoBehaviour
     public ReadOnlyCollection<PoliceCar> PoliceCars { get { return policeCars.AsReadOnly(); } }
 	FungusCore core;
 
+    public bool disableDeltaCompensation = false;
+
 	public FungusCore Core { get { return core; } }
 
 	public bool destroyDisconnectedNodes = true;
@@ -155,7 +157,7 @@ public class GameWorld : MonoBehaviour
 		for (int i = 0; i < policeCars.Count; i++) {
 			policeCars [i].UpdateEntity (humanDelta);
 		}
-		yield return new WaitForSeconds (humanTickInterval - (humanStopWatch.ElapsedMilliseconds / 1000f));
+		yield return new WaitForSeconds (humanTickInterval - (disableDeltaCompensation?0:humanStopWatch.ElapsedMilliseconds / 1000f));
 		goto RESTART;
 	}
 
@@ -168,7 +170,7 @@ public class GameWorld : MonoBehaviour
 		for (int i = nodes.Count; i-- > 0;) {
 			nodes [i].UpdateEntity (nodeDelta);
 		}
-		yield return new WaitForSeconds (nodeTickInterval - (nodeStopWatch.ElapsedMilliseconds / 1000f));
+		yield return new WaitForSeconds (nodeTickInterval - (disableDeltaCompensation?0:nodeStopWatch.ElapsedMilliseconds / 1000f));
 		goto RESTART;
 	}
 
