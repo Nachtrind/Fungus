@@ -89,7 +89,7 @@ Material:
         first:
           name: _GlowTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: b5c4c957906084447a322d69b0c18aff, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
