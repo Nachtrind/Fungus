@@ -26,7 +26,7 @@ GraphicsSettings:
   - {fileID: 4800000, guid: 66bad91667b97214ab1024893126c8d5, type: 3}
   m_PreloadedShaders: []
   m_ShaderSettings:
-    useScreenSpaceShadows: 1
+    useScreenSpaceShadows: 0
   m_BuildTargetShaderSettings: []
   m_LightmapStripping: 0
   m_FogStripping: 0

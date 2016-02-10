@@ -13,14 +13,7 @@ public class FungusResources : MonoBehaviour
 	public NodeAbility zombies;
 	public NodeAbility growth;
 
-	public AbilityButton bBeatneat;
-	public AbilityButton bAttract;
-	public AbilityButton bSlowdown;
-	public AbilityButton bSpeedup;
-	public AbilityButton bZombies;
-	public AbilityButton bGrowth;
-
-    public static event System.Action OnResourceGain;
+	public static event System.Action OnResourceGain;
 
 	static FungusResources instance;
 
@@ -48,31 +41,29 @@ public class FungusResources : MonoBehaviour
 	{
 		CurrentResources = startResources;
 		MaxResources = CurrentResources;
-		resourceDisplay = GameObject.Find ("ResourceCount").GetComponent<Text> ();
 		resourceDisplay.text = CurrentResources.ToString ();
 
 	}
 
 	public void AddResources (float _toAdd)
 	{
-	    if (OnResourceGain != null)
-	    {
-	        OnResourceGain();
-	    }
+		if (OnResourceGain != null) {
+			OnResourceGain ();
+		}
 		CurrentResources += _toAdd;
 
 		if (CurrentResources > MaxResources) {
 			MaxResources = CurrentResources;
 		}
 
-		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+		resourceDisplay.text = CurrentResources.ToString ();
 	}
 
 	public void SubResources (float _toSub)
 	{
 		CurrentResources -= _toSub;
 
-		resourceDisplay.text = CurrentResources.ToString () + "/" + MaxResources.ToString ();
+		resourceDisplay.text = CurrentResources.ToString ();
 	}
 
 
@@ -82,22 +73,18 @@ public class FungusResources : MonoBehaviour
 		switch (_toUnlock.name) {
 		case "growth":
 			{
-				bGrowth.Unlock ();
 				break;
 			}
 		case "slowdown":
 			{
-				bSlowdown.Unlock ();
 				break;
 			}
 		case "speedup":
 			{
-				bSpeedup.Unlock ();
 				break;
 			}
 		case "zombie":
 			{
-				bZombies.Unlock ();
 				break;
 			}
 

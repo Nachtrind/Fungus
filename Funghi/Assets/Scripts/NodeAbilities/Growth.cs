@@ -48,9 +48,9 @@ namespace NodeAbilities
 				em.enabled = true;
 			}
 
-			Quaternion rotation = Quaternion.Euler (Wind.Instance.arrowTrans.transform.rotation.eulerAngles - Vector3.up * 90);
+			Quaternion rotation = Quaternion.Euler (Wind.Instance.currentRotation.eulerAngles - Vector3.up * 90);
 			spores.transform.rotation = Quaternion.Euler (spores.transform.rotation.eulerAngles.x, 
-				Wind.Instance.arrowTrans.transform.rotation.eulerAngles.z * -1.0f - 90.0f,  
+				Wind.Instance.currentRotation.eulerAngles.z * -1.0f - 90.0f,  
 				spores.transform.rotation.eulerAngles.z);
 			Vector3 rotatedVector = (rotation * Vector3.up * radius);
 

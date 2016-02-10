@@ -4,25 +4,29 @@ using UnityEngine.EventSystems;
 
 public class UserMenuButton : MonoBehaviour
 {
-    [SerializeField] UserMenu menu;
+	[SerializeField] UserMenu menu;
 
-    public UserMenu.UserMenuButtonType type;
+	public UserMenu.UserMenuButtonType type;
 
-    bool _active;
+	bool _active;
 
-    public void OnActive(BaseEventData data)
-    {
-        if (!menu) return;
-        if (_active) return;
-        _active = true;
-        menu.OnMenuButtonActive(type);
-    }
+	public void OnActive (BaseEventData data)
+	{
+		if (!menu)
+			return;
+		if (_active)
+			return;
+		_active = true;
+		menu.OnMenuButtonActive (type);
+	}
 
-    public void OnInactive(BaseEventData data)
-    {
-        if (!menu) return;
-        if (!_active) return;
-        _active = false;
-        menu.OnMenuButtonInactive(type);
-    }
+	public void OnInactive (BaseEventData data)
+	{
+		if (!menu)
+			return;
+		if (!_active)
+			return;
+		_active = false;
+		menu.OnMenuButtonInactive (type);
+	}
 }

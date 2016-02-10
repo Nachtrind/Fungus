@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Wind : MonoBehaviour
 {
 
+	public Anemometer meter;
 
 	static Wind instance;
 
@@ -21,9 +22,8 @@ public class Wind : MonoBehaviour
 	float directionChangeTick;
 	float minTime = 10.0f;
 	float maxTime = 15.0f;
-	Quaternion currentRotation;
+	public Quaternion currentRotation;
 	float eulerZRot;
-	public RectTransform arrowTrans;
 	Quaternion formerRotation;
 	Quaternion targetRotation;
 	float rotationSpeed = 10.0f;
@@ -35,10 +35,7 @@ public class Wind : MonoBehaviour
 	void Start ()
 	{
 
-		arrowTrans = GetComponent<RectTransform> ();
 		directionChangeTick = Random.Range (minTime, maxTime);
-
-		formerRotation = arrowTrans.rotation;
 
 
 	}
@@ -46,7 +43,6 @@ public class Wind : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
 		if (directionTimer >= directionChangeTick) {
 			ChangeWindDirection ();
 		}
@@ -56,7 +52,8 @@ public class Wind : MonoBehaviour
 			float distCovered = (Time.time - startTime) * rotationSpeed;
 			float fracJourney = distCovered / journeyLength;
 
-			transform.rotation = Quaternion.Lerp (formerRotation, targetRotation, fracJourney);
+			//transform.rotation = Quaternion.Lerp (formerRotation, targetRotation, fracJourney);
+			meter.SetOrientation (Quaternion.Lerp (formerRotation, targetRotation, fracJourney).eulerAngles.z);
 
 			if (fracJourney >= 1.0f) {
 				changing = false;
@@ -70,13 +67,14 @@ public class Wind : MonoBehaviour
 
 	private void ChangeWindDirection ()
 	{
-		Vector3 targetVektor = arrowTrans.eulerAngles + Vector3.forward * Random.Range (-90.0f, 90.0f);
-		formerRotation = arrowTrans.rotation;
-		targetRotation = Quaternion.Euler (targetVektor);
+		Vector3 targetVektor = currentRotation.eulerAngles + Vector3.forward * Random.Range (-90.0f, 90.0f);
+		formerRotation = currentRotation;
+		targetRotation = Quaternion.Euler (targetVektor - Vector3.forward * 90.0f);
 		changing = true;
 		directionChangeTick = Random.Range (minTime, maxTime);
 		directionTimer = 0.0f;
 		startTime = Time.time;
 		journeyLength = Mathf.Abs (formerRotation.eulerAngles.z - targetRotation.eulerAngles.z);
+
 	}
 }

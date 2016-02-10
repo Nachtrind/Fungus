@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameInput: MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameInput: MonoBehaviour
 		SkillMode,
 		BuildMode,
 		MoveBrainMode,
+		ChangeWind,
 		NoMode}
 
 	;
@@ -36,8 +38,9 @@ public class GameInput: MonoBehaviour
 	static event Action<Vector3> OnCoreCommand;
 	static event Func<Vector3, FungusNode> OnSpawnFungusCommand;
 
-	static InputHandler instance;
+	static InputHandler handlerInstance;
 	AbilityButton currentSelection;
+	NodeAbility selectedSkill;
 
 	//Stuff for Building a new Node
 	private Vector3 touchWorldPoint;
@@ -71,23 +74,35 @@ public class GameInput: MonoBehaviour
 
 	private GameObject skillMenu;
 
+	static GameInput instance;
+
+	public static GameInput Instance {
+		get {
+			if (instance == null) {
+				instance = FindObjectOfType<GameInput> ();
+			}
+			return instance;
+		}
+	}
+
+	EventSystem eventsystem;
+
 	void Start ()
 	{
 		plane = new Plane (Vector3.up, Vector3.zero);
 		cam = Camera.main;
 
 		CalcLevelBorders ();
-
 		currentState = InputState.NoMode;
+		eventsystem = EventSystem.current;
 
-		//Find and Deativate Skill Menu
-		skillMenu = GameObject.Find ("SkillMenu");
-		skillMenu.SetActive (false);
+		selectedSkill = null;
 
 	}
 
 	void Update ()
 	{
+
 		if (!cam) {
 			Debug.LogError ("No Camera tagged as MainCamera");
 #if UNITY_EDITOR
@@ -95,34 +110,51 @@ public class GameInput: MonoBehaviour
 #endif
 			return;
 		}
-			
 
+		if (eventsystem == null) {
+			eventsystem = EventSystem.current;
+		}
 
 		///////////////
 		//Get Touches//
 		///////////////
 		Touch[] touches = Input.touches;
 
-		if (touches.Length == 1) {
+
+
+		if (currentState != InputState.NoMode && touches.Length > 0) {
+			int touchToUseInWorld = 0;
+			//decide which touch to use
+			if (touches.Length == 2) {
+				if (!eventsystem.IsPointerOverGameObject (0)) {
+					touchToUseInWorld = 0;
+				}
+				if (!eventsystem.IsPointerOverGameObject (1)) {
+					touchToUseInWorld = 1;
+				}
+			}
+
 
 			//Transform Touch to WorldPosition
-			touchWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (Input.GetTouch (0).position));
+			touchWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (touches [touchToUseInWorld].position));
+			spores.transform.position = new Vector3 (touchWorldPoint.x, 0.1f, touchWorldPoint.z);
 
 			///////////////////
 			//Build New Nodes//
 			///////////////////
-			if (currentState == InputState.BuildMode) {				
-				if (touches [0].phase == TouchPhase.Began) {
+			if (currentState == InputState.BuildMode && touches.Length == 2) {	
+				if (touches [touchToUseInWorld].phase == TouchPhase.Began) {
 					BeginBuild (touchWorldPoint);
 				}
 
-				if (touches [0].phase == TouchPhase.Moved && canBuildNode) {
+				if (touches [touchToUseInWorld].phase == TouchPhase.Moved && canBuildNode) {
 					TrackBuild (touchWorldPoint);
 				}
 
-				if (touches [0].phase == TouchPhase.Ended && canBuildNode) {
+				if (touches [touchToUseInWorld].phase == TouchPhase.Ended && canBuildNode) {
 					EndBuild ();
 					FungusResources.Instance.SubResources (nodeCost);
+
 				}
 
 			}
@@ -130,11 +162,15 @@ public class GameInput: MonoBehaviour
 			////////////////////
 			//Specialize Nodes//
 			////////////////////
-			if (currentState == InputState.SkillMode) {	
-				if (touches [0].phase == TouchPhase.Ended) {
+			if (currentState == InputState.SkillMode && touches.Length == 2) {
+				if (selectedSkill == null) {
+					Debug.Log ("NO SKILL!!!!!!!!");	
+				}
+
+				if (touches [touchToUseInWorld].phase == TouchPhase.Ended) {
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.55f);
 					if (nodesInRadius.Count > 0) {
-						if (currentSelection != null) {
+						if (selectedSkill != null) {
 							this.SpecializeNode (GameWorld.Instance.GetNearestFungusNode (touchWorldPoint));
 						}
 					}
@@ -144,20 +180,23 @@ public class GameInput: MonoBehaviour
 			//////////////
 			//Move Brain//
 			//////////////
-			if (currentState == InputState.MoveBrainMode) {
+			if (currentState == InputState.MoveBrainMode && touches.Length == 2) {
 				//Touch	
-				if (touches [0].phase == TouchPhase.Ended) {
+				if (touches [touchToUseInWorld].phase == TouchPhase.Ended) {
 					if (OnCoreCommand != null) {
 						OnCoreCommand (touchWorldPoint);
 					}
 				}
 			}
+		}
 
-			/////////////////////////
-			//Activate & Deactivate//
-			/////////////////////////
+
+		/////////////////////////
+		//Activate & Deactivate//
+		/////////////////////////
+		if (touches.Length == 1) {
+			touchWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (touches [0].position));
 			if (currentState == InputState.NoMode) {
-
 				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 1.0f);
 				if (nodesInRadius.Count > 0) {
 					if (touches [0].phase == TouchPhase.Began) {
@@ -219,7 +258,7 @@ public class GameInput: MonoBehaviour
 
 
 
-
+		/*
 		/////////////////
 		//Mouse Control//
 		/////////////////
@@ -318,8 +357,7 @@ public class GameInput: MonoBehaviour
 					} 
 				}
 			}
-		}
-
+		}*/
 
 				
 		inputTimer += Time.deltaTime;
@@ -363,7 +401,7 @@ public class GameInput: MonoBehaviour
 				ParticleSystem.EmissionModule em = spores.emission;
 				spores.Play ();
 				em.enabled = true;
-				spores.transform.position = new Vector3 (_pos.x, 0.5f, _pos.z);
+				spores.transform.position = new Vector3 (_pos.x, 0.1f, _pos.z);
 			}
 			canBuildNode = true;
 		}
@@ -414,40 +452,116 @@ public class GameInput: MonoBehaviour
 
 	}
 
-	public void ClickedButton (AbilityButton _button)
+
+	public void SelectSkill (UserMenu.AbilityType _button)
 	{
-		if (_button.isUnlocked) {
-			if (_button == currentSelection) {
-				if (_button.isSelected) {
-					this.currentSelection = null;
-					_button.isSelected = false;
-					_button.SetTint (normalTint);
+		Debug.Log ("SET TO: " + _button);
+		switch (_button) {
+		case UserMenu.AbilityType.Lure:
+			{
+				if (FungusResources.Instance.attract.isUnlocked) {
+					selectedSkill = FungusResources.Instance.attract;
 				}
-			} else {
-				if (currentSelection != null) {
-					currentSelection.isSelected = false;
-					currentSelection.SetTint (normalTint);
-				}
-			
-				currentSelection = _button;
-				_button.isSelected = true;
-				_button.SetTint (selectedTint);
+				Debug.Log ("SET LURE!!!!!");
+				break;
 			}
+		case UserMenu.AbilityType.Eat:
+			{
+				if (FungusResources.Instance.beatneat.isUnlocked) {
+					selectedSkill = FungusResources.Instance.beatneat;
+				}
+				break;
+			}
+		case UserMenu.AbilityType.Spawn:
+			{
+				if (FungusResources.Instance.growth.isUnlocked) {
+					selectedSkill = FungusResources.Instance.growth;
+				}
+				break;
+			}
+		case UserMenu.AbilityType.Slow:
+			{
+				if (FungusResources.Instance.slowdown.isUnlocked) {
+					selectedSkill = FungusResources.Instance.slowdown;
+				}
+				break;
+			}
+		case UserMenu.AbilityType.Speedup:
+			{
+				if (FungusResources.Instance.speedup.isUnlocked) {
+					selectedSkill = FungusResources.Instance.speedup;
+				}
+				break;
+			}
+		case UserMenu.AbilityType.Enslave:
+			{
+				if (FungusResources.Instance.zombies.isUnlocked) {
+					selectedSkill = FungusResources.Instance.zombies;
+				}
+				break;
+			}
+
+		default:
+			{
+				Debug.Log ("Something went wrong");
+				selectedSkill = null;
+				break;
+			}
+
 		}
+
 		inputTimer = 0.0f;	
 	}
 
-	public void ToggleSkillMenu (Image _buttonImg)
+
+	public void ActivateMode (UserMenu.UserMenuButtonType type)
 	{
-		bool current = this.skillMenu.activeSelf;
-		this.skillMenu.SetActive (!current);
-		if (this.skillMenu.activeSelf) {
-			currentState = InputState.SkillMode;
-			_buttonImg.color = selectedTint;
-		} else {
-			currentState = InputState.NoMode;
-			_buttonImg.color = Color.white;
+		switch (type) {
+		case UserMenu.UserMenuButtonType.Brain:
+			{
+				ActivateBrainMode ();
+				break;
+			}
+		case UserMenu.UserMenuButtonType.Build:
+			{
+				ActivateBuildMode ();
+				break;
+			}
+
+		case UserMenu.UserMenuButtonType.Skill:
+			{
+				ActivateSkillMode ();
+				break;
+			}
+
+		default:
+			{
+				Debug.Log ("Something went wrong");
+				break;
+			}
+
 		}
+	}
+
+	public void ActivateBuildMode ()
+	{
+		currentState = InputState.BuildMode;
+	}
+
+
+	public void ActivateSkillMode ()
+	{
+		currentState = InputState.SkillMode;
+	}
+
+	public void ActivateBrainMode ()
+	{
+		currentState = InputState.MoveBrainMode;
+	}
+
+	public void DeactivateMode ()
+	{
+		currentState = InputState.NoMode;
 	}
 
 	public void ToggleBuildMode (Image _buttonImg)
@@ -482,43 +596,13 @@ public class GameInput: MonoBehaviour
 		currentSelection = null;
 	}
 
+
+
+
+
 	void SpecializeNode (FungusNode fungusNode)
 	{
-
-		switch (currentSelection.buttonName) {
-		case ButtonName.ButtonName.BeatNEat:
-			{
-				fungusNode.Specialize (Instantiate (FungusResources.Instance.beatneat) as NodeAbility);
-				break;
-			}
-		case ButtonName.ButtonName.ScentNode:
-			{
-				fungusNode.Specialize (FungusResources.Instance.attract);
-				break;
-			}
-		case ButtonName.ButtonName.SlowDown:
-			{
-				fungusNode.Specialize (FungusResources.Instance.slowdown);
-				break;
-			}
-		case ButtonName.ButtonName.SpeedUp:
-			{
-				fungusNode.Specialize (FungusResources.Instance.speedup);
-				break;
-			}
-		case ButtonName.ButtonName.Zombies:
-			{
-				fungusNode.Specialize (FungusResources.Instance.zombies);
-				break;
-			}
-		case ButtonName.ButtonName.GrowthSpores:
-			{
-				fungusNode.Specialize (FungusResources.Instance.growth);
-				break;
-			}
-		}
-
-
+		fungusNode.Specialize (selectedSkill);
 	}
 
 	public static void RegisterCoreMoveCallback (Action<Vector3> callback)
