@@ -19,7 +19,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: a6c4ad2339508a54eb6c30b457c439fd, type: 3}
+          m_Texture: {fileID: 2800000, guid: 95d6fac3d7ec5ba418e4a3363b8fbe1c, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -89,7 +89,7 @@ Material:
         first:
           name: _GlowTex
         second:
-          m_Texture: {fileID: 2800000, guid: b5c4c957906084447a322d69b0c18aff, type: 3}
+          m_Texture: {fileID: 2800000, guid: c0cf4c6706bb62548afe57dd49744504, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
