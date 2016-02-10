@@ -27,7 +27,7 @@ public class UserMenu : MonoBehaviour
 	/// <summary>
 	/// This event passes the player requested wind direction.
 	/// </summary>
-	public event System.Action<float> OnRequestWindDirection;
+	public static event System.Action<float> OnRequestWindDirection;
 
 	[SerializeField] AbilityFader abilityFader;
 	[SerializeField] Anemometer anemo;
@@ -55,15 +55,22 @@ public class UserMenu : MonoBehaviour
 			_activeButtonPositions [i - 1] = buttons [i].anchoredPosition.x;
 		}
 		_activeMenuPosition = buttons [0].anchoredPosition.x;
-		for (var i = 0; i < abilityButtons.Length; i++) {
-			if (i > 1) {
-				abilityButtons [i].SetActivatedState (false, AbilityInactiveColor);
-			} else {
-				abilityButtons [i].SetActivatedState (true, AbilityActiveColor);
-			}
-		}
+
+		EnableOrDisableAbility (AbilityType.Eat, FungusResources.Instance.beatneat.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Lure, FungusResources.Instance.attract.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Spawn, FungusResources.Instance.growth.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Enslave, FungusResources.Instance.zombies.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Slow, FungusResources.Instance.slowdown.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Speedup, FungusResources.Instance.speedup.isUnlocked);
+
 		BlendOut ();
 		OnMenuInactive ();
+		Wind.OnWind += SetAnemometerDirection;
+	}
+
+	void OnDestroy ()
+	{
+		Wind.OnWind -= SetAnemometerDirection;
 	}
 
 	public void OnAnemoRequestsWindDirection (float degree)
@@ -85,7 +92,6 @@ public class UserMenu : MonoBehaviour
 	{
 		//ForceBlendOut ();
 		GameInput.Instance.SelectSkill (type);
-		Debug.Log ("Selected Skill: " + type);
 	}
 
 	public void OnBrainSelected ()
@@ -130,9 +136,9 @@ public class UserMenu : MonoBehaviour
 	{
 		_activeButton = type;
 		BlendIn ();
-		/*if (type != UserMenuButtonType.Skill & !_abilityRectActive) {
+		if (type != UserMenuButtonType.Skill & !_abilityRectActive) {
 			abilityFader.FadeOut (StandardFadeTimeAbilities);
-		}*/
+		}
 
 		GameInput.Instance.ActivateMode (type);
 
@@ -143,7 +149,7 @@ public class UserMenu : MonoBehaviour
 		_activeButton = UserMenuButtonType.None;
 		BlendOut ();
 
-		GameInput.Instance.DeactivateMode ();
+		GameInput.Instance.DeactivateMode (type);
 	}
 
 	public void OnAbilityRectActive ()

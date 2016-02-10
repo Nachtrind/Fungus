@@ -18,6 +18,7 @@ MonoBehaviour:
   radius: 1.2
   cost: 2
   tickRate: 1
+  isUnlocked: 0
   growthSpores: {fileID: 150168, guid: 4cdb3f65ad93d8b488619b9b59ab435c, type: 2}
   sporeAnimObjPrefab: {fileID: 106630, guid: 9972c3bd0c6b1514c933a69462fa6fee, type: 2}
   influenceRadius: 1

@@ -72,6 +72,11 @@ public class GameInput: MonoBehaviour
 	float upperBorder;
 	float lowerBorder;
 
+	//Skill Mode Timer
+	float skillTimer = 0.0f;
+	float skillTick = 0.25f;
+	bool leftSkillMode;
+
 	private GameObject skillMenu;
 
 	static GameInput instance;
@@ -163,9 +168,6 @@ public class GameInput: MonoBehaviour
 			//Specialize Nodes//
 			////////////////////
 			if (currentState == InputState.SkillMode && touches.Length == 2) {
-				if (selectedSkill == null) {
-					Debug.Log ("NO SKILL!!!!!!!!");	
-				}
 
 				if (touches [touchToUseInWorld].phase == TouchPhase.Ended) {
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.55f);
@@ -361,6 +363,14 @@ public class GameInput: MonoBehaviour
 
 				
 		inputTimer += Time.deltaTime;
+		skillTimer += Time.deltaTime;
+
+		//Check SkillMode Deactivation
+		if (leftSkillMode && skillTimer >= skillTick) {
+			currentState = InputState.NoMode;
+			Debug.Log ("Came from Skill went to No Mode");
+		}
+
 
 	}
 
@@ -455,14 +465,13 @@ public class GameInput: MonoBehaviour
 
 	public void SelectSkill (UserMenu.AbilityType _button)
 	{
-		Debug.Log ("SET TO: " + _button);
+		currentState = InputState.SkillMode;
 		switch (_button) {
 		case UserMenu.AbilityType.Lure:
 			{
 				if (FungusResources.Instance.attract.isUnlocked) {
 					selectedSkill = FungusResources.Instance.attract;
 				}
-				Debug.Log ("SET LURE!!!!!");
 				break;
 			}
 		case UserMenu.AbilityType.Eat:
@@ -509,13 +518,14 @@ public class GameInput: MonoBehaviour
 			}
 
 		}
-
+		Debug.Log (currentState);
 		inputTimer = 0.0f;	
 	}
 
 
 	public void ActivateMode (UserMenu.UserMenuButtonType type)
 	{
+		leftSkillMode = false;
 		switch (type) {
 		case UserMenu.UserMenuButtonType.Brain:
 			{
@@ -546,22 +556,30 @@ public class GameInput: MonoBehaviour
 	public void ActivateBuildMode ()
 	{
 		currentState = InputState.BuildMode;
+		leftSkillMode = false;
 	}
 
 
 	public void ActivateSkillMode ()
 	{
 		currentState = InputState.SkillMode;
+		leftSkillMode = false;
 	}
 
 	public void ActivateBrainMode ()
 	{
 		currentState = InputState.MoveBrainMode;
+		leftSkillMode = false;
 	}
 
-	public void DeactivateMode ()
+	public void DeactivateMode (UserMenu.UserMenuButtonType type)
 	{
-		currentState = InputState.NoMode;
+		if (type != UserMenu.UserMenuButtonType.Skill) {
+			currentState = InputState.NoMode;
+		} else {
+			skillTimer = 0.0f;
+			leftSkillMode = true;
+		}
 	}
 
 	public void ToggleBuildMode (Image _buttonImg)
@@ -668,6 +686,33 @@ public class GameInput: MonoBehaviour
 		} else {
 			pathToCursor.Clear ();
 			pathToCursorLength = float.PositiveInfinity;
+		}
+
+	}
+
+
+	void OnGUI ()
+	{
+		
+		int touchToUseInWorld = 0;
+		int touchOverGUI = 0;
+		Touch[] touches = Input.touches;
+		if (touches.Length == 0) {
+			return;
+		}
+		//decide which touch to use
+		if (touches.Length == 2) {
+			if (!eventsystem.IsPointerOverGameObject (0)) {
+				touchToUseInWorld = 0;
+				touchOverGUI = 1;
+			}
+			if (!eventsystem.IsPointerOverGameObject (1)) {
+				touchToUseInWorld = 1;
+				touchOverGUI = 0;
+			}
+
+			GUI.Box (new Rect (touches [touchToUseInWorld].position, new Vector2 (64, 64)), touches [touchToUseInWorld].fingerId.ToString ());
+			GUI.Box (new Rect (touches [touchOverGUI].position, new Vector2 (64, 64)), touches [touchOverGUI].fingerId.ToString ());
 		}
 
 	}
