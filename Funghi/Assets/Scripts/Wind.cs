@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class Wind : MonoBehaviour
 {
 
-	public Anemometer meter;
+    public static event System.Action<float> OnWind;
 
 	static Wind instance;
 
@@ -18,63 +18,55 @@ public class Wind : MonoBehaviour
 		}
 	}
 
-	float directionTimer;
-	float directionChangeTick;
-	float minTime = 10.0f;
-	float maxTime = 15.0f;
 	public Quaternion currentRotation;
-	float eulerZRot;
-	Quaternion formerRotation;
-	Quaternion targetRotation;
-	float rotationSpeed = 10.0f;
-	bool changing;
-	float startTime;
-	float journeyLength;
+
+    float _currentDirection;
+    float _nextDirection;
+    public float DirectionChangeIntervalMin = 1f;
+    public float DirectionChangeIntervalMax = 5f;
+    public float DirectionChangeSpeed = 1f;
+
+    public float AfterUserChangeTimeout = 5f;
+
+    float _userRequestTimeout;
 
 	// Use this for initialization
 	void Start ()
 	{
-
-		directionChangeTick = Random.Range (minTime, maxTime);
-
-
+        UserMenu.OnRequestWindDirection += OnRequestedWindDirection;
+        ChangeDirection();
 	}
+
+    void ChangeDirection()
+    {
+        if (Mathf.Approximately(_userRequestTimeout, 0))
+        {
+            _nextDirection = Random.Range(0, 360f);
+        }
+        Invoke("ChangeDirection", Random.Range(DirectionChangeIntervalMin, DirectionChangeIntervalMax)+_userRequestTimeout);
+        _userRequestTimeout = 0;
+    }
+
+    void OnDestroy()
+    {
+        UserMenu.OnRequestWindDirection -= OnRequestedWindDirection;
+    }
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (directionTimer >= directionChangeTick) {
-			ChangeWindDirection ();
-		}
-
-		if (changing) {
-
-			float distCovered = (Time.time - startTime) * rotationSpeed;
-			float fracJourney = distCovered / journeyLength;
-
-			//transform.rotation = Quaternion.Lerp (formerRotation, targetRotation, fracJourney);
-			meter.SetOrientation (Quaternion.Lerp (formerRotation, targetRotation, fracJourney).eulerAngles.z);
-
-			if (fracJourney >= 1.0f) {
-				changing = false;
-			}
-
-		} else {
-			directionTimer += Time.deltaTime;
-		}
-
+        currentRotation = Quaternion.AngleAxis(_currentDirection, Vector3.up);
+        _currentDirection = Mathf.MoveTowards(_currentDirection, _nextDirection, Time.deltaTime * DirectionChangeSpeed);
+        if (OnWind != null)
+        {
+            OnWind(_currentDirection);
+        }
 	}
 
-	private void ChangeWindDirection ()
-	{
-		Vector3 targetVektor = currentRotation.eulerAngles + Vector3.forward * Random.Range (-90.0f, 90.0f);
-		formerRotation = currentRotation;
-		targetRotation = Quaternion.Euler (targetVektor - Vector3.forward * 90.0f);
-		changing = true;
-		directionChangeTick = Random.Range (minTime, maxTime);
-		directionTimer = 0.0f;
-		startTime = Time.time;
-		journeyLength = Mathf.Abs (formerRotation.eulerAngles.z - targetRotation.eulerAngles.z);
+    void OnRequestedWindDirection(float degree)
+    {
+        _nextDirection = degree;
+        _userRequestTimeout = AfterUserChangeTimeout;
+    }
 
-	}
 }

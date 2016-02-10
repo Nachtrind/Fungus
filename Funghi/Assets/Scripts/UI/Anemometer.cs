@@ -22,7 +22,6 @@ public class Anemometer : MonoBehaviour
 		}
 		menu.OnAnemoRequestsWindDirection (degree - 90);
 		SetOrientation (degree - 90);
-		Wind.Instance.currentRotation = Quaternion.Euler (0, 0, degree);
 	}
 
 	public void OnPointerDown (BaseEventData eventData)
