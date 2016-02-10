@@ -96,7 +96,7 @@ public class GameInput: MonoBehaviour
 		currentState = InputState.NoMode;
 		eventsystem = EventSystem.current;
 
-		selectedSkill = null;
+		selectedSkill = FungusResources.Instance.attract;
 
 	}
 
