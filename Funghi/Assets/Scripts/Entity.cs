@@ -55,7 +55,6 @@ public abstract class Entity : MonoBehaviour
 
 	public void Kill (Entity murderer)
 	{
-		PlaySound (SoundSet.ClipType.Death);
 		Damage (murderer, currentHealth);
 	}
 
@@ -132,7 +131,7 @@ public abstract class Entity : MonoBehaviour
 	AudioSource audioSource;
 	[SerializeField]
 	[Header("Sound")]
-	SoundSet soundSet;
+	protected SoundSet soundSet;
     
 	public bool PlaySound (SoundSet.ClipType type)
 	{

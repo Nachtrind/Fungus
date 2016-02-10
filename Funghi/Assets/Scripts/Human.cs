@@ -22,6 +22,10 @@ public class Human : Entity
         GetComponent<Rigidbody>().isKinematic = true;
         initialGlowColor = glowRenderer.color;
         DisableSlimeComponents();
+        if (GameWorld.Instance.GetPositionIsSlime(transform.position, 0.1f))
+        {
+            Kill(this);
+        }
     }
 
     public override void OnDamage(Entity attacker)
