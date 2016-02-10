@@ -11,4 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee07db70d8df52488db96a6d5b2c1de, type: 3}
   m_Name: Node
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - type: 7
+    playType: 0
+    clip: {fileID: 8300000, guid: 4907270b83b86d54392114acdaf68952, type: 3}
