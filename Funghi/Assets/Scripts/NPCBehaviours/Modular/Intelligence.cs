@@ -224,6 +224,13 @@ namespace ModularBehaviour
             Vector2 unitPos = Camera.main.WorldToScreenPoint(owner.transform.position);
             unitPos.y = Screen.height - unitPos.y;
             string txt = "State: " + activeState.name;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(txt+System.Environment.NewLine);
+            sb.AppendLine("Memory:");
+            foreach(var pair in memory)
+            {
+                sb.AppendLine(string.Format("{0}: {1}", pair.Key, pair.Value));
+            }
+            txt = sb.ToString();
             Vector2 gSize = GUI.skin.box.CalcSize(new GUIContent(txt));
             GUILayout.BeginArea(new Rect(unitPos, new Vector2(gSize.x, gSize.y)), GUI.skin.box);
             GUILayout.Label(txt);
