@@ -197,42 +197,45 @@ public class GameInput: MonoBehaviour
 		//Activate & Deactivate//
 		/////////////////////////
 		if (touches.Length == 1) {
-			touchWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (touches [0].position));
-			if (currentState == InputState.NoMode) {
-				List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 1.0f);
-				if (nodesInRadius.Count > 0) {
-					if (touches [0].phase == TouchPhase.Began) {
-						GameWorld.Instance.GetNearestFungusNode (touchWorldPoint).ToggleActive ();
+			int touchToUseInWorld = 0;
+			if (!eventsystem.IsPointerOverGameObject (0)) {
+				touchWorldPoint = GetTouchPosInWorld (cam.ScreenPointToRay (touches [touchToUseInWorld].position));
+				if (currentState == InputState.NoMode) {
+					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 1.0f);
+					if (nodesInRadius.Count > 0) {
+						if (touches [touchToUseInWorld].phase == TouchPhase.Began) {
+							GameWorld.Instance.GetNearestFungusNode (touchWorldPoint).ToggleActive ();
+						}
+					} else {
+						///////////////
+						//Move Camera//
+						///////////////
+						if (touches [0].phase == TouchPhase.Moved) {
+							Vector2 touchMovement = touches [0].deltaPosition * 0.02f;
+
+							float posX = touchMovement.x * -moveSpeedX * touches [touchToUseInWorld].deltaTime;
+							float posZ = touchMovement.y * -moveSpeedZ * touches [touchToUseInWorld].deltaTime;
+
+							cam.transform.position += new Vector3 (posX, 0, posZ);
+						} 
+
+						if (touches [touchToUseInWorld].phase == TouchPhase.Began) {
+							lastMousePos = touches [touchToUseInWorld].position;
+						} else if (Input.GetMouseButton (0)) {
+							Vector2 current = Input.mousePosition;
+
+							Vector3 lastMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (lastMousePos));
+							Vector3 currentMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (current));
+
+							float x = (currentMouseInWorldPos.x - lastMouseInWorldPos.x) * -moveSpeedX;
+							float z = (currentMouseInWorldPos.z - lastMouseInWorldPos.z) * -moveSpeedZ;
+
+							cam.transform.position += new Vector3 (x, 0, z);
+
+							lastMousePos = current;
+							//ClampCamPos ();
+						} 
 					}
-				} else {
-					///////////////
-					//Move Camera//
-					///////////////
-					if (touches [0].phase == TouchPhase.Moved) {
-						Vector2 touchMovement = touches [0].deltaPosition * 0.02f;
-
-						float posX = touchMovement.x * -moveSpeedX * touches [0].deltaTime;
-						float posZ = touchMovement.y * -moveSpeedZ * touches [0].deltaTime;
-
-						cam.transform.position += new Vector3 (posX, 0, posZ);
-					} 
-
-					if (touches [0].phase == TouchPhase.Began) {
-						lastMousePos = touches [0].position;
-					} else if (Input.GetMouseButton (0)) {
-						Vector2 current = Input.mousePosition;
-
-						Vector3 lastMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (lastMousePos));
-						Vector3 currentMouseInWorldPos = GetTouchPosInWorld (cam.ScreenPointToRay (current));
-
-						float x = (currentMouseInWorldPos.x - lastMouseInWorldPos.x) * -moveSpeedX;
-						float z = (currentMouseInWorldPos.z - lastMouseInWorldPos.z) * -moveSpeedZ;
-
-						cam.transform.position += new Vector3 (x, 0, z);
-
-						lastMousePos = current;
-						//ClampCamPos ();
-					} 
 				}
 			}
 		}
