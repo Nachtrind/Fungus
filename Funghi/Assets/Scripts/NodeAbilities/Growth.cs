@@ -73,7 +73,7 @@ namespace NodeAbilities
 				Human h = peopleCollider [0].GetComponent<Human> ();
 				h.SetBehaviour (growthIntelligence);
 				h.TriggerBehaviour ("Infect", node);
-				h.gameObject.tag = "Infected";
+				//h.gameObject.tag = "Infected";
 				infected = h.gameObject;
 			}
 		}

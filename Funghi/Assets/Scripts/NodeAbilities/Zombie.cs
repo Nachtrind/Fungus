@@ -58,12 +58,15 @@ namespace NodeAbilities
 
 		public override void StopExecution (FungusNode node)
 		{
-			if (spores.GetComponent<ParticleSystem> ().isPlaying) {
-				spores.GetComponent<ParticleSystem> ().Stop ();
-				ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
-				em.enabled = false;
+			if (spores != null) {
+				if (spores.GetComponent<ParticleSystem> ().isPlaying) {
+					spores.GetComponent<ParticleSystem> ().Stop ();
+					ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
+					em.enabled = false;
+				}
+				GameObject.Destroy (sporeAnimObj);
+
 			}
-			GameObject.Destroy (sporeAnimObj);
 		}
 
 		private void InfluenceEnemiesInArea (FungusNode node, Vector3 rotatedVector)

@@ -371,7 +371,7 @@ public class GameInput: MonoBehaviour
 			leftSkillMode = false;
 		}
 
-
+		Debug.Log (currentState);
 	}
 
 	private void ClampCamPos ()
@@ -518,7 +518,7 @@ public class GameInput: MonoBehaviour
 			}
 
 		}
-		Debug.Log (currentState);
+
 		inputTimer = 0.0f;	
 	}
 
@@ -556,20 +556,17 @@ public class GameInput: MonoBehaviour
 	public void ActivateBuildMode ()
 	{
 		currentState = InputState.BuildMode;
-		leftSkillMode = false;
 	}
 
 
 	public void ActivateSkillMode ()
 	{
 		currentState = InputState.SkillMode;
-		leftSkillMode = false;
 	}
 
 	public void ActivateBrainMode ()
 	{
 		currentState = InputState.MoveBrainMode;
-		leftSkillMode = false;
 	}
 
 	public void ActivateWindMode ()
