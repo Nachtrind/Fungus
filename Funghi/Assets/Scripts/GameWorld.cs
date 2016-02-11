@@ -465,15 +465,27 @@ public class GameWorld : MonoBehaviour
         {
             return null;
         }
-        Human nearest = humans[0];
-        float dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
-        for (int i = 1; i < humans.Count; i++)
+        var nearest = humans[0];
+        var dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
+        for (var i = 1; i < humans.Count; i++)
         {
-            if (!humans[i].Behaviour || humans[i].Behaviour.Classification != typeFilter)
+            if (!humans[i].Behaviour) continue;
+            if (typeFilter == IntelligenceType.Human)
             {
-                continue;
+                IntelligenceType ht = humans[i].Behaviour.Classification;
+                if (ht != IntelligenceType.Citizen || ht != IntelligenceType.Human || ht != IntelligenceType.Police)
+                {
+                    continue;
+                }
             }
-            float curDist = AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position);
+            else
+            {
+                if (humans[i].Behaviour.Classification != typeFilter)
+                {
+                    continue;
+                }
+            }
+            var curDist = AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position);
             if (curDist < dist)
             {
                 nearest = humans[i];
