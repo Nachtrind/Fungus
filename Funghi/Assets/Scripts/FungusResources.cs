@@ -84,18 +84,22 @@ public class FungusResources : MonoBehaviour
 		switch (_toUnlock.name) {
 		case "growth":
 			{
+				growth.UnlockAbillity ();
 				break;
 			}
 		case "slowdown":
 			{
+				slowdown.UnlockAbillity ();
 				break;
 			}
 		case "speedup":
 			{
+				speedup.UnlockAbillity ();
 				break;
 			}
 		case "zombie":
 			{
+				zombies.UnlockAbillity ();
 				break;
 			}
 
