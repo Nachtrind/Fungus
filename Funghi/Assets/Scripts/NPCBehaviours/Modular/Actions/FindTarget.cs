@@ -28,7 +28,7 @@ namespace ModularBehaviour
             switch (Type)
             {
                 case TargetType.Human:
-                    t = GameWorld.Instance.GetNearestHuman(controller.Owner.transform.position);
+                    t = GameWorld.Instance.GetNearestHuman(controller.Owner.transform.position, targetClassification);
                     break;
                 case TargetType.Fungus:
                     t = GameWorld.Instance.GetNearestFungusNode(controller.Owner.transform.position);
