@@ -54,6 +54,8 @@ public class UserMenu : MonoBehaviour
 
     public static UserMenu current;
 
+    [SerializeField] MainMenu mainMenu;
+
 	void Start ()
 	{
 	    current = this;
@@ -98,6 +100,7 @@ public class UserMenu : MonoBehaviour
 	public void OnMenuSelected ()
 	{
 		Debug.Log ("Display the menu");
+	    mainMenu.OpenMenu();
 	}
 
 	public void OnAbilitySelected (AbilityType type)
