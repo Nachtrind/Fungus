@@ -14,6 +14,7 @@ namespace NodeAbilities
 		GameObject sporeAnimObj;
 		Animator sporeAnim;
 		public float influenceRadius;
+		public LayerMask citizenLayer;
 
 		public override void Execute (FungusNode node)
 		{
@@ -46,13 +47,10 @@ namespace NodeAbilities
 				em.enabled = true;
 			}
 
-			Quaternion rotation = Quaternion.Euler (Wind.Instance.currentRotation.eulerAngles - Vector3.up * 90);
-			spores.transform.rotation = Quaternion.Euler (spores.transform.rotation.eulerAngles.x, 
-				Wind.Instance.currentRotation.z * -1.0f - 90.0f,  
-				spores.transform.rotation.eulerAngles.z);
-			Vector3 rotatedVector = (rotation * Vector3.up * radius);
+			Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
+			spores.transform.rotation = sporeRotation;
 
-			InfluenceEnemiesInArea (node, rotatedVector);
+			InfluenceEnemiesInArea (node, sporeRotation);
 
 		}
 
@@ -69,19 +67,17 @@ namespace NodeAbilities
 			}
 		}
 
-		private void InfluenceEnemiesInArea (FungusNode node, Vector3 rotatedVector)
+		private void InfluenceEnemiesInArea (FungusNode node, Quaternion sporeRot)
 		{
-
+			Vector3 rotatedVector = sporeRot * Vector3.forward;
 			Vector3 dir = Vector3.Normalize (rotatedVector);
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
-			int i = 0;
-			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
-				List<Human> enemiesInRadius = GameWorld.Instance.GetHumans (node.transform.position + tempVector, influenceRadius);
-				foreach (Human h in enemiesInRadius) {
-					h.TriggerBehaviour ("Lure", node);
-				}
-				i++;
-				tempVector = dir * (i * influenceRadius);
+			Collider[] peopleCollider = Physics.OverlapBox (node.transform.position + dir * radius / 2, new Vector3 (influenceRadius / 2, 1, radius / 2), sporeRot, citizenLayer);
+			//Debug.Log ("Caught Citizens with lure: " + peopleCollider.Length);
+			//Debug.DrawLine (node.transform.position, node.transform.position + dir * radius, Color.cyan, 4.0f);
+
+			foreach (Collider c in peopleCollider) {
+				c.GetComponent<Human> ().TriggerBehaviour ("Lure", node);
 			}
 		}
 	}

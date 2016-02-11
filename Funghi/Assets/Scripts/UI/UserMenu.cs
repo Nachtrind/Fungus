@@ -123,6 +123,18 @@ public class UserMenu : MonoBehaviour
 		anemo.SetOrientation (degree);
 	}
 
+	public void StartChangingWind ()
+	{
+		GameInput.Instance.ActivateWindMode ();
+	}
+
+	public void StopChangingWind ()
+	{
+		GameInput.Instance.DeactivateMode (UserMenu.UserMenuButtonType.Build);
+	}
+
+
+
 	#region Fading
 
 	void ForceBlendOut ()

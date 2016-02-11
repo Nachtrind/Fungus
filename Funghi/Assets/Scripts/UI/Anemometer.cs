@@ -28,5 +28,11 @@ public class Anemometer : MonoBehaviour
 	{
 		var pos = (eventData as PointerEventData).position;
 		RequestOrientTo (pos);
+		menu.StartChangingWind ();
+	}
+
+	public void OnPointerAway (BaseEventData eventData)
+	{
+		menu.StopChangingWind ();
 	}
 }

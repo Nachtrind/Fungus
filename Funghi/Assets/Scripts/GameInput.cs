@@ -368,7 +368,7 @@ public class GameInput: MonoBehaviour
 		//Check SkillMode Deactivation
 		if (leftSkillMode && skillTimer >= skillTick) {
 			currentState = InputState.NoMode;
-			Debug.Log ("Came from Skill went to No Mode");
+			leftSkillMode = false;
 		}
 
 
@@ -570,6 +570,11 @@ public class GameInput: MonoBehaviour
 	{
 		currentState = InputState.MoveBrainMode;
 		leftSkillMode = false;
+	}
+
+	public void ActivateWindMode ()
+	{
+		currentState = InputState.ChangeWind;
 	}
 
 	public void DeactivateMode (UserMenu.UserMenuButtonType type)

@@ -16,6 +16,7 @@ namespace NodeAbilities
 		Animator sporeAnim;
 		public float influenceRadius;
 		public ModularBehaviour.Intelligence zombieIntelligence;
+		public LayerMask citizenLayer;
 
 		public override void Execute (FungusNode node)
 		{
@@ -48,13 +49,10 @@ namespace NodeAbilities
 				spores.GetComponent<ParticleSystem> ().Play ();
 			}
 			
-			Quaternion rotation = Quaternion.Euler (Wind.Instance.currentRotation.eulerAngles - Vector3.up * 90);
-			spores.transform.rotation = Quaternion.Euler (spores.transform.rotation.eulerAngles.x, 
-				Wind.Instance.currentRotation.eulerAngles.z * -1.0f - 90.0f,  
-				spores.transform.rotation.eulerAngles.z);
-			Vector3 rotatedVector = (rotation * Vector3.up * radius);
+			Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
+			spores.transform.rotation = sporeRotation;
 
-			InfluenceEnemiesInArea (node, rotatedVector);
+			InfluenceEnemiesInArea (node, sporeRotation);
 			
 		}
 
@@ -88,5 +86,24 @@ namespace NodeAbilities
 				tempVector = dir * (i * influenceRadius);
 			}
 		}
+
+
+		private void InfluenceEnemiesInArea (FungusNode node, Quaternion sporeRot)
+		{
+			Vector3 rotatedVector = sporeRot * Vector3.forward;
+			Vector3 dir = Vector3.Normalize (rotatedVector);
+			Vector3 tempVector = new Vector3 (0, 0, 0); 
+			Collider[] peopleCollider = Physics.OverlapBox (node.transform.position + dir * radius / 2, new Vector3 (influenceRadius / 2, 1, radius / 2), sporeRot, citizenLayer);
+			//Debug.Log ("Caught Citizens with lure: " + peopleCollider.Length);
+			//Debug.DrawLine (node.transform.position, node.transform.position + dir * radius, Color.cyan, 4.0f);
+
+			foreach (Collider c in peopleCollider) {
+				Human h = c.GetComponent<Human> ();
+				h.SetBehaviour (zombieIntelligence);
+				h.TriggerBehaviour ("AttachToNode", node);
+				h.gameObject.tag = "Zombie";
+			}
+		}
+
 	}
 }

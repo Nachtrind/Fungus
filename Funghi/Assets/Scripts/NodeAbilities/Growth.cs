@@ -15,6 +15,7 @@ namespace NodeAbilities
 		Animator sporeAnim;
 		public float influenceRadius;
 		public ModularBehaviour.Intelligence growthIntelligence;
+		public LayerMask citizenLayer;
 
 		private GameObject infected;
 
@@ -48,41 +49,32 @@ namespace NodeAbilities
 				em.enabled = true;
 			}
 
-			Quaternion rotation = Quaternion.Euler (Wind.Instance.currentRotation.eulerAngles - Vector3.up * 90);
-			spores.transform.rotation = Quaternion.Euler (spores.transform.rotation.eulerAngles.x, 
-				Wind.Instance.currentRotation.eulerAngles.z * -1.0f - 90.0f,  
-				spores.transform.rotation.eulerAngles.z);
-			Vector3 rotatedVector = (rotation * Vector3.up * radius);
+			Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
+			spores.transform.rotation = sporeRotation;
 
+			InfluenceEnemyInArea (node, sporeRotation);
 
 
 			if (infected == null) {
 				sporeAnim.SetTrigger ("Attack");
-				InfluenceEnemyInArea (node, rotatedVector);
+				InfluenceEnemyInArea (node, sporeRotation);
 			}
 		}
 
 
-		private void InfluenceEnemyInArea (FungusNode node, Vector3 rotatedVector)
+		private void InfluenceEnemyInArea (FungusNode node, Quaternion sporeRot)
 		{
+			Vector3 rotatedVector = sporeRot * Vector3.forward;
 			Vector3 dir = Vector3.Normalize (rotatedVector);
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
-			int i = 0;
+			Collider[] peopleCollider = Physics.OverlapBox (node.transform.position + dir * radius / 2, new Vector3 (influenceRadius / 2, 1, radius / 2), sporeRot, citizenLayer);
 
-			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
-
-				List<Human> enemiesInRadius = GameWorld.Instance.GetHumans (node.transform.position + tempVector, influenceRadius);
-				foreach (Human h in enemiesInRadius) {
-					if (h.gameObject.tag.Equals ("Citizen")) {
-						h.SetBehaviour (growthIntelligence);
-						h.TriggerBehaviour ("Infect", node);
-						h.gameObject.tag = "Infected";
-						infected = h.gameObject;
-						return;
-					}
-				}
-				i++;
-				tempVector = dir * (i * influenceRadius);
+			if (peopleCollider.Length > 0) {
+				Human h = peopleCollider [0].GetComponent<Human> ();
+				h.SetBehaviour (growthIntelligence);
+				h.TriggerBehaviour ("Infect", node);
+				h.gameObject.tag = "Infected";
+				infected = h.gameObject;
 			}
 		}
 

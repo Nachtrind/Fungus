@@ -22,3 +22,6 @@ MonoBehaviour:
   attractSpores: {fileID: 161090, guid: 02e6ff77e0c89a447b407c7246ed8436, type: 2}
   sporeAnimObjPrefab: {fileID: 106630, guid: 9972c3bd0c6b1514c933a69462fa6fee, type: 2}
   influenceRadius: 1
+  citizenLayer:
+    serializedVersion: 2
+    m_Bits: 16384
