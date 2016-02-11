@@ -76,6 +76,18 @@ MonoBehaviour:
   m_Name: VariableIsSet
   m_EditorClassIdentifier: 
   varName: target
+--- !u!114 &11420732
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685688ef6ad465f458519a360919a753, type: 3}
+  m_Name: MoveToStoredPos
+  m_EditorClassIdentifier: 
+  storeName: target
 --- !u!114 &11421382
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -115,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ifAction: {fileID: 11495406}
   thenAction: {fileID: 11499600}
-  elseAction: {fileID: 0}
+  elseAction: {fileID: 11420732}
 --- !u!114 &11439960
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -145,6 +157,17 @@ MonoBehaviour:
   ifAction: {fileID: 11497188}
   thenAction: {fileID: 0}
   elseAction: {fileID: 11454788}
+--- !u!114 &11442750
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ce386c3b52e9408e623820c7dcf37, type: 3}
+  m_Name: StopMovement
+  m_EditorClassIdentifier: 
 --- !u!114 &11442780
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -207,6 +230,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de82ca16b2dcd5b4f9cda83730538ab0, type: 3}
   m_Name: Suicide
   m_EditorClassIdentifier: 
+--- !u!114 &11454842
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cad1d33fd224d4fbd024d6ed7fed63, type: 3}
+  m_Name: RemoveOwnedSpeedMods
+  m_EditorClassIdentifier: 
 --- !u!114 &11456576
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -220,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   targetClassification: 1
-  range: 0.5
+  range: 1
   checkLOS: 1
   saveVar: 1
   storageVar: target
@@ -277,7 +311,9 @@ MonoBehaviour:
   m_Name: Zombiefied
   m_EditorClassIdentifier: 
   enterActions:
+  - {fileID: 11442750}
   - {fileID: 11482416}
+  - {fileID: 11454842}
   - {fileID: 11439960}
   - {fileID: 11458696}
   updateActions:

@@ -417,7 +417,7 @@ public class GameWorld : MonoBehaviour
             var humanClassification = humans[i].Behaviour.Classification;
             if (filter == IntelligenceType.Human)
             {
-                if (humanClassification != IntelligenceType.Human || humanClassification != IntelligenceType.Citizen ||
+                if (humanClassification != IntelligenceType.Human & humanClassification != IntelligenceType.Citizen &
                     humanClassification != IntelligenceType.Police)
                 {
                     continue;
@@ -466,14 +466,15 @@ public class GameWorld : MonoBehaviour
             return null;
         }
         var nearest = humans[0];
-        var dist = AstarMath.SqrMagnitudeXZ(nearest.transform.position, position);
+        var dist = float.PositiveInfinity;
+        bool found = false;
         for (var i = 1; i < humans.Count; i++)
         {
             if (!humans[i].Behaviour) continue;
             if (typeFilter == IntelligenceType.Human)
             {
                 IntelligenceType ht = humans[i].Behaviour.Classification;
-                if (ht != IntelligenceType.Citizen || ht != IntelligenceType.Human || ht != IntelligenceType.Police)
+                if (ht != IntelligenceType.Citizen & ht != IntelligenceType.Human & ht != IntelligenceType.Police)
                 {
                     continue;
                 }
@@ -490,9 +491,10 @@ public class GameWorld : MonoBehaviour
             {
                 nearest = humans[i];
                 dist = curDist;
+                found = true;
             }
         }
-        if (!nearest.Behaviour || nearest.Behaviour.Classification != typeFilter)
+        if (!found)
         {
             return null;
         }
