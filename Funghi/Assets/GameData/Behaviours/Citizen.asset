@@ -73,6 +73,7 @@ MonoBehaviour:
   enterActions:
   - {fileID: 11490308}
   - {fileID: 11416094}
+  - {fileID: 11404666}
   updateActions:
   - {fileID: 11450586}
   exitActions: []
@@ -100,6 +101,19 @@ MonoBehaviour:
   m_Name: VariableIsSet
   m_EditorClassIdentifier: 
   varName: target
+--- !u!114 &11404666
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 3
+  interval: 0.5
 --- !u!114 &11405762
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -454,6 +468,19 @@ MonoBehaviour:
   m_Name: VariableIsSet
   m_EditorClassIdentifier: 
   varName: Node
+--- !u!114 &11446454
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ab962ae0231eb4eb5827b172e691bf, type: 3}
+  m_Name: PlaySound
+  m_EditorClassIdentifier: 
+  type: 3
+  interval: 0.5
 --- !u!114 &11447282
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -894,6 +921,7 @@ MonoBehaviour:
   enterActions:
   - {fileID: 11405762}
   - {fileID: 11472724}
+  - {fileID: 11446454}
   updateActions:
   - {fileID: 11493136}
   exitActions: []

@@ -46,11 +46,15 @@ public class UserMenu : MonoBehaviour
 	const float StandardFadeTimeAbilities = 0.1f;
 	const float StandardFadeTimeButtons = 0.25f;
 
+    Transform audioAnchor;
+    public AudioClip interactionSound;
+
 	bool _abilityRectActive;
 	UserMenuButtonType _activeButton = UserMenuButtonType.None;
 
 	void Start ()
 	{
+	    audioAnchor = Camera.main.transform.FindChild("Listener");
 		for (var i = 1; i < buttons.Length; i++) {
 			_activeButtonPositions [i - 1] = buttons [i].anchoredPosition.x;
 		}
@@ -92,19 +96,22 @@ public class UserMenu : MonoBehaviour
 	{
 		//ForceBlendOut ();
 		GameInput.Instance.SelectSkill (type);
+	    AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
 	}
 
 	public void OnBrainSelected ()
 	{
 		//implement handling here
 		GameInput.Instance.ActivateBrainMode ();
-	}
+        AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
+    }
 
 	public void OnBuildSelected ()
 	{
 		//implement handling here
 		GameInput.Instance.ActivateBuildMode ();
-	}
+        AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
+    }
 
 	/// <summary>
 	/// Use this to un/lock the ui ability buttons

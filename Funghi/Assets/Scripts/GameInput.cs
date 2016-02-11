@@ -371,7 +371,6 @@ public class GameInput: MonoBehaviour
 			leftSkillMode = false;
 		}
 
-		Debug.Log (currentState);
 	}
 
 	private void ClampCamPos ()
@@ -688,33 +687,6 @@ public class GameInput: MonoBehaviour
 		} else {
 			pathToCursor.Clear ();
 			pathToCursorLength = float.PositiveInfinity;
-		}
-
-	}
-
-
-	void OnGUI ()
-	{
-		
-		int touchToUseInWorld = 0;
-		int touchOverGUI = 0;
-		Touch[] touches = Input.touches;
-		if (touches.Length == 0) {
-			return;
-		}
-		//decide which touch to use
-		if (touches.Length == 2) {
-			if (!eventsystem.IsPointerOverGameObject (0)) {
-				touchToUseInWorld = 0;
-				touchOverGUI = 1;
-			}
-			if (!eventsystem.IsPointerOverGameObject (1)) {
-				touchToUseInWorld = 1;
-				touchOverGUI = 0;
-			}
-
-			GUI.Box (new Rect (touches [touchToUseInWorld].position, new Vector2 (64, 64)), touches [touchToUseInWorld].fingerId.ToString ());
-			GUI.Box (new Rect (touches [touchOverGUI].position, new Vector2 (64, 64)), touches [touchOverGUI].fingerId.ToString ());
 		}
 
 	}

@@ -42,16 +42,7 @@ public class PoliceCar : Entity
     {
         Debug.Log("TODO: spawn particles (Policecar explosion)");
         Kill(this);
-        SoundSet.ClipPlayType pt;
-        AudioClip deathSound = soundSet.GetClip(SoundSet.ClipType.Death, out pt);
-        if (deathSound)
-        {
-            Destroy(gameObject, deathSound.length);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 
     Color gizmoColor = new Color(1, 1, 1, 0.33f);

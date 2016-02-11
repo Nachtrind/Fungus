@@ -10,7 +10,7 @@ public class ImmersiveAudioListener : MonoBehaviour
 
     [Range(0, 1f)] public float PointToCam = 0.5f;
 
-    void Start()
+    void Awake()
     {
         var existing = FindObjectOfType<AudioListener>();
         if (existing) { Destroy(existing); }

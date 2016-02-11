@@ -142,7 +142,9 @@ public abstract class Entity : MonoBehaviour
 		AudioClip clip = soundSet.GetClip (type, out playType);
 		if (clip) {
 			if (playType == SoundSet.ClipPlayType.OneShot) {
-				audioSource.PlayOneShot (clip);
+				//audioSource.PlayOneShot (clip);
+                Debug.Log("playing clip: "+clip.name);
+			    AudioSource.PlayClipAtPoint(clip, transform.position, 0.6f);
 				return true;
 			}
 			audioSource.clip = clip;

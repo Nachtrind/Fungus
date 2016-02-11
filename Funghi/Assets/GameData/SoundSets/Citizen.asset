@@ -9,12 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aee07db70d8df52488db96a6d5b2c1de, type: 3}
-  m_Name: Node
+  m_Name: Citizen
   m_EditorClassIdentifier: 
   sounds:
+  - type: 3
+    playType: 0
+    clip: {fileID: 8300000, guid: d29d54eb47b59274a89ea0a7705af63e, type: 3}
   - type: 7
     playType: 0
-    clip: {fileID: 8300000, guid: 55cdf9544cae39347aefa202bf26e004, type: 3}
-  - type: 2
+    clip: {fileID: 8300000, guid: addb7e66a23cdbe45ad40d1e1d29f214, type: 3}
+  - type: 4
     playType: 0
-    clip: {fileID: 8300000, guid: 15976ec3214d38d48915af2b4b3bcc88, type: 3}
+    clip: {fileID: 8300000, guid: d29d54eb47b59274a89ea0a7705af63e, type: 3}
+  - type: 5
+    playType: 0
+    clip: {fileID: 8300000, guid: d29d54eb47b59274a89ea0a7705af63e, type: 3}
