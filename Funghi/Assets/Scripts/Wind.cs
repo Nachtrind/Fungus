@@ -54,6 +54,7 @@ public class Wind : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        if (GameWorld.Instance.IsPaused) return;
 		currentRotation = Quaternion.AngleAxis (_currentDirection, Vector3.forward);
 		_currentDirection = Mathf.MoveTowards (_currentDirection, _nextDirection, Time.deltaTime * DirectionChangeSpeed);
 		if (OnWind != null) {

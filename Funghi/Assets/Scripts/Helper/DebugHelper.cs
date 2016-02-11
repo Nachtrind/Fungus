@@ -194,6 +194,7 @@ public class DebugHelper : MonoBehaviour
         GUILayout.BeginArea(displayRect);
         GUILayout.Space(20);
         bool showStates = GUILayout.Toggle(showEntityDebug, "Entity Debug Infos");
+        GameWorld.Instance.IsPaused = GUILayout.Toggle(GameWorld.Instance.IsPaused, "Pause Game: ");
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Force Restart") && restartConfirmation)
         {

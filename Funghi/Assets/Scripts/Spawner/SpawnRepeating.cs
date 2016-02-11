@@ -23,6 +23,7 @@ namespace Spawner.Modules
         RESTART:
             if (cancel) { yield break; }
             if (prefab == null) { Debug.LogError("human prefab not assigned"); yield break; }
+            while (GameWorld.Instance.IsPaused) yield return null;
             worker.Restart();
             worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up)) as Entity);
             yield return new WaitForSeconds(timeInterval);

@@ -52,25 +52,33 @@ public class UserMenu : MonoBehaviour
 	bool _abilityRectActive;
 	UserMenuButtonType _activeButton = UserMenuButtonType.None;
 
+    public static UserMenu current;
+
 	void Start ()
 	{
+	    current = this;
 	    audioAnchor = Camera.main.transform.FindChild("Listener");
 		for (var i = 1; i < buttons.Length; i++) {
 			_activeButtonPositions [i - 1] = buttons [i].anchoredPosition.x;
 		}
 		_activeMenuPosition = buttons [0].anchoredPosition.x;
 
-		EnableOrDisableAbility (AbilityType.Eat, FungusResources.Instance.beatneat.isUnlocked);
-		EnableOrDisableAbility (AbilityType.Lure, FungusResources.Instance.attract.isUnlocked);
-		EnableOrDisableAbility (AbilityType.Spawn, FungusResources.Instance.growth.isUnlocked);
-		EnableOrDisableAbility (AbilityType.Enslave, FungusResources.Instance.zombies.isUnlocked);
-		EnableOrDisableAbility (AbilityType.Slow, FungusResources.Instance.slowdown.isUnlocked);
-		EnableOrDisableAbility (AbilityType.Speedup, FungusResources.Instance.speedup.isUnlocked);
+	    UpdateEnabledAbilities();
 
 		BlendOut ();
 		OnMenuInactive ();
 		Wind.OnWind += SetAnemometerDirection;
 	}
+
+    public void UpdateEnabledAbilities()
+    {
+        EnableOrDisableAbility(AbilityType.Eat, FungusResources.Instance.beatneat.isUnlocked);
+        EnableOrDisableAbility(AbilityType.Lure, FungusResources.Instance.attract.isUnlocked);
+        EnableOrDisableAbility(AbilityType.Spawn, FungusResources.Instance.growth.isUnlocked);
+        EnableOrDisableAbility(AbilityType.Enslave, FungusResources.Instance.zombies.isUnlocked);
+        EnableOrDisableAbility(AbilityType.Slow, FungusResources.Instance.slowdown.isUnlocked);
+        EnableOrDisableAbility(AbilityType.Speedup, FungusResources.Instance.speedup.isUnlocked);
+    }
 
 	void OnDestroy ()
 	{
@@ -94,6 +102,7 @@ public class UserMenu : MonoBehaviour
 
 	public void OnAbilitySelected (AbilityType type)
 	{
+        if (GameWorld.Instance.IsPaused) return;
 		//ForceBlendOut ();
 		GameInput.Instance.SelectSkill (type);
 	    AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
@@ -101,15 +110,17 @@ public class UserMenu : MonoBehaviour
 
 	public void OnBrainSelected ()
 	{
-		//implement handling here
-		GameInput.Instance.ActivateBrainMode ();
+        if (GameWorld.Instance.IsPaused) return;
+        //implement handling here
+        GameInput.Instance.ActivateBrainMode ();
         AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
     }
 
 	public void OnBuildSelected ()
 	{
-		//implement handling here
-		GameInput.Instance.ActivateBuildMode ();
+        if (GameWorld.Instance.IsPaused) return;
+        //implement handling here
+        GameInput.Instance.ActivateBuildMode ();
         AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
     }
 

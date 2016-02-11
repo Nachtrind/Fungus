@@ -61,6 +61,8 @@ public class GameWorld : MonoBehaviour
 
 	public bool destroyDisconnectedNodes = true;
 
+    public bool IsPaused;
+
 	[SerializeField]
 	SlimeHandler slimeHandler;
 
@@ -131,7 +133,15 @@ public class GameWorld : MonoBehaviour
 
 	void Update ()
 	{
-		LevelTime = Time.time - levelStartTime;
+	    if (IsPaused)
+	    {
+	        GameInput.Instance.enabled = false;
+	    }
+	    else
+	    {
+	        GameInput.Instance.enabled = true;
+	    }
+	    LevelTime = Time.time - levelStartTime;
 		slimeHandler.UpdateSlimeConnections ();
 		if (core) {
 			if (Time.time - lastCoreUpdate >= coreTickInterval) {
@@ -148,6 +158,7 @@ public class GameWorld : MonoBehaviour
 	IEnumerator HumanUpdate ()
 	{
 		RESTART:
+	    while (IsPaused) yield return null;
 		humanDelta = humanStopWatch.ElapsedMilliseconds / 1000f;
 		humanStopWatch.Reset ();
 		humanStopWatch.Start ();
@@ -164,6 +175,7 @@ public class GameWorld : MonoBehaviour
 	IEnumerator NodeUpdate ()
 	{
 		RESTART:
+	    while (IsPaused) yield return null;
 		nodeDelta = nodeStopWatch.ElapsedMilliseconds / 1000f;
 		nodeStopWatch.Reset ();
 		nodeStopWatch.Start ();
@@ -212,6 +224,8 @@ public class GameWorld : MonoBehaviour
         RemoveAllEntities();
         slimeHandler.ClearAllConnections();
         RemoveAllSlimeTags();
+        FungusResources.Instance.Reset();
+        UserMenu.current.UpdateEnabledAbilities();
         var t = FindObjectOfType<Tutorials.Tutorial>();
         if (t)
         {

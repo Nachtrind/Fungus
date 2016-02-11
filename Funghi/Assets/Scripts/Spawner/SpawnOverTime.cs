@@ -19,6 +19,7 @@ namespace Spawner.Modules
             float partTime = timeSpan / Mathf.Max(1f, amount);
             for (int i = 0; i < amount; i++)
             {
+                while (GameWorld.Instance.IsPaused) yield return null;
                 if (prefab != null)
                 {
                     Entity e = Instantiate(prefab, worker.source.transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up)) as Entity;

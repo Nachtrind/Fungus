@@ -16,6 +16,7 @@ namespace Spawner.Modules
         {
             worker.Restart();
             yield return new WaitForSeconds(delay);
+            while (GameWorld.Instance.IsPaused) yield return null;
             if (prefab != null)
             {
                 worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up)) as Entity);
