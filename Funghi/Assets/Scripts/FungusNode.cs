@@ -157,6 +157,15 @@ public class FungusNode : Entity
 		}
 	}
 
+    public void ForceConnectTo(FungusNode other)
+    {
+        if (!nodeConnections.Contains(other))
+        {
+            nodeConnections.Add(other);
+            other.ConnectTo(this);
+        }
+    }
+
 	public void DisconnectionFrom (FungusNode other)
 	{
 		nodeConnections.Remove (other);
