@@ -42,6 +42,7 @@ public class MainMenu : MonoBehaviour
             canvasGroup.alpha = 1-Mathf.Clamp01(Time.realtimeSinceStartup - t);
             yield return null;
         }
+        canvasGroup.alpha = 0;
     }
 
     IEnumerator FadeIn()
@@ -54,5 +55,6 @@ public class MainMenu : MonoBehaviour
             canvasGroup.alpha = Mathf.Clamp01(Time.realtimeSinceStartup - t);
             yield return null;
         }
+        canvasGroup.alpha = 1;
     }
 }
