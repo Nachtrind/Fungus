@@ -29,12 +29,27 @@ public class LevelEventDispatcher : MonoBehaviour
     /// </summary>
     [SerializeField]
     ParameterEvent OnDeadDirect;
-    [Header("Or immediately if these are empty")]
     [Header("Invoked on callbacks from [x]Direct events")]
+    [Header("Or immediately if these are empty")]
     [SerializeField]
     UnityEvent OnReachedGoalCallback;
     [SerializeField]
     UnityEvent OnDeadCallback;
+
+#if UNITY_EDITOR
+    [ContextMenu("Load Autostart Spawners")]
+    void LoadAutoStartSpawners()
+    {
+        EntitySpawner[] spawners = FindObjectsOfType<EntitySpawner>();
+        foreach (var spawner in spawners)
+        {
+            if (spawner.autoActivateOnStart)
+            {
+                UnityEditor.Events.UnityEventTools.AddPersistentListener(OnStart, spawner.Activate);
+            }
+        }
+    }
+#endif
 
     public float delayDebugAutoCallback;
 
