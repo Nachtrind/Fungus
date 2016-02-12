@@ -18,6 +18,6 @@ MonoBehaviour:
   radius: 1
   cost: 2
   tickRate: 0.5
-  isUnlocked: 1
+  isUnlocked: 0
   newSpeed: 2
   speedUpTime: 3

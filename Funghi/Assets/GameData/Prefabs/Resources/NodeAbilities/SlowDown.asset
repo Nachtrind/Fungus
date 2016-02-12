@@ -18,7 +18,7 @@ MonoBehaviour:
   radius: 1
   cost: 1
   tickRate: 0.5
-  isUnlocked: 1
+  isUnlocked: 0
   slowDownSpeed: 0
   slowDownTime: 3
   attackAnimObjPrefab: {fileID: 181464, guid: 1c0836f10c8cfb54ea4ab46da70839c6, type: 2}

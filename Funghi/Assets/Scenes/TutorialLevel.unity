@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.1589533, g: 0.19035745, b: 0.25735295, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.01
+  m_AmbientIntensity: 0.1
   m_AmbientMode: 0
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -49,7 +49,7 @@ LightmapSettings:
     m_IndirectOutputScale: 5
     m_AlbedoBoost: 10
     m_TemporalCoherenceThreshold: 1
-    m_EnvironmentLightingMode: 0
+    m_EnvironmentLightingMode: 1
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
@@ -6494,7 +6494,7 @@ Transform:
   - {fileID: 101509385}
   - {fileID: 681938317}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!1 &180937422
 GameObject:
   m_ObjectHideFlags: 0
@@ -12516,7 +12516,7 @@ Light:
   serializedVersion: 6
   m_Type: 2
   m_Color: {r: 0.9503514, g: 1, b: 0.19852942, a: 1}
-  m_Intensity: 6.03
+  m_Intensity: 4
   m_Range: 3.5
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -21365,7 +21365,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 625527514}
   m_LocalRotation: {x: 0, y: -0.20851985, z: 0, w: 0.97801816}
-  m_LocalPosition: {x: -0.562, y: 0, z: 2.032}
+  m_LocalPosition: {x: -1.1, y: 0, z: 1.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1466548646}
@@ -28697,21 +28697,21 @@ MonoBehaviour:
   drawCircle: 1
   gizmoDrawColor: {r: 1, g: 1, b: 1, a: 1}
   points:
-  - position: {x: 18.115505, y: 0, z: 1.2800394}
+  - position: {x: 18.918386, y: 0, z: 0.7753567}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
     actionProbability: 100
     functionName: 
     target: 0
-  - position: {x: 17.62451, y: 0, z: 1.9089415}
+  - position: {x: 18.33593, y: 0, z: 0.66498476}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
     actionProbability: 100
     functionName: 
     target: 0
-  - position: {x: 17.241518, y: 0, z: 1.5572935}
+  - position: {x: 17.686316, y: 0, z: 0.76622355}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
@@ -28725,7 +28725,7 @@ MonoBehaviour:
     actionProbability: 100
     functionName: 
     target: 0
-  - position: {x: 18.242908, y: 0, z: 0.6785147}
+  - position: {x: 17.425692, y: 0, z: 1.8309875}
     action: 0
     waitTime: 0
     linkedPath: {fileID: 0}
@@ -29332,7 +29332,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 853098964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12, y: -0.29, z: 0.45}
+  m_LocalPosition: {x: -0.12, y: -1.28, z: 0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1304224808}
@@ -33554,7 +33554,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 992620828}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -0.43, z: 0}
+  m_LocalPosition: {x: -0.29, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 682560835}
@@ -68075,7 +68075,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2106007726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.35, y: 0.11, z: -0}
+  m_LocalPosition: {x: -0.85, y: 0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1350981750}
