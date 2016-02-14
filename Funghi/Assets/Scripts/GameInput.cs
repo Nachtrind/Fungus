@@ -61,6 +61,7 @@ public class GameInput: MonoBehaviour
 	//Stuff for camera movement &  zoom
 	public float moveSpeedX = 2.1f;
 	public float moveSpeedZ = 2.1f;
+	public float zoomSpeed = 0.1f;
 	private Vector2 scrollDirection = Vector2.zero;
 
 	float levelSizeY;
@@ -233,8 +234,8 @@ public class GameInput: MonoBehaviour
 							cam.transform.position += new Vector3 (x, 0, z);
 
 							lastMousePos = current;
-						    camClampComponent.ClampCamViewPos(cam);
-						    //ClampCamPos ();
+							camClampComponent.ClampCamViewPos (cam);
+							//ClampCamPos ();
 						} 
 					}
 				}
@@ -245,21 +246,28 @@ public class GameInput: MonoBehaviour
 		///////////////
 		//Zoom Camera//
 		///////////////
-		if (touches.Length == 2) {
-			Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+		if (touches.Length == 2 && currentState == InputState.NoMode) {
+
+			if (!eventsystem.IsPointerOverGameObject (0) && !eventsystem.IsPointerOverGameObject (1)) {
+
+				Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
 							
-			Touch touchOne = touches [0];
-			Touch touchTwo = touches [1];
+				Touch touchOne = touches [0];
+				Touch touchTwo = touches [1];
 							
-			Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-			Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
+				Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+				Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
 
-			float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
-			float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
+				float prevTouchLength = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+				float touchDeltaLength = (touchOne.position - touchTwo.position).magnitude;
 
-			float lengthDiff = prevTouchLength - touchDeltaLength;
+				float lengthDiff = prevTouchLength - touchDeltaLength;
 
-			//TODO: Finish Zoom
+				cam.fieldOfView += lengthDiff * zoomSpeed;
+				cam.fieldOfView = Mathf.Clamp (cam.fieldOfView, 10.0f, 40.0f);
+				camClampComponent.ClampCamViewPos (cam);
+
+			}
 		}
 
 
