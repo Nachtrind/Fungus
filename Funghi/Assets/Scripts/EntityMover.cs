@@ -11,7 +11,7 @@ public class EntityMover: MonoBehaviour
     enum MoveTypes { Direct, Pathing, FleePathing }
     public enum MovePathSmoothing { NoSmoothing, Force, LikeSlime }
 
-    const float TargetReachDistance = 0.025f;
+    const float TargetReachDistance = 0.05f;
     Seeker _seeker;
     Vector3 _lastRequestedMoveTargetPosition;
     List<Vector3> _pathToTarget = new List<Vector3>();
