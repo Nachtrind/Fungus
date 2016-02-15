@@ -7,13 +7,27 @@ public class MainMenu : MonoBehaviour
 
     Coroutine fadeRoutine;
 
+    [SerializeField] RectTransform[] states;
+
+
     public void OnPlayButtonClick()
     {  
         CloseMenu();
     }
 
-    public void OpenMenu()
+    public void OpenMenu(int stateID = 0)
     {
+        for (var i = 0; i < states.Length; i++)
+        {
+            if (i == stateID)
+            {
+                states[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                states[i].gameObject.SetActive(false);
+            }
+        }
         GameWorld.Instance.IsPaused = true;
         if (fadeRoutine != null) StopCoroutine(fadeRoutine);
         fadeRoutine = StartCoroutine(FadeIn());
