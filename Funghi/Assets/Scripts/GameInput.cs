@@ -169,14 +169,13 @@ public class GameInput: MonoBehaviour
 			//Specialize Nodes//
 			////////////////////
 			if (currentState == InputState.SkillMode && touches.Length == 2) {
-
 				if (touches [touchToUseInWorld].phase == TouchPhase.Ended) {
 					List<FungusNode> nodesInRadius = GameWorld.Instance.GetFungusNodes (touchWorldPoint, 0.55f);
 					if (nodesInRadius.Count > 0) {
 						if (selectedSkill != null) {
 							this.SpecializeNode (GameWorld.Instance.GetNearestFungusNode (touchWorldPoint));
 						}
-					}
+					} 
 				}
 			}
 
@@ -583,6 +582,11 @@ public class GameInput: MonoBehaviour
 	public void ActivateWindMode ()
 	{
 		currentState = InputState.ChangeWind;
+	}
+
+	public void ActivateNoMode ()
+	{
+		currentState = InputState.NoMode;
 	}
 
 	public void DeactivateMode (UserMenu.UserMenuButtonType type)

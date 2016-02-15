@@ -46,41 +46,52 @@ public class UserMenu : MonoBehaviour
 	const float StandardFadeTimeAbilities = 0.1f;
 	const float StandardFadeTimeButtons = 0.25f;
 
-    Transform audioAnchor;
-    public AudioClip interactionSound;
+	Transform audioAnchor;
+	public AudioClip interactionSound;
 
 	bool _abilityRectActive;
 	UserMenuButtonType _activeButton = UserMenuButtonType.None;
 
-    public static UserMenu current;
+	public static UserMenu current;
 
-    [SerializeField] MainMenu mainMenu;
+	[SerializeField] MainMenu mainMenu;
 
 	void Start ()
 	{
-	    current = this;
-	    audioAnchor = Camera.main.transform.FindChild("Listener");
+		current = this;
+		audioAnchor = Camera.main.transform.FindChild ("Listener");
 		for (var i = 1; i < buttons.Length; i++) {
 			_activeButtonPositions [i - 1] = buttons [i].anchoredPosition.x;
 		}
 		_activeMenuPosition = buttons [0].anchoredPosition.x;
 
-	    UpdateEnabledAbilities();
-
 		BlendOut ();
 		OnMenuInactive ();
 		Wind.OnWind += SetAnemometerDirection;
+
+		FungusResources.Instance.beatneat.isUnlocked = true;
+		FungusResources.Instance.attract.isUnlocked = true;
+		FungusResources.Instance.growth.isUnlocked = true;
+		FungusResources.Instance.zombies.isUnlocked = false;
+		FungusResources.Instance.slowdown.isUnlocked = false;
+		FungusResources.Instance.speedup.isUnlocked = false;
+
+		UpdateEnabledAbilities ();
+
+		OnBuildSelected ();
+		OnMenuInactive ();
+
 	}
 
-    public void UpdateEnabledAbilities()
-    {
-        EnableOrDisableAbility(AbilityType.Eat, FungusResources.Instance.beatneat.isUnlocked);
-        EnableOrDisableAbility(AbilityType.Lure, FungusResources.Instance.attract.isUnlocked);
-        EnableOrDisableAbility(AbilityType.Spawn, FungusResources.Instance.growth.isUnlocked);
-        EnableOrDisableAbility(AbilityType.Enslave, FungusResources.Instance.zombies.isUnlocked);
-        EnableOrDisableAbility(AbilityType.Slow, FungusResources.Instance.slowdown.isUnlocked);
-        EnableOrDisableAbility(AbilityType.Speedup, FungusResources.Instance.speedup.isUnlocked);
-    }
+	public void UpdateEnabledAbilities ()
+	{
+		EnableOrDisableAbility (AbilityType.Eat, FungusResources.Instance.beatneat.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Lure, FungusResources.Instance.attract.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Spawn, FungusResources.Instance.growth.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Enslave, FungusResources.Instance.zombies.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Slow, FungusResources.Instance.slowdown.isUnlocked);
+		EnableOrDisableAbility (AbilityType.Speedup, FungusResources.Instance.speedup.isUnlocked);
+	}
 
 	void OnDestroy ()
 	{
@@ -99,33 +110,35 @@ public class UserMenu : MonoBehaviour
 	/// </summary>
 	public void OnMenuSelected ()
 	{
-		Debug.Log ("Display the menu");
-	    mainMenu.OpenMenu();
+		mainMenu.OpenMenu ();
 	}
 
 	public void OnAbilitySelected (AbilityType type)
 	{
-        if (GameWorld.Instance.IsPaused) return;
+		if (GameWorld.Instance.IsPaused)
+			return;
 		//ForceBlendOut ();
 		GameInput.Instance.SelectSkill (type);
-	    AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
+		AudioSource.PlayClipAtPoint (interactionSound, audioAnchor.position);
 	}
 
 	public void OnBrainSelected ()
 	{
-        if (GameWorld.Instance.IsPaused) return;
-        //implement handling here
-        GameInput.Instance.ActivateBrainMode ();
-        AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
-    }
+		if (GameWorld.Instance.IsPaused)
+			return;
+		//implement handling here
+		GameInput.Instance.ActivateBrainMode ();
+		AudioSource.PlayClipAtPoint (interactionSound, audioAnchor.position);
+	}
 
 	public void OnBuildSelected ()
 	{
-        if (GameWorld.Instance.IsPaused) return;
-        //implement handling here
-        GameInput.Instance.ActivateBuildMode ();
-        AudioSource.PlayClipAtPoint(interactionSound, audioAnchor.position);
-    }
+		if (GameWorld.Instance.IsPaused)
+			return;
+		//implement handling here
+		GameInput.Instance.ActivateBuildMode ();
+		AudioSource.PlayClipAtPoint (interactionSound, audioAnchor.position);
+	}
 
 	/// <summary>
 	/// Use this to un/lock the ui ability buttons
@@ -182,7 +195,7 @@ public class UserMenu : MonoBehaviour
 		_activeButton = UserMenuButtonType.None;
 		BlendOut ();
 
-		GameInput.Instance.DeactivateMode (type);
+
 	}
 
 	public void OnAbilityRectActive ()
@@ -195,6 +208,8 @@ public class UserMenu : MonoBehaviour
 	{
 		_abilityRectActive = false;
 		BlendOut ();
+		//Debug.Log ("OnAbilityRectInactive");
+		//GameInput.Instance.DeactivateMode (UserMenuButtonType.Skill);
 	}
 
 	public void OnMenuActive ()
@@ -249,6 +264,7 @@ public class UserMenu : MonoBehaviour
 
 	IEnumerator FadeRoutine (float duration, bool inOut)
 	{
+		GameInput.Instance.ActivateNoMode ();
 		float t = 0;
 		while (t < 1f) {
 			t += Time.deltaTime / duration;
@@ -260,6 +276,7 @@ public class UserMenu : MonoBehaviour
 			}
 			yield return null;
 		}
+
 	}
 
 	IEnumerator InactiveCheckTimer (float duration)
@@ -275,6 +292,34 @@ public class UserMenu : MonoBehaviour
 		if (routine != null)
 			StopCoroutine (routine);
 		routine = StartCoroutine (FadeRoutine (StandardFadeTimeButtons, false));
+	}
+
+	Coroutine pingRoutine;
+
+	public void PingSkillButton ()
+	{
+		if (pingRoutine != null) {
+			StopCoroutine (pingRoutine);
+		}
+		pingRoutine = StartCoroutine (PingSkill ());
+	}
+
+	IEnumerator PingSkill ()
+	{
+		float timer = 0.0f;
+		float duration = .5f;
+		Vector3 startSize = buttons [2].localScale;
+		while (timer < 1.0f) {
+			buttons [2].localScale = Mathf.Lerp (1.0f, 1.5f, Mathf.SmoothStep (0f, 1f, timer)) * startSize;
+			timer += Time.deltaTime / duration;
+			yield return null;
+		}
+
+		while (timer > 0f) {
+			buttons [2].localScale = Mathf.Lerp (1.0f, 1.5f, Mathf.SmoothStep (0f, 1f, timer)) * startSize;
+			timer -= Time.deltaTime / duration;
+			yield return null;
+		}
 	}
 
 	#endregion

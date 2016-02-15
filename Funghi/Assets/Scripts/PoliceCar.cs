@@ -16,7 +16,7 @@ public class PoliceCar : Entity
 
     public void SpawnPolice()
     {
-        if (numPoliceInside <= 0) { return; }
+		if (numPoliceInside <= 0) { RemoveBehaviour (); return; }
         Human h = null;
         if (Random.Range(0, 100) >= 50)
         {

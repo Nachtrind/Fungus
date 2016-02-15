@@ -19,15 +19,15 @@ namespace ModularBehaviour
         {
             if (Time.time - lastAttack > interval)
             {
+				lastAttack = Time.time;
                 Entity target;
                 if (controller.GetMemoryValue(entityVarName, out target))
                 {
                     if (!target.isAttackable) { return ActionResult.Failed; }
-                    target.Damage(controller.Owner, (int)(damagePerAttack * deltaTime));
+					target.Damage(controller.Owner, damagePerAttack);
                     controller.Owner.TriggerAnimator("Attack");
                     return ActionResult.Success;
                 }
-                lastAttack = Time.time;
             }
             return ActionResult.Running;
         }

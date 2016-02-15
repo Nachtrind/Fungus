@@ -17,7 +17,7 @@ namespace NodeAbilities
 
 			//Create Animation Sprite Object
 			if (attackAnimObj == null) {
-				attackAnimObj = Instantiate (attackAnimObjPrefab, node.transform.position, node.transform.rotation) as GameObject;
+				attackAnimObj = Instantiate (attackAnimObjPrefab, node.transform.position + Vector3.up * 0.1f, node.transform.rotation) as GameObject;
 				attackAnimObj.transform.SetParent (node.transform);
 				attackAnimObj.transform.localRotation = Quaternion.Euler (90.0f, 0, 0);
 			}

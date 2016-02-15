@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: SlimeMat
-  m_Shader: {fileID: 4800000, guid: 3be975786a31d9d4c813fe8ad4013f29, type: 3}
+  m_Shader: {fileID: 4800000, guid: 27e6d1e6077552040810a4e056bf0307, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000

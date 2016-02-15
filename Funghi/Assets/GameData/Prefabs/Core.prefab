@@ -11,7 +11,6 @@ GameObject:
   - 114: {fileID: 11441898}
   - 114: {fileID: 11415486}
   - 114: {fileID: 11424470}
-  - 122: {fileID: 12239482}
   - 82: {fileID: 8256568}
   - 54: {fileID: 5430252}
   - 65: {fileID: 6554722}
@@ -199,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14bf4d8f68407b6449de4be12ce25985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseMoveSpeed: 1
+  BaseMoveSpeed: 0.2
   _effectiveMovespeed: 1
   turnSpeed: 0.492
   extraPathSmoothing: 0
@@ -251,17 +250,6 @@ MonoBehaviour:
   soundSet: {fileID: 0}
   groundCheckInterval: 0.33
   groundedTimeForReport: 1
---- !u!122 &12239482
-Halo:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168438}
-  m_Enabled: 1
-  m_Color:
-    serializedVersion: 2
-    rgba: 4285136893
-  m_Size: 0.2
 --- !u!212 &21201250
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -456,6 +444,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BaseMoveSpeed
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

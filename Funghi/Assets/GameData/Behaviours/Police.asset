@@ -529,7 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityVarName: target
   interval: 0.5
-  damagePerAttack: 20
+  damagePerAttack: 10
 --- !u!114 &11456130
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -20,8 +20,8 @@ public class Wind : MonoBehaviour
 
 	public Quaternion currentRotation;
 
-	float _currentDirection;
-	float _nextDirection;
+	Quaternion _currentDirection;
+	Quaternion _nextDirection;
 	public float DirectionChangeIntervalMin = 1f;
 	public float DirectionChangeIntervalMax = 5f;
 	public float DirectionChangeSpeed = 1f;
@@ -40,7 +40,7 @@ public class Wind : MonoBehaviour
 	void ChangeDirection ()
 	{
 		if (Mathf.Approximately (_userRequestTimeout, 0)) {
-			_nextDirection = Random.Range (0, 360f);
+			_nextDirection = Quaternion.AngleAxis (Random.Range (0, 360f), Vector3.forward);
 		}
 		Invoke ("ChangeDirection", Random.Range (DirectionChangeIntervalMin, DirectionChangeIntervalMax) + _userRequestTimeout);
 		_userRequestTimeout = 0;
@@ -54,17 +54,21 @@ public class Wind : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-        if (GameWorld.Instance.IsPaused) return;
-		currentRotation = Quaternion.AngleAxis (_currentDirection, Vector3.forward);
-		_currentDirection = Mathf.MoveTowards (_currentDirection, _nextDirection, Time.deltaTime * DirectionChangeSpeed);
+		if (GameWorld.Instance.IsPaused)
+			return;
+		float deltaComp = Quaternion.Angle (_currentDirection, _nextDirection);
+		deltaComp = (2f / 180f) * deltaComp;
+		_currentDirection = Quaternion.Slerp (_currentDirection, _nextDirection, Time.deltaTime * DirectionChangeSpeed * deltaComp);
+		currentRotation = _currentDirection;
+		//_currentDirection = Mathf.MoveTowards (_currentDirection, _nextDirection, Time.deltaTime * DirectionChangeSpeed);
 		if (OnWind != null) {
-			OnWind (_currentDirection);
+			OnWind (_currentDirection.eulerAngles.z);
 		}
 	}
 
 	void OnRequestedWindDirection (float degree)
 	{
-		_nextDirection = degree;
+		_nextDirection = Quaternion.AngleAxis (degree, Vector3.forward);
 		_userRequestTimeout = AfterUserChangeTimeout;
 	}
 

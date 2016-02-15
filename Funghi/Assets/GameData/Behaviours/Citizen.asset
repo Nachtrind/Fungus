@@ -647,7 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ifAction: {fileID: 11444790}
   thenAction: {fileID: 0}
-  elseAction: {fileID: 11478582}
+  elseAction: {fileID: 0}
 --- !u!114 &11464700
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -777,18 +777,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05cad1d33fd224d4fbd024d6ed7fed63, type: 3}
   m_Name: RemoveOwnedSpeedMods
   m_EditorClassIdentifier: 
---- !u!114 &11478582
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f5b4e25aafef74fad8885b3195201c, type: 3}
-  m_Name: GotoState
-  m_EditorClassIdentifier: 
-  newState: {fileID: 11423596}
 --- !u!114 &11480146
 MonoBehaviour:
   m_ObjectHideFlags: 3

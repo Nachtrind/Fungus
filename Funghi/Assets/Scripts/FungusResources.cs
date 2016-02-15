@@ -28,16 +28,16 @@ public class FungusResources : MonoBehaviour
 		}
 	}
 
-    public void Reset()
-    {
-        beatneat.isUnlocked = true;
-        attract.isUnlocked = true;
-        slowdown.isUnlocked = false;
-        speedup.isUnlocked = false;
-        zombies.isUnlocked = false;
-        growth.isUnlocked = false;
-        Start();
-    }
+	public void Reset ()
+	{
+		beatneat.isUnlocked = true;
+		attract.isUnlocked = true;
+		slowdown.isUnlocked = false;
+		speedup.isUnlocked = false;
+		zombies.isUnlocked = false;
+		growth.isUnlocked = false;
+		Start ();
+	}
 
 	public float CurrentResources { get; set; }
 
@@ -110,7 +110,7 @@ public class FungusResources : MonoBehaviour
 			}
 
 		}
-
+		UserMenu.current.UpdateEnabledAbilities ();
 	}
 
 

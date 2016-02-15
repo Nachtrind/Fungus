@@ -52,7 +52,7 @@ namespace NodeAbilities
 			Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
 			spores.transform.rotation = sporeRotation;
 
-			InfluenceEnemyInArea (node, sporeRotation);
+			//InfluenceEnemyInArea (node, sporeRotation);
 
 
 			if (infected == null) {

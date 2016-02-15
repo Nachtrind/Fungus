@@ -24,10 +24,11 @@ public class AbilityBuilding : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag.Equals ("FungusCore")) {
+		if (other.gameObject.CompareTag ("FungusCore")) {
 			FungusResources.Instance.UnlockAbility (ability);
+			Destroy (Instantiate (Resources.Load<GameObject> ("AbilityGainParticles"), other.transform.position, Quaternion.identity), 1.5f);
+			UserMenu.current.PingSkillButton ();
 			if (OnAbilityGained != null) {
-				Debug.Log ("Gained!");
 				OnAbilityGained (ability);
 			}
 		}

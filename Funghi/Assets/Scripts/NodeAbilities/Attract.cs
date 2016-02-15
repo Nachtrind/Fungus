@@ -78,6 +78,7 @@ namespace NodeAbilities
 
 			foreach (Collider c in peopleCollider) {
 				c.GetComponent<Human> ().TriggerBehaviour ("Lure", node);
+				Debug.DrawLine (node.transform.position, c.transform.position, Color.cyan);
 			}
 		}
 	}

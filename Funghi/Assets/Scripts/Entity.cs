@@ -1,13 +1,15 @@
 ﻿using ModularBehaviour;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent (typeof(Rigidbody))]
+[RequireComponent (typeof(AudioSource))]
 public abstract class Entity : MonoBehaviour
 {
 	protected GameWorld world;
-    #region Health
-	[Header("State")]
+
+	#region Health
+
+	[Header ("State")]
 	[SerializeField]
 	int currentHealth;
 
@@ -18,40 +20,40 @@ public abstract class Entity : MonoBehaviour
 
 	public int MaxHealth { get { return maxHealth; } }
 
-    /// <summary>
-    /// CurrentHealth, MaxHealth
-    /// </summary>
-    public event System.Action<float, float> OnHealthChanged;
+	/// <summary>
+	/// CurrentHealth, MaxHealth
+	/// </summary>
+	public event System.Action<float, float> OnHealthChanged;
 
-    public static event System.Action<Entity> OnDamaged;
+	public static event System.Action<Entity> OnDamaged;
 
-    public ParticleEffect deathParticles;
+	public ParticleEffect deathParticles;
 
 	public bool isAttackable = true;
 
-    public static bool showDebug = false;
+	public static bool showDebug = false;
 
 	public void Damage (Entity attacker, int amount)
 	{
-	    TriggerAnimator("Attacked");
+		TriggerAnimator ("Attacked");
 		SubtractHealth (amount);
 		if (IsDead) {
 			PlaySound (SoundSet.ClipType.Death);
-		    if (deathParticles)
-		    {
-		        deathParticles.Fire(transform.position);
-		    }
+			if (deathParticles) {
+				deathParticles.Fire (transform.position);
+			}
 		} else {
 			PlaySound (SoundSet.ClipType.ReceiveDamage);
 		}
-	    if (OnDamaged != null)
-	    {
-	        OnDamaged(this);
-	    }
+		if (OnDamaged != null) {
+			OnDamaged (this);
+		}
 		OnDamage (attacker);
 	}
 
-	public virtual void OnDamage (Entity attacker) { }
+	public virtual void OnDamage (Entity attacker)
+	{
+	}
 
 	public void Kill (Entity murderer)
 	{
@@ -66,20 +68,22 @@ public abstract class Entity : MonoBehaviour
 	protected void SubtractHealth (int amount)
 	{
 		currentHealth = Mathf.Clamp (currentHealth - amount, 0, maxHealth);
-        if (OnHealthChanged != null)
-        {
-            OnHealthChanged(currentHealth, maxHealth);
-        }
+		if (OnHealthChanged != null) {
+			OnHealthChanged (currentHealth, maxHealth);
+		}
 	}
 
 	public bool IsDead {
 		get { return currentHealth <= 0; }
 	}
-    #endregion
 
-    #region Behaviour
+	#endregion
+
+	#region Behaviour
+
 	[SerializeField, ReadOnlyInInspector]
 	protected Intelligence behaviour;
+
 	/// <summary>
 	/// Direct access to the behaviour, used by the Spawner (for triggers use <seealso cref="TriggerBehaviour(string, object)"/>)
 	/// </summary>
@@ -97,7 +101,7 @@ public abstract class Entity : MonoBehaviour
 		}
 		if (newBehaviour) {
 			behaviour = Instantiate (newBehaviour);
-            behaviour.Initialize (this);
+			behaviour.Initialize (this);
 			return true;
 		}
 		return false;
@@ -125,14 +129,16 @@ public abstract class Entity : MonoBehaviour
 		}
 		return false;
 	}
-    #endregion
 
-    #region Sound
+	#endregion
+
+	#region Sound
+
 	AudioSource audioSource;
 	[SerializeField]
-	[Header("Sound")]
+	[Header ("Sound")]
 	protected SoundSet soundSet;
-    
+
 	public bool PlaySound (SoundSet.ClipType type)
 	{
 		if (soundSet == null) {
@@ -143,7 +149,7 @@ public abstract class Entity : MonoBehaviour
 		if (clip) {
 			if (playType == SoundSet.ClipPlayType.OneShot) {
 				//audioSource.PlayOneShot (clip);
-			    AudioSource.PlayClipAtPoint(clip, transform.position, 0.6f);
+				AudioSource.PlayClipAtPoint (clip, transform.position, 0.6f);
 				return true;
 			}
 			audioSource.clip = clip;
@@ -189,7 +195,7 @@ public abstract class Entity : MonoBehaviour
 		return false;
 	}
 
-    #endregion
+	#endregion
 
 	void Awake ()
 	{
@@ -241,6 +247,11 @@ public abstract class Entity : MonoBehaviour
 
 	}
 
+	void FixedUpdate ()
+	{
+		UpdateEntity (Time.fixedDeltaTime);
+	}
+
 	protected virtual void OnUpdate (float deltaTime)
 	{
 	}
@@ -249,18 +260,20 @@ public abstract class Entity : MonoBehaviour
 	{
 	}
 
-    #region Animator
-    public void TriggerAnimator(string triggerID)
-    {
-        if (mover)
-        {
-            mover.TriggerAnimator(triggerID);
-        }
-    }
-    #endregion
+	#region Animator
 
-    #region Movement
-    EntityMover mover;
+	public void TriggerAnimator (string triggerID)
+	{
+		if (mover) {
+			mover.TriggerAnimator (triggerID);
+		}
+	}
+
+	#endregion
+
+	#region Movement
+
+	EntityMover mover;
 
 	public EntityMover.MoveResult MoveTo (Vector3 position)
 	{
@@ -278,14 +291,13 @@ public abstract class Entity : MonoBehaviour
 		return mover.MoveToDirect (position);
 	}
 
-    public EntityMover.MoveResult FleeFrom(Vector3 position)
-    {
-        if (!mover)
-        {
-            return EntityMover.MoveResult.NotAllowed;
-        }
-        return mover.FleeFrom(position);
-    }
+	public EntityMover.MoveResult FleeFrom (Vector3 position)
+	{
+		if (!mover) {
+			return EntityMover.MoveResult.NotAllowed;
+		}
+		return mover.FleeFrom (position);
+	}
 
 	public void StopMovement ()
 	{
@@ -294,37 +306,42 @@ public abstract class Entity : MonoBehaviour
 		}
 	}
 
-    /// <summary>
-    /// Applies a movement speed modifying effect, timeouts greater than 0 makes it so existing effects from the source are replaced by this new application
-    /// </summary>
-    /// <returns>the modifier id, can be used to revoke it manually</returns>
-    public int ApplySpeedMod(EntityMover.SpeedModType type, Entity source, float timeOut = -1)
-    {
-        if (!mover) return -1;
-        return mover.ApplySpeedMod(source, type, timeOut);
-    }
+	/// <summary>
+	/// Applies a movement speed modifying effect, timeouts greater than 0 makes it so existing effects from the source are replaced by this new application
+	/// </summary>
+	/// <returns>the modifier id, can be used to revoke it manually</returns>
+	public int ApplySpeedMod (EntityMover.SpeedModType type, Entity source, float timeOut = -1)
+	{
+		if (!mover)
+			return -1;
+		return mover.ApplySpeedMod (source, type, timeOut);
+	}
 
-    public void RevokeSpeedMod(int modID)
-    {
-        if (!mover) return;
-        mover.RevokeSpeedMod(modID);
-    }
+	public void RevokeSpeedMod (int modID)
+	{
+		if (!mover)
+			return;
+		mover.RevokeSpeedMod (modID);
+	}
 
-    public void RevokeAllSpeedMods(Entity owner)
-    {
-        if (!mover) return;
-        mover.RevokeAllSpeedMods(owner);
-    }
-    
-    #endregion
+	public void RevokeAllSpeedMods (Entity owner)
+	{
+		if (!mover)
+			return;
+		mover.RevokeAllSpeedMods (owner);
+	}
 
-    #region Messaging
+	#endregion
+
+	#region Messaging
+
 	public virtual void ReceiveBroadcast (Message message)
 	{
 		if (behaviour) {
 			behaviour.HandleMessageBroadcast (message);
 		}
 	}
-    #endregion
+
+	#endregion
 
 }

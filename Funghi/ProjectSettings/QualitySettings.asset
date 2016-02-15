@@ -60,7 +60,7 @@ QualitySettings:
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Simple
-    pixelLightCount: 20
+    pixelLightCount: 100
     shadows: 1
     shadowResolution: 0
     shadowProjection: 1
@@ -166,3 +166,4 @@ QualitySettings:
     Android: 2
     Standalone: 4
     Web: 3
+    iPhone: 0

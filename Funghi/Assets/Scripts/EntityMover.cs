@@ -259,7 +259,7 @@ public class EntityMover: MonoBehaviour
             _lastRequestedMoveTargetPosition = position;
             if (!RequestPath(_lastRequestedMoveTargetPosition))
             {
-                _lastRequestedMoveTargetPosition = Vector3.zero;
+				_lastRequestedMoveTargetPosition = transform.position;
             }
         }
         return _moveResult;
@@ -275,7 +275,7 @@ public class EntityMover: MonoBehaviour
             _lastRequestedMoveTargetPosition = position;
             if (!RequestFleePath(position))
             {
-                _lastRequestedMoveTargetPosition = Vector3.zero;
+				_lastRequestedMoveTargetPosition = transform.position;
             }
         }
         return _moveResult;

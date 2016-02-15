@@ -23,11 +23,11 @@ public class GameWorld : MonoBehaviour
 	public float coreTickInterval = 0.1f;
 	float lastCoreUpdate = 0;
 
-    public static event Action<Message> OnMessageBroadcast;
-    public static event Action<Entity> OnNodeDestroyed;
-    public static event Action<Entity> OnCoreKilled;
+	public static event Action<Message> OnMessageBroadcast;
+	public static event Action<Entity> OnNodeDestroyed;
+	public static event Action<Entity> OnCoreKilled;
 
-    public const float nodeConnectionDistance = 3f;
+	public const float nodeConnectionDistance = 3f;
 
 	static GameWorld instance;
 
@@ -46,22 +46,30 @@ public class GameWorld : MonoBehaviour
 	#endregion
 
 	List<FungusNode> nodes = new List<FungusNode> ();
-    public ReadOnlyCollection<FungusNode> Nodes { get { return nodes.AsReadOnly(); } }
+
+	public ReadOnlyCollection<FungusNode> Nodes { get { return nodes.AsReadOnly (); } }
+
 	List<Human> humans = new List<Human> ();
-    public ReadOnlyCollection<Human> Humans { get { return humans.AsReadOnly(); } }
+
+	public ReadOnlyCollection<Human> Humans { get { return humans.AsReadOnly (); } }
+
 	List<PoliceStation> policeStations = new List<PoliceStation> ();
-    public ReadOnlyCollection<PoliceStation> PoliceStations { get { return policeStations.AsReadOnly(); } }
+
+	public ReadOnlyCollection<PoliceStation> PoliceStations { get { return policeStations.AsReadOnly (); } }
+
 	List<PoliceCar> policeCars = new List<PoliceCar> ();
-    public ReadOnlyCollection<PoliceCar> PoliceCars { get { return policeCars.AsReadOnly(); } }
+
+	public ReadOnlyCollection<PoliceCar> PoliceCars { get { return policeCars.AsReadOnly (); } }
+
 	FungusCore core;
 
-    public bool disableDeltaCompensation = false;
+	public bool disableDeltaCompensation = false;
 
 	public FungusCore Core { get { return core; } }
 
 	public bool destroyDisconnectedNodes = true;
 
-    public bool IsPaused;
+	public bool IsPaused;
 
 	[SerializeField]
 	SlimeHandler slimeHandler;
@@ -78,22 +86,22 @@ public class GameWorld : MonoBehaviour
 	[Header ("Masks")]
 	public LayerMask ObstacleLayer;
 
-    LevelEventDispatcher eventDispatcher;
+	LevelEventDispatcher eventDispatcher;
 
-    SpawnerTriggerCollection triggerCollection;
+	SpawnerTriggerCollection triggerCollection;
 
-    [RuntimeInitializeOnLoadMethod]
-    static void InitApplication()
-    {
+	[RuntimeInitializeOnLoadMethod]
+	static void InitApplication ()
+	{
 #if DEBUG
-        new GameObject("DebugHelper").AddComponent<DebugHelper>();
+		new GameObject ("DebugHelper").AddComponent<DebugHelper> ();
 #endif
 #if UNITY_ANDROID
-        Screen.orientation = StandardGameSettings.Get.androidScreenOrientation;
+		Screen.orientation = StandardGameSettings.Get.androidScreenOrientation;
 #endif
-    }
+	}
 
-    void Awake ()
+	void Awake ()
 	{
 		instance = this;
 		slimeHandler = GetComponent<SlimeHandler> ();
@@ -102,27 +110,28 @@ public class GameWorld : MonoBehaviour
 
 	void Start ()
 	{
-	    if (triggerCollection == null)
-	    {
-	        triggerCollection = FindObjectOfType<SpawnerTriggerCollection>();
-        }
-        GameInput.ReleaseSpawnFungusCallback(SpawnFungusNode);
+		if (triggerCollection == null) {
+			triggerCollection = FindObjectOfType<SpawnerTriggerCollection> ();
+		}
+		GameInput.ReleaseSpawnFungusCallback (SpawnFungusNode);
 		GameInput.RegisterSpawnFungusCallback (SpawnFungusNode);
-        if (nodeUpdater == null) {
+		/*if (nodeUpdater == null) {
 			nodeUpdater = StartCoroutine (NodeUpdate ());
 		}
 		if (humanUpdater == null) {
 			humanUpdater = StartCoroutine (HumanUpdate ());
+		}*/
+		eventDispatcher = FindObjectOfType<LevelEventDispatcher> ();
+		if (eventDispatcher == null) {
+			throw new NullReferenceException ("No EventDispatcher found in Level");
 		}
-        eventDispatcher = FindObjectOfType<LevelEventDispatcher>();
-        if (eventDispatcher == null) { throw new NullReferenceException("No EventDispatcher found in Level"); }
-        eventDispatcher.FireEvent(LevelEventType.Start);
-    }
+		eventDispatcher.FireEvent (LevelEventType.Start);
+	}
 
 	void OnLevelWasLoaded ()
 	{
 		levelStartTime = Time.time;
-    }
+	}
 
 	bool gameShuttingDown = false;
 
@@ -133,24 +142,20 @@ public class GameWorld : MonoBehaviour
 
 	void Update ()
 	{
-	    if (IsPaused)
-	    {
-	        GameInput.Instance.enabled = false;
-	    }
-	    else
-	    {
-	        GameInput.Instance.enabled = true;
-	    }
-	    LevelTime = Time.time - levelStartTime;
+		if (IsPaused) {
+			GameInput.Instance.enabled = false;
+		} else {
+			GameInput.Instance.enabled = true;
+		}
+		LevelTime = Time.time - levelStartTime;
 		slimeHandler.UpdateSlimeConnections ();
 		if (core) {
 			if (Time.time - lastCoreUpdate >= coreTickInterval) {
 				core.UpdateEntity (coreTickInterval);
-			    if (triggerCollection)
-			    {
-			        triggerCollection.EvaluateForCore(core.transform.position);
-			    }
-			    lastCoreUpdate = Time.time;
+				if (triggerCollection) {
+					triggerCollection.EvaluateForCore (core.transform.position);
+				}
+				lastCoreUpdate = Time.time;
 			}
 		}
 	}
@@ -158,7 +163,8 @@ public class GameWorld : MonoBehaviour
 	IEnumerator HumanUpdate ()
 	{
 		RESTART:
-	    while (IsPaused) yield return null;
+		while (IsPaused)
+			yield return null;
 		humanDelta = humanStopWatch.ElapsedMilliseconds / 1000f;
 		humanStopWatch.Reset ();
 		humanStopWatch.Start ();
@@ -168,21 +174,22 @@ public class GameWorld : MonoBehaviour
 		for (int i = 0; i < policeCars.Count; i++) {
 			policeCars [i].UpdateEntity (humanDelta);
 		}
-		yield return new WaitForSeconds (humanTickInterval - (disableDeltaCompensation?0:humanStopWatch.ElapsedMilliseconds / 1000f));
+		yield return new WaitForSeconds (humanTickInterval - (disableDeltaCompensation ? 0 : humanStopWatch.ElapsedMilliseconds / 1000f));
 		goto RESTART;
 	}
 
 	IEnumerator NodeUpdate ()
 	{
 		RESTART:
-	    while (IsPaused) yield return null;
+		while (IsPaused)
+			yield return null;
 		nodeDelta = nodeStopWatch.ElapsedMilliseconds / 1000f;
 		nodeStopWatch.Reset ();
 		nodeStopWatch.Start ();
 		for (int i = nodes.Count; i-- > 0;) {
 			nodes [i].UpdateEntity (nodeDelta);
 		}
-		yield return new WaitForSeconds (nodeTickInterval - (disableDeltaCompensation?0:nodeStopWatch.ElapsedMilliseconds / 1000f));
+		yield return new WaitForSeconds (nodeTickInterval - (disableDeltaCompensation ? 0 : nodeStopWatch.ElapsedMilliseconds / 1000f));
 		goto RESTART;
 	}
 
@@ -198,7 +205,7 @@ public class GameWorld : MonoBehaviour
 		}
 		SpawnFungusNode (start.transform.position);
 		SpawnCore (start.transform.position);
-        deathEventCalled = false;
+		deathEventCalled = false;
 	}
 
 	public bool SpawnCore (Vector3 position)
@@ -218,46 +225,45 @@ public class GameWorld : MonoBehaviour
 		return fn;
 	}
 
-    public void RestartCurrentLevel()
-    {
-        Debug.Log("Restarting Level, TODO: reset resources, abilities etc.");
-        RemoveAllEntities();
-        slimeHandler.ClearAllConnections();
-        RemoveAllSlimeTags();
-        FungusResources.Instance.Reset();
-        UserMenu.current.UpdateEnabledAbilities();
-        var t = FindObjectOfType<Tutorials.Tutorial>();
-        if (t)
-        {
-            t.Reset();
-        }
-        Start();
-    }
+	public void RestartCurrentLevel ()
+	{
+		Debug.Log ("Restarting Level, TODO: reset resources, abilities etc.");
+		RemoveAllEntities ();
+		slimeHandler.ClearAllConnections ();
+		RemoveAllSlimeTags ();
+		FungusResources.Instance.Reset ();
+		UserMenu.current.UpdateEnabledAbilities ();
+		var t = FindObjectOfType<Tutorials.Tutorial> ();
+		if (t) {
+			t.Reset ();
+		}
+		Start ();
+	}
 
-    void RemoveAllEntities()
-    {
-        if (core) { Destroy(core.gameObject); core = null; }
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            Destroy(nodes[i].gameObject);
-        }
-        nodes.Clear();
-        for (int i = 0; i < policeCars.Count; i++)
-        {
-            Destroy(policeCars[i].gameObject);
-        }
-        policeCars.Clear();
-        //for (int i = 0; i < policeStations.Count; i++)
-        //{
-        //    Destroy(policeStations[i].gameObject);
-        //}
-        //policeStations.Clear();
-        for (int i = 0; i < humans.Count; i++)
-        {
-            Destroy(humans[i].gameObject);
-        }
-        humans.Clear();
-    }
+	void RemoveAllEntities ()
+	{
+		if (core) {
+			Destroy (core.gameObject);
+			core = null;
+		}
+		for (int i = 0; i < nodes.Count; i++) {
+			Destroy (nodes [i].gameObject);
+		}
+		nodes.Clear ();
+		for (int i = 0; i < policeCars.Count; i++) {
+			Destroy (policeCars [i].gameObject);
+		}
+		policeCars.Clear ();
+		//for (int i = 0; i < policeStations.Count; i++)
+		//{
+		//    Destroy(policeStations[i].gameObject);
+		//}
+		//policeStations.Clear();
+		for (int i = 0; i < humans.Count; i++) {
+			Destroy (humans [i].gameObject);
+		}
+		humans.Clear ();
+	}
 
 	#region Helper
 
@@ -280,10 +286,9 @@ public class GameWorld : MonoBehaviour
 			if (!nodes.Contains (fn)) {
 				nodes.Add (fn);
 				fn.transform.parent = entityHolder;
-			    if (triggerCollection)
-			    {
-			        triggerCollection.EvaluateForNode(fn.transform.position);
-			    }
+				if (triggerCollection) {
+					triggerCollection.EvaluateForNode (fn.transform.position);
+				}
 			}
 			return;
 		}
@@ -330,7 +335,7 @@ public class GameWorld : MonoBehaviour
 		FungusNode fn = e as FungusNode;
 		if (fn) {
 			nodes.Remove (fn);
-            CleanupAfterNodes();
+			CleanupAfterNodes ();
 			return;
 		}
 		Human en = e as Human;
@@ -375,11 +380,10 @@ public class GameWorld : MonoBehaviour
 				humans [i].ReceiveBroadcast (message);
 			}
 		}
-        if (OnMessageBroadcast != null)
-        {
-            OnMessageBroadcast(message);
-        }
-    }
+		if (OnMessageBroadcast != null) {
+			OnMessageBroadcast (message);
+		}
+	}
 
 	public void BroadcastToNodes (Message message, Vector3 position, float radius = float.PositiveInfinity)
 	{
@@ -419,38 +423,30 @@ public class GameWorld : MonoBehaviour
 		return rangeQuery;
 	}
 
-    public List<Human> GetHumans(Vector3 position, float radius, IntelligenceType filter)
-    {
-        var rangeQuery = new List<Human>();
-        for (var i = 0; i < humans.Count; i++)
-        {
-            if (!humans[i].Behaviour)
-            {
-                continue;
-            }
-            var humanClassification = humans[i].Behaviour.Classification;
-            if (filter == IntelligenceType.Human)
-            {
-                if (humanClassification != IntelligenceType.Human & humanClassification != IntelligenceType.Citizen &
-                    humanClassification != IntelligenceType.Police)
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                if (humanClassification != filter)
-                {
-                    continue;
-                }
-            }
-            if (AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position) <= radius * radius)
-            {
-                rangeQuery.Add(humans[i]);
-            }
-        }
-        return rangeQuery;
-    } 
+	public List<Human> GetHumans (Vector3 position, float radius, IntelligenceType filter)
+	{
+		var rangeQuery = new List<Human> ();
+		for (var i = 0; i < humans.Count; i++) {
+			if (!humans [i].Behaviour) {
+				continue;
+			}
+			var humanClassification = humans [i].Behaviour.Classification;
+			if (filter == IntelligenceType.Human) {
+				if (humanClassification != IntelligenceType.Human & humanClassification != IntelligenceType.Citizen &
+				                humanClassification != IntelligenceType.Police) {
+					continue;
+				}
+			} else {
+				if (humanClassification != filter) {
+					continue;
+				}
+			}
+			if (AstarMath.SqrMagnitudeXZ (humans [i].transform.position, position) <= radius * radius) {
+				rangeQuery.Add (humans [i]);
+			}
+		}
+		return rangeQuery;
+	}
 
 	public Human GetNearestHuman (Vector3 position)
 	{
@@ -469,53 +465,44 @@ public class GameWorld : MonoBehaviour
 		return nearest;
 	}
 
-    public Human GetNearestHuman(Vector3 position, IntelligenceType typeFilter)
-    {
-        if (typeFilter == IntelligenceType.Undefined)
-        {
-            return GetNearestHuman(position);
-        }
-        if (humans.Count == 0)
-        {
-            return null;
-        }
-        var nearest = humans[0];
-        var dist = float.PositiveInfinity;
-        bool found = false;
-        for (var i = 1; i < humans.Count; i++)
-        {
-            if (!humans[i].Behaviour) continue;
-            if (typeFilter == IntelligenceType.Human)
-            {
-                IntelligenceType ht = humans[i].Behaviour.Classification;
-                if (ht != IntelligenceType.Citizen & ht != IntelligenceType.Human & ht != IntelligenceType.Police)
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                if (humans[i].Behaviour.Classification != typeFilter)
-                {
-                    continue;
-                }
-            }
-            var curDist = AstarMath.SqrMagnitudeXZ(humans[i].transform.position, position);
-            if (curDist < dist)
-            {
-                nearest = humans[i];
-                dist = curDist;
-                found = true;
-            }
-        }
-        if (!found)
-        {
-            return null;
-        }
-        return nearest;
-    }
+	public Human GetNearestHuman (Vector3 position, IntelligenceType typeFilter)
+	{
+		if (typeFilter == IntelligenceType.Undefined) {
+			return GetNearestHuman (position);
+		}
+		if (humans.Count == 0) {
+			return null;
+		}
+		var nearest = humans [0];
+		var dist = float.PositiveInfinity;
+		bool found = false;
+		for (var i = 1; i < humans.Count; i++) {
+			if (!humans [i].Behaviour)
+				continue;
+			if (typeFilter == IntelligenceType.Human) {
+				IntelligenceType ht = humans [i].Behaviour.Classification;
+				if (ht != IntelligenceType.Citizen & ht != IntelligenceType.Human & ht != IntelligenceType.Police) {
+					continue;
+				}
+			} else {
+				if (humans [i].Behaviour.Classification != typeFilter) {
+					continue;
+				}
+			}
+			var curDist = AstarMath.SqrMagnitudeXZ (humans [i].transform.position, position);
+			if (curDist < dist) {
+				nearest = humans [i];
+				dist = curDist;
+				found = true;
+			}
+		}
+		if (!found) {
+			return null;
+		}
+		return nearest;
+	}
 
-    public PoliceStation GetNearestPoliceStation (Vector3 position)
+	public PoliceStation GetNearestPoliceStation (Vector3 position)
 	{
 		if (policeStations.Count == 0) {
 			return null;
@@ -578,55 +565,58 @@ public class GameWorld : MonoBehaviour
 		return (node.transform.position - sourcePoint).normalized;
 	}
 
-    public List<PoliceCar> GetPoliceCars(Vector3 position, float radius)
-    {
-        var rangeQuery = new List<PoliceCar>();
-        for (int i = 0; i < policeCars.Count; i++)
-        {
-            if (AstarMath.SqrMagnitudeXZ(policeCars[i].transform.position, position) <= radius*radius)
-            {
-                rangeQuery.Add(policeCars[i]);
-            }
-        }
-        return rangeQuery;
-    } 
+	public List<PoliceCar> GetPoliceCars (Vector3 position, float radius)
+	{
+		var rangeQuery = new List<PoliceCar> ();
+		for (int i = 0; i < policeCars.Count; i++) {
+			if (AstarMath.SqrMagnitudeXZ (policeCars [i].transform.position, position) <= radius * radius) {
+				rangeQuery.Add (policeCars [i]);
+			}
+		}
+		return rangeQuery;
+	}
 
 	#endregion
 
 	#region Slime
 
-    void CleanupAfterNodes()
-    {
-        if (nodes.Count == 0)
-        {
-            slimeHandler.ClearAllConnections();
-            RemoveAllSlimeTags();
-        }
-    }
+	void CleanupAfterNodes ()
+	{
+		if (nodes.Count == 0) {
+			slimeHandler.ClearAllConnections ();
+			RemoveAllSlimeTags ();
+		}
+	}
 
 	public void SetPositionIsSlime (Vector3 point, float size, bool state)
 	{
-		if (gameShuttingDown) { return; }
-        slimeHandler.QueueSlimeUpdate(point, size, state);
+		if (gameShuttingDown) {
+			return;
+		}
+		slimeHandler.QueueSlimeUpdate (point, size, state);
 	}
 
 	public bool GetPositionIsSlime (Vector3 point, float toleranceRadius)
 	{
-        if (gameShuttingDown) { return false; }
-        return slimeHandler.GetPositionIsSlime(point, toleranceRadius);
+		if (gameShuttingDown) {
+			return false;
+		}
+		return slimeHandler.GetPositionIsSlime (point, toleranceRadius);
 	}
 
-    public void RemoveAllSlimeTags()
-    {
-        if (gameShuttingDown) { return; }
-        AstarPath.active.FlushGraphUpdates();
-        GraphUpdateObject guo = new GraphUpdateObject(new Bounds(Vector3.zero, Vector3.one * 10000f));
-        guo.modifyTag = true;
-        guo.updatePhysics = false;
-        guo.modifyWalkability = false;
-        guo.setTag = 0;
-        AstarPath.active.UpdateGraphs(guo);
-    }
+	public void RemoveAllSlimeTags ()
+	{
+		if (gameShuttingDown) {
+			return;
+		}
+		AstarPath.active.FlushGraphUpdates ();
+		GraphUpdateObject guo = new GraphUpdateObject (new Bounds (Vector3.zero, Vector3.one * 10000f));
+		guo.modifyTag = true;
+		guo.updatePhysics = false;
+		guo.modifyWalkability = false;
+		guo.setTag = 0;
+		AstarPath.active.UpdateGraphs (guo);
+	}
 
 	/// <summary>
 	/// untested, may crash
@@ -672,10 +662,9 @@ public class GameWorld : MonoBehaviour
 
 	public void OnFungusNodeWasKilled (FungusNode node)
 	{
-	    if (OnNodeDestroyed != null)
-	    {
-	        OnNodeDestroyed(node);
-	    }
+		if (OnNodeDestroyed != null) {
+			OnNodeDestroyed (node);
+		}
 		Destroy (node.gameObject);
 	}
 
@@ -685,19 +674,18 @@ public class GameWorld : MonoBehaviour
 		Destroy (human.gameObject);
 	}
 
-    bool deathEventCalled = false;
+	bool deathEventCalled = false;
+
 	public void OnCoreLostGrounding (FungusCore core)
 	{
-        if (!deathEventCalled)
-        {
-            if (OnCoreKilled != null)
-            {
-                OnCoreKilled(core);
-            }
-            Debug.Log("Core ungrounded");
-            eventDispatcher.FireEvent(LevelEventType.Death);
-            deathEventCalled = true;
-        }
+		if (!deathEventCalled) {
+			if (OnCoreKilled != null) {
+				OnCoreKilled (core);
+			}
+			Debug.Log ("Core ungrounded");
+			eventDispatcher.FireEvent (LevelEventType.Death);
+			deathEventCalled = true;
+		}
 #if UNITY_EDITOR
 //        UnityEditor.EditorApplication.isPaused = true;
 #endif
@@ -706,7 +694,7 @@ public class GameWorld : MonoBehaviour
 	public void OnCoreWasKilled (FungusCore core)
 	{
 		Debug.Log ("Core killed");
-        eventDispatcher.FireEvent(LevelEventType.Death);
+		eventDispatcher.FireEvent (LevelEventType.Death);
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPaused = true;
 #endif
@@ -720,7 +708,7 @@ public class GameWorld : MonoBehaviour
 		} else {
 			Debug.Log ("Goal reached");
 		}
-        eventDispatcher.FireEvent(LevelEventType.Goal);
+		eventDispatcher.FireEvent (LevelEventType.Goal);
 		//TODO handle new level etc
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPaused = true;
