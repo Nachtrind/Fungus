@@ -69,27 +69,6 @@ namespace NodeAbilities
 			}
 		}
 
-		private void InfluenceEnemiesInArea (FungusNode node, Vector3 rotatedVector)
-		{
-			Vector3 dir = Vector3.Normalize (rotatedVector);
-			Vector3 tempVector = new Vector3 (0, 0, 0); 
-			int i = 0;
-			
-			while (Vector3.Magnitude (tempVector) < Vector3.Magnitude (rotatedVector)) {
-			
-				List<Human> enemiesInRadius = GameWorld.Instance.GetHumans (node.transform.position + tempVector, influenceRadius);
-				foreach (Human h in enemiesInRadius) {
-					if (h.gameObject.tag.Equals ("Citizen")) {
-						h.SetBehaviour (zombieIntelligence);
-						h.TriggerBehaviour ("AttachToNode", node);
-						h.gameObject.tag = "Zombie";
-					}
-				}
-				i++;
-				tempVector = dir * (i * influenceRadius);
-			}
-		}
-
 
 		private void InfluenceEnemiesInArea (FungusNode node, Quaternion sporeRot)
 		{
@@ -98,7 +77,7 @@ namespace NodeAbilities
 			Vector3 tempVector = new Vector3 (0, 0, 0); 
 			Collider[] peopleCollider = Physics.OverlapBox (node.transform.position + dir * radius / 2, new Vector3 (influenceRadius / 2, 1, radius / 2), sporeRot, citizenLayer);
 			//Debug.Log ("Caught Citizens with lure: " + peopleCollider.Length);
-			//Debug.DrawLine (node.transform.position, node.transform.position + dir * radius, Color.cyan, 4.0f);
+			Debug.DrawLine (node.transform.position, node.transform.position + dir * radius, Color.cyan, 4.0f);
 
 			foreach (Collider c in peopleCollider) {
 				Human h = c.GetComponent<Human> ();

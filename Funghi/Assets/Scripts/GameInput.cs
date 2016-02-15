@@ -683,24 +683,28 @@ public class GameInput: MonoBehaviour
 
 	private void CreateNewSlimePath (Vector3 _mousePosition)
 	{
-		_mousePosition.y = 0;
-		FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode (_mousePosition); //HACK: nearest node is not always shortest path (if needed, compare multiple paths)
-		if (nodeNearCursor) {
-			if (Time.time - lastRequest >= requestInterval) {
-				AstarPath.StartPath (ABPath.Construct (nodeNearCursor.transform.position, _mousePosition, OnPathCompleted));
-				lastRequest = Time.time;
+		if (FungusResources.Instance.CurrentResources >= nodeCost) {
+			_mousePosition.y = 0;
+			FungusNode nodeNearCursor = GameWorld.Instance.GetNearestFungusNode (_mousePosition); //HACK: nearest node is not always shortest path (if needed, compare multiple paths)
+			if (nodeNearCursor) {
+				if (Time.time - lastRequest >= requestInterval) {
+					AstarPath.StartPath (ABPath.Construct (nodeNearCursor.transform.position, _mousePosition, OnPathCompleted));
+					lastRequest = Time.time;
+				}
+				Color c = pathToCursorLength > GameWorld.nodeConnectionDistance ? Color.red : Color.green;
+				//non gizmo indicator
+				spores.startColor = pathToCursorLength > GameWorld.nodeConnectionDistance ? new Color (232 / 255f, 82 / 255f, 0 / 255f, 1f) : new Color (167 / 255f, 255 / 255f, 0 / 255f, 1f);
+				for (int i = 1; i < pathToCursor.Count; i++) {
+					Debug.DrawLine (pathToCursor [i], pathToCursor [i - 1], c);
+				}
+			} else {
+				pathToCursor.Clear ();
+				pathToCursorLength = float.PositiveInfinity;
 			}
-			Color c = pathToCursorLength > GameWorld.nodeConnectionDistance ? Color.red : Color.green;
-			//non gizmo indicator
-			spores.startColor = pathToCursorLength > GameWorld.nodeConnectionDistance ? new Color (232 / 255f, 82 / 255f, 0 / 255f, 1f) : new Color (167 / 255f, 255 / 255f, 0 / 255f, 1f);
-			for (int i = 1; i < pathToCursor.Count; i++) {
-				Debug.DrawLine (pathToCursor [i], pathToCursor [i - 1], c);
-			}
-		} else {
-			pathToCursor.Clear ();
-			pathToCursorLength = float.PositiveInfinity;
-		}
 
+		} else {
+			spores.startColor = new Color (232 / 255f, 82 / 255f, 0 / 255f, 1f);
+		}
 	}
 
 }

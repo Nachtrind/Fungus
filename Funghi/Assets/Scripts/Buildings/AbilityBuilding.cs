@@ -27,6 +27,7 @@ public class AbilityBuilding : MonoBehaviour
 		if (other.tag.Equals ("FungusCore")) {
 			FungusResources.Instance.UnlockAbility (ability);
 			if (OnAbilityGained != null) {
+				Debug.Log ("Gained!");
 				OnAbilityGained (ability);
 			}
 		}
