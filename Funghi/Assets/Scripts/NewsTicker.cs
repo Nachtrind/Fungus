@@ -175,14 +175,13 @@ public class NewsTicker : MonoBehaviour
         t.horizontalOverflow = HorizontalWrapMode.Overflow;
         t.verticalOverflow = VerticalWrapMode.Overflow;
         var rt = txtPlate.transform as RectTransform;
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
+        rt.anchorMin = Vector2.one*0.5f;
+        rt.anchorMax = Vector2.one*0.5f;
         var csf = txtPlate.AddComponent<ContentSizeFitter>();
         csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         rt.localScale = Vector3.one;
         Canvas.ForceUpdateCanvases();
-        var right = panel.rect.x + (panel.rect.width*0.5f*canvas.scaleFactor);
-        right += (rt.rect.width*canvas.scaleFactor) * 0.5f;
+        var right = panel.rect.width * 0.5f+rt.rect.width*0.5f;
         rt.anchoredPosition = new Vector2(right, 0);
         return new TransformTrack(rt);
     }
@@ -196,13 +195,13 @@ public class NewsTicker : MonoBehaviour
                 TransformTrack upItem = upperPanelItems[i];
                 upItem.t.anchoredPosition = new Vector2(upItem.t.anchoredPosition.x - upperPanelSpeed, upItem.t.anchoredPosition.y);
                 //_______________________________________________________________________________
-                if (!upItem.triggered && upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f*canvas.scaleFactor < upperPanel.rect.x+upperPanel.rect.width*0.5f*canvas.scaleFactor)
+                if (!upItem.triggered && (upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f)*canvas.scaleFactor < (upperPanel.rect.x+upperPanel.rect.width*0.5f)*canvas.scaleFactor)
                 {
                     upItem.triggered = true;
                     DisplayNextItem(upperPanel);
                 }
                 //_______________________________________________________________________________
-                if (upperPanel.anchoredPosition.x-(upperPanel.rect.width*0.5f*canvas.scaleFactor) > upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f*canvas.scaleFactor)
+                if ((upperPanel.anchoredPosition.x-upperPanel.rect.width*0.5f)*canvas.scaleFactor > (upItem.t.anchoredPosition.x+upItem.t.rect.width*0.5f)*canvas.scaleFactor)
                 {
                     Destroy(upItem.t.gameObject);
                     upperPanelItems.RemoveAt(i);

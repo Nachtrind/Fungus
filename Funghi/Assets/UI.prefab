@@ -489,8 +489,6 @@ GameObject:
   - 114: {fileID: 11462634}
   - 114: {fileID: 11486550}
   - 114: {fileID: 11457678}
-  - 114: {fileID: 11486052}
-  - 114: {fileID: 11429746}
   m_Layer: 5
   m_Name: Text (3)
   m_TagString: Untagged
@@ -580,8 +578,6 @@ GameObject:
   - 114: {fileID: 11436308}
   - 114: {fileID: 11485292}
   - 114: {fileID: 11432574}
-  - 114: {fileID: 11434118}
-  - 114: {fileID: 11431712}
   m_Layer: 5
   m_Name: Text (1)
   m_TagString: Untagged
@@ -621,8 +617,6 @@ GameObject:
   - 114: {fileID: 11472758}
   - 114: {fileID: 11462368}
   - 114: {fileID: 11475462}
-  - 114: {fileID: 11401570}
-  - 114: {fileID: 11481302}
   m_Layer: 5
   m_Name: Text (5)
   m_TagString: Untagged
@@ -708,8 +702,6 @@ GameObject:
   - 114: {fileID: 11457834}
   - 114: {fileID: 11477308}
   - 114: {fileID: 11475270}
-  - 114: {fileID: 11462202}
-  - 114: {fileID: 11427916}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -794,8 +786,6 @@ GameObject:
   - 114: {fileID: 11491320}
   - 114: {fileID: 11442742}
   - 114: {fileID: 11443238}
-  - 114: {fileID: 11455808}
-  - 114: {fileID: 11422172}
   m_Layer: 5
   m_Name: Text (2)
   m_TagString: Untagged
@@ -815,8 +805,6 @@ GameObject:
   - 114: {fileID: 11415622}
   - 114: {fileID: 11443294}
   - 114: {fileID: 11453944}
-  - 114: {fileID: 11406184}
-  - 114: {fileID: 11403290}
   m_Layer: 5
   m_Name: Text (4)
   m_TagString: Untagged
@@ -841,19 +829,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11401570
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11402108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -881,19 +856,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11403290
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11403506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -990,19 +952,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11406184
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11406252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1094,9 +1043,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11466536}
-          m_MethodName: OnBuildSelected
-          m_Mode: 1
+        - m_Target: {fileID: 11424164}
+          m_MethodName: OnInactive
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1169,6 +1118,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   type: 1
+  normalSprite: {fileID: 21300000, guid: 5775db2496be9e7429c346fd6675ae0c, type: 3}
+  pressedSprite: {fileID: 21300000, guid: 2c225290381234f44b113a689e324848, type: 3}
+  uiImage: {fileID: 11498490}
 --- !u!114 &11414654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1221,7 +1173,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1320,19 +1272,6 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
---- !u!114 &11422172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11423284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1373,6 +1312,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   type: 2
+  normalSprite: {fileID: 21300000, guid: 85936d916b81c5543a3f8e7f0def3955, type: 3}
+  pressedSprite: {fileID: 21300000, guid: c0b28a75ce01c6c46abae6ad82451867, type: 3}
+  uiImage: {fileID: 11403938}
 --- !u!114 &11425964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1400,32 +1342,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11427916
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
---- !u!114 &11429746
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11430974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1437,13 +1353,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10d68d5e24fe8348842af5d6aa39416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickerData: {fileID: 11400000, guid: 25f1c67d7109ac948b4a3d51e5bf0263, type: 2}
+  tickerData: {fileID: 11400000, guid: 8195ff41f89654246a22a0bf4d42e325, type: 2}
   fader: {fileID: 22529372}
   fadeSpeed: 1
   upperPanel: {fileID: 22447952}
   lowerPanel: {fileID: 22438890}
-  upperPanelSpeed: 0.2
-  lowerPanelSpeed: 0.2
+  upperPanelSpeed: 0.3
+  lowerPanelSpeed: 0.4
   upperPanelFont: {fileID: 12800000, guid: eb7bab75451bf244ba767b1e0a5068a5, type: 3}
   lowerPanelFont: {fileID: 12800000, guid: eb7bab75451bf244ba767b1e0a5068a5, type: 3}
   upperPanelFontSize: 10
@@ -1475,19 +1391,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11431712
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11431790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1514,10 +1417,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: c0b28a75ce01c6c46abae6ad82451867,
-      type: 3}
+    m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: c0b28a75ce01c6c46abae6ad82451867, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -1542,58 +1444,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11431712}
-          m_MethodName: OnInactive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11431712}
-          m_MethodName: OnActive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 11485292}
           m_MethodName: OnSelect
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11431712}
-          m_MethodName: OnInactive
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1678,19 +1535,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &11434118
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11434196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1780,7 +1624,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1841,58 +1685,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11442742}
-          m_MethodName: OnSelect
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11422172}
-          m_MethodName: OnActive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 11442742}
           m_MethodName: OnSelect
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11422172}
-          m_MethodName: OnInactive
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2197,58 +1996,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11443294}
-          m_MethodName: OnSelect
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11403290}
-          m_MethodName: OnActive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 11443294}
           m_MethodName: OnSelect
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11403290}
-          m_MethodName: OnInactive
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2260,19 +2014,6 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
---- !u!114 &11455808
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11456704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2297,58 +2038,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11486550}
-          m_MethodName: OnSelect
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11429746}
-          m_MethodName: OnActive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 11486550}
           m_MethodName: OnSelect
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11429746}
-          m_MethodName: OnInactive
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2385,7 +2081,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2419,10 +2115,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: bb481e2d69fbbc043ae22a8ffad6e1fc,
-      type: 3}
+    m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: bb481e2d69fbbc043ae22a8ffad6e1fc, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -2516,19 +2211,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11462202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11462368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2568,7 +2250,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2693,8 +2375,8 @@ MonoBehaviour:
   - {fileID: 11486550}
   - {fileID: 11443294}
   - {fileID: 11462368}
-  InactiveButtonOffset: -50
-  InactiveMenuOffset: -25
+  InactiveButtonOffset: 0
+  InactiveMenuOffset: 0
   AbilityActiveColor: {r: 1, g: 1, b: 1, a: 1}
   AbilityInactiveColor: {r: 0.5588235, g: 0.5588235, b: 0.5588235, a: 1}
   interactionSound: {fileID: 8300000, guid: a7c260d92417ebf40a265f4cd6be129b, type: 3}
@@ -2712,6 +2394,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   type: 0
+  normalSprite: {fileID: 21300000, guid: b8fe0db41ad155b4eb7a1c3029844263, type: 3}
+  pressedSprite: {fileID: 21300000, guid: bb481e2d69fbbc043ae22a8ffad6e1fc, type: 3}
+  uiImage: {fileID: 11474214}
 --- !u!114 &11472758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2737,7 +2422,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2798,58 +2483,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11462368}
-          m_MethodName: OnSelect
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11481302}
-          m_MethodName: OnActive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 11462368}
           m_MethodName: OnSelect
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11481302}
-          m_MethodName: OnInactive
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2900,58 +2540,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11475270}
-          m_MethodName: OnSelect
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   - eventID: 0
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11427916}
-          m_MethodName: OnActive
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 11475270}
           m_MethodName: OnSelect
           m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11427916}
-          m_MethodName: OnInactive
-          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3081,19 +2676,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11481302
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 179396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11481886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3171,9 +2753,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 11466536}
-          m_MethodName: OnBrainSelected
-          m_Mode: 1
+        - m_Target: {fileID: 11412984}
+          m_MethodName: OnInactive
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3199,19 +2781,6 @@ MonoBehaviour:
   menu: {fileID: 11466536}
   Type: 1
   IsActive: 0
---- !u!114 &11486052
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9107401360c1c0409794b362a434749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: {fileID: 11466536}
-  type: 0
 --- !u!114 &11486550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3298,7 +2867,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -3471,7 +3040,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149426}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -3491,10 +3060,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 2c225290381234f44b113a689e324848,
-      type: 3}
+    m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: 2c225290381234f44b113a689e324848, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -4042,8 +3610,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -28.549988, y: -0.0000038146973}
-  m_SizeDelta: {x: 18.7, y: 126.3}
+  m_AnchoredPosition: {x: -30.256, y: -0.0000038146973}
+  m_SizeDelta: {x: 16.587, y: 188.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22427234
 RectTransform:
@@ -4125,7 +3693,7 @@ RectTransform:
   m_Children:
   - {fileID: 22472780}
   m_Father: {fileID: 22492046}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.000006109476}
@@ -4143,10 +3711,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22495866}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -84.2, y: 11.300003}
-  m_SizeDelta: {x: -369, y: -53.2}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.3, y: 1.7}
+  m_SizeDelta: {x: 259, y: 22.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22438890
 RectTransform:
@@ -4160,10 +3728,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22495866}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -36.150024, y: -8.900017}
-  m_SizeDelta: {x: -272.5, y: -45.4}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 25.85, y: -18.5}
+  m_SizeDelta: {x: 355.5, y: 30.599998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22439046
 RectTransform:
@@ -4211,10 +3779,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22495866}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -36.15, y: -8.89999}
-  m_SizeDelta: {x: -272.5, y: -45.4}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 29.38, y: -18.5}
+  m_SizeDelta: {x: 355.5, y: 30.599998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22447952
 RectTransform:
@@ -4228,10 +3796,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22495866}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -84.19997, y: 11.299997}
-  m_SizeDelta: {x: -369, y: -53.2}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 8.8, y: 1.7}
+  m_SizeDelta: {x: 259, y: 22.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22449694
 RectTransform:
@@ -4328,7 +3896,7 @@ RectTransform:
   - {fileID: 22415354}
   - {fileID: 22496476}
   m_Father: {fileID: 22492046}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 81, y: 0}
@@ -4394,7 +3962,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 9.35001, y: -0.0000038146973}
-  m_SizeDelta: {x: 57.1, y: 126.3}
+  m_SizeDelta: {x: 62.626, y: 188.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22460758
 RectTransform:
@@ -4633,10 +4201,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22495866}
   m_RootOrder: 4
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -217.7, y: 49.8}
-  m_SizeDelta: {x: -513.4, y: 107.6}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -146.6, y: -1.6}
+  m_SizeDelta: {x: 114.599976, y: 107.600006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22492046
 RectTransform:
@@ -4648,9 +4216,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 22495866}
   - {fileID: 22457266}
   - {fileID: 22434998}
+  - {fileID: 22495866}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -4691,11 +4259,11 @@ RectTransform:
   - {fileID: 22444740}
   - {fileID: 22490696}
   m_Father: {fileID: 22492046}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 44, y: 40.5}
-  m_SizeDelta: {x: 628.1299, y: 77}
+  m_AnchoredPosition: {x: -2.1100277e-10, y: 38.500008}
+  m_SizeDelta: {x: 369.8, y: 77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22496476
 RectTransform:
@@ -4713,8 +4281,8 @@ RectTransform:
   m_RootOrder: 8
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41.837, y: -29.6}
-  m_SizeDelta: {x: 75.8, y: 126.3}
+  m_AnchoredPosition: {x: 41.836998, y: -29.599998}
+  m_SizeDelta: {x: 81.326, y: 188.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &22521574
 CanvasGroup:
