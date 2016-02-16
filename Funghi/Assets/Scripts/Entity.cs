@@ -249,6 +249,9 @@ public abstract class Entity : MonoBehaviour
 
 	void FixedUpdate ()
 	{
+		if (GameWorld.Instance.IsPaused) {
+			return;
+		}
 		UpdateEntity (Time.fixedDeltaTime);
 	}
 
