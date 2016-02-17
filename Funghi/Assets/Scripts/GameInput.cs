@@ -32,8 +32,8 @@ public class GameInput: MonoBehaviour
 	float lastRequest;
 	float requestInterval = 0.1f;
 	private float inputTimer;
-	private float inputTick = 0.2f;
-	float coreInputRange = 0.1f;
+	//private float inputTick = 0.2f;
+	//float coreInputRange = 0.1f;
 
 	static event Action<Vector3> OnCoreCommand;
 	static event Func<Vector3, FungusNode> OnSpawnFungusCommand;
@@ -52,7 +52,7 @@ public class GameInput: MonoBehaviour
 	//Image Tint Colors
 	Color normalTint = new Color (1f, 1f, 1f, 1f);
 	public Color selectedTint;
-	Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
+	//Color lockedTint = new Color (90 / 255f, 90 / 255f, 90 / 255f, 1f);
 
 	//Plane + Camera
 	private Plane plane;
@@ -62,7 +62,7 @@ public class GameInput: MonoBehaviour
 	public float moveSpeedX = 2.1f;
 	public float moveSpeedZ = 2.1f;
 	public float zoomSpeed = 0.1f;
-	private Vector2 scrollDirection = Vector2.zero;
+	//private Vector2 scrollDirection = Vector2.zero;
 
 	float levelSizeY;
 	float levelSizeX;
@@ -249,7 +249,7 @@ public class GameInput: MonoBehaviour
 
 			if (!eventsystem.IsPointerOverGameObject (0) && !eventsystem.IsPointerOverGameObject (1)) {
 
-				Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
+				//Vector2 cameraViewsize = new Vector2 (cam.pixelWidth, cam.pixelHeight);
 							
 				Touch touchOne = touches [0];
 				Touch touchTwo = touches [1];

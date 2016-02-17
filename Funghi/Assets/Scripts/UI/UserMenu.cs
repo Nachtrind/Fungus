@@ -71,7 +71,7 @@ public class UserMenu : MonoBehaviour
 
 		FungusResources.Instance.beatneat.isUnlocked = true;
 		FungusResources.Instance.attract.isUnlocked = true;
-		FungusResources.Instance.growth.isUnlocked = true;
+		FungusResources.Instance.growth.isUnlocked = false;
 		FungusResources.Instance.zombies.isUnlocked = false;
 		FungusResources.Instance.slowdown.isUnlocked = false;
 		FungusResources.Instance.speedup.isUnlocked = false;

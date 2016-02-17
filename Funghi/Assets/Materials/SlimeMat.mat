@@ -166,11 +166,11 @@ Material:
       data:
         first:
           name: _Spread
-        second: 0.613
+        second: 1
       data:
         first:
           name: _CutOff
-        second: 0.297
+        second: 0.261
       data:
         first:
           name: _Speed
@@ -247,4 +247,4 @@ Material:
       data:
         first:
           name: _GlowColor
-        second: {r: 0.26750988, g: 0.2794118, b: 0.15614188, a: 1}
+        second: {r: 0.61115617, g: 0.6764706, b: 0, a: 1}
