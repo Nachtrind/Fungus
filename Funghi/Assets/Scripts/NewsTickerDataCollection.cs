@@ -3,16 +3,20 @@ using System.Collections.Generic;
 
 public enum NewsTickerCategory
 {
-	Gossip = 0,
-	HearSay = 1,
-	Talk = 2,
-	Anouncement = 3,
-	News = 4,
-	Party = 5,
-	EventCoverage = 6,
-	Forecast = 7,
-	Warning = 8,
-	GovernmentNotice = 9
+	Diner = 1,
+	SlimeSighting = 2,
+	Special1 = 3,
+	Special2 = 4,
+	Special3 = 5,
+	Special4 = 6,
+	Special5 = 7,
+	Special6 = 8,
+	Party = 9,
+	SpeedUp = 10,
+	Growth = 11,
+	Enslave = 12,
+	SlowDown = 13,
+	President = 14
 }
 
 [CreateAssetMenu (menuName = "NewsTickerDataCollection")]
@@ -48,16 +52,20 @@ public class NewsTickerDataCollection : ScriptableObject
 
 	[SerializeField]
 	List<TickerData> data = new List<TickerData> {
-		new TickerData (NewsTickerCategory.Gossip),
-		new TickerData (NewsTickerCategory.HearSay),
-		new TickerData (NewsTickerCategory.Talk),
-		new TickerData (NewsTickerCategory.Anouncement),
-		new TickerData (NewsTickerCategory.News),
+		new TickerData (NewsTickerCategory.Diner),
+		new TickerData (NewsTickerCategory.SlimeSighting),
+		new TickerData (NewsTickerCategory.Special1),
+		new TickerData (NewsTickerCategory.Special2),
+		new TickerData (NewsTickerCategory.Special3),
+		new TickerData (NewsTickerCategory.Special4),
+		new TickerData (NewsTickerCategory.Special5),
+		new TickerData (NewsTickerCategory.Special6),
 		new TickerData (NewsTickerCategory.Party),
-		new TickerData (NewsTickerCategory.EventCoverage),
-		new TickerData (NewsTickerCategory.Forecast),
-		new TickerData (NewsTickerCategory.Warning),
-		new TickerData (NewsTickerCategory.GovernmentNotice)
+		new TickerData (NewsTickerCategory.SpeedUp),
+		new TickerData (NewsTickerCategory.Growth),
+		new TickerData (NewsTickerCategory.Enslave),
+		new TickerData (NewsTickerCategory.SlowDown),
+		new TickerData (NewsTickerCategory.President)
 
 	};
 
