@@ -711,7 +711,7 @@ public class GameWorld : MonoBehaviour
 		eventDispatcher.FireEvent (LevelEventType.Goal);
 		//TODO handle new level etc
 #if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPaused = true;
+		//UnityEditor.EditorApplication.isPaused = true;
 #endif
 	}
 
