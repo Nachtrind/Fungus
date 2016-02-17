@@ -206,6 +206,7 @@ public class GameWorld : MonoBehaviour
 		SpawnFungusNode (start.transform.position);
 		SpawnCore (start.transform.position);
 		deathEventCalled = false;
+	    goalReachedCalled = false;
 	}
 
 	public bool SpawnCore (Vector3 position)
@@ -700,16 +701,24 @@ public class GameWorld : MonoBehaviour
 #endif
 	}
 
+    bool goalReachedCalled;
 	public void OnCoreTouchedGoal (LevelGoal goal)
 	{
-		if (goal.unlockedAbility) {
-			PlayerRecord.UnlockAbility (goal.unlockedAbility);
-			Debug.Log ("Goal reached, ability unlocked: " + goal.unlockedAbility.name);
-		} else {
-			Debug.Log ("Goal reached");
-		}
-		eventDispatcher.FireEvent (LevelEventType.Goal);
-		//TODO handle new level etc
+	    if (!goalReachedCalled)
+	    {
+	        if (goal.unlockedAbility)
+	        {
+	            PlayerRecord.UnlockAbility(goal.unlockedAbility);
+	            Debug.Log("Goal reached, ability unlocked: " + goal.unlockedAbility.name);
+	        }
+	        else
+	        {
+	            Debug.Log("Goal reached");
+	        }
+	        eventDispatcher.FireEvent(LevelEventType.Goal);
+	        goalReachedCalled = true;
+	    }
+	    //TODO handle new level etc
 #if UNITY_EDITOR
 		//UnityEditor.EditorApplication.isPaused = true;
 #endif
