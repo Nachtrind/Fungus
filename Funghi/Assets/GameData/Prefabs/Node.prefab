@@ -73,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.775364, y: -12.303985, z: -9.838043}
+  m_LocalPosition: {x: -6.15618, y: 0.0000005945523, z: -2.6449773}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 453608}
@@ -278,7 +278,7 @@ MonoBehaviour:
   node: {fileID: 11407298}
   rend: {fileID: 2389220}
   inactiveStrength: 0.2
-  activeStrength: 0.75
+  activeStrength: 0.9
 --- !u!212 &21219708
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -16,7 +16,8 @@ MonoBehaviour:
     entries:
     - text: Due to an misfortunate kitchen accident - involving the chefs hand an
         a blender - the Diner sends customers home early.
-    - text: 
+    - text: Pizza Friday has been replaced with Papaya Friday in the Diner. People
+        leave in horror.
     - text: 
   - categoryName: SlimeSighting
     entries:
@@ -45,11 +46,16 @@ MonoBehaviour:
     - text: '"Big Coffees" popular coffee bar seems to be invaded by a caffeine addicted
         Slime. The police is on their way.'
   - categoryName: Growth
-    entries: []
+    entries:
+    - text: A green thing was spotted moving at the genetic green house. And it wasn't
+        a plant!
   - categoryName: Enslave
-    entries: []
+    entries:
+    - text: The unknown Slime Creature is crawling towards the After Life Research
+        Facillity. Security will try to intervene with it.
   - categoryName: SlowDown
-    entries: []
+    entries:
+    - text: Somehow the creature has moved all the way to the Ice Factory.
   - categoryName: President
     entries:
     - text: Something that appears to be an alien mucus has appeared near the presidents

@@ -11,6 +11,7 @@ public class EntitySpawner: MonoBehaviour
 
 	public bool triggerNewsTicker = false;
 	public NewsTickerCategory triggerNewsCategory;
+	bool tickerHasBeenTriggered = false;
 
 	#region Settings
 
@@ -65,8 +66,9 @@ public class EntitySpawner: MonoBehaviour
 
 	void OnSpawnCompleted (Entity e)
 	{
-		if (triggerNewsTicker) {
+		if (triggerNewsTicker && !tickerHasBeenTriggered) {
 			NewsTicker.Trigger (triggerNewsCategory);
+			tickerHasBeenTriggered = true;
 		}
 		if (OnSpawned != null) {
 			OnSpawned (e);
