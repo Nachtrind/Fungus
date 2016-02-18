@@ -159,7 +159,9 @@ public class GameInput: MonoBehaviour
 
 				if (touches [touchToUseInWorld].phase == TouchPhase.Ended && canBuildNode) {
 					EndBuild ();
-					FungusResources.Instance.SubResources (nodeCost);
+					if (FungusResources.Instance.CurrentResources >= nodeCost) {
+						FungusResources.Instance.SubResources (nodeCost);
+					}
 
 				}
 

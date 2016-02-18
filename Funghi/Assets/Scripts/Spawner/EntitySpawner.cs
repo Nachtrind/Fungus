@@ -12,6 +12,7 @@ public class EntitySpawner: MonoBehaviour
 
 	public bool triggerNewsTicker = false;
 	public NewsTickerCategory triggerNewsCategory;
+	bool triggeredTicker = false;
 
 	#region Settings
 
@@ -26,16 +27,15 @@ public class EntitySpawner: MonoBehaviour
 
 	#endregion
 
-    List<ModuleWorker> startedWorkers = new List<ModuleWorker>();
+	List<ModuleWorker> startedWorkers = new List<ModuleWorker> ();
 
-    public void CancelWorkers()
-    {
-        while (startedWorkers.Count > 0)
-        {
-            startedWorkers[0].markedForDeletion = true;
-            startedWorkers.RemoveAt(0);
-        }
-    }
+	public void CancelWorkers ()
+	{
+		while (startedWorkers.Count > 0) {
+			startedWorkers [0].markedForDeletion = true;
+			startedWorkers.RemoveAt (0);
+		}
+	}
 
 	//void Start ()
 	//{
@@ -52,24 +52,24 @@ public class EntitySpawner: MonoBehaviour
 		}
 
 		//if (!active) {
-			ModuleWorker worker = new ModuleWorker (this, OnSpawnCompleted);
-			if (eventModule != null && eventModule.BeforeSpawn) {
-				worker.steps.Add (eventModule.Apply);
-			}
-			worker.steps.Add (spawnModule.Apply);
-			if (positionModule != null) {
-				worker.steps.Add (positionModule.Apply);
-			}
-			if (behaviourModule != null) {
-				worker.steps.Add (behaviourModule.Apply);
-			}
-			if (eventModule != null && !eventModule.BeforeSpawn) {
-				worker.steps.Add (eventModule.Apply);
-			}
-			worker.steps.Add (ScriptableObject.CreateInstance<SpecialPathStarter> ().Apply);
-	    startedWorkers.Add(worker);
-			worker.ProcessNext (null);
-			//active = true;
+		ModuleWorker worker = new ModuleWorker (this, OnSpawnCompleted);
+		if (eventModule != null && eventModule.BeforeSpawn) {
+			worker.steps.Add (eventModule.Apply);
+		}
+		worker.steps.Add (spawnModule.Apply);
+		if (positionModule != null) {
+			worker.steps.Add (positionModule.Apply);
+		}
+		if (behaviourModule != null) {
+			worker.steps.Add (behaviourModule.Apply);
+		}
+		if (eventModule != null && !eventModule.BeforeSpawn) {
+			worker.steps.Add (eventModule.Apply);
+		}
+		worker.steps.Add (ScriptableObject.CreateInstance<SpecialPathStarter> ().Apply);
+		startedWorkers.Add (worker);
+		worker.ProcessNext (null);
+		//active = true;
 		//}
 	}
 
@@ -78,9 +78,10 @@ public class EntitySpawner: MonoBehaviour
 
 	void OnSpawnCompleted (Entity e)
 	{
-		if (triggerNewsTicker) {
+		if (triggerNewsTicker && !triggeredTicker) {
 			Debug.Log ("Triggered News");
 			NewsTicker.Trigger (triggerNewsCategory);
+			triggeredTicker = true;
 		}
 		if (OnSpawned != null) {
 			OnSpawned (e);

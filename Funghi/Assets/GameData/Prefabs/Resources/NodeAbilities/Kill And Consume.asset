@@ -15,7 +15,7 @@ MonoBehaviour:
   executionSound: {fileID: 0}
   deathSound: {fileID: 0}
   name: beatneat
-  radius: 0.511
+  radius: 0.8
   cost: 0
   tickRate: 1
   isUnlocked: 1

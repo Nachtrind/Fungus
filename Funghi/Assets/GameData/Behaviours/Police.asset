@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: IsInRange
   m_EditorClassIdentifier: 
   entityVarName: target
-  range: 0.5
+  range: 0.77
 --- !u!114 &11429502
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Name: IsInRange
   m_EditorClassIdentifier: 
   entityVarName: target
-  range: 0.5
+  range: 0.8
 --- !u!114 &11445722
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   entityVarName: target
-  interval: 0.5
+  interval: 0.71
   damagePerAttack: 10
 --- !u!114 &11456130
 MonoBehaviour:
