@@ -21,39 +21,41 @@ namespace NodeAbilities
 		public override void Execute (FungusNode node)
 		{
 
+			if (FungusResources.Instance.CurrentResources >= cost) {
+				//Create Animation Sprite Object
+				if (sporeAnimObj == null) {
+					sporeAnimObj = Instantiate (sporeAnimObjPrefab, node.transform.position, node.transform.rotation) as GameObject;
+					sporeAnimObj.transform.SetParent (node.transform);
+					sporeAnimObj.transform.localPosition = new Vector3 (0, 0.57f, 0);
+					sporeAnimObj.transform.localRotation = Quaternion.Euler (90.0f, 0, 0);
+				}
 
-			//Create Animation Sprite Object
-			if (sporeAnimObj == null) {
-				sporeAnimObj = Instantiate (sporeAnimObjPrefab, node.transform.position, node.transform.rotation) as GameObject;
-				sporeAnimObj.transform.SetParent (node.transform);
-				sporeAnimObj.transform.localPosition = new Vector3 (0, 0.57f, 0);
-				sporeAnimObj.transform.localRotation = Quaternion.Euler (90.0f, 0, 0);
-			}
+				if (sporeAnim == null) {
+					sporeAnim = sporeAnimObj.GetComponent<Animator> ();
+				}
 
-			if (sporeAnim == null) {
-				sporeAnim = sporeAnimObj.GetComponent<Animator> ();
-			}
-
-			sporeAnim.SetTrigger ("Attack");
+				sporeAnim.SetTrigger ("Attack");
 
 
-			FungusResources.Instance.SubResources (cost);
+				FungusResources.Instance.SubResources (cost);
 
-			if (spores == null) {
-				spores = Instantiate (zombieSpores, node.transform.position, Quaternion.Euler (Vector3.zero)) as GameObject;
-				spores.transform.parent = node.transform;
-				spores.GetComponent<ParticleSystem> ().Play ();
-			}
+				if (spores == null) {
+					spores = Instantiate (zombieSpores, node.transform.position, Quaternion.Euler (Vector3.zero)) as GameObject;
+					spores.transform.parent = node.transform;
+					spores.GetComponent<ParticleSystem> ().Play ();
+				}
 			
-			if (!spores.GetComponent<ParticleSystem> ().isPlaying) {
-				spores.GetComponent<ParticleSystem> ().Play ();
-			}
+				if (!spores.GetComponent<ParticleSystem> ().isPlaying) {
+					spores.GetComponent<ParticleSystem> ().Play ();
+				}
 			
-			Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
-			spores.transform.rotation = sporeRotation;
+				Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
+				spores.transform.rotation = sporeRotation;
 
-			InfluenceEnemiesInArea (node, sporeRotation);
-			
+				InfluenceEnemiesInArea (node, sporeRotation);
+			} else {
+				node.ToggleActive ();
+			}
 		}
 
 		public override void StopExecution (FungusNode node)

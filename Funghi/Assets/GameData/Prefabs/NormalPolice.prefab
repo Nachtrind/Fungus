@@ -576,8 +576,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29249500ff8d24245a09ffc656f6abe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 5
-  maxHealth: 5
+  currentHealth: 10
+  maxHealth: 10
   deathParticles: {fileID: 11466330, guid: 2c236c5bb44353f41b38ebac1e879b85, type: 2}
   isAttackable: 1
   behaviour: {fileID: 0}
@@ -773,11 +773,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: currentHealth
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxHealth
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: playOnAwake

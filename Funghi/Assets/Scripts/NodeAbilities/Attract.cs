@@ -74,7 +74,7 @@ namespace NodeAbilities
 			//Vector3 tempVector = new Vector3 (0, 0, 0); 
 			Collider[] peopleCollider = Physics.OverlapBox (node.transform.position + dir * radius / 2, new Vector3 (influenceRadius / 2, 1, radius / 2), sporeRot, citizenLayer);
 			//Debug.Log ("Caught Citizens with lure: " + peopleCollider.Length);
-			//Debug.DrawLine (node.transform.position, node.transform.position + dir * radius, Color.cyan, 4.0f);
+			Debug.DrawLine (node.transform.position, node.transform.position + dir * radius, Color.cyan, 4.0f);
 
 			foreach (Collider c in peopleCollider) {
 				c.GetComponent<Human> ().TriggerBehaviour ("Lure", node);

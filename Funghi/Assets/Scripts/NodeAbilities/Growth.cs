@@ -21,43 +21,47 @@ namespace NodeAbilities
 
 		public override void Execute (FungusNode node)
 		{
-			//Create Animation Sprite Object
-			if (sporeAnimObj == null) {
-				sporeAnimObj = Instantiate (sporeAnimObjPrefab, node.transform.position, node.transform.rotation) as GameObject;
-				sporeAnimObj.transform.SetParent (node.transform);
-				sporeAnimObj.transform.localPosition = new Vector3 (0, 0.57f, 0);
-				sporeAnimObj.transform.localRotation = Quaternion.Euler (90.0f, 0, 0);
-			}
+			if (FungusResources.Instance.CurrentResources >= cost) {
+				//Create Animation Sprite Object
+				if (sporeAnimObj == null) {
+					sporeAnimObj = Instantiate (sporeAnimObjPrefab, node.transform.position, node.transform.rotation) as GameObject;
+					sporeAnimObj.transform.SetParent (node.transform);
+					sporeAnimObj.transform.localPosition = new Vector3 (0, 0.57f, 0);
+					sporeAnimObj.transform.localRotation = Quaternion.Euler (90.0f, 0, 0);
+				}
 
-			if (sporeAnim == null) {
-				sporeAnim = sporeAnimObj.GetComponent<Animator> ();
-			}
-
-
-			//Particles
-			if (spores == null) {
-				spores = Instantiate (growthSpores, new Vector3 (node.transform.position.x, node.transform.position.y + 0.5f, node.transform.position.z), Quaternion.Euler (Vector3.zero)) as GameObject;
-				spores.transform.parent = node.transform;
-				ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
-				em.enabled = true;
-				spores.GetComponent<ParticleSystem> ().Play ();
-			}
-
-			if (!spores.GetComponent<ParticleSystem> ().isPlaying) {
-				spores.GetComponent<ParticleSystem> ().Play ();
-				ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
-				em.enabled = true;
-			}
-
-			Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
-			spores.transform.rotation = sporeRotation;
-
-			//InfluenceEnemyInArea (node, sporeRotation);
+				if (sporeAnim == null) {
+					sporeAnim = sporeAnimObj.GetComponent<Animator> ();
+				}
 
 
-			if (infected == null) {
-				sporeAnim.SetTrigger ("Attack");
-				InfluenceEnemyInArea (node, sporeRotation);
+				//Particles
+				if (spores == null) {
+					spores = Instantiate (growthSpores, new Vector3 (node.transform.position.x, node.transform.position.y + 0.5f, node.transform.position.z), Quaternion.Euler (Vector3.zero)) as GameObject;
+					spores.transform.parent = node.transform;
+					ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
+					em.enabled = true;
+					spores.GetComponent<ParticleSystem> ().Play ();
+				}
+
+				if (!spores.GetComponent<ParticleSystem> ().isPlaying) {
+					spores.GetComponent<ParticleSystem> ().Play ();
+					ParticleSystem.EmissionModule em = spores.GetComponent<ParticleSystem> ().emission;
+					em.enabled = true;
+				}
+
+				Quaternion sporeRotation = Quaternion.Euler (new Vector3 (Wind.Instance.currentRotation.eulerAngles.x, -Wind.Instance.currentRotation.eulerAngles.z + 90.0f, Wind.Instance.currentRotation.eulerAngles.y));
+				spores.transform.rotation = sporeRotation;
+
+				//InfluenceEnemyInArea (node, sporeRotation);
+
+
+				if (infected == null) {
+					sporeAnim.SetTrigger ("Attack");
+					InfluenceEnemyInArea (node, sporeRotation);
+				}
+			} else {
+				node.ToggleActive ();
 			}
 		}
 

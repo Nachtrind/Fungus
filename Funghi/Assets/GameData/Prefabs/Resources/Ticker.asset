@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e3f7fb4d8ec5442bf8b13487658495, type: 3}
+  m_Name: Ticker
+  m_EditorClassIdentifier: 
+  data:
+  - categoryName: Diner
+    entries:
+    - text: Due to an misfortunate kitchen accident - involving the chefs hand an
+        a blender - the Diner sends customers home early.
+    - text: Pizza Friday has been replaced with Papaya Friday in the Diner. People
+        leave in horror.
+  - categoryName: SlimeSighting
+    entries:
+    - text: Some people sighted a green Slime near the park. Others suggest someone
+        just sneezed on the walkway.
+  - categoryName: Special1
+    entries: []
+  - categoryName: Special2
+    entries: []
+  - categoryName: Special3
+    entries: []
+  - categoryName: Special4
+    entries: []
+  - categoryName: Special5
+    entries: []
+  - categoryName: Special6
+    entries: []
+  - categoryName: Party
+    entries:
+    - text: The good citizens are partying too hard. The Police is on its way to help
+        them "calm down".
+    - text: There is a mighty fine party taking place in the heart of the city. The
+        police is on its way to check it out.
+  - categoryName: SpeedUp
+    entries:
+    - text: '"Big Coffees" popular coffee bar seems to be invaded by a caffeine addicted
+        Slime. The police is on their way.'
+  - categoryName: Growth
+    entries:
+    - text: A green thing was spotted moving at the genetic green house. And it wasn't
+        a plant!
+  - categoryName: Enslave
+    entries:
+    - text: The unknown Slime Creature is crawling towards the After Life Research
+        Facillity. Security will try to intervene with it.
+  - categoryName: SlowDown
+    entries:
+    - text: Somehow the creature has moved all the way to the Ice Factory.
+  - categoryName: President
+    entries:
+    - text: Something that appears to be an alien mucus has appeared near the presidents
+        Holiday Home. Reinforcments are on their way.

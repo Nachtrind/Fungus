@@ -17,7 +17,7 @@ MonoBehaviour:
   name: zombie
   radius: 4
   cost: 3
-  tickRate: 0.5
+  tickRate: 2
   isUnlocked: 0
   zombieSpores: {fileID: 153816, guid: 0c930ff4c7d439940a15cef6f7c06239, type: 2}
   sporeAnimObjPrefab: {fileID: 106630, guid: 9972c3bd0c6b1514c933a69462fa6fee, type: 2}

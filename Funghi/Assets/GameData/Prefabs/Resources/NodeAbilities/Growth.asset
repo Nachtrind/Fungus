@@ -16,7 +16,7 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   name: growth
   radius: 2
-  cost: 2
+  cost: 1
   tickRate: 1
   isUnlocked: 0
   growthSpores: {fileID: 150168, guid: 4cdb3f65ad93d8b488619b9b59ab435c, type: 2}
