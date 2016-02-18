@@ -9,7 +9,6 @@ namespace Spawner.Modules
         public float delay = 0f;
         public float timeInterval = 1f;
         bool started = false;
-        bool cancel = false;
         public override void Apply(Entity e, ModuleWorker worker)
         {
             worker.source.StartCoroutine(Execute(worker));
@@ -21,8 +20,8 @@ namespace Spawner.Modules
             started = true;
             yield return new WaitForSeconds(delay);
         RESTART:
-            if (cancel) { yield break; }
             if (prefab == null) { Debug.LogError("human prefab not assigned"); yield break; }
+            if (worker.markedForDeletion) { yield break; }
             while (GameWorld.Instance.IsPaused) yield return null;
             worker.Restart();
             worker.ProcessNext(Instantiate(prefab, worker.source.transform.position, Quaternion.AngleAxis(Random.Range(0, 360f), Vector3.up)) as Entity);
@@ -30,9 +29,5 @@ namespace Spawner.Modules
             goto RESTART;
         }
 
-        public void Stop()
-        {
-            cancel = true;
-        }
     }
 }

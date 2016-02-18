@@ -11,6 +11,7 @@ namespace Spawner
         int currentStep = 0;
         public PatrolPath linkedSpawnPath;
         public string pathStartIdentifier = "EnterWorld";
+        public bool markedForDeletion;
         public ModuleWorker(EntitySpawner spawner, Action<Entity> completedCallback)
         {
             source = spawner;
@@ -35,7 +36,10 @@ namespace Spawner
                 {
                     SpawnCompletedCallback(e);
                 }
-                Restart();
+                if (!markedForDeletion)
+                {
+                    Restart();
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Spawner;
+﻿using System.Collections.Generic;
+using Spawner;
 using UnityEngine;
 using Spawner.Modules;
 
@@ -26,12 +27,23 @@ public class EntitySpawner: MonoBehaviour
 
 	#endregion
 
-	void Start ()
-	{
-		if (autoActivateOnStart) {
-			Activate ();
-		}
-	}
+    List<ModuleWorker> startedWorkers = new List<ModuleWorker>();
+
+    public void CancelWorkers()
+    {
+        while (startedWorkers.Count > 0)
+        {
+            startedWorkers[0].markedForDeletion = true;
+            startedWorkers.RemoveAt(0);
+        }
+    }
+
+	//void Start ()
+	//{
+	//	if (autoActivateOnStart) {
+	//		Activate ();
+	//	}
+	//}
 
 	public void Activate ()
 	{
@@ -40,7 +52,7 @@ public class EntitySpawner: MonoBehaviour
 			return;
 		}
 
-		if (!active) {
+		//if (!active) {
 			ModuleWorker worker = new ModuleWorker (this, OnSpawnCompleted);
 			if (eventModule != null && eventModule.BeforeSpawn) {
 				worker.steps.Add (eventModule.Apply);
@@ -56,9 +68,10 @@ public class EntitySpawner: MonoBehaviour
 				worker.steps.Add (eventModule.Apply);
 			}
 			worker.steps.Add (ScriptableObject.CreateInstance<SpecialPathStarter> ().Apply);
+	    startedWorkers.Add(worker);
 			worker.ProcessNext (null);
-			active = true;
-		}
+			//active = true;
+		//}
 	}
 
 	public event System.Action<Entity> OnSpawned;
@@ -75,16 +88,6 @@ public class EntitySpawner: MonoBehaviour
 		}
 		if (OnSpawn != null) {
 			OnSpawn (e, this, tutorialTag);
-		}
-	}
-
-	public void CancelRepeating ()
-	{
-		if (spawnModule != null) {
-			SpawnRepeating sr = spawnModule as SpawnRepeating;
-			if (sr) {
-				sr.Stop ();
-			}
 		}
 	}
 

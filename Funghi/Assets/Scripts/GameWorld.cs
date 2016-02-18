@@ -234,6 +234,10 @@ public class GameWorld : MonoBehaviour
 		RemoveAllSlimeTags ();
 		FungusResources.Instance.Reset ();
 		UserMenu.current.UpdateEnabledAbilities ();
+	    foreach (var spawner in FindObjectsOfType<EntitySpawner>())
+	    {
+	        spawner.CancelWorkers();
+	    }
 		var t = FindObjectOfType<Tutorials.Tutorial> ();
 		if (t) {
 			t.Reset ();

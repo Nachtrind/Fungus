@@ -19,6 +19,7 @@ namespace Spawner.Modules
             float partTime = timeSpan / Mathf.Max(1f, amount);
             for (int i = 0; i < amount; i++)
             {
+                if (worker.markedForDeletion) { yield break; }
                 while (GameWorld.Instance.IsPaused) yield return null;
                 if (prefab != null)
                 {
