@@ -255,8 +255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfffbb2cdd9d5a84fb2c7efb7a41ca1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 100
-  maxHealth: 100
+  currentHealth: 80
+  maxHealth: 80
   deathParticles: {fileID: 11423238, guid: 0e01f2fcd3f8a1e489f8301010e3111f, type: 2}
   isAttackable: 1
   behaviour: {fileID: 0}
@@ -369,6 +369,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Loop
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: currentHealth
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxHealth
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
