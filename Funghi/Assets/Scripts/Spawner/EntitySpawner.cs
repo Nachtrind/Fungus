@@ -6,7 +6,7 @@ using Spawner.Modules;
 public class EntitySpawner: MonoBehaviour
 {
 	public bool autoActivateOnStart = true;
-	bool active = false;
+	//bool active = false;
 
 	public string tutorialTag = "";
 

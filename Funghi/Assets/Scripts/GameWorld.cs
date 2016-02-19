@@ -93,6 +93,7 @@ public class GameWorld : MonoBehaviour
 	[RuntimeInitializeOnLoadMethod]
 	static void InitApplication ()
 	{
+	    Application.targetFrameRate = 30;
 #if DEBUG
 		new GameObject ("DebugHelper").AddComponent<DebugHelper> ();
 #endif
@@ -237,6 +238,10 @@ public class GameWorld : MonoBehaviour
 	    foreach (var spawner in FindObjectsOfType<EntitySpawner>())
 	    {
 	        spawner.CancelWorkers();
+	    }
+	    foreach (var spt in FindObjectsOfType<SpawnerTriggerCollection>())
+	    {
+	        spt.Reset();
 	    }
 		var t = FindObjectOfType<Tutorials.Tutorial> ();
 		if (t) {

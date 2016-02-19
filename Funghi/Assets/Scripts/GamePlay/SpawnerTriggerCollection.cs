@@ -12,6 +12,7 @@ public class SpawnerTriggerCollection: MonoBehaviour
 			Core
 		}
 
+	    public bool triggerOnce = true;
 		public TargetMode target;
 		public EntitySpawner spawner;
 		public Vector3 position;
@@ -19,8 +20,9 @@ public class SpawnerTriggerCollection: MonoBehaviour
 	}
 
 	public List<SpawnerTrigger> triggers = new List<SpawnerTrigger> ();
-
-	[SerializeField] Color gizmoColor;
+    [SerializeField, HideInInspector]
+    List<SpawnerTrigger> _onceTriggered = new List<SpawnerTrigger>();
+    [SerializeField] Color gizmoColor;
 
 	void OnDrawGizmosSelected ()
 	{
@@ -30,9 +32,15 @@ public class SpawnerTriggerCollection: MonoBehaviour
 		}
 	}
 
+    public void Reset()
+    {
+        triggers.AddRange(_onceTriggered);
+        _onceTriggered.Clear();
+    }
+
 	public void EvaluateForCore (Vector3 corePosition)
 	{
-		for (var i = 0; i < triggers.Count; i++) {
+	    for (var i = triggers.Count; i-- > 0 ;) {
 			if (triggers [i].target != SpawnerTrigger.TargetMode.Core)
 				continue;
 			if (Vector3.SqrMagnitude (triggers [i].position - corePosition) < triggers [i].radius * triggers [i].radius) {
@@ -40,13 +48,18 @@ public class SpawnerTriggerCollection: MonoBehaviour
 				if (sp) {
 					sp.Activate ();
 				}
+			    if (triggers[i].triggerOnce)
+			    {
+			        _onceTriggered.Add(triggers[i]);
+			        triggers.RemoveAt(i);
+			    }
 			}
 		}
 	}
 
 	public void EvaluateForNode (Vector3 newNodePosition)
 	{
-		for (var i = 0; i < triggers.Count; i++) {
+	    for (var i = triggers.Count; i-- > 0 ;) {
 			if (triggers [i].target != SpawnerTrigger.TargetMode.Node)
 				continue;
 			if (Vector3.SqrMagnitude (triggers [i].position - newNodePosition) < triggers [i].radius * triggers [i].radius) {
@@ -54,7 +67,12 @@ public class SpawnerTriggerCollection: MonoBehaviour
 				if (sp) {
 					sp.Activate ();
 				}
-			}
+                if (triggers[i].triggerOnce)
+                {
+                    _onceTriggered.Add(triggers[i]);
+                    triggers.RemoveAt(i);
+                }
+            }
 		}
 	}
 
