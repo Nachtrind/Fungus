@@ -103,6 +103,7 @@ public class UserMenu : MonoBehaviour
         _lastButton = type;
         if (type == UserMenuButtonType.Menu)
         {
+            abilityFader.FadeOut(0.1f);
             HighlightButtons(UserMenuButtonType.None);
             mainMenu.OpenMenu();
             return;
@@ -148,6 +149,7 @@ public class UserMenu : MonoBehaviour
     public void StartChangingWind()
     {
         if (GameWorld.Instance.IsPaused) return;
+        abilityFader.FadeOut(0.1f);
         HighlightButtons(UserMenuButtonType.None);
         GameInput.Instance.ActivateMode(UserMenuButtonType.Wind);
     }
