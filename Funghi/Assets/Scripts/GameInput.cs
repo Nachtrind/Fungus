@@ -137,7 +137,7 @@ public class GameInput : MonoBehaviour
 
             //Transform Touch to WorldPosition
             touchWorldPoint = GetTouchPosInWorld(cam.ScreenPointToRay(touches[touchToUseInWorld].position));
-            spores.transform.position = new Vector3(touchWorldPoint.x, 0.1f, touchWorldPoint.z);
+            spores.transform.position = cam.transform.position +((new Vector3(touchWorldPoint.x, 0.1f, touchWorldPoint.z) - cam.transform.position).normalized)*3;
 
             ///////////////////
             //Build New Nodes//
@@ -331,7 +331,7 @@ public class GameInput : MonoBehaviour
                 var em = spores.emission;
                 spores.Play();
                 em.enabled = true;
-                spores.transform.position = new Vector3(_pos.x, 0.1f, _pos.z);
+                //spores.transform.position = new Vector3(_pos.x, 0.1f, _pos.z);
             }
             canBuildNode = true;
             return true;
@@ -342,7 +342,7 @@ public class GameInput : MonoBehaviour
     void TrackBuild(Vector3 _pos)
     {
         var nodesInRadius = GameWorld.Instance.GetFungusNodes(_pos, 0.4f);
-        spores.transform.position = new Vector3(_pos.x, 0.5f, _pos.z);
+        //spores.transform.position = new Vector3(_pos.x, 0.5f, _pos.z);
 
         if (nodesInRadius.Count <= 0)
         {

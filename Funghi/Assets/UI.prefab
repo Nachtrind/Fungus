@@ -1365,8 +1365,8 @@ MonoBehaviour:
   fadeSpeed: 1
   upperPanel: {fileID: 22447952}
   lowerPanel: {fileID: 22438890}
-  upperPanelSpeed: 0.3
-  lowerPanelSpeed: 0.4
+  upperPanelSpeed: 0.6
+  lowerPanelSpeed: 0.8
   upperPanelFont: {fileID: 12800000, guid: eb7bab75451bf244ba767b1e0a5068a5, type: 3}
   lowerPanelFont: {fileID: 12800000, guid: eb7bab75451bf244ba767b1e0a5068a5, type: 3}
   upperPanelFontSize: 10
@@ -1604,7 +1604,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   Type: 2
+  txt: {fileID: 0}
   IsActive: 0
+  fontSizeSelected: 14
+  SelectedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &11443238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1648,7 +1651,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   Type: 4
+  txt: {fileID: 0}
   IsActive: 0
+  fontSizeSelected: 14
+  SelectedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &11443492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2051,7 +2057,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   Type: 5
+  txt: {fileID: 0}
   IsActive: 0
+  fontSizeSelected: 14
+  SelectedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &11462634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2198,7 +2207,7 @@ MonoBehaviour:
   - {fileID: 11443294}
   - {fileID: 11462368}
   abilityFader: {fileID: 11445642}
-  AbilityInactiveColor: {r: 0.5588235, g: 0.5588235, b: 0.5588235, a: 1}
+  AbilityInactiveColor: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 1}
   anemo: {fileID: 11466350}
   buttons:
   - {fileID: 11490948}
@@ -2296,7 +2305,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   Type: 0
+  txt: {fileID: 0}
   IsActive: 0
+  fontSizeSelected: 14
+  SelectedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &11475462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2572,7 +2584,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   Type: 1
+  txt: {fileID: 0}
   IsActive: 0
+  fontSizeSelected: 14
+  SelectedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &11486550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2586,7 +2601,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 11466536}
   Type: 3
+  txt: {fileID: 0}
   IsActive: 0
+  fontSizeSelected: 14
+  SelectedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &11490754
 MonoBehaviour:
   m_ObjectHideFlags: 1
