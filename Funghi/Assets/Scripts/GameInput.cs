@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using NodeAbilities;
 using Pathfinding;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 
