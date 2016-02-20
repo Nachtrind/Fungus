@@ -22,8 +22,10 @@ public class UserMenuButton : MonoBehaviour
 		if (_active)
 			return;
 		_active = true;
-		menu.OnMenuButtonActive (type);
-		uiImage.sprite = pressedSprite;
+	    if (pressedSprite != null)
+	    {
+	        uiImage.sprite = pressedSprite;
+	    }
 
 	}
 
@@ -34,7 +36,21 @@ public class UserMenuButton : MonoBehaviour
 		if (!_active)
 			return;
 		_active = false;
-		menu.OnMenuButtonInactive (type);
-		uiImage.sprite = normalSprite;
+	    if (normalSprite != null)
+	    {
+	        uiImage.sprite = normalSprite;
+	    }
 	}
+
+    public void OnClick(BaseEventData data)
+    {
+        if (!menu) return;
+        menu.OnMenuButtonClicked(type);
+    }
+
+    public void OnClick()
+    {
+        if (!menu) return;
+        menu.OnMenuButtonClicked(type);
+    }
 }
